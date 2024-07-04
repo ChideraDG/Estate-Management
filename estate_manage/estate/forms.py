@@ -28,6 +28,6 @@ class RegistrationForm(ModelForm):
             'full_name': 'Full Name',  # Custom label for the fullname field
         }
         help_texts = {
-            'address_2': ' Optional',  # Help text for the phone number field
+            'address_2': ' (Optional)',  # Help text for the phone number field
         }
 

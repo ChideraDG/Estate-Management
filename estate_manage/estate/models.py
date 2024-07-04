@@ -5,8 +5,8 @@ from django.utils import timezone
 
 class Registration(models.Model):
     GENDER = [
-        ('m', 'Male'),
-        ('f', 'Female'),
+        ('male', 'Male'),
+        ('female', 'Female'),
     ]
 
     full_name = models.CharField(max_length=100, blank=False, null=False)
@@ -21,8 +21,8 @@ class Registration(models.Model):
     address_1 = models.CharField(max_length=200, blank=False, null=False)
     address_2 = models.CharField(max_length=200, blank=True, null=True)
     password = models.CharField(max_length=200, blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated = models.DateTimeField(auto_now=True, default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.full_name
