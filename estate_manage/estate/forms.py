@@ -31,3 +31,14 @@ class RegistrationForm(ModelForm):
             'address_2': ' (Optional)',  # Help text for the phone number field
         }
 
+class LoginForm(forms.Form):
+    user_name = forms.CharField(max_length=100, blank=False, null=False)
+    password = forms.CharField(max_length=500, blank=False, null=False, widget=forms.PasswordInput)
+
+    class Meta:
+        fields = ['user_name','password']
+
+        labels={
+            'user_name':'Username',    # Custom label for the username field
+            }
+
