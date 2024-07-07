@@ -18,7 +18,7 @@ class RegistrationForm(ModelForm):
 
     class Meta:
         model = Registration
-        fields = ['full_name', 'gender', 'date_of_birth', 'email', 'phone_number', 'state_of_origin',
+        fields = ['full_name', 'gender', 'date_of_birth', 'email', 'phone_number', 'designation', 'state_of_origin',
                   'state_of_residence', 'city', 'address_1', 'address_2', 'password1', 'password2']
 
         widgets = {
