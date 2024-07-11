@@ -20,7 +20,7 @@ class Registration(models.Model):
     email = models.EmailField(blank=False, null=False, unique=True)
     phone_number = models.CharField(max_length=15, validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$')],
                                     unique=True)
-    designation = models.CharField(max_length=10, choices=DESIGNATION, null=False, blank=False, default='Tenant')
+    designation = models.CharField(max_length=10, choices=DESIGNATION, null=False, blank=False, default='tenant')
     state_of_origin = models.CharField(max_length=50, blank=False, null=False)
     state_of_residence = models.CharField(max_length=50, blank=False, null=False)
     city = models.CharField(max_length=50, blank=False, null=False)
