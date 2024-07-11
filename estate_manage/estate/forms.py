@@ -39,6 +39,6 @@ class LoginForm(forms.Form):
         fields = ['user_name','password']
 
         labels={
-            'user_name':'Username',    # Custom label for the username field
+            'user_name': 'Username',    # Custom label for the username field
             }
 
