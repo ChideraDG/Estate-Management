@@ -35,43 +35,8 @@ class RegistrationForm(ModelForm):
 
 
 class LoginForm(forms.Form):
-    user_name = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=100,  null=False, unique=True)
     password = forms.CharField(max_length=500, widget=forms.PasswordInput)
 
     class Meta:
-        fields = ['user_name', 'password']
-
-        labels = {
-            'user_name': 'Username',  # Custom label for the username field
-        }
-
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['first_name', 'email', 'username', 'password1', 'password2']
-        labels = {
-            'first_name': 'Name',
-        }
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': "input input--text", 'id': "formInput#text", 'type': "text",
-                                                 'name': "text", 'placeholder': "e.g. Dennis Ivanov"}),
-            'email': forms.TextInput(attrs={'class': "input input--email", 'id': "formInput#email", 'type': "email",
-                                            'name': "email", 'placeholder': "e.g. user@domain.com"}),
-            'username': forms.TextInput(attrs={'class': "input input--text", 'id': "formInput#text", 'type': "text",
-                                               'name': "text", 'placeholder': "e.g. DennisIvanov"}),
-            'password1': forms.PasswordInput(attrs={'placeholder': "••••••••"}),
-            #     'password2': forms.PasswordInput(
-            #         attrs={'class': "input input--password", 'id': "formInput#confirm-password",
-            #                'type': "password", 'name': "confirm-password", 'placeholder': "••••••••"}),
-            #
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-
-        for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
-
-            if field.label.lower().strip() == 'password' or field.label.lower().strip() == 'password confirmation':
-                field.widget.attrs.update({'class': 'input', 'placeholder': "••••••••"})
+        fields = ['email', 'password']
