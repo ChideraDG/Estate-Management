@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
-from django.utils import timezone
 
 
 class Registration(models.Model):
@@ -14,6 +14,7 @@ class Registration(models.Model):
         ('tenant', 'Tenant')
     ]
 
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     full_name = models.CharField(max_length=100, blank=False, null=False)
     gender = models.CharField(max_length=50, choices=GENDER, null=False, blank=False)
     date_of_birth = models.DateField()
@@ -31,4 +32,4 @@ class Registration(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.full_name
+        return self.email
