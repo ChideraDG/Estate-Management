@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
@@ -5,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 
 
-def register(request):
+def userRegister(request):
     form = RegistrationForm()
 
     if request.method == 'POST':
@@ -35,45 +36,34 @@ def welcome(request):
 def userLogin(request):
     form = LoginForm()
 
+    if request.user.is_authenticated:
+        return redirect('welcome')
+
     if request.method == 'POST':
-        email = request.POST['user_name']
-        password = request.POST['password']
+        form = LoginForm(request.POST)
 
-        try:
-            user = Registration.objects.get(email=email)
-        except:
-            print("Email doesn't exist.")
+        if form.is_valid():
+            email = form.cleaned_data['user_name']
+            password = form.cleaned_data['password']
 
-        user = authenticate(request, username=email, password=password)
+            try:
+                user = Registration.objects.get(email=email)
+            except:
+                print("Email doesn't exist.")
 
-        if user is not None:
-            login(request, user)
-            return redirect('welcome')
-        else:
-            print('Username or Password is Wrong')
+            user = authenticate(request, username=email, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('welcome')
+            else:
+                messages.error(request, 'username or password is wrong')
 
     context = {'form': form}
 
     return render(request, 'estate/login.html', context)
 
-# def registerUser(request):
-#     page = 'register'
-#     form = CustomUserCreationForm()
-#
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST)
-#         print(form)
-#         print(request.POST)
-#
-#         # if form.is_valid():
-#         #     user = form.save(commit=False)
-#         #     user.username = user.username.lower()
-#         #     user.save()
-#         #
-#         #     # messages.success(request, f'{user.username.title()}, your account was created.')
-#         #
-#         #     # login(request, user)
-#         #     return redirect('login')
-#
-#     context = {'page': page, 'form': form}
-#     return render(request, 'estate/test.html', context)
+
+def userLogout(request):
+    logout(request)
+    return redirect('welcome')
