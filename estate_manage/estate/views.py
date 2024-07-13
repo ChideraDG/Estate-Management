@@ -23,6 +23,7 @@ def userRegister(request):
 
             cleaned.save()
 
+            login(request, user)
             return redirect('welcome')
 
     context = {'form': form}
@@ -43,7 +44,7 @@ def userLogin(request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
-            email = form.cleaned_data['user_name']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
             try:
@@ -52,6 +53,7 @@ def userLogin(request):
                 print("Email doesn't exist.")
 
             user = authenticate(request, username=email, password=password)
+            print(user)
 
             if user is not None:
                 login(request, user)
