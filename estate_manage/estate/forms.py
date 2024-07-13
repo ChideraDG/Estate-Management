@@ -35,8 +35,5 @@ class RegistrationForm(ModelForm):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(max_length=100,  null=False, unique=True)
-    password = forms.CharField(max_length=500, widget=forms.PasswordInput)
-
-    class Meta:
-        fields = ['email', 'password']
+    email = forms.EmailField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Enter your Email Here'}))
+    password = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': "•••••••••••"}))
