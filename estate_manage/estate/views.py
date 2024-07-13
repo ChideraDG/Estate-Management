@@ -15,6 +15,7 @@ def userRegister(request):
         if form.is_valid():
             cleaned = form.save(commit=False)
             cleaned.password = form.clean_password2()
+            cleaned.full_name = cleaned.full_name.title().strip()
 
             user = User.objects.create_user(username=request.POST['email'],
                                             email=request.POST['email'],

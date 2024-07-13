@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -15,6 +17,8 @@ class RegistrationForm(ModelForm):
 
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords do not match")
+        elif re.search(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$. #!%*?&])[A-Za-z\d@$!#% *?.&]{8,}$", password1):
+            raise forms.ValidationError("Passwords are not the same")
 
         return password2
 
