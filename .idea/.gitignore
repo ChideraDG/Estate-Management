@@ -1,3 +1,12 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/estate_manage/estate/__pycache__
+/estate_manage/estate/migrations
+/estate_manage/estate/migrations/__pycache__
+/estate_manage/estate_manage/__pycache__
+/estate_manage/company/__pycache__
+/estate_manage/company/migrations
+/estate_manage/company/migrations/__pycache__
+/.idea
+/.idea/inspectionProfiles
