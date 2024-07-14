@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/cosmic-timetraveler.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/daniel.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/estate/templates/estate/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/welcome.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/estate_manage/static/css/navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/css/navbar.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
