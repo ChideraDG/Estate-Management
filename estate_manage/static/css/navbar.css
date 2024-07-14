@@ -1,0 +1,36 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff; /* Adjust as needed */
+    z-index: 1000; /* Ensure it appears above other content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px; /* Adjust padding as needed */
+}
+
+.nav-links li {
+    margin-right: 40px; /* Adjust spacing between list items */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333; /* Adjust link color */
+    font-size: 16px; /* Adjust font size */
+}
+
+.logo img {
+    width: 60px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.nav-links li a:hover {
+    color: blue; /* Change to desired hover color */
+    transform: translateY(-2px);
+}

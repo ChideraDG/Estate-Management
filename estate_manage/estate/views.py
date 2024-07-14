@@ -70,3 +70,7 @@ def userLogin(request):
 def userLogout(request):
     logout(request)
     return redirect('welcome')
+
+
+def test(request):
+    return render(request, 'estate/welcome.html')

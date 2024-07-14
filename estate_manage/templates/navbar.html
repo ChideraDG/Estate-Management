@@ -1,0 +1,25 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="#">Buy</a></li>
+        <li><a href="#">Rent</a></li>
+        <li><a href="#">Sell</a></li>
+        <li><a href="#">Home Loans</a></li>
+        <li><a href="#">Find an Agent</a></li>
+        <div class="logo">
+            <img src="{% static 'images/villa-svgrepo-com.svg' %}"
+                alt="Zillow Logo">
+        </div>
+        <li><a href="#">Manage Rentals</a></li>
+        <li><a href="#">Advertise</a></li>
+        <li><a href="#">Help</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Sign In</a></li>
+        {% endif %}
+    </ul>
+</nav>

@@ -3,16 +3,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Estate</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}<title>Estate</title>{% endblock title %}
+    {% block head %}<!-- Placeholder for child template CSS -->{% endblock head %}
+    <link rel="shortcut icon" href="zillow.jpeg" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">ESTATE MANAGEMENT WEBSITE</h1>
-        <hr>
-        {% block content %}
+    {% block content %}
 
-        {% endblock content %}
-    </div>
+    {% endblock content %}
 </body>
 </html>

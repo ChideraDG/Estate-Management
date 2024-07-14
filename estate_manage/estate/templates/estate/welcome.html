@@ -1,16 +1,198 @@
 {% extends 'base.html' %}
-{%load static %}
-{% block content %}
-<div class="links">
-    <h1 style="text-align: center;">Welcome to Estate Management</h1>
-    <br>
-    {% if request.user.is_authenticated %}
-    <h1 class="link"><a href="{% url 'logout' %}">Logout Here</a></h1>
-    {% else %}
-    <h1 class="link"><a href="{% url 'register' %}">Register Here</a></h1>
-    <br>
-    <h1 class="link"><a href="{% url 'login' %}">Login Here</a></h1>
-    {% endif %}
-</div>
 
-{% endblock %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+<link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+{% endblock head %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+
+    <header class="header">
+        <div class="hero">
+            <h1>Agents. Tours. <br> Loans. Homes.</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Enter an address, neighborhood, city, or ZIP code">
+                <button><i class='bx bx-search' style="width: 100%; font-size: 20px;"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="recommend">
+            <div class="home-recommend">
+                <h3 style="font-weight: 800;">Get home recommendations</h3>
+                <p>Sign in for a more personalized experience.</p>
+                {% if request.user.is_authenticated %}
+                <button><a href="{% url 'logout' %}" style="text-decoration: none;">Logout</a></button>
+                {% else %}
+                <button><a href="{% url 'login' %}" style="text-decoration: none;">Sign In</a></button>
+                {% endif %}
+
+            </div>
+
+            <div class="recommendImg">
+                <img src="https://www.zillowstatic.com/s3/web-platform/sub-apps/hops-homepage/hops-homepage.prod.master.6485453.907c1efa/web/1d9d5bce566c85fa242cb21ad3292cb8.webp"
+                    alt="Recomend">
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="main">
+            <div class="card">
+                <img src="https://www.zillowstatic.com/bedrock/app/uploads/sites/5/2024/04/homepage-spot-agent-lg-1.webp
+                " alt="Buy a home" class="card-img">
+                <h2>Buy a home</h2>
+                <p>Find your place with an immersive photo experience and the most listings, including things you won’t
+                    find
+                    anywhere else.</p>
+                <button>Browse homes</button>
+            </div>
+            <div class="card">
+                <img src="https://www.zillowstatic.com/bedrock/app/uploads/sites/5/2024/04/homepage-spot-sell-lg-1.webp
+                " alt="Sell a home" class="card-img">
+                <h2>Sell a home</h2>
+                <p>No matter what path you take to sell your home, we can help you navigate a successful sale.</p>
+                <button>See your options</button>
+            </div>
+            <div class="card">
+                <img src="https://www.zillowstatic.com/bedrock/app/uploads/sites/5/2024/04/homepage-spot-rent-lg-1.webp
+                " alt="Rent a home" class="card-img">
+                <h2>Rent a home</h2>
+                <p>We’re creating a seamless online experience – from shopping on the largest rental network, to
+                    applying,
+                    to paying rent.</p>
+                <button>Find rentals</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="AboutRecommendation">
+        <h4 style="font-weight: 800;">About Zillow's Recommendations</h4>
+        <p style="margin-top: -1%;">Recommendations are based on your location and search activity, such as the homes
+            you've viewed and saved and the filters you've used. We use this <br> information to bring similar homes to
+            your attention, so you don't miss out.</p>
+        <div class="inline-rents">
+            <div class="rents">
+                <p>
+                    <a href="#" style="text-decoration: none; color: black;">Real Estate
+                        <i class='bx bxs-chevron-down' style="color: blue; font-size: 22px; cursor: pointer;"></i>
+                    </a>
+                </p>
+            </div>
+            <div class="rents2">
+                <p>
+                    <a href="#" style="text-decoration: none; color: black;">Rentals
+                        <i class='bx bxs-chevron-down' style="color: blue; font-size: 22px; cursor: pointer;"></i>
+                    </a>
+                </p>
+            </div>
+            <div class="rent3">
+                <p>
+                    <a href="#" style="text-decoration: none; color: black;">Mortgage Rates
+                        <i class='bx bxs-chevron-down' style="color: blue; font-size: 22px; cursor: pointer;"></i>
+                    </a>
+                </p>
+            </div>
+            <div class="rent4">
+                <p>
+                    <a href="#" style="text-decoration: none; color: black;">Browse Homes
+                        <i class='bx bxs-chevron-down' style="color: blue; font-size: 22px; cursor: pointer;"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="line"></div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Zestimates</a>
+            <a href="#">Research</a>
+            <a href="#">Careers</a>
+            <a href="#">Careers - U.S. Privacy Notice</a>
+            <a href="#">Careers - Mexico Privacy Notice</a>
+            <a href="#">Help</a>
+            <a href="#">Advertise</a>
+            <a href="#">Fair Housing Guide</a>
+            <a href="#">Advocacy</a>
+            <a href="#">Terms of use</a>
+            <a href="#">Privacy Portal</a>
+            <a href="#">Cookie Preference</a>
+            <a href="#">Learn</a>
+            <a href="#">AI</a>
+            <a href="#">Mobile Apps</a>
+            <a href="#">Trulia</a>
+            <a href="#">StreetEasy</a>
+            <a href="#">HotPads</a>
+            <a href="#">Out East</a>
+            <a href="#">ShowingTime+</a>
+        </div>
+        <div class="footer-disclaimer">
+            <a href="#">Do Not Sell or Share My Personal Information→</a>
+        </div>
+    </footer>
+    <div class="line"></div>
+
+    <footer class="bottom-footer">
+        <div class="footer-content" style="font-size: 11px; line-height: 17px;">
+            <p>Zillow Group is committed to ensuring digital accessibility for individuals with disabilities. We are
+                continuously working to improve the accessibility of our <br> web experience for everyone, and we
+                welcome feedback and accommodation requests. If you wish to report an issue or seek an accommodation,
+                <br> please
+                <span><a href="#" style="color: blue;">let us know.</a></span>
+            </p>
+        </div>
+
+        <div class="Second bottom-footer" style="line-height: 20px; font-size: 11px;">
+            <p>
+                Zillow, Inc. holds real estate brokerage <a href="#" style="color: blue;">licenses</a> in multiple states. Zillow (Canada), Inc. holds real
+                estate brokerage <a href="#" style="color: blue;">licenses</a> in multiple provinces.
+                <br>
+               <a href="#" style="color: blue;">§ 442-H New York Standard Operating Procedures</a> <br>
+                <a href="#" style="color: blue;">§ New York Fair Housing Notice</a> <br>
+              <a href="#" style="color: blue;">TREC: Information about brokerage services, Consumer protection notice</a> <br>
+                California DRE #1522444
+            </p>
+        </div>
+        <div class="footer-disclaimer">
+            <a href="#" style="font-size: 15px;">Contact Zillow, Inc. Brokerage</a>
+        </div>
+
+        <div class="texts" style="font-size: 11px; margin-top: 25px;">
+            <p>
+                For listings in Canada, the trademarks REALTOR®, REALTORS®, and the REALTOR® logo are controlled by The Canadian Real Estate Association (CREA) <br> and identify real estate professionals who are members of CREA. The trademarks MLS®, Multiple Listing Service® and the associated logos are owned <br>by CREA and identify the quality of services provided by real estate professionals who are members of CREA. Used under license.
+            </p>
+        </div>
+
+        <div class="Apps">
+            <div class="Appdownload" style="margin: 20px; cursor: pointer; ">
+                <img src="https://s.zillowstatic.com/pfs/static/app-store-badge.svg" class="One">
+                <img src="https://s.zillowstatic.com/pfs/static/google-play-badge.svg" class="Two">
+            </div>
+        </div>
+
+        <div class="Contacts">
+            <div class="logo">
+                <img src="https://s.zillowstatic.com/pfs/static/z-logo-default-visual-refresh.svg" alt="">
+            </div>
+            <span style="font-size: 11px;">Follow us:</span>
+            <div class="social-links" style="color: blue; font-size: 35px; cursor: pointer;">
+                <i class='bx bxl-facebook-circle'></i>
+                <i class='bx bxl-instagram' ></i>
+                <i class='bx bxl-tiktok' ></i>
+            </div>
+            <span  style="font-size: 11px;">© 2006-2024 Zillow</span>
+            <div class="logo">
+                <i class='bx bx-building-house' style="color: #212121; font-size: 30px; cursor: pointer;"></i>
+            </div>
+        </div>
+    </footer>
+
+
+{% endblock content %}

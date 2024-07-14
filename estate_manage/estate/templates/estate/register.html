@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h1 style="text-align: center;">Register your Details</h1>
-    <br>
-    <br>
-    <form action="" method="POST" class="styled-form">
-        {% csrf_token %}
-        {{form.as_p}}
-        <div class="form-group">
-            <input type="submit" value="SUBMIT" class="submit-btn">
-        </div>
-    </form>
+    <div class="container">
+        <h1 style="text-align: center;">Register your Details</h1>
+        <br>
+        <br>
+        <form action="" method="POST" class="styled-form">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="form-group">
+                <input type="submit" value="SUBMIT" class="submit-btn">
+            </div>
+        </form>
+    </div>
 
 {% endblock %}

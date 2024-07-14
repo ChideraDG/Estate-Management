@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="" />
+    <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/css/navbar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/css/welcome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/hotel-svgrepo-com.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/house.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/house2.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/realestate.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/rl2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/rl3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/villa-svgrepo-com.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/templates/navbar.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/garbage" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/templates/estate/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/templates/estate/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/templates/estate/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate_manage/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate_manage/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/templates/base.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,13 +49,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/mac/Documents/GitHub/Estate-Management/estate_manage/static/images"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/estate_manage/static/images" />
+      <recent name="$PROJECT_DIR$/estate_manage/templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/estate_manage/static/images" />
+      <recent name="$PROJECT_DIR$/estate_manage/static/css" />
+      <recent name="$PROJECT_DIR$/estate_manage/estate/templates/estate" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

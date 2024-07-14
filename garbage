@@ -1,0 +1,19 @@
+from login.html
+==============
+<!--<div class="container">-->
+<!--    <h1 class="title">Sign In</h1>-->
+<!--    <form method="POST" action="" class="styled-form">-->
+<!--        {% csrf_token %}-->
+<!--        {{form.as_p}}-->
+<!--        <hr>-->
+<!--        <div class="form-group">-->
+<!--            <input type="submit" value="Login" class="submit-btn">-->
+<!--        </div>-->
+<!--    </form>-->
+<!--    <br>-->
+<!--    <div class="container">-->
+<!--        <p>Don’t have an Account?</p>-->
+<!--        <h1 class="link"><a href="{% url 'register' %}">Sign Up</a></h1>-->
+<!--    </div>-->
+<!--</div>-->
+==============
