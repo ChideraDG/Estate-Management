@@ -1,0 +1,222 @@
+.main_container {
+    background-color: rgb(35, 28, 81);
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    padding: 150px 350px 150px 100px; /* Adjusted padding */
+    width: 800px; /* Increased width */
+    height: 500px; /* Increased height */
+    border-radius: 10px;
+    margin-top: 100px;
+    margin-left: 200px;
+    background-color: rgba(248, 248, 255, 0.6);
+    border: 3px solid white;
+}
+
+.company_name {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: blueviolet;
+    margin-left: 120px;
+    font-size: 31px;
+}
+
+.web_app {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: -18px;
+    margin-left: 128px;
+    font-size: 14px;
+    color: white;
+}
+
+.user {
+    width: 340px;
+    height: 40px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+.user[placeholder] {
+    padding-left: 15px;
+    background-color: rgba(0, 0, 139, 0.5);
+    border-radius: 10px;
+    outline: none;
+    border: 3px solid white;
+}
+
+.key {
+    width: 340px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.key[placeholder] {
+    padding-left: 15px;
+    background-color: rgba(0, 0, 139, 0.5);
+    border-radius: 10px;
+    outline: none;
+    border: 3px solid white;
+}
+
+::placeholder {
+    color: white;
+    font-size: 14px;
+}
+
+.link {
+    text-align: center;
+    margin-left: 118px;
+    font-size: 17px;
+    color: blueviolet;
+}
+
+.dont_acc {
+    text-align: center;
+    margin-left: 95px;
+    font-size: 17px;
+    color: blueviolet;
+}
+
+.reg {
+    text-decoration: none;
+    color: ghostwhite;
+}
+
+.reg:hover {
+    color: chocolate;
+    font-style: italic;
+    background-color: #f0f0f0;
+}
+
+.btn {
+    margin-top: 10px;
+    margin-left: 75px;
+    width: 200px;
+    height: 30px;
+    font-size: 14px;
+    z-index: 1;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 3px 5px 10px 10px rgba(0, 0, 0, 0.04);
+    color: ghostwhite;
+    background-color: rgb(97, 5, 183);
+}
+
+.btn:hover {
+    color: chocolate;
+    font-style: italic;
+    background-color: #f0f0f0;
+}
+
+.pic, img {
+    width: 700px; /* Adjusted width */
+    height: 670px; /* Adjusted height */
+    position: relative;
+    left: 225px;
+    top: -255px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    z-index: 2;
+    filter: hue-rotate(270deg) /* Rotate hue to shift blue to purple */,
+        saturate(150%) /* Increase color saturation for vibrancy */,
+        brightness(90%) /* Adjust brightness to lighten or darken */,
+        contrast(110%);
+}
+
+.additional-info {
+    margin-top: 20px; /* Adjust margin as needed */
+    text-align: center;
+    color: white;
+}
+
+/* Media Queries */
+
+/* Small screens (e.g., phones) */
+@media (max-width: 480px) {
+    .container {
+        padding: 50px 20px; /* Reduce padding */
+        width: 90%; /* Full width */
+        height: auto; /* Auto height */
+        margin-left: 5%; /* Centered */
+        margin-top: 20px;
+    }
+    .company_name, .web_app, .link, .dont_acc, .btn {
+        text-align: center;
+        margin-left: 0;
+    }
+    .company_name {
+        font-size: 24px;
+    }
+    .web_app {
+        font-size: 12px;
+    }
+    .user, .key {
+        width: 100%;
+    }
+    .pic, img {
+        width: 100%;
+        height: auto;
+        left: 0;
+        top: 0;
+    }
+}
+
+/* Medium screens (e.g., tablets) */
+@media (max-width: 768px) {
+    .container {
+        padding: 100px 50px; /* Adjusted padding */
+        width: 600px; /* Adjusted width */
+        height: auto; /* Auto height */
+        margin-left: 50px; /* Centered */
+        margin-top: 50px;
+    }
+    .company_name, .web_app, .link, .dont_acc, .btn {
+        text-align: center;
+        margin-left: 0;
+    }
+    .company_name {
+        font-size: 26px;
+    }
+    .web_app {
+        font-size: 12px;
+    }
+    .user, .key {
+        width: 80%;
+    }
+    .pic, img {
+        width: 90%;
+        height: auto;
+        left: 5%;
+        top: 0;
+    }
+}
+
+/* Large screens (e.g., desktops) */
+@media (min-width: 992px) {
+    .container {
+        padding: 200px 400px 200px 150px; /* Increased padding */
+        width: 1000px; /* Increased width */
+        height: 600px; /* Increased height */
+        margin-left: 300px;
+    }
+    .company_name {
+        font-size: 36px;
+        margin-left: 150px;
+    }
+    .web_app {
+        font-size: 18px;
+        margin-left: 158px;
+    }
+    .user, .key {
+        width: 400px;
+    }
+    .pic, img {
+        width: 800px; /* Adjusted width */
+        height: 750px; /* Adjusted height */
+        left: 300px;
+        top: -300px;
+    }
+}

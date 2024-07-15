@@ -34,3 +34,60 @@
     color: blue; /* Change to desired hover color */
     transform: translateY(-2px);
 }
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .nav-links {
+        padding: 10px 20px; /* Reduce padding for smaller screens */
+    }
+
+    .nav-links li {
+        margin-right: 20px; /* Reduce spacing between list items */
+    }
+
+    .nav-links li a {
+        font-size: 14px; /* Reduce font size for smaller screens */
+    }
+
+    .logo img {
+        width: 40px; /* Reduce logo size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        flex-direction: column;
+        padding: 10px; /* Reduce padding further for mobile screens */
+    }
+
+    .nav-links li {
+        margin-right: 0; /* Remove right margin for vertical alignment */
+        margin-bottom: 10px; /* Add bottom margin for spacing */
+    }
+
+    .nav-links li a {
+        font-size: 14px; /* Reduce font size for smaller screens */
+    }
+
+    .logo img {
+        width: 40px; /* Reduce logo size for smaller screens */
+    }
+}
+
+@media (min-width: 992px) {
+    .nav-links {
+        padding: 10px 80px; /* Increase padding for larger screens */
+    }
+
+    .nav-links li {
+        margin-right: 60px; /* Increase spacing between list items */
+    }
+
+    .nav-links li a {
+        font-size: 18px; /* Increase font size for larger screens */
+    }
+
+    .logo img {
+        width: 60px; /* Increase logo size for larger screens */
+    }
+}

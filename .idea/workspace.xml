@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="" />
+    <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/companyregistration.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/companyregistration.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/3d.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/js/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/garbages/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/garbages/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/templates/estate/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/templates/estate/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/static/css/navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/css/navbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/garbage" beforeDir="false" afterPath="$PROJECT_DIR$/garbages/garbage" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,18 +46,22 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/mac/Documents/GitHub/Estate-Management/estate_manage/static/images"
+    "last_opened_file_path": "/Users/mac/Documents/GitHub/Estate-Management/estate_manage/estate/templates"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/estate_manage/estate/templates" />
+      <recent name="$PROJECT_DIR$/estate_manage/estate/templates/estate" />
       <recent name="$PROJECT_DIR$/estate_manage/static/images" />
       <recent name="$PROJECT_DIR$/estate_manage/templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/estate_manage/static/images" />
       <recent name="$PROJECT_DIR$/estate_manage/static/css" />
-      <recent name="$PROJECT_DIR$/estate_manage/estate/templates/estate" />
+      <recent name="$PROJECT_DIR$/garbages" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/estate_manage/static" />
+      <recent name="$PROJECT_DIR$/estate_manage/static/images" />
     </key>
   </component>
   <component name="SharedIndexes">

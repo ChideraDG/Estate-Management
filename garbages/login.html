@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main_container">
+    <div class="container">
+        <h1 class="company_name">Sign In</h1>
+        <p class="web_app">Welcome Back!</p>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <a href="#" class="link">Forget Password?</a>
+            <br>
+            <button class="btn">LOGIN</button>
+        </form>
+        <br>
+        <br>
+        <a class="dont_acc">Don't have an Account?</a>
+        <br>
+        <button class="btn"><a href="{% url 'register' %}" class="reg">SIGN UP</a></button>
+        <div class="pic"><img src="{% static 'images/3d.jpg' %}" alt=""></div>
+    </div>
+</div>
+{% endblock content %}

@@ -6,24 +6,31 @@
 {% endblock %}
 
 {% block content %}
-<div class="main_container">
-    <div class="container">
-        <h1 class="company_name">Sign In</h1>
-        <p class="web_app">Welcome Back!</p>
-        <form method="POST" action="">
+    <div class="wrapper">
+        <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
-            {{form.as_p}}
-            <br>
-            <a href="#" class="link">Forget Password?</a>
-            <br>
-            <button class="btn">LOGIN</button>
+            <h2>Log In</h2>
+            <h3>Welcome Back!</h3>
+            <div class="input-field">
+                {{form.email}}
+                <label>Enter your Email</label>
+            </div>
+            <div class="input-field">
+                {{form.password}}
+                <label>Enter your Password</label>
+            </div>
+            <div class="forget">
+                <label for="show-password">
+                  <input type="checkbox" id="show-password">
+                  <p>Show password</p>
+                </label>
+                <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit">Log In</button>
+            <div class="register">
+                <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+            </div>
         </form>
-        <br>
-        <br>
-        <a class="dont_acc">Don't have an Account?</a>
-        <br>
-        <button class="btn"><a href="{% url 'register' %}" class="reg">SIGN UP</a></button>
-        <div class="pic"><img src="{% static 'images/house.jpg' %}" alt=""></div>
     </div>
-</div>
-{% endblock content %}
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

@@ -54,7 +54,6 @@ def userLogin(request):
                 print("Email doesn't exist.")
 
             user = authenticate(request, username=email, password=password)
-            print(user)
 
             if user is not None:
                 login(request, user)
