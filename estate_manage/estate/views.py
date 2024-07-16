@@ -28,7 +28,7 @@ def userRegister(request):
             return redirect('welcome')
 
     context = {'form': form}
-    return render(request, 'estate/register.html', context)
+    return render(request, 'estate/reg.html', context)
 
 
 def welcome(request):

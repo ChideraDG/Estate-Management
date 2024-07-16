@@ -30,6 +30,13 @@ class RegistrationForm(ModelForm):
             'full_name': 'Full Name',  # Custom label for the fullname field
         }
 
+        widgets = {
+            'full_name': forms.TextInput(attrs={'id': 'name'}),
+            'email': forms.EmailInput(attrs={'id': 'email'}),
+            'password1': forms.PasswordInput(attrs={'id': 'password'}),
+            'password2': forms.PasswordInput(attrs={'id': 'confirm-password'})
+        }
+
 
 class LoginForm(forms.Form):
     email = forms.EmailField(max_length=100, widget=forms.EmailInput)
