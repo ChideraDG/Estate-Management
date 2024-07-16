@@ -24,17 +24,10 @@ class RegistrationForm(ModelForm):
 
     class Meta:
         model = Registration
-        fields = ['full_name', 'gender', 'date_of_birth', 'email', 'phone_number', 'designation', 'state_of_origin',
-                  'state_of_residence', 'city', 'address_1', 'address_2', 'password1', 'password2']
+        fields = ['full_name', 'email', 'designation', 'password1', 'password2']
 
-        widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date'})
-        }
         labels = {
             'full_name': 'Full Name',  # Custom label for the fullname field
-        }
-        help_texts = {
-            'address_2': ' (Optional)',  # Help text for the phone number field
         }
 
 
