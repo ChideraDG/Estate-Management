@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}<link rel="stylesheet" href="{% static 'css/register.css' %}">{% endblock head %}
+
+{% block content %}
+    <div class="container">
+      <form action="{% url 'register' %}" class="registration-form" method="POST">
+        {% csrf_token %}
+        <h2>Registration Form</h2>
+        <div class="form-group">
+          <label for="name">Username</label>
+          {{form.username}}
+        </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          {{form.full_name}}
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          {{form.email}}
+        </div>
+        <div class="form-group">
+          <label for="designation">Designation</label>
+          {{form.designation}}
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          {{form.password1}}
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          {{form.password2}}
+        </div>
+        <button type="submit">
+          Submit
+        </button>
+      </form>
+    </div>
+
+{% endblock content %}

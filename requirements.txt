@@ -12,4 +12,4 @@ requests~=2.31.0
 setuptools~=69.5.1
 packaging~=24.0
 PyMySQL~=1.1.0
-"django-phonenumber-field[phonenumbers]"
+Pillow~=10.4.0
