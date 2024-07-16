@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head %}<link rel="stylesheet" href="{% static 'css/register.css' %}">{% endblock head %}
 
 {% block content %}
     <div class="container">
-      <form action="{% url 'reg' %}" class="registration-form" method="POST">
+      <form action="{% url 'register' %}" class="registration-form" method="POST">
         {% csrf_token %}
         <h2>Registration Form</h2>
         <div class="form-group">

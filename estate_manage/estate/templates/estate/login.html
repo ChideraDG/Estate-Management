@@ -11,14 +11,12 @@
             {% csrf_token %}
             <h2>Log In</h2>
             <h3>Welcome Back!</h3>
+            {% for field in form %}
             <div class="input-field">
-                {{form.email}}
-                <label>Enter your Email</label>
+                {{field}}
+                <label>Enter your {{field.label}}</label>
             </div>
-            <div class="input-field">
-                {{form.password}}
-                <label>Enter your Password</label>
-            </div>
+            {% endfor %}
             <div class="forget">
                 <label for="show-password">
                   <input type="checkbox" id="show-password">
