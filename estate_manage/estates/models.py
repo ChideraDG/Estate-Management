@@ -49,7 +49,7 @@ class Profile(models.Model):
      ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    company = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='estate_profiles')
     estate_name = models.CharField(max_length=100, blank=False, null=False)
     estate_location = models.TextField(null=False, blank=False)
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
