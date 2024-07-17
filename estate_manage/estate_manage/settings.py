@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users.apps.UsersConfig",
     "company.apps.CompanyConfig",
-    "estates.apps.estatesConfig",
+    "estates.apps.EstatesConfig",
     'multiselectfield',
 ]
 
