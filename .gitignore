@@ -5,6 +5,9 @@
 /estate_manage/company/__pycache__
 /estate_manage/company/migrations
 /estate_manage/company/migrations/__pycache__
+/estate_manage/estates/__pycache__
+/estate_manage/estates/migrations
+/estate_manage/estates/migrations/__pycache__
 /.idea
 /.idea/inspectionProfiles
 .idea/workspace.xml
