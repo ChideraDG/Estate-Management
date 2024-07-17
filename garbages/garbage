@@ -18,113 +18,84 @@ from login.html
 <!--</div>-->
 ==============
 
-/* Extra small devices (phones, less than 576px) */
-@media (max-width: 575.98px) {
-    body {
-        margin: 10px;
-        height: auto;
-    }
-    .container {
-        padding: 10px;
-        height: auto;
-    }
-    .registration-form h2 {
-        font-size: 30px;
-    }
-    .registration-form label,
-    .form-group input,
-    .registration-form button {
-        font-size: 14px;
-    }
-    .registration-form button {
-        height: 40px;
-    }
-}
 
-/* Small devices (tablets, 576px and up) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    body {
-        margin: 20px;
-        height: auto;
-    }
+/* Media Queries */
+@media (max-width: 767.98px) {
     .container {
-        padding: 15px;
+        max-width: 100%;
         height: auto;
-    }
-    .registration-form h2 {
-        font-size: 35px;
-    }
-    .registration-form label,
-    .form-group input,
-    .registration-form button {
-        font-size: 16px;
-    }
-    .registration-form button {
-        height: 45px;
-    }
-}
-
-/* Medium devices (desktops, 768px and up) */
-@media (min-width: 768px) and (max-width: 991.98px) {
-    body {
-        margin: 30px;
-    }
-    .container {
-        padding: 20px;
     }
     .registration-form h2 {
         font-size: 40px;
     }
-    .registration-form label,
+    .form-group label {
+        font-size: 18px;
+    }
     .form-group input,
-    .registration-form button {
+    .choice-field {
         font-size: 18px;
     }
     .registration-form button {
-        height: 48px;
+        font-size: 24px;
     }
 }
 
-/* Large devices (large desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-    body {
-        margin: 40px;
-    }
+@media (min-width: 768px) and (max-width: 991.98px) {
     .container {
-        padding: 20px;
-        height: auto;
+        max-width: 90%;
+        height: 650px; /* Adjusted height for this breakpoint */
     }
     .registration-form h2 {
         font-size: 45px;
     }
-    .registration-form label,
+    .form-group label {
+        font-size: 19px;
+    }
     .form-group input,
-    .registration-form button {
-        font-size: 20px;
+    .choice-field {
+        font-size: 19px;
     }
     .registration-form button {
-        height: 50px;
+        font-size: 25px;
     }
 }
 
-/* Extra large devices (extra large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    body {
-        margin: 50px;
-    }
+@media (min-width: 992px) and (max-width: 1199.98px) {
     .container {
-        padding: 20px;
-        height: 600px;
+        max-width: 80%;
+        height: 700px; /* Adjusted height for this breakpoint */
+    }
+    .registration-form h2 {
+        font-size: 48px;
+    }
+    .form-group label {
+        font-size: 20px;
+    }
+    .form-group input,
+    .choice-field {
+        font-size: 20px;
+    }
+    .registration-form button {
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 70%;
+        height: 750px; /* Adjusted height for this breakpoint */
     }
     .registration-form h2 {
         font-size: 50px;
     }
-    .registration-form label,
+    .form-group label {
+        font-size: 22px;
+    }
     .form-group input,
-    .registration-form button {
-        font-size: 20px;
+    .choice-field {
+        font-size: 22px;
     }
     .registration-form button {
-        height: 50px;
+        font-size: 27px;
     }
 }
