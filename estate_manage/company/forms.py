@@ -3,7 +3,7 @@ from .models import *
 
 class CompanyForm(ModelForm):
     class Meta:
-        model = Registration
+        model =Profile
         fields = ['name', 'address', 'number', 'email', 'website', 'cac',
                    'logo', 'year_founded']
 

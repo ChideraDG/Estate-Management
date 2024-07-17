@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 
-class Registration(models.Model):
+class Profile(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
     address = models.TextField(max_length=200, blank=False, null=False)
     number = models.CharField(max_length=15, unique=True,
