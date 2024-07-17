@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/js/users_register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/static/css/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/css/register.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/js/users_login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/users/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/templates/users/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/users/templates/users/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/templates/users/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/users/templates/users/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/garbages/garbage" beforeDir="false" afterPath="$PROJECT_DIR$/garbages/garbage" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

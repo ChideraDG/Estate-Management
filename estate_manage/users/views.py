@@ -9,6 +9,9 @@ from django.contrib.auth import get_user_model
 def userRegister(request):
     form = RegistrationForm()
 
+    if request.user.is_authenticated:
+        return redirect('welcome')
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
 

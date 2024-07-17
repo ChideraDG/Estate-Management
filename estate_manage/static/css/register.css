@@ -1,5 +1,5 @@
-body{
-    font-family: Arial,  sans-serif;
+body {
+    font-family: system-ui;
     background: url(/static/images/clay.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -9,61 +9,70 @@ body{
     height: 100vh;
     overflow: hidden;
     margin: 50px;
-    animation:fadein 1s ease-in-out;
+    animation: fadein 1s ease-in-out;
 }
 
 @keyframes fadein {
-    from{
+    from {
         opacity: 0;
     }
-    to{
+    to {
         opacity: 1;
     }
 }
-.container{
-    background-color: rgba(101,88,70, 0.9);
+
+.container {
+    background-color: rgba(101, 88, 70, 0.9);
     padding: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     border-radius: 9px;
+    border-style: solid;
+    border-color: #bd986b white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 600px;
     height: 600px;
     transform: scale(0.9);
 }
+
 @keyframes popin {
-    to{
+    to {
         transform: scale(1);
     }
 }
-.registration-form{
-    margin: 14px;
+
+.registration-form {
+    margin: 20px;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    width: 100%;
     animation: slideup 0.6s ease forwards;
 }
+
 @keyframes slideup {
-    from{
+    from {
         transform: translateY(20px);
     }
-    to{
+    to {
         transform: translateY(0);
         opacity: 1;
     }
 }
- .registration-form h2{
+
+.registration-form h2 {
     text-align: center;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    font-size:50px;
-    margin: 20px;
+    font-size: 50px;
+    margin: 5px;
     animation: fadeInDown 0.5s ease forwards;
 }
+
 @keyframes fadeInDown {
-    from{
+    from {
         transform: translateY(-20px);
         opacity: 0;
     }
@@ -72,14 +81,16 @@ body{
         opacity: 1;
     }
 }
-.registration-form label{
+
+.registration-form label {
     margin-bottom: 15px;
     font-size: 20px;
-    font-weight: 600;
-    animation:fadeInRight 0.6s ease forwards;
+    font-weight: 500;
+    animation: fadeInRight 0.6s ease forwards;
 }
+
 @keyframes fadeInRight {
-    from{
+    from {
         transform: translateY(-20px);
         opacity: 0;
     }
@@ -89,74 +100,166 @@ body{
     }
 }
 
-.form-group input{
+.form-group {
+    position: relative;
+    border-bottom: 2px solid #bd986b;
+    margin: 15px 5px;
     width: 100%;
-    height: 40px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: none;
-    border-radius: 7px;
-    box-sizing: border-box;
-    box-shadow: 1px 1px ;
-    cursor: pointer;
-    animation: fadeInLeft 0.7s ease forwards;
 }
 
-input[type='text']{
-    font-size: 19px;
+.form-group label {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 20px;
+    pointer-events: none;
+    transition: 0.15s ease;
 }
-#email{
-    font-size: 19px;
+
+.form-group input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    color: #fff;
+    padding: 5px 0 5px 0;
+    margin-bottom: -3px;
+    cursor: pointer;
+    box-sizing: border-box;
 }
-#password{
-    font-size: 19px;
+
+.form-group input:focus~label,
+.form-group input:valid~label {
+    font-size: 0.8rem;
+    top: -5px;
+    transform: translateY(-120%);
 }
-#confirm-password{
-    font-size: 19px;
+
+.choice-field {
+    font-family: system-ui;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: black;
+    font-size: 20px;
+    color: #fff;
+    margin: 15px 0;
+    cursor: pointer;
+    box-sizing: border-box;
 }
-.registration-form button{
+
+.registration-form button {
+    font-family: system-ui;
     padding: 10px;
     border: none;
     height: 50px;
     border-radius: 5px;
-    background-color: #ff0073;
+    background-color: #bd986b;
     color: white;
     cursor: pointer;
     font-size: 27px;
     font-weight: 700;
-   transition: ease 0.3;
+    transition: ease 0.3s;
     animation: fadeInUp 0.8s ease forwards;
 }
+
 @keyframes fadeInUp {
-    from{
+    from {
         transform: translateX(10px);
-        opacity:0
+        opacity: 0;
     }
-    to{
+    to {
         transform: translateX(0);
         opacity: 1;
     }
 }
-.registration-form button:hover{
+
+.registration-form button:hover {
     background-color: #b33000;
 }
 
-
-@media (max-width:1000px) {
-    .container{
-        padding: 15px;
+/* Media Queries */
+@media (max-width: 767.98px) {
+    .container {
+        max-width: 100%;
+        height: auto;
     }
-    .registration-form button{
-        background-color: red;
+    .registration-form h2 {
+        font-size: 40px;
+    }
+    .form-group label {
+        font-size: 18px;
+    }
+    .form-group input,
+    .choice-field {
+        font-size: 18px;
+    }
+    .registration-form button {
+        font-size: 24px;
     }
 }
 
-@media (max-width:600px) {
-    .container{
-        padding: 10px;
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .container {
+        max-width: 90%;
+        height: 650px; /* Adjusted height for this breakpoint */
     }
-    .registration-form input,.registration-form button{
-        font-size: 14px;
+    .registration-form h2 {
+        font-size: 45px;
     }
-    
+    .form-group label {
+        font-size: 19px;
+    }
+    .form-group input,
+    .choice-field {
+        font-size: 19px;
+    }
+    .registration-form button {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .container {
+        max-width: 80%;
+        height: 700px; /* Adjusted height for this breakpoint */
+    }
+    .registration-form h2 {
+        font-size: 48px;
+    }
+    .form-group label {
+        font-size: 20px;
+    }
+    .form-group input,
+    .choice-field {
+        font-size: 20px;
+    }
+    .registration-form button {
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 70%;
+        height: 750px; /* Adjusted height for this breakpoint */
+    }
+    .registration-form h2 {
+        font-size: 50px;
+    }
+    .form-group label {
+        font-size: 22px;
+    }
+    .form-group input,
+    .choice-field {
+        font-size: 22px;
+    }
+    .registration-form button {
+        font-size: 27px;
+    }
 }

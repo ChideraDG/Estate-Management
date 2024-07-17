@@ -17,3 +17,114 @@ from login.html
 <!--    </div>-->
 <!--</div>-->
 ==============
+
+/* Extra small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+    body {
+        margin: 10px;
+        height: auto;
+    }
+    .container {
+        padding: 10px;
+        height: auto;
+    }
+    .registration-form h2 {
+        font-size: 30px;
+    }
+    .registration-form label,
+    .form-group input,
+    .registration-form button {
+        font-size: 14px;
+    }
+    .registration-form button {
+        height: 40px;
+    }
+}
+
+/* Small devices (tablets, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    body {
+        margin: 20px;
+        height: auto;
+    }
+    .container {
+        padding: 15px;
+        height: auto;
+    }
+    .registration-form h2 {
+        font-size: 35px;
+    }
+    .registration-form label,
+    .form-group input,
+    .registration-form button {
+        font-size: 16px;
+    }
+    .registration-form button {
+        height: 45px;
+    }
+}
+
+/* Medium devices (desktops, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    body {
+        margin: 30px;
+    }
+    .container {
+        padding: 20px;
+    }
+    .registration-form h2 {
+        font-size: 40px;
+    }
+    .registration-form label,
+    .form-group input,
+    .registration-form button {
+        font-size: 18px;
+    }
+    .registration-form button {
+        height: 48px;
+    }
+}
+
+/* Large devices (large desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    body {
+        margin: 40px;
+    }
+    .container {
+        padding: 20px;
+        height: auto;
+    }
+    .registration-form h2 {
+        font-size: 45px;
+    }
+    .registration-form label,
+    .form-group input,
+    .registration-form button {
+        font-size: 20px;
+    }
+    .registration-form button {
+        height: 50px;
+    }
+}
+
+/* Extra large devices (extra large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    body {
+        margin: 50px;
+    }
+    .container {
+        padding: 20px;
+        height: 600px;
+    }
+    .registration-form h2 {
+        font-size: 50px;
+    }
+    .registration-form label,
+    .form-group input,
+    .registration-form button {
+        font-size: 20px;
+    }
+    .registration-form button {
+        height: 50px;
+    }
+}
