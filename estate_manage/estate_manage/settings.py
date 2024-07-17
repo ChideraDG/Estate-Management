@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "company.apps.CompanyConfig",
     "estates.apps.EstatesConfig",
-    'multiselectfield',
 ]
 
 MIDDLEWARE = [

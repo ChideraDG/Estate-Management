@@ -4,6 +4,7 @@ from .forms import *
 from .models import *
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 
 def userRegister(request):
@@ -58,6 +59,7 @@ def userLogin(request):
 
             if user is not None:
                 login(request, user)
+                messages.success(request, f'{user.username.title()}, you successfully logged in.')
                 return redirect('welcome')
             else:
                 messages.error(request, 'username or password is wrong')

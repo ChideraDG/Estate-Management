@@ -5,8 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/estate_manage/estates/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-grid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/estate_manage/static/images/estate-pics/default.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/estates/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/company/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/company/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/company/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/static/css/alert.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estate_manage/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate_manage/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/estates/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estates/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/templates/users/companyregistration.css" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/company/templates/company/companyregistration.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/templates/users/companyregistration.html" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/company/templates/company/companyregistration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estate_manage/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,17 +79,17 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/estate_manage/static/images" />
+      <recent name="$PROJECT_DIR$/estate_manage/static" />
+      <recent name="$PROJECT_DIR$/estate_manage/static/css/bootstrap" />
       <recent name="$PROJECT_DIR$/estate_manage/static/images/profile-pics" />
       <recent name="$PROJECT_DIR$/estate_manage/estate/templates" />
-      <recent name="$PROJECT_DIR$/estate_manage/estate/templates/estate" />
-      <recent name="$PROJECT_DIR$/estate_manage/templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/estate_manage/static/css" />
-      <recent name="$PROJECT_DIR$/garbages" />
-      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/estate_manage/static/images/estate-pics" />
+      <recent name="$PROJECT_DIR$/estate_manage/company/templates/company" />
+      <recent name="$PROJECT_DIR$/estate_manage/company/templates" />
       <recent name="$PROJECT_DIR$/estate_manage/static" />
-      <recent name="$PROJECT_DIR$/estate_manage/static/images" />
+      <recent name="$PROJECT_DIR$/estate_manage/static/css" />
     </key>
   </component>
   <component name="SharedIndexes">

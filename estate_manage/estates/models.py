@@ -2,9 +2,7 @@ import uuid
 from django.core.validators import MinValueValidator
 from django.db import models
 from company.models import Profile
-from multiselectfield import MultiSelectField
 
-# Create your models here.
 
 class Profile(models.Model):
     DESIGNATION = [
@@ -36,7 +34,7 @@ class Profile(models.Model):
         ('regular_audits_and_assessments', 'Regular Audits and Assessments'),
     ]
 
-    UTILITIES= [
+    UTILITIES = [
         ('electricity', 'Electricity'),
         ('water', 'Water'),
         ('gas', 'Gas'),
@@ -49,27 +47,57 @@ class Profile(models.Model):
      ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, related_name='estate_profiles')
+    company = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     estate_name = models.CharField(max_length=100, blank=False, null=False)
     estate_location = models.TextField(null=False, blank=False)
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
-    estate_image = models.ImageField(null=False, blank=False)
+    estate_image = models.JSONField(default=list)  # JSONField for storing image paths
     year_built = models.DateField(null=False, blank=False)
     number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
     number_of_apartments = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-    total_area_covered = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00, validators=[MinValueValidator(0)])
-    land_area = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00, validators=[MinValueValidator(0)])
+    total_area_covered = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
+                                             validators=[MinValueValidator(0)])
+    land_area = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
+                                    validators=[MinValueValidator(0)])
     total_floor_number = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(0)])
     estate_parking_spaces = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-    amenities =MultiSelectField( choices=AMENITIES,null=True, blank=True,)
+    amenities = models.TextField(null=True, blank=True, default='')
     construction_type = models.CharField(max_length=50,  null=True, blank=True,)
-    maintenance_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(0)])
-    security_features = MultiSelectField(choices=SECURITY, null=True, blank=True)
-    utility = MultiSelectField(choices=UTILITIES, null=True, blank=True)
+    maintenance_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True,
+                                           validators=[MinValueValidator(0)])
+    security_features = models.TextField(null=True, blank=True, default='')
+    utility = models.TextField(null=True, blank=True, default='')
     current_occupancy = models.IntegerField( null=True, blank=True, validators=[MinValueValidator(0)])
     vacancy_rate = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
     estate_description = models.TextField(null=True, blank=True,)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.estate_name
-    
+
+    def get_amenities_list(self):
+        if self.amenities:
+            return self.amenities.split(',')
+        return []
+
+    def set_amenities_list(self, choices):
+        self.amenities = ','.join(choices)
+
+    def get_security_features_list(self):
+        if self.security_features:
+            return self.security_features.split(',')
+        return []
+
+    def set_security_features_list(self, choices):
+        self.security_features = ','.join(choices)
+
+    def get_utility_list(self):
+        if self.utility:
+            return self.utility.split(',')
+        return []
+
+    def set_utility_list(self, choices):
+        self.utility = ','.join(choices)
+
+    def add_estate_image(self, path):
+        self.estate_image.append(path)
+        self.save()
