@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e84327d2-1fb8-4834-aff8-95c7f3e62344" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/estate_manage/estates/templates/estates/your.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/company/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/company/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/estate_manage/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estate_manage/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/estates/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estates/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/estate_manage/estates/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estates/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/estates/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estates/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/estate_manage/estates/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/estate_manage/estates/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
