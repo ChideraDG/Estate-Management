@@ -46,20 +46,19 @@ class Profile(models.Model):
         ('garbage_collection', 'Garbage Collection'),
      ]
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     estate_name = models.CharField(max_length=100, blank=False, null=False)
     estate_location = models.TextField(null=False, blank=False)
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
     estate_image = models.JSONField(default=list)  # JSONField for storing image paths
-    year_built = models.DateField(null=False, blank=False)
+    year_built = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(1900)])
     number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
     number_of_apartments = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
     total_area_covered = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                              validators=[MinValueValidator(0)])
     land_area = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                     validators=[MinValueValidator(0)])
-    total_floor_number = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(0)])
+    total_floor_number = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
     estate_parking_spaces = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
     amenities = models.TextField(null=True, blank=True, default='')
     construction_type = models.CharField(max_length=50,  null=True, blank=True,)
@@ -70,6 +69,8 @@ class Profile(models.Model):
     current_occupancy = models.IntegerField( null=True, blank=True, validators=[MinValueValidator(0)])
     vacancy_rate = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
     estate_description = models.TextField(null=True, blank=True,)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.estate_name
