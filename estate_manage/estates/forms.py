@@ -61,10 +61,13 @@ class ProfileForm(ModelForm):
         ('garbage_collection', 'Garbage Collection'),
     ]
 
-    _images = MultipleFileField(label='Select Estate Images', required=False)
-    _amenity = forms.MultipleChoiceField(choices=AMENITIES, widget=forms.CheckboxSelectMultiple)
-    _security = forms.MultipleChoiceField(choices=SECURITY, widget=forms.CheckboxSelectMultiple)
-    _utility = forms.MultipleChoiceField(choices=UTILITIES, widget=forms.CheckboxSelectMultiple)
+    _images = MultipleFileField(label='Estate Images', required=False)
+    _amenity = forms.MultipleChoiceField(choices=AMENITIES, widget=forms.CheckboxSelectMultiple,
+                                         label='Amenities')
+    _security = forms.MultipleChoiceField(choices=SECURITY, widget=forms.CheckboxSelectMultiple,
+                                          label='Security Features')
+    _utility = forms.MultipleChoiceField(choices=UTILITIES, widget=forms.CheckboxSelectMultiple,
+                                         label='Utilities')
 
     class Meta:
         model = Profile
@@ -72,6 +75,13 @@ class ProfileForm(ModelForm):
                   'number_of_apartments', 'total_area_covered', 'land_area', 'total_floor_number',
                   'estate_parking_spaces', '_amenity', 'construction_type', 'maintenance_cost', '_security', '_utility',
                   'current_occupancy', 'vacancy_rate', 'estate_description']
+        widgets = {
+            'year_built': forms.NumberInput(attrs={'placeholder': '1900'})
+        }
+        labels = {
+            'total_area_covered': 'Total Area Covered (acres)',
+            'land_area': 'Land Area (square metres)',
+        }
 
     # clean methods
     def clean__amenity(self):
