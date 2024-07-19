@@ -50,25 +50,19 @@ class Profile(models.Model):
         return self.estate_name
 
     def get_amenities_list(self):
-        if self.amenities:
-            return self.amenities.split(',')
-        return []
+        return self.amenities.split(',') if self.amenities else []
 
     def set_amenities_list(self, choices):
         self.amenities = ','.join(choices)
 
     def get_security_features_list(self):
-        if self.security_features:
-            return self.security_features.split(',')
-        return []
+        return self.security_features.split(',') if self.security_features else []
 
     def set_security_features_list(self, choices):
         self.security_features = ','.join(choices)
 
     def get_utility_list(self):
-        if self.utility:
-            return self.utility.split(',')
-        return []
+        return self.utility.split(',') if self.utility else []
 
     def set_utility_list(self, choices):
         self.utility = ','.join(choices)
