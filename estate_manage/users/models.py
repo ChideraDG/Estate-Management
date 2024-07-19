@@ -33,4 +33,4 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.email
+        return self.username

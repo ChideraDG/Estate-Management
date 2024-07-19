@@ -76,7 +76,7 @@ class ProfileForm(ModelForm):
                   'estate_parking_spaces', '_amenity', 'construction_type', 'maintenance_cost', '_security', '_utility',
                   'current_occupancy', 'vacancy_rate', 'estate_description']
         widgets = {
-            'year_built': forms.NumberInput(attrs={'placeholder': '1900'})
+            'year_built': forms.NumberInput(attrs={'value': 1900})
         }
         labels = {
             'total_area_covered': 'Total Area Covered (acres)',
