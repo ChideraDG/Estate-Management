@@ -2,7 +2,6 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
-from company.models import Profile
 
 
 def createProfile(request):
@@ -27,3 +26,4 @@ def createProfile(request):
 
     context = {'form': form}  # Create a context dictionary with the form.
     return render(request, 'estates/your.html', context)  # Render the 'estates/your.html' template with the context.
+
