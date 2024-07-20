@@ -19,6 +19,20 @@ class Profile(models.Model):
         ('wood_frame', 'Wood Frame'),
     ]
 
+    AMENITIES = [
+        ('parking', 'Parking'),
+        ('gym', 'Gym'),
+        ('swimming_pool', 'Swimming pool'),
+        ('cafeteria', 'Cafeteria'),
+        ('spa', 'Spa'),
+        ('playground', 'Playground'),
+        ('terraces', 'Terraces'),
+        ('helipads', 'Helipads'),
+        ('package_locker', 'Package locker'),
+        ('pet_friendly_amenities', 'Pet-Friendly Amenities'),
+        ('laundry_facilities', 'Laundry facilities'),
+    ]
+
     company = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     estate_name = models.CharField(max_length=100, blank=False, null=False)
     estate_location = models.TextField(null=False, blank=False)
@@ -33,12 +47,12 @@ class Profile(models.Model):
                                     validators=[MinValueValidator(0)])
     total_floor_number = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     estate_parking_spaces = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
-    amenities = models.TextField(null=True, blank=True, default='')
+    amenities = models.ManyToManyField('Amenity', default='', blank=True)
     construction_type = models.CharField(max_length=50, choices=CONSTRUCTION_TYPES, null=True, blank=True, )
     maintenance_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True,
                                            validators=[MinValueValidator(0)], default=0.00)
-    security_features = models.TextField(null=True, blank=True, default='')
-    utility = models.TextField(null=True, blank=True, default='')
+    security_features = models.ManyToManyField('SecurityFeatures', default='', blank=True)
+    utilities = models.ManyToManyField('Utility', default='', blank=True)
     current_occupancy = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     vacancy_rate = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                        validators=[MinValueValidator(0)])
@@ -49,24 +63,30 @@ class Profile(models.Model):
     def __str__(self):
         return self.estate_name
 
-    def get_amenities_list(self):
-        return self.amenities.split(',') if self.amenities else []
-
-    def set_amenities_list(self, choices):
-        self.amenities = ','.join(choices)
-
-    def get_security_features_list(self):
-        return self.security_features.split(',') if self.security_features else []
-
-    def set_security_features_list(self, choices):
-        self.security_features = ','.join(choices)
-
-    def get_utility_list(self):
-        return self.utility.split(',') if self.utility else []
-
-    def set_utility_list(self, choices):
-        self.utility = ','.join(choices)
-
     def add_estate_image(self, path):
         self.estate_image.append(path)
         self.save()
+
+
+class Amenity(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class SecurityFeatures(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Utility(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

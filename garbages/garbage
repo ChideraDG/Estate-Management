@@ -18,7 +18,7 @@ from login.html
 <!--</div>-->
 ==============
 
-
+Media================================================
 /* Media Queries */
 @media (max-width: 767.98px) {
     .container {
@@ -99,3 +99,14 @@ from login.html
         font-size: 27px;
     }
 }
+=======================================
+
+
+Many to many================================================
+# Now add many-to-many relationships after saving the instance
+amenities_ids = request.POST.getlist('amenities')  # Get the list of selected amenities' IDs
+amenities = Amenity.objects.filter(id__in=amenities_ids)  # Query the selected amenities
+
+for amenity in amenities:  # Iterate through the selected amenities
+    instance.amenities.add(amenity)  # Add each amenity to the instance
+============================================================

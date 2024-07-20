@@ -2,14 +2,15 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
+from .models import Profile
 
 
 def createProfile(request):
-    form = ProfileForm()  # Initialize an empty ProfileForm.
+    form = ProfileForm()
 
-    if request.method == "POST":  # Check if the request method is POST.
-        form = ProfileForm(request.POST, request.FILES)  # Populate the form with POST data and uploaded files.
-        if form.is_valid():  # Check if the form is valid.
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
             images = request.FILES.getlist('_images')  # Get the list of uploaded images from the form field named '_images'.
             image_paths = []  # Initialize an empty list to store the paths of saved images.
 
@@ -20,10 +21,23 @@ def createProfile(request):
 
             instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
             instance.estate_image = image_paths  # Set the estate_image field of the instance to the list of image paths.
-            instance.save()  # Save the instance to the database.
 
-            return redirect('welcome')  # Redirect the user to the 'welcome' page after successful form submission.
+            instance.save()
 
-    context = {'form': form}  # Create a context dictionary with the form.
-    return render(request, 'estates/your.html', context)  # Render the 'estates/your.html' template with the context.
+            ProfileAmenities = Profile.amenities.through  # Accessing a Many-to-Many Table of Amenities
+            for amenity in request.POST.getlist('amenities'):
+                ProfileAmenities.objects.create(profile_id=instance.id, amenity_id=amenity)
+
+            ProfileSecurityFeatures = Profile.security_features.through  # Accessing a Many-to-Many Table of Securities
+            for security_features in request.POST.getlist('security_features'):
+                ProfileSecurityFeatures.objects.create(profile_id=instance.id, securityfeatures_id=security_features)
+
+            ProfileUtilities = Profile.utilities.through  # Accessing a Many-to-Many Table of Utility
+            for utility in request.POST.getlist('utilities'):
+                ProfileUtilities.objects.create(profile_id=instance.id, utilities_id=utility)
+
+            return redirect('welcome')
+
+    context = {'form': form}
+    return render(request, 'estates/your.html', context)
 
