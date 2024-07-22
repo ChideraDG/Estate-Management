@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
@@ -50,10 +51,11 @@ def userLogin(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
-            try:
-                user = Profile.objects.get(username=username)
-            except:
-                print("Username doesn't exist.")
+            user = Profile.objects.filter(username=username)
+            if not user.exists():
+                print('Account not Found')
+                messages.info(request, 'Account not Found')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
             user = authenticate(request, username=username, password=password)
 
