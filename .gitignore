@@ -11,3 +11,15 @@
 /.idea
 /.idea/inspectionProfiles
 /estate_manage/estates/management
+/estate_manage/apartments/__pycache__
+/estate_manage/apartments/migrations
+/estate_manage/apartments/migrations/__pycache__
+/estate_manage/building_owners/__pycache__
+/estate_manage/building_owners/migrations
+/estate_manage/building_owners/migrations/__pycache__
+/estate_manage/houses/__pycache__
+/estate_manage/houses/migrations
+/estate_manage/houses/migrations/__pycache__
+/estate_manage/tenants/__pycache__
+/estate_manage/tenants/migrations
+/estate_manage/tenants/migrations/__pycache__
