@@ -110,3 +110,7 @@ amenities = Amenity.objects.filter(id__in=amenities_ids)  # Query the selected a
 for amenity in amenities:  # Iterate through the selected amenities
     instance.amenities.add(amenity)  # Add each amenity to the instance
 ============================================================
+
+For making a folder work onn gitignore==========================
+git rm -r --cached media/
+=============================================

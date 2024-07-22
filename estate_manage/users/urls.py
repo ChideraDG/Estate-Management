@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import *
-from estates.views import *
 
 urlpatterns = [
     path("", welcome, name='welcome'),

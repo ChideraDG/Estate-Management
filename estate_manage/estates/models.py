@@ -1,10 +1,10 @@
 import uuid
 from django.core.validators import MinValueValidator
 from django.db import models
-from company.models import Profile
+from companies.models import Company
 
 
-class Profile(models.Model):
+class Estate(models.Model):
     DESIGNATION = [
         ('residential', 'Residential'),
         ('commercial', 'Commercial'),
@@ -33,11 +33,10 @@ class Profile(models.Model):
         ('laundry_facilities', 'Laundry facilities'),
     ]
 
-    company = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='estates')
     estate_name = models.CharField(max_length=100, blank=False, null=False)
     estate_location = models.TextField(null=False, blank=False)
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
-    estate_image = models.JSONField(default=list)
     year_built = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(1900)])
     number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     number_of_apartments = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
@@ -63,10 +62,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.estate_name
 
-    def add_estate_image(self, path):
-        self.estate_image.append(path)
-        self.save()
-
 
 class Amenity(models.Model):
     code = models.CharField(max_length=50, unique=True)
@@ -90,3 +85,12 @@ class Utility(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Photo(models.Model):
+    estate = models.ForeignKey(Estate, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/estate_photos/')
+    description = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"Photo of {self.estate.name}"

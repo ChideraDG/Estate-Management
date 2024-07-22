@@ -10,7 +10,7 @@ from .models import *
 class RegistrationForm(forms.Form):
     DESIGNATION = [
         ('', 'Select a Designation'),
-        ('company', 'Company'),
+        ('companies', 'Company'),
         ('tenant', 'Tenant'),
         ('land_owner', 'Land Owner'),
         ('agent', 'Agent'),

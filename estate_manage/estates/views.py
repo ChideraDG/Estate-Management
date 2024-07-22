@@ -2,7 +2,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
-from .models import Profile
+from .models import Estate
 
 
 def createProfile(request):
@@ -24,15 +24,15 @@ def createProfile(request):
 
             instance.save()
 
-            ProfileAmenities = Profile.amenities.through  # Accessing a Many-to-Many Table of Amenities
+            ProfileAmenities = Estate.amenities.through  # Accessing a Many-to-Many Table of Amenities
             for amenity in request.POST.getlist('amenities'):
                 ProfileAmenities.objects.create(profile_id=instance.id, amenity_id=amenity)
 
-            ProfileSecurityFeatures = Profile.security_features.through  # Accessing a Many-to-Many Table of Securities
+            ProfileSecurityFeatures = Estate.security_features.through  # Accessing a Many-to-Many Table of Securities
             for security_features in request.POST.getlist('security_features'):
                 ProfileSecurityFeatures.objects.create(profile_id=instance.id, securityfeatures_id=security_features)
 
-            ProfileUtilities = Profile.utilities.through  # Accessing a Many-to-Many Table of Utility
+            ProfileUtilities = Estate.utilities.through  # Accessing a Many-to-Many Table of Utility
             for utility in request.POST.getlist('utilities'):
                 ProfileUtilities.objects.create(profile_id=instance.id, utilities_id=utility)
 
