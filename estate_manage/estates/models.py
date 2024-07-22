@@ -89,7 +89,7 @@ class Utility(models.Model):
 
 class Photo(models.Model):
     estate = models.ForeignKey(Estate, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/estate_photos/')
+    image = models.ImageField(upload_to='estate_photos/', default='estate_photos/default.jpg')
     description = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
