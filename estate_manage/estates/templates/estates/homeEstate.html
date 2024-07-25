@@ -19,7 +19,7 @@
     <br>
     <form action="{% url 'create-estate' %}">
     <button type="submit" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Profile Here">
-    <i class="bx bxl-github"></i>  Create New Profile
+    <i class="bi bi-person-add"></i>  Create New Profile
     </button></form>
 
     <table>
@@ -30,12 +30,12 @@
             </tr>
             {% for profile in profiles %}
             <tr>
-                <td>{{ profile.estate_name }}</td>
+                <td>{{ profile.estate_name }} <i class="ri-account-circle-fill"></i></td>
                 <td>{{ profile.estate_location }}</td>
                 <td>
-                    <a href="{% url 'view-estate' profile.id %}">View</a> |
-                    <a href="{% url 'update-estate' profile.id %}">Edit</a> |
-                    <a href="{% url 'delete-estate' profile.id %}">Delete</a>
+                    <a style="text-decoration: None" href="{% url 'view-estate' profile.id %}"><i class="ri-eye-fill"></i></a> |
+                    <a style="text-decoration: None" href="{% url 'update-estate' profile.id %}"><i class="ri-add-box-fill"></i></a> |
+                    <a style="text-decoration: None" href="{% url 'delete-estate' profile.id %}"><i class="bi bi-trash"></i></a>
                 </td>
             </tr>
             {% endfor %}
