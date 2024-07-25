@@ -65,6 +65,8 @@ def updateEstate(request, pk):
                 image_paths.append(path)
 
             instance = form.save(commit=False)
+            instance.estate_name = instance.estate_name.strip().title()
+            instance.estate_location = instance.estate_location.strip().title()
             instance.estate_image = image_paths
             instance.save()
 
