@@ -4,14 +4,14 @@
 <h1>Home Template</h1>
 <br>
 <br>
-<h1><a href="{% url 'create-profile' %}">Create New Profile</a></h1>
+<h1><a href="{% url 'create-estate' %}">Create New Profile</a></h1>
 <br>
 <br>
 {% for profile in profiles %}
 <h3>{{profile}} ----
-<a href="{% url 'update-profile' profile.id %}">Edit</a>
-<a href="{% url 'delete-profile' profile.id %}">Delete</a>
-<a href="{% url 'view-profile' profile.id %}">View</a></h3>
+<a href="{% url 'update-estate' profile.id %}">Edit</a>
+<a href="{% url 'delete-estate' profile.id %}">Delete</a>
+<a href="{% url 'view-estate' profile.id %}">View</a></h3>
 {% endfor %}
 
 {% endblock content %}

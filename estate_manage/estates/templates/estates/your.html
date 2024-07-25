@@ -2,7 +2,7 @@
 
 {% block content%}
 
-<div style="border: 2px solid green; font-size: 20px; color: gold;"">
+<div style="border: 2px solid green; font-size: 20px; color: gold;">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}

@@ -5,7 +5,7 @@ from .forms import ProfileForm
 from .models import Estate
 
 
-def createProfile(request):
+def createEstate(request):
     form = ProfileForm()
 
     if request.method == "POST":
@@ -43,13 +43,13 @@ def createProfile(request):
     return render(request, 'estates/your.html', context)
 
 
-def home(request):
+def homeEstate(request):
     profiles = Estate.objects.all()
     context = {'profiles': profiles}
     return render(request, 'estates/home.html', context)
 
 
-def updateProfile(request, pk):
+def updateEstate(request, pk):
     profile = Estate.objects.get(id=pk)
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def updateProfile(request, pk):
     return render(request, 'estates/your.html', context)
 
 
-def deleteProfile(request, pk):
+def deleteEstate(request, pk):
     profile = Estate.objects.get(id=pk)
     if request.method == 'POST':
         profile.delete()
@@ -98,7 +98,7 @@ def deleteProfile(request, pk):
     return render(request, 'estates/delete.html', context)
 
 
-def viewProfile(request, pk):
+def viewEstate(request, pk):
     estate = Estate.objects.get(id=pk)
     context = {'estate': estate}
     return render(request, 'estates/viewProfile.html', context)
