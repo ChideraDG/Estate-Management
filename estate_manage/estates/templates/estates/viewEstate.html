@@ -6,9 +6,9 @@
 {% endblock head %}
 
 {% block content %}
-<p><a href="{% url 'home-estate' %}">back</a></p>
-<div>
 
+<div>
+    <a style="font-size:36px;" href="{% url 'home-estate' %}"><i class="bi-arrow-left-circle-fill" style="font-size:36px;"></i></a>
     <h1>{{ estate.estate_name }}'s Profile</h1>
     <p><strong>Estate name:</strong> {{ estate.estate_name }}</p>
     <p><strong>Estate Location:</strong> {{ estate.estate_location }}</p>

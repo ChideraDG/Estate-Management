@@ -6,8 +6,8 @@
 {% endblock head %}
 
 {% block content%}
-<p><a href="{% url 'home-estate' %}">back</a></p>
 <div class="form-container">
+    <a href="{% url 'home-estate' %}"><i class="bi-arrow-left-circle-fill" style="font-size:36px;"></i></a>
         {% if form.estate_name.value is None %}
             <h1>Create Profile</h1>
         {% else %}
