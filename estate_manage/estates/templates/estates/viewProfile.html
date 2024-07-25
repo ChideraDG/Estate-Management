@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h1>view {{ estate.estate_name }} Profile</h1>
+    <p><strong>Estate name:</strong> {{ estate.estate_name }}</p>
+    <p><strong>Estate Location:</strong> {{ estate.estate_location }}</p>
+    <p><strong>Estate Type:</strong> {{ estate.get_estate_type_display }}</p>
+    <p><strong>Year Built:</strong> {{ estate.year_built }}</p>
+    <p><strong>Number of Houses:</strong> {{ estate.number_of_houses }}</p>
+    <p><strong>Number of Apartments:</strong> {{ estate.number_of_apartments }}</p>
+    <p><strong>Total Area Covered:</strong> {{ estate.total_area_covered }} sqm</p>
+    <p><strong>Land Area:</strong> {{ estate.land_area }} sqm</p>
+    <p><strong>Total Floor Number:</strong> {{ estate.total_floor_number }}</p>
+    <p><strong>Estate Parking Spaces:</strong> {{ estate.estate_parking_spaces }}</p>
+    <p><strong>Amenities:</strong></p>
+    <ul>
+        {% for amenity in estate.amenities.all %}
+            <li>{{ amenity.name }}</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Construction Type:</strong> {{ estate.construction_type }}</p>
+    <p><strong>Maintenance Cost:</strong> {{ estate.maintenance_cost }}</p>
+    <p><strong>Security Features:</strong></p>
+    <ul>
+        {% for security_feature in estate.security_features.all %}
+            <li>{{ security_feature.name }}</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Utility:</strong> </p>
+    <ul>
+        {% for utility in estate.utilities.all %}
+            <li>{{ utility.name }}</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Current Occupancy:</strong> {{ estate.current_occupancy }}</p>
+    <p><strong>Vacancy Rate:</strong> {{ estate.vacancy_rate }}%</p>
+    <p><strong>Description:</strong> {{ estate.estate_description }}</p>
+</div>
+{% endblock content %}

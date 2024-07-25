@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div style="border: 2px solid green; font-size: 50px; color: gold;">
+    <form action="" method="POST">
+        {%csrf_token%}
+        <p>Are you sure you want to delete {{obj}} profile? </p>
+
+        <a href="{% url 'home' %}">Go back</a>
+        <input type="submit" value="confirm">
+    </form>
+</div>
+
+{% endblock content%}
