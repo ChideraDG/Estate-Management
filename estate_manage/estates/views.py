@@ -42,13 +42,13 @@ def createEstate(request):
             return redirect('home-estate')
 
     context = {'form': form}
-    return render(request, 'estates/your.html', context)
+    return render(request, 'estates/createEstate.html', context)
 
 
 def homeEstate(request):
     profiles = Estate.objects.all()
     context = {'profiles': profiles}
-    return render(request, 'estates/home.html', context)
+    return render(request, 'estates/homeEstate.html', context)
 
 
 def updateEstate(request, pk):
@@ -88,7 +88,7 @@ def updateEstate(request, pk):
             return redirect('home-estate')
 
     context = {'form': form, 'profile': profile}
-    return render(request, 'estates/your.html', context)
+    return render(request, 'estates/createEstate.html', context)
 
 
 def deleteEstate(request, pk):
@@ -97,10 +97,10 @@ def deleteEstate(request, pk):
         profile.delete()
         return redirect('home-estate')
     context = {'obj': profile}
-    return render(request, 'estates/delete.html', context)
+    return render(request, 'estates/deleteEstate.html', context)
 
 
 def viewEstate(request, pk):
     estate = Estate.objects.get(id=pk)
     context = {'estate': estate}
-    return render(request, 'estates/viewProfile.html', context)
+    return render(request, 'estates/viewEstate.html', context)
