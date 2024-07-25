@@ -21,6 +21,8 @@ def createEstate(request):
                 image_paths.append(path)  # Append the saved image path to the image_paths list.
 
             instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            instance.estate_name = instance.estate_name.strip().title()
+            instance.estate_location = instance.estate_location.strip().title()
             instance.estate_image = image_paths  # Set the estate_image field of the instance to the list of image paths
 
             instance.save()
@@ -37,7 +39,7 @@ def createEstate(request):
             for utility in request.POST.getlist('utilities'):
                 EstateUtilities.objects.create(estate_id=instance.id, utility_id=utility)
 
-            return redirect('home')
+            return redirect('home-estate')
 
     context = {'form': form}
     return render(request, 'estates/your.html', context)
@@ -83,7 +85,7 @@ def updateEstate(request, pk):
 
             instance.save()
 
-            return redirect('home')
+            return redirect('home-estate')
 
     context = {'form': form, 'profile': profile}
     return render(request, 'estates/your.html', context)
@@ -93,7 +95,7 @@ def deleteEstate(request, pk):
     profile = Estate.objects.get(id=pk)
     if request.method == 'POST':
         profile.delete()
-        return redirect('home')
+        return redirect('home-estate')
     context = {'obj': profile}
     return render(request, 'estates/delete.html', context)
 
