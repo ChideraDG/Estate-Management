@@ -1,0 +1,134 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container styling */
+div {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header styling */
+h1 {
+    font-size: 2.5em;
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Helvetica', sans-serif;
+}
+
+/* Paragraph styling */
+p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+p strong {
+    color: #007bff;
+}
+
+/* Enhanced list styling */
+ul {
+    list-style-type: none; /* Remove default bullet points */
+    margin-left: 0;
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+ul li {
+    background-color: #e6f0ff; /* Light blue background */
+    margin-bottom: 10px; /* Space between list items */
+    padding: 10px 15px; /* Padding inside list items */
+    border-left: 5px solid #007bff; /* Blue left border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1.1em; /* Slightly larger font size */
+    display: flex;
+    align-items: center;
+}
+
+ul li:before {
+    content: "\2022"; /* Unicode bullet character */
+    color: #007bff; /* Blue color for bullets */
+    font-weight: bold; /* Bold bullets */
+    display: inline-block;
+    width: 1em; /* Fixed width for alignment */
+    margin-right: 10px; /* Space between bullet and text */
+    font-size: 1.5em; /* Larger bullets */
+}
+
+/* Link styling */
+a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #e6f0ff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+a:visited {
+    color: #007bff;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    div {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    ul li {
+        font-size: 1em;
+        padding: 8px 12px;
+    }
+
+    ul li:before {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    div {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    ul li {
+        font-size: 0.9em;
+        padding: 6px 10px;
+    }
+
+    ul li:before {
+        font-size: 1.1em;
+    }
+}

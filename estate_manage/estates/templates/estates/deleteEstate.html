@@ -1,14 +1,21 @@
 {% extends 'base.html'%}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/deleteEstate.css' %}">
+{% endblock head %}
 
 {% block content%}
-<div style="border: 2px solid green; font-size: 50px; color: gold;">
-    <form action="" method="POST">
-        {%csrf_token%}
-        <p>Are you sure you want to delete {{obj}} profile? </p>
+<!-- HTML -->
+<div class="confirmation-container">
+    <form action="" method="POST" class="confirmation-form">
+        {% csrf_token %}
+        <p class="confirmation-message">Are you sure you want to delete {{ obj }} profile?</p>
 
-        <a href="{% url 'home-estate' %}">Go back</a>
-        <input type="submit" value="Confirm">
+        <div class="form-actions">
+            <a href="{% url 'home-estate' %}" class="go-back-link">Go back</a>
+            <input type="submit" value="Confirm" class="confirm-button">
+        </div>
     </form>
 </div>
-
 {% endblock content%}

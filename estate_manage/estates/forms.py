@@ -13,9 +13,13 @@ class ProfileForm(ModelForm):
                   'utilities', 'current_occupancy', 'vacancy_rate', 'estate_description']
         widgets = {
             'year_built': forms.NumberInput(attrs={'value': 1900}),
-            'amenities': forms.CheckboxSelectMultiple,
-            'security_features': forms.CheckboxSelectMultiple,
-            'utilities': forms.CheckboxSelectMultiple,
+            'amenities': forms.CheckboxSelectMultiple(),
+            'security_features': forms.CheckboxSelectMultiple(),
+            'utilities': forms.CheckboxSelectMultiple(),
+            'estate_location': forms.Textarea(attrs={'rows': 3}),
+            'estate_description': forms.Textarea(attrs={'rows': 5}),
+            'estate_type': forms.Select(choices=Estate.DESIGNATION),
+            'construction_type': forms.Select(choices=Estate.CONSTRUCTION_TYPES)
         }
         labels = {
             'total_area_covered': 'Total Area Covered (acres)',

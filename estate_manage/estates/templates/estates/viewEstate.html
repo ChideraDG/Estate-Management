@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/viewEstate.css' %}">
+{% endblock head %}
 
 {% block content %}
+<p><a href="{% url 'home-estate' %}">back</a></p>
 <div>
-    <h1>view {{ estate.estate_name }} Profile</h1>
+
+    <h1>{{ estate.estate_name }}'s Profile</h1>
     <p><strong>Estate name:</strong> {{ estate.estate_name }}</p>
     <p><strong>Estate Location:</strong> {{ estate.estate_location }}</p>
     <p><strong>Estate Type:</strong> {{ estate.get_estate_type_display }}</p>

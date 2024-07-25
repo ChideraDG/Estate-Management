@@ -1,13 +1,23 @@
 {% extends 'base.html'%}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/createEstate.css' %}">
+{% endblock head %}
 
 {% block content%}
+<p><a href="{% url 'home-estate' %}">back</a></p>
+<div class="form-container">
+        {% if form.estate_name.value is None %}
+            <h1>Create Profile</h1>
+        {% else %}
+            <h1>Update Profile</h1>
+        {% endif %}
 
-<div style="border: 2px solid green; font-size: 20px; color: gold;">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit">
-    </form>
-</div>
-
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 {% endblock content%}

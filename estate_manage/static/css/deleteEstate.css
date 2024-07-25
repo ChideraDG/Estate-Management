@@ -1,0 +1,66 @@
+/* CSS */
+body {
+    font-family: Arial, sans-serif; /* Default font for better readability */
+    background-color: #f4f4f9; /* Light background color for the whole page */
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle, #a2c2e4, black);
+}
+
+/* Container for centering the form */
+.confirmation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+/* Styling the form */
+.confirmation-form {
+    background-color: #ffffff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    width: 100%;
+    max-width: 400px; /* Maximum width of the form */
+    text-align: center;
+}
+
+/* Styling the confirmation message */
+.confirmation-message {
+    font-size: 16px;
+    color: #333333; /* Dark grey color for text */
+    margin-bottom: 20px; /* Space below the message */
+}
+
+/* Styling the action buttons container */
+.form-actions {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+}
+
+/* Styling the "Go back" link */
+.go-back-link {
+    text-decoration: none;
+    color: #007bff; /* Blue color for the link */
+    font-weight: bold;
+}
+
+/* Styling the "Confirm" button */
+.confirm-button {
+    background-color: #007bff; /* Blue background */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.confirm-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.go-back-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
