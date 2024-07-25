@@ -11,7 +11,8 @@ def createProfile(request):
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            images = request.FILES.getlist('_images')  # Get the list of uploaded images from the form field named '_images'.
+            images = request.FILES.getlist(
+                '_images')  # Get the list of uploaded images from the form field named '_images'.
             image_paths = []  # Initialize an empty list to store the paths of saved images.
 
             for image in images:  # Iterate through each uploaded image.
@@ -20,7 +21,7 @@ def createProfile(request):
                 image_paths.append(path)  # Append the saved image path to the image_paths list.
 
             instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            instance.estate_image = image_paths  # Set the estate_image field of the instance to the list of image paths.
+            instance.estate_image = image_paths  # Set the estate_image field of the instance to the list of image paths
 
             instance.save()
 
@@ -36,15 +37,17 @@ def createProfile(request):
             for utility in request.POST.getlist('utilities'):
                 EstateUtilities.objects.create(estate_id=instance.id, utility_id=utility)
 
-            return redirect('welcome')
+            return redirect('home')
 
     context = {'form': form}
     return render(request, 'estates/your.html', context)
 
+
 def home(request):
-    profile = Estate()
-    context = {'profile': profile}
+    profiles = Estate.objects.all()
+    context = {'profiles': profiles}
     return render(request, 'estates/home.html', context)
+
 
 def updateProfile(request, pk):
     profile = Estate.objects.get(id=pk)
@@ -52,17 +55,16 @@ def updateProfile(request, pk):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            images = request.FILES.getlist('_images')  # Get the list of uploaded images from the form field named '_images'.
-            image_paths = []  # Initialize an empty list to store the paths of saved images.
+            images = request.FILES.getlist('_images')
+            image_paths = []
 
-            for image in images:  # Iterate through each uploaded image.
-                # Save each image to the 'estate-pics/' directory and store its path in the 'path' variable.
+            for image in images:
                 path = default_storage.save('estate-pics/' + image.name, ContentFile(image.read()))
-                image_paths.append(path)  # Append the saved image path to the image_paths list.
+                image_paths.append(path)
 
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            instance.estate_image = image_paths  # Set the estate_image field of the instance to the list of image paths.
-            instance.save()  # Save the instance to the database.
+            instance = form.save(commit=False)
+            instance.estate_image = image_paths
+            instance.save()
 
             # Clear existing many-to-many relationships
             instance.amenities.clear()
@@ -72,30 +74,31 @@ def updateProfile(request, pk):
             # Add new many-to-many relationships
             for amenity in request.POST.getlist('amenities'):
                 instance.amenities.add(amenity)
-            
+
             for security_feature in request.POST.getlist('security_features'):
                 instance.security_features.add(security_feature)
-            
+
             for utility in request.POST.getlist('utilities'):
                 instance.utilities.add(utility)
-            
+
             instance.save()
 
-            return redirect('welcome')  # Redirect the user to the 'welcome' page after successful form submission.
+            return redirect('home')
 
-    context = {'form': form, 'profile': profile} # Create a context dictionary with the form.
-    return render(request, 'estates/your.html', context)  # Render the 'estates/your.html' template with the context.
+    context = {'form': form, 'profile': profile}
+    return render(request, 'estates/your.html', context)
 
-def deleteProfile(request, pk): 
-    profile = Estate.objects.get( id=pk)
+
+def deleteProfile(request, pk):
+    profile = Estate.objects.get(id=pk)
     if request.method == 'POST':
         profile.delete()
-        return redirect('welcome')
+        return redirect('home')
     context = {'obj': profile}
     return render(request, 'estates/delete.html', context)
+
 
 def viewProfile(request, pk):
     estate = Estate.objects.get(id=pk)
     context = {'estate': estate}
     return render(request, 'estates/viewProfile.html', context)
-

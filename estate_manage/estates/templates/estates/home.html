@@ -1,18 +1,17 @@
 {% extends 'base.html'%}
 
 {% block content%}
-
-<div>
-    <h1>home Template</h1>
-
-    <a href="{% url 'create-profile' %}">Create profile</a>
-    <br>
-    <br>
-    <a href="{% url 'update-profile' profile.id %}">Edit</a>
-    <br><br>
-    <a href="{% url 'delete-profile' pk=profile.id %}">Delete</a>
-    <br><br>
-    <a href="{% url 'view-profile' profile.id %}">View profile</a>
-</div>
+<h1>Home Template</h1>
+<br>
+<br>
+<h1><a href="{% url 'create-profile' %}">Create New Profile</a></h1>
+<br>
+<br>
+{% for profile in profiles %}
+<h3>{{profile}} ----
+<a href="{% url 'update-profile' profile.id %}">Edit</a>
+<a href="{% url 'delete-profile' profile.id %}">Delete</a>
+<a href="{% url 'view-profile' profile.id %}">View</a></h3>
+{% endfor %}
 
 {% endblock content %}
