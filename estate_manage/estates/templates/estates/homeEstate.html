@@ -22,9 +22,9 @@
             <td>{{ profile.estate_name }}</td>
             <td>{{ profile.estate_location }}</td>
             <td>
+                <a href="{% url 'view-estate' profile.id %}">View</a> |
                 <a href="{% url 'update-estate' profile.id %}">Edit</a> |
-                <a href="{% url 'delete-estate' profile.id %}">Delete</a> |
-                <a href="{% url 'view-estate' profile.id %}">View</a>
+                <a href="{% url 'delete-estate' profile.id %}">Delete</a>
             </td>
         </tr>
         {% endfor %}
