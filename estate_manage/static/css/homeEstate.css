@@ -12,6 +12,10 @@ table {
     margin: 20px 0;
     font-size: 18px;
     text-align: left;
+    border: 20px solid #007bff;
+    border-color : #007bff
+    border-radius: 30px;
+    overflow: hidden;
 }
 
 th, td {
@@ -20,11 +24,11 @@ th, td {
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #007bff;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #d9eaff;
 }
 
 tr:hover {
@@ -44,9 +48,6 @@ a:hover {
     color: white;
 }
 
-a:visited {
-    color: #007bff;
-}
 
 /* Responsive table */
 @media (max-width: 600px) {
