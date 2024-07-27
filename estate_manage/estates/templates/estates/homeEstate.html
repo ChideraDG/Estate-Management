@@ -23,26 +23,26 @@
     </button></form>
 
     <table>
+        <tr>
+            <th>Estate Name</th>
+            <th>Estate Location</th>
+            <th>Actions</th>
+        </tr>
+        {% for profile in profiles %}
             <tr>
-                <th>Estate Name</th>
-                <th>Estate Location</th>
-                <th>Actions</th>
+                <td><i class="ri-account-circle-fill"></i> {{ profile.estate_name }}</td>
+                <td><i class="bi bi-geo-alt-fill"></i> {{ profile.estate_location }}</td>
+                <td>
+                    <a style="text-decoration: None" href="{% url 'view-estate' profile.id %}">
+                        <i class="ri-eye-fill"></i></a> |
+                    <a style="text-decoration: None" href="{% url 'update-estate' profile.id %}">
+                        <i class="ri-add-box-fill"></i></a> |
+                    <a style="text-decoration: None" href="{% url 'delete-estate' profile.id %}">
+                        <i class="bi bi-trash"></i></a>
+                </td>
             </tr>
-            {% for profile in profiles %}
-                <tr>
-                    <td><i class="ri-account-circle-fill"></i> {{ profile.estate_name }}</td>
-                    <td><i class="bi bi-geo-alt-fill"></i> {{ profile.estate_location }}</td>
-                    <td>
-                        <a style="text-decoration: None" href="{% url 'view-estate' profile.id %}">
-                            <i class="ri-eye-fill"></i></a> |
-                        <a style="text-decoration: None" href="{% url 'update-estate' profile.id %}">
-                            <i class="ri-add-box-fill"></i></a> |
-                        <a style="text-decoration: None" href="{% url 'delete-estate' profile.id %}">
-                            <i class="bi bi-trash"></i></a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+        {% endfor %}
+    </table>
 
     {% block script %}
             <!-- Vendor JS Files -->
