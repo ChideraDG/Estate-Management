@@ -11,10 +11,21 @@
     {% endblock head %}
 </head>
 <body>
+<!--    {% if messages %}-->
+<!--    {% for message in messages %}-->
+<!--        <div class="alert alert-success alert-dismissible fade show" role="alert">-->
+<!--            This is a success alert with a close button.-->
+<!--            <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
+<!--    {% endif %}-->
+
     {% block content %}
     {% endblock content %}
 
-    {% block script %}
+<!--    {% block script %}-->
 <!--        <script>-->
 <!--        document.querySelectorAll('.close').forEach(button => {-->
 <!--            button.addEventListener('click', () => {-->
@@ -22,7 +33,7 @@
 <!--            });-->
 <!--        });-->
 <!--        </script>-->
-    {% endblock script %}
+<!--    {% endblock script %}-->
 
 </body>
 </html>
