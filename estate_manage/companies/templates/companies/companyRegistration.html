@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/companyRegistration.css' %}">
+{% endblock head %}
+
+{% block content%}
+
+<div class="container">
+    <div class="title">Registration</div>
+    <div class="content">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="company-details">
+            {% for field in form %}
+                <div class="input-box">
+                    <span class="details">{{field.label}}</span>
+                    {{field}}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="button">
+        <input type="submit" value="Register">
+        </div>
+    </form>
+    </div>
+</div>
+
+{% endblock content%}

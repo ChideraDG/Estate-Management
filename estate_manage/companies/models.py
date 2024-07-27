@@ -12,7 +12,7 @@ class Company(models.Model):
     email = models.EmailField(unique=True, blank=True, null=True)
     website = models.CharField(max_length=200, blank=True, null=True)
     cac = models.CharField(max_length=200, blank=True, null=True)
-    logo = models.FileField(blank=True, null=True)
+    logo = models.ImageField(blank=True, null=True, upload_to='comapny-logo/', default="comapny-logo/default.svg")
     year_founded = models.CharField(max_length=50, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
