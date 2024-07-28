@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CompanyForm
 from .models import Company
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 
 
 def createCompany(request):
@@ -10,9 +8,7 @@ def createCompany(request):
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.number = request.POST['phone_number']
-            instance.save()
+            form.save()
 
             return redirect('company-home')
 
@@ -28,16 +24,18 @@ def companyHome(request):
 
 
 def updateCompany(request, pk):
-    profile = Company.objects.get(id=pk)
+    try:
+        profile = Company.objects.get(id=pk)
+    except Company.DoesNotExist:
+        return redirect('custom_404')
+
     form = CompanyForm(instance=profile)
 
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.number = request.POST['phone_number']
-            instance.save()
+            form.save()
 
             return redirect('company-home')
 
