@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import createCompany, updateCompany, companyHome, viewCompany, deleteCompany
 
 urlpatterns = [
   path('create/', createCompany, name='create-company'),
