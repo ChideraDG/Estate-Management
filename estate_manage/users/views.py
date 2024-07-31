@@ -12,7 +12,7 @@ def userRegister(request):
     form = RegistrationForm()
 
     if request.user.is_authenticated:
-        return redirect('welcome')
+        return redirect('home')
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -28,21 +28,21 @@ def userRegister(request):
             user.save()
 
             login(request, user)
-            return redirect('welcome')
+            return redirect('home')
 
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
 
-def welcome(request):
-    return render(request, 'users/welcome.html')
+def home(request):
+    return render(request, 'users/home.html')
 
 
 def userLogin(request):
     form = LoginForm()
 
     if request.user.is_authenticated:
-        return redirect('welcome')
+        return redirect('home')
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -62,7 +62,7 @@ def userLogin(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'{user.username.title()}, you successfully logged in.')
-                return redirect('welcome')
+                return redirect('home')
             else:
                 messages.error(request, 'username or password is wrong')
 
@@ -73,8 +73,4 @@ def userLogin(request):
 
 def userLogout(request):
     logout(request)
-    return redirect('welcome')
-
-
-def test(request):
-    return render(request, 'users/welcome.html')
+    return redirect('home')
