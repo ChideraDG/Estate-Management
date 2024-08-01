@@ -1,40 +1,58 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}<link rel="stylesheet" href="{% static 'css/register.css' %}">{% endblock head %}
-
 {% block content %}
-    <div class="container">
-      <form action="{% url 'register' %}" class="registration-form" method="POST">
-        {% csrf_token %}
-        <h2 style="color: #bd986b">Register</h2>
-        <div class="form-group">
-          {{form.username}}
-          <label>Enter your Username</label>
+<link rel="stylesheet" href="{% static 'css/signin_signup.css' %}">
+<div class="main">
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title" style="color: #2fc96a;">Sign Up</h2>
+                    <form method="POST" class="register-form" id="register-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            {{ form.full_name }}
+                        </div>
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-email"></i></label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-lock"></i></label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-lock-outline"></i></label>
+                            {{ form.password2 }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.designation }}
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
+                                statements in <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group form-button">
+                            <a href="{% url 'login' %}" class="signin-image-link">Already a member?</a>
+                            <input style="background-color: #2fc96a; font-weight: 600;" type="submit" name="signup"
+                                id="signup" class="form-submit" value="Register" />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          {{form.full_name}}
-          <label>Enter your Fullname</label>
-        </div>
-        <div class="form-group">
-          {{form.email}}
-          <label>Enter your Email</label>
-        </div>
-        <div class="form-group">
-          {{ form.designation }}
-        </div>
-        <div class="form-group">
-          {{form.password1}}
-          <label>Enter your Password</label>
-        </div>
-        <div class="form-group">
-          {{form.password2}}
-          <label>Confirm Password</label>
-        </div>
-        <button type="submit">
-          Submit
-        </button>
-      </form>
-    </div>
-  <script src="{% static 'js/users_register.js' %}"></script>
-{% endblock content %}
+    </section>
+</div>
+
+<!-- Added JavaScript for client-side validation -->
+<script src="{% static 'js/users_register.js' %}"></script>
+
+{% endblock %}

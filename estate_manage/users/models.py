@@ -17,7 +17,7 @@ class Profile(models.Model):
     email = models.EmailField(blank=False, null=False, unique=True)
     phone_number = models.CharField(max_length=15, validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$')],
                                     unique=True, null=True, blank=True)
-    designation = models.CharField(max_length=10, null=False, blank=False, default='agent')
+    designation = models.CharField(max_length=25, null=False, blank=False, default='agent')
     bio = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profile-pics/',
                                       default='profile-pics/users-default.png')

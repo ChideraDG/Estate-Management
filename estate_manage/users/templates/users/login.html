@@ -1,35 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
-
 {% block content %}
-    <div class="wrapper">
-        <form action="{% url 'login' %}" method="POST">
-            {% csrf_token %}
-            <h2>Log In</h2>
-            <h3>Welcome Back!</h3>
-            {% for field in form %}
-            <div class="input-field">
-                {{field}}
-                <label>Enter your {{field.label}}</label>
+<link rel="stylesheet" href="{% static 'css/signin_signup.css' %}">
+<div class="main">
+    <!-- Log in Form -->
+    <section class="sign-in">
+        <div class="container">
+            <div class="signin-content">
+                <div class="signin-form">
+                    <h2 class="form-title" style="color: #2fc96a;">Sign In</h2>
+                    <form method="POST" class="register-form" id="login-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-email"></i></label>
+                            {{ form.username_or_email }}
+                        </div>
+                        <div class="form-group">
+                            <label><i class="zmdi zmdi-lock"></i></label>
+                            {{ form.password }}
+                        </div>
+
+                        <div class="form-group">
+                            <input type="checkbox" name="show-password" id="show-password" class="agree-term" />
+                            <label for="show-password" class="label-agree-term"><span><span></span></span>Show Password</label>
+                        </div>
+                        <div class="form-group form-button">
+                            <input style="background-color: #2fc96a; font-weight: 600;" type="submit" name="signin"
+                                id="signin" class="form-submit" value="Log in" />
+                                <a href="{% url 'register' %}" class="signup-image-link">Not a member?</a>
+                        </div>
+                        <a href="{% url 'reset_password' %}" class="signup-image-link" style="color: red;">Forgot Password?</a>
+                    </form>
+                    <div class="social-login">
+                        <span class="social-label">Or login with</span>
+                        <ul class="socials">
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            {% endfor %}
-            <div class="forget">
-                <label for="show-password">
-                  <input type="checkbox" id="show-password">
-                  <p style="color: black; font-weight: bold">Show password</p>
-                </label>
-                <a style="color: black; font-weight: bold" href="#">Forgot password?</a>
-            </div>
-            <button type="submit">Log In</button>
-            <div class="register">
-                <p style="color: black; font-weight: bold">Don't have an account?
-                    <a style="color: black; font-weight: bold" href="{% url 'register' %}">Register</a></p>
-            </div>
-        </form>
-    </div>
-    <script src="{% static 'js/users_login.js' %}"></script>
+        </div>
+    </section>
+</div>
+
+<!-- Added JavaScript for showing/hiding password -->
+<script src="{% static 'js/users_login.js' %}"></script>
 {% endblock %}

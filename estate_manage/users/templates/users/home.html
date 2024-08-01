@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}
-{% endblock head %}
-
 {% block content %}
 <!-- ======= Intro Section ======= -->
 <div class="intro intro-carousel swiper position-relative">
@@ -11,7 +8,7 @@
     <div class="swiper-wrapper">
 
         <div class="swiper-slide carousel-item-a intro-item bg-image"
-            style="background-image: url(static/images/home-pics/slide-1.jpg)">
+            style="background-image: url(static/images/home-pics/arch5.jpg)">
             <div class="overlay overlay-a"></div>
             <div class="intro-content display-table">
                 <div class="table-cell">
@@ -37,7 +34,7 @@
             </div>
         </div>
         <div class="swiper-slide carousel-item-a intro-item bg-image"
-            style="background-image: url(static/images/home-pics/slide-2.jpg)">
+            style="background-image: url(static/images/home-pics/arch9.jpg)">
             <div class="overlay overlay-a"></div>
             <div class="intro-content display-table">
                 <div class="table-cell">
@@ -63,7 +60,7 @@
             </div>
         </div>
         <div class="swiper-slide carousel-item-a intro-item bg-image"
-            style="background-image: url(static/images/home-pics/slide-3.jpg)">
+            style="background-image: url(static/images/home-pics/arch7.jpg)">
             <div class="overlay overlay-a"></div>
             <div class="intro-content display-table">
                 <div class="table-cell">
@@ -80,6 +77,32 @@
                                     </h1>
                                     <p class="intro-subtitle intro-price">
                                         <a href="#"><span class="price-a">rent | N 245M</span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide carousel-item-a intro-item bg-image"
+            style="background-image: url(static/images/home-pics/arch6.jpg)">
+            <div class="overlay overlay-a"></div>
+            <div class="intro-content display-table">
+                <div class="table-cell">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="intro-body">
+                                    <p class="intro-title-top">Ikeja, Lagos
+                                        <br> 19945
+                                    </p>
+                                    <h1 class="intro-title mb-4">
+                                        <span class="color-b">63 </span> Villa
+                                        <br> Grand Residential Area
+                                    </h1>
+                                    <p class="intro-subtitle intro-price">
+                                        <a href="#"><span class="price-a">rent | N 155M</span></a>
                                     </p>
                                 </div>
                             </div>
@@ -190,7 +213,7 @@
                             <h2 class="title-a">Latest Properties</h2>
                         </div>
                         <div class="title-link">
-                            <a href="#">All Property
+                            <a href="{% url 'property-grid' %}">All Property
                                 <span class="bi bi-chevron-right"></span>
                             </a>
                         </div>
@@ -204,21 +227,21 @@
                     <div class="carousel-item-b swiper-slide">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
-                                <img src="{% static 'images/home-pics/property-5.jpg' %}" alt="" class="img-a img-fluid">
+                                <img src="{% static 'images/home-pics/top2.jpg' %}" alt="" class="img-a img-fluid">
                             </div>
                             <div class="card-overlay">
                                 <div class="card-overlay-a-content">
                                     <div class="card-header-a">
                                         <h2 class="card-title-a">
-                                            <a href="#">206 Mount
-                                                <br /> Olive Road Two</a>
+                                            <a href="{% url 'property-single' %}">206 Amen Estate
+                                                <br /> Eleko Beach Road</a>
                                         </h2>
                                     </div>
                                     <div class="card-body-a">
                                         <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
+                                            <span class="price-a">rent | N 12M</span>
                                         </div>
-                                        <a href="#" class="link-a">Click here to view
+                                        <a href="{% url 'property-single' %}" class="link-a">Click here to view
                                             <span class="bi bi-chevron-right"></span>
                                         </a>
                                     </div>
@@ -252,21 +275,21 @@
                     <div class="carousel-item-b swiper-slide">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
-                                <img src="{% static 'images/home-pics/property-1.jpg' %}" alt="" class="img-a img-fluid">
+                                <img src="{% static 'images/home-pics/top4.jpg' %}" alt="" class="img-a img-fluid">
                             </div>
                             <div class="card-overlay">
                                 <div class="card-overlay-a-content">
                                     <div class="card-header-a">
                                         <h2 class="card-title-a">
-                                            <a href="#">157 West
-                                                <br /> Central Park</a>
+                                            <a href="{% url 'property-single' %}">157 Crown Estate
+                                                <br /> Ajah</a>
                                         </h2>
                                     </div>
                                     <div class="card-body-a">
                                         <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
+                                            <span class="price-a">rent | N 20M</span>
                                         </div>
-                                        <a href="#" class="link-a">Click here to view
+                                        <a href="{% url 'property-single' %}" class="link-a">Click here to view
                                             <span class="bi bi-chevron-right"></span>
                                         </a>
                                     </div>
@@ -300,21 +323,21 @@
                     <div class="carousel-item-b swiper-slide">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
-                                <img src="{% static 'images/home-pics/property-7.jpg' %}" alt="" class="img-a img-fluid">
+                                <img src="{% static 'images/home-pics/top7.jpg' %}" alt="" class="img-a img-fluid">
                             </div>
                             <div class="card-overlay">
                                 <div class="card-overlay-a-content">
                                     <div class="card-header-a">
                                         <h2 class="card-title-a">
-                                            <a href="#">245 Azabu
-                                                <br /> Nishi Park let</a>
+                                            <a href="{% url 'property-single' %}">245 Chevron Estate
+                                                <br /> Lekki</a>
                                         </h2>
                                     </div>
                                     <div class="card-body-a">
                                         <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
+                                            <span class="price-a">rent | N 19M</span>
                                         </div>
-                                        <a href="#" class="link-a">Click here to view
+                                        <a href="{% url 'property-single' %}" class="link-a">Click here to view
                                             <span class="bi bi-chevron-right"></span>
                                         </a>
                                     </div>
@@ -348,21 +371,69 @@
                     <div class="carousel-item-b swiper-slide">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
-                                <img src="{% static 'images/home-pics/property-10.jpg' %}" alt="" class="img-a img-fluid">
+                                <img src="{% static 'images/home-pics/top1.jpg' %}" alt="" class="img-a img-fluid">
                             </div>
                             <div class="card-overlay">
                                 <div class="card-overlay-a-content">
                                     <div class="card-header-a">
                                         <h2 class="card-title-a">
-                                            <a href="#">204 Montal
-                                                <br /> South Bela Two</a>
+                                            <a href="{% url 'property-single' %}">12 Magodo GRA Phase II
+                                                <br /> CMD Road, Ketu</a>
                                         </h2>
                                     </div>
                                     <div class="card-body-a">
                                         <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
+                                            <span class="price-a">rent | N 10M</span>
                                         </div>
-                                        <a href="#" class="link-a">Click here to view
+                                        <a href="{% url 'property-single' %}" class="link-a">Click here to view
+                                            <span class="bi bi-chevron-right"></span>
+                                        </a>
+                                    </div>
+                                    <div class="card-footer-a">
+                                        <ul class="card-info d-flex justify-content-around">
+                                            <li>
+                                                <h4 class="card-info-title">Area</h4>
+                                                <span>340m
+                                                    <sup>2</sup>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Beds</h4>
+                                                <span>2</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Baths</h4>
+                                                <span>4</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Garages</h4>
+                                                <span>1</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-b swiper-slide">
+                        <div class="card-box-a card-shadow">
+                            <div class="img-box-a">
+                                <img src="{% static 'images/home-pics/top6.jpg' %}" alt="" class="img-a img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-overlay-a-content">
+                                    <div class="card-header-a">
+                                        <h2 class="card-title-a">
+                                            <a href="{% url 'property-single' %}">121 NICON Town Estate
+                                                <br /> Lekki</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body-a">
+                                        <div class="price-box d-flex">
+                                            <span class="price-a">rent | N 22m</span>
+                                        </div>
+                                        <a href="{% url 'property-single' %}" class="link-a">Click here to view
                                             <span class="bi bi-chevron-right"></span>
                                         </a>
                                     </div>
@@ -421,14 +492,14 @@
                 <div class="col-md-4">
                     <div class="card-box-d">
                         <div class="card-img-d">
-                            <img src="{% static 'images/home-pics/agent-4.jpg' %}" alt="" class="img-d img-fluid">
+                            <img src="{% static 'images/home-pics/nora-agent.jpg' %}" alt="" class="img-d img-fluid">
                         </div>
                         <div class="card-overlay card-overlay-hover">
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a href="#" class="link-two">Margaret Sotillo
-                                            <br> Escala</a>
+                                        <a href="#" class="link-two">Nora Hutton
+                                            <br> Esther</a>
                                     </h3>
                                 </div>
                             </div>
@@ -478,14 +549,14 @@
                 <div class="col-md-4">
                     <div class="card-box-d">
                         <div class="card-img-d">
-                            <img src="{% static 'images/home-pics/agent-1.jpg' %}" alt="" class="img-d img-fluid">
+                            <img src="{% static 'images/home-pics/zulmaury-agent.jpg' %}" alt="" class="img-d img-fluid">
                         </div>
                         <div class="card-overlay card-overlay-hover">
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a href="#" class="link-two">Stiven Spilver
-                                            <br> Darw</a>
+                                        <a href="#" class="link-two">Zulmaury Saavedra
+                                            <br> Darwin</a>
                                     </h3>
                                 </div>
                             </div>
@@ -535,13 +606,13 @@
                 <div class="col-md-4">
                     <div class="card-box-d">
                         <div class="card-img-d">
-                            <img src="{% static 'images/home-pics/agent-5.jpg' %}" alt="" class="img-d img-fluid">
+                            <img src="{% static 'images/home-pics/alexis-agent.jpg' %}" alt="" class="img-d img-fluid">
                         </div>
                         <div class="card-overlay card-overlay-hover">
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a href="#" class="link-two">Emma Toledo
+                                        <a href="#" class="link-two">Alexis Toledo
                                             <br> Cascada</a>
                                     </h3>
                                 </div>
@@ -738,7 +809,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="testimonial-img">
-                                        <img src="{% static 'images/home-pics/testimonial-1.jpg' %}" alt="" class="img-fluid">
+                                        <img src="{% static 'images/home-pics/fam1.jpg' %}" alt="" class="img-fluid">
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
@@ -769,7 +840,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="testimonial-img">
-                                        <img src="{% static 'images/home-pics/testimonial-2.jpg' %}" alt="" class="img-fluid">
+                                        <img src="{% static 'images/home-pics/fam2.jpg' %}" alt="" class="img-fluid">
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
@@ -805,160 +876,6 @@
 
 </main><!-- End #main -->
 
-<!-- ======= Footer ======= -->
-<section class="section-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-4">
-                <div class="widget-a">
-                    <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">EstateManage</h3>
-                    </div>
-                    <div class="w-body-a">
-                        <p class="w-text-a color-text-a">
-                            EstateManage is dedicated to providing top-tier property management services.
-                            We simplify property ownership and renting with our professional, responsive team,
-                            ensuring every client's experience is seamless and stress-free.
-                        </p>
-                    </div>
-                    <div class="w-footer-a">
-                        <ul class="list-unstyled">
-                            <li class="color-a">
-                                <span class="color-text-a">Phone .</span> contact@example.com
-                            </li>
-                            <li class="color-a">
-                                <span class="color-text-a">Email .</span> +54 356 945234
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 section-md-t3">
-                <div class="widget-a">
-                    <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">The Company</h3>
-                    </div>
-                    <div class="w-body-a">
-                        <div class="w-body-a">
-                            <ul class="list-unstyled">
-                                <li class="item-list-a">
-                                    <i class="bi bi-chevron-right"></i> <a href="#">Site Map</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="bi bi-chevron-right"></i> <a href="#">Legal</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="bi bi-chevron-right"></i> <a href="#">Agent Admin</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="bi bi-chevron-right"></i> <a href="#">Careers</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="bi bi-chevron-right"></i> <a href="#">Affiliate</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="bi bi-chevron-right"></i> <a href="#">Privacy Policy</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 section-md-t3">
-                <div class="widget-a">
-                    <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">International sites</h3>
-                    </div>
-                    <div class="w-body-a">
-                        <ul class="list-unstyled">
-                            <li class="item-list-a">
-                                <i class="bi bi-chevron-right"></i> <a href="#">Venezuela</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="bi bi-chevron-right"></i> <a href="#">China</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="bi bi-chevron-right"></i> <a href="#">Hong Kong</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="bi bi-chevron-right"></i> <a href="#">Argentina</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="bi bi-chevron-right"></i> <a href="#">Singapore</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="bi bi-chevron-right"></i> <a href="#">Philippines</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <nav class="nav-footer">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">About</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">Property</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">Blog</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">Contact</a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="socials-a">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a href="#">
-                                <i class="bi bi-facebook" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                <i class="bi bi-twitter" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                <i class="bi bi-instagram" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                <i class="bi bi-linkedin" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="copyright-footer">
-                    <p class="copyright color-text-a">
-                        &copy; Copyright
-                        <span class="color-a">EstateAgency</span> All Rights Reserved.
-                    </p>
-                </div>
-                <div class="credits">
-                    Designed by <a href="#">Oluwatosin</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer><!-- End Footer -->
-
-<div id="preloader"></div>
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+{% include 'footer.html' %}
 
 {% endblock content %}

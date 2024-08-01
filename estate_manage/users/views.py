@@ -4,8 +4,10 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.decorators import login_required
 
 
 def userRegister(request):
@@ -28,14 +30,15 @@ def userRegister(request):
             user.save()
 
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
 
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
 
 def home(request):
-    return render(request, 'users/home.html')
+    context = {'current_url': 'home'}
+    return render(request, 'users/home.html', context)
 
 
 def userLogin(request):
@@ -48,21 +51,23 @@ def userLogin(request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username']
+            username_or_email = form.cleaned_data['username_or_email']
             password = form.cleaned_data['password']
 
-            user = Profile.objects.filter(username=username)
+            user = Profile.objects.filter(username=username_or_email)
             if not user.exists():
-                print('Account not Found')
-                messages.info(request, 'Account not Found')
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                user = Profile.objects.filter(email=username_or_email)
+                if not user.exists():
+                    print('Account not Found')
+                    messages.info(request, 'Account not Found')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=user[0].username, password=password)
 
             if user is not None:
                 login(request, user)
                 messages.success(request, f'{user.username.title()}, you successfully logged in.')
-                return redirect('home')
+                return redirect('dashboard')
             else:
                 messages.error(request, 'username or password is wrong')
 
@@ -74,3 +79,32 @@ def userLogin(request):
 def userLogout(request):
     logout(request)
     return redirect('home')
+
+
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
+
+
+@login_required(login_url='login')
+def dashboard(request):
+
+    user = request.user.profile
+
+    context = {'user': user}
+    return render(request, 'dashboard/base.html', context)
+
+
+def property_single(request):
+    return render(request, 'users/property-single.html')
+
+
+def property_grid(request):
+    return render(request, 'users/property-grid.html')
+
+
+def blog_single(request):
+    return render(request, 'users/blog-single.html')
