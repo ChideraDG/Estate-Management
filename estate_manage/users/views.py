@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
@@ -142,10 +142,12 @@ def contact_us(request):
             send_mail(from_email=settings.EMAIL_HOST_USER,
                       recipient_list=['chrischidera6@gmail.com'],
                       subject=subject,
-                      message=f"Sender's Name: {name.title()} \n\n Sender's Email: {email.lower()} \n\n" + message,
+                      message=f"Sender's Name: {name.title()} \n\nSender's Email: {email.lower()} \n\n" + message,
                       fail_silently=False)
 
-            return redirect('contact-us')
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
     context = {'form': form}
 

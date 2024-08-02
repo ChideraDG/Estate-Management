@@ -6,7 +6,10 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>EstateManage - Let's Manage your Property</title>
+    {% block title %}
+        <title>EstateManage - Let's Manage your Property</title>
+    {% endblock title %}
+
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -33,7 +36,7 @@
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'js/contact-us.js' %}"></script>
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/script.js' %}"></script>

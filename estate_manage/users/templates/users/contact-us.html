@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+    <title>Contact Us - EstateManage</title>
+{% endblock title %}
+
 {% block content %}
 <main id="main">
 
@@ -49,7 +53,7 @@
           <div class="col-sm-12 section-t8">
             <div class="row">
               <div class="col-md-7">
-                <form action="" method="POST" class="php-email-form">
+                <form action="" method="POST" class="php-email-form" id="contactForm">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -72,15 +76,15 @@
                                 {{ form.message }}
                             </div>
                         </div>
-                        <div class="col-md-12 my-3">
+                        <div class="col-md-12">
                             <div class="mb-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                                <div class="loading" id="loadingIndicator" style="display: none;">Loading...</div>
+                                <div class="error-message" id="errorMessage" style="display: none;"></div>
+                                <div class="sent-message" id="sentMessage" style="display: none;">Your message has been sent. Thank you!</div>
                             </div>
                         </div>
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-a">Send Message</button>
+                            <input type="submit" class="btn btn-a" value="Send Message">
                         </div>
                     </div>
                 </form>
@@ -164,5 +168,6 @@
     </section><!-- End Contact Single-->
 
   </main><!-- End #main -->
+
 {% include 'footer.html' %}
 {% endblock content %}
