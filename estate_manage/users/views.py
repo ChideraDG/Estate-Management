@@ -101,14 +101,14 @@ def dashboard(request):
 
 
 def property_single(request):
-    form = AgentMailForm()
+    form = ContactAgentForm()
 
     if request.method == 'POST':
-        form = AgentMailForm(request.POST)
+        form = ContactAgentForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
-            subject = f'From {name.title()}'
+            subject = 'Estate Manage Agent'
             message = form.cleaned_data.get('message')
 
             send_mail(from_email=settings.EMAIL_HOST_USER,

@@ -100,7 +100,7 @@ class ContactForm(forms.Form):
     )
 
 
-class AgentMailForm(forms.Form):
+class ContactAgentForm(forms.Form):
     name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={
