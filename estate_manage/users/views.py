@@ -101,7 +101,29 @@ def dashboard(request):
 
 
 def property_single(request):
-    return render(request, 'users/property-single.html')
+    form = AgentMailForm()
+
+    if request.method == 'POST':
+        form = AgentMailForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            subject = f'From {name.title()}'
+            message = form.cleaned_data.get('message')
+
+            send_mail(from_email=settings.EMAIL_HOST_USER,
+                      recipient_list=['chrischidera6@gmail.com'],
+                      subject=subject,
+                      message=f"Sender's Name: {name.title()} \n\nSender's Email: {email.lower()} \n\n" + message,
+                      fail_silently=False)
+
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
+
+    context = {'form': form}
+
+    return render(request, 'users/property-single.html', context)
 
 
 def property_grid(request):

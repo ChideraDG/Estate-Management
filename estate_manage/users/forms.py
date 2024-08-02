@@ -99,3 +99,30 @@ class ContactForm(forms.Form):
         })
     )
 
+
+class AgentMailForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control form-control-lg form-control-a',
+            'placeholder': 'Name *',
+            'required': 'required'
+        })
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control form-control-lg form-control-a',
+            'placeholder': 'Email *',
+            'required': 'required'
+        })
+    )
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Comment *',
+            'cols': 45,
+            'rows': 8,
+            'required': 'required'
+        })
+    )
+
