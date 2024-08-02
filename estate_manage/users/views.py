@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def userRegister(request):
@@ -108,3 +110,43 @@ def property_grid(request):
 
 def blog_single(request):
     return render(request, 'users/blog-single.html')
+
+
+def agents_grid(request):
+    return render(request, 'users/agents-grid.html')
+
+
+def agent_single(request):
+    return render(request, 'users/agent-single.html')
+
+
+def about(request):
+    return render(request, 'users/about.html')
+
+
+def blog(request):
+    return render(request, 'users/blog.html')
+
+
+def contact_us(request):
+    form = ContactForm()
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            subject = form.cleaned_data.get('subject')
+            message = form.cleaned_data.get('message')
+
+            send_mail(from_email=settings.EMAIL_HOST_USER,
+                      recipient_list=['chrischidera6@gmail.com'],
+                      subject=subject,
+                      message=f"Sender's Name: {name.title()} \n\n Sender's Email: {email.lower()} \n\n" + message,
+                      fail_silently=False)
+
+            return redirect('contact-us')
+
+    context = {'form': form}
+
+    return render(request, 'users/contact-us.html', context)

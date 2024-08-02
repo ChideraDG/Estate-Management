@@ -116,9 +116,11 @@
                 <li class="nav-item"><a class="nav-link " href="{% url 'home' %}">Home</a></li>
                 {% endif %}
 
-                <li class="nav-item">
-                    <a class="nav-link " href="#">About</a>
-                </li>
+                {% if request.path == '/about/' %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link " href="{% url 'about' %}">About</a></li>
+                {% endif %}
 
                 {% if request.path == '/property-grid/' %}
                 <li class="nav-item"><a class="nav-link active" href="{% url 'property-grid' %}">Property</a></li>
@@ -126,20 +128,28 @@
                 <li class="nav-item"><a class="nav-link " href="{% url 'property-grid' %}">Property</a></li>
                 {% endif %}
 
-                <li class="nav-item">
-                    <a class="nav-link " href="#">Contact</a>
-                </li>
+                {% if request.path == '/blog/' %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'blog' %}">Blog</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link " href="{% url 'blog' %}">Blog</a></li>
+                {% endif %}
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item " href="{% url 'property-single' %}">Property Single</a>
-                        <a class="dropdown-item " href="{% url 'blog-single' %}">Blog Single</a>
-                        <a class="dropdown-item " href="#">Agents Grid</a>
-                        <a class="dropdown-item " href="#">Agent Single</a>
-                    </div>
-                </li>
+                {% if request.path == '/contact-us/' %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'contact-us' %}">Contact</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link " href="{% url 'contact-us' %}">Contact</a></li>
+                {% endif %}
+
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
+<!--                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>-->
+<!--                    <div class="dropdown-menu">-->
+<!--                        <a class="dropdown-item " href="{% url 'property-single' %}">Property Single</a>-->
+<!--                        <a class="dropdown-item " href="{% url 'blog-single' %}">Blog Single</a>-->
+<!--                        <a class="dropdown-item " href="{% url 'agents-grid' %}">Agents Grid</a>-->
+<!--                        <a class="dropdown-item " href="{% url 'agent-single' %}">Agent Single</a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link " href="{% url 'logout' %}">Logout</a></li>
@@ -159,38 +169,40 @@
         {% if request.path == '/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-                <i class="bi bi-search"></i>
-            </button>
+                <i class="bi bi-search"></i></button>
         {% elif request.path == '/property-grid/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-                <i class="bi bi-search"></i>
-            </button>
+                <i class="bi bi-search"></i></button>
         {% elif request.path == '/property-single/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-                <i class="bi bi-search"></i>
-            </button>
+                <i class="bi bi-search"></i></button>
         {% elif request.path == '/about/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-                <i class="bi bi-search"></i>
-            </button>
+                <i class="bi bi-search"></i></button>
         {% elif request.path == '/blog/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-                <i class="bi bi-search"></i>
-            </button>
+                <i class="bi bi-search"></i></button>
         {% elif request.path == '/contact/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-                <i class="bi bi-search"></i>
-            </button>
+                <i class="bi bi-search"></i></button>
         {% elif request.path == '/blog-single/' %}
+            <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
+                data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
+                <i class="bi bi-search"></i></button>
+        {% elif request.path == '/agent-single/' %}
             <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
                 <i class="bi bi-search"></i>
             </button>
+        {% elif request.path == '/agents-grid/' %}
+            <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
+                data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
+                <i class="bi bi-search"></i></button>
         {% endif %}
     </div>
 

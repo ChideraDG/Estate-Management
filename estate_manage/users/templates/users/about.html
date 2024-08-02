@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="title-single-box">
+              <h1 class="title-single">We Sell And Manage Great Apartments For Our Clientele</h1>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  About
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= About Section ======= -->
+    <section class="section-about">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 position-relative">
+            <div class="about-img-box">
+              <img src="{% static 'images/home-pics/arch6-2.jpg' %}" alt="" class="img-fluid">
+            </div>
+            <div class="sinse-box">
+              <h3 class="sinse-title">EstateManage
+                <span></span>
+                <br> Since 2023
+              </h3>
+              <p>Estate Management</p>
+            </div>
+          </div>
+          <div class="col-md-12 section-t8 position-relative">
+            <div class="row">
+              <div class="col-md-6 col-lg-5">
+                <img src="{% static 'images/home-pics/top4.jpg' %}" alt="" class="img-fluid">
+              </div>
+              <div class="col-lg-2  d-none d-lg-block position-relative">
+                <div class="title-vertical d-flex justify-content-start">
+                  <span>EstateManage Exclusive Property</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-5 section-md-t3">
+                <div class="title-box-d">
+                  <h3 class="title-d">Where
+                    <span class="color-d">luxury</span> meets
+                    <br> comfort.
+                  </h3>
+                </div>
+                <p class="color-text-a">
+                  Welcome to EstateManage Exclusive Property, where luxury meets exceptional service. Our portfolio
+                  features the finest properties, meticulously selected for their prime locations and stunning designs.
+                  Each listing offers unparalleled amenities and sophisticated living spaces, catering to discerning
+                  clients seeking a premium lifestyle. At EstateManage, we prioritize your needs, providing
+                  personalized assistance and expert advice to ensure a seamless property acquisition experience.
+                  Discover your dream home with us and experience the pinnacle of luxury living. With EstateManage
+                  Exclusive Property, you can trust that you're getting the best in real estate.
+                </p>
+                <p class="color-text-a">
+                  Explore our exclusive listings and find properties that redefine elegance and comfort. Whether you're
+                  looking for a chic urban apartment or a serene countryside estate, EstateManage is dedicated to
+                  helping you find the perfect match. Experience excellence in every detail with EstateManage
+                  Exclusive Property. Your dream home awaits.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======Team Section ======= -->
+    <section class="section-agents section-t8">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="title-wrap d-flex justify-content-between">
+              <div class="title-box">
+                <h2 class="title-a">Meet Our Team</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+                    <div class="card-box-d">
+                        <div class="card-img-d">
+                            <img src="{% static 'images/home-pics/nora-agent.jpg' %}" alt="" class="img-d img-fluid">
+                        </div>
+                        <div class="card-overlay card-overlay-hover">
+                            <div class="card-header-d">
+                                <div class="card-title-d align-self-center">
+                                    <h3 class="title-d">
+                                        <a href="{% url 'agent-single' %}" class="link-two">Nora Hutton
+                                            <br> Esther</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="card-body-d">
+                                <p class="content-d color-text-a">
+                                    I’m dedicated to matching clients with their ideal homes and providing top-notch
+                                    service.
+                                </p>
+                                <div class="info-agents color-a">
+                                    <p>
+                                        <strong>Phone: </strong> +54 356 945234
+                                    </p>
+                                    <p>
+                                        <strong>Email: </strong> agents@example.com
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-footer-d">
+                                <div class="socials-footer d-flex justify-content-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          <div class="col-md-4">
+              <div class="card-box-d">
+                  <div class="card-img-d">
+                      <img src="{% static 'images/home-pics/zulmaury-agent.jpg' %}" alt="" class="img-d img-fluid">
+                  </div>
+                  <div class="card-overlay card-overlay-hover">
+                      <div class="card-header-d">
+                          <div class="card-title-d align-self-center">
+                              <h3 class="title-d">
+                                  <a href="{% url 'agent-single' %}" class="link-two">Zulmaury Saavedra
+                                      <br> Darwin</a>
+                              </h3>
+                          </div>
+                      </div>
+                      <div class="card-body-d">
+                          <p class="content-d color-text-a">
+                              I specialize in finding perfect properties and ensuring smooth transactions
+                              for all clients.
+                          </p>
+                          <div class="info-agents color-a">
+                              <p>
+                                  <strong>Phone: </strong> +54 356 945234
+                              </p>
+                              <p>
+                                  <strong>Email: </strong> agents@example.com
+                              </p>
+                          </div>
+                      </div>
+                      <div class="card-footer-d">
+                          <div class="socials-footer d-flex justify-content-center">
+                              <ul class="list-inline">
+                                  <li class="list-inline-item">
+                                      <a href="#" class="link-one">
+                                          <i class="bi bi-facebook" aria-hidden="true"></i>
+                                      </a>
+                                  </li>
+                                  <li class="list-inline-item">
+                                      <a href="#" class="link-one">
+                                          <i class="bi bi-twitter" aria-hidden="true"></i>
+                                      </a>
+                                  </li>
+                                  <li class="list-inline-item">
+                                      <a href="#" class="link-one">
+                                          <i class="bi bi-instagram" aria-hidden="true"></i>
+                                      </a>
+                                  </li>
+                                  <li class="list-inline-item">
+                                      <a href="#" class="link-one">
+                                          <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+                    <div class="card-box-d">
+                        <div class="card-img-d">
+                            <img src="{% static 'images/home-pics/alexis-agent.jpg' %}" alt="" class="img-d img-fluid">
+                        </div>
+                        <div class="card-overlay card-overlay-hover">
+                            <div class="card-header-d">
+                                <div class="card-title-d align-self-center">
+                                    <h3 class="title-d">
+                                        <a href="{% url 'agent-single' %}" class="link-two">Alexis Toledo
+                                            <br> Cascada</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="card-body-d">
+                                <p class="content-d color-text-a">
+                                    With expertise in property management, I ensure seamless transactions and client
+                                    satisfaction every time.
+                                </p>
+                                <div class="info-agents color-a">
+                                    <p>
+                                        <strong>Phone: </strong> +54 356 945234
+                                    </p>
+                                    <p>
+                                        <strong>Email: </strong> agents@example.com
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-footer-d">
+                                <div class="socials-footer d-flex justify-content-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+      </div>
+    </section><!-- End About Section-->
+
+  </main><!-- End #main -->
+{% include 'footer.html' %}
+{% endblock content %}

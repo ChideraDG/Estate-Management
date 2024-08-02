@@ -481,7 +481,7 @@
                             <h2 class="title-a">Best Agents</h2>
                         </div>
                         <div class="title-link">
-                            <a href="#">All Agents
+                            <a href="{% url 'agents-grid' %}">All Agents
                                 <span class="bi bi-chevron-right"></span>
                             </a>
                         </div>
@@ -498,7 +498,7 @@
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a href="#" class="link-two">Nora Hutton
+                                        <a href="{% url 'agent-single' %}" class="link-two">Nora Hutton
                                             <br> Esther</a>
                                     </h3>
                                 </div>
@@ -555,7 +555,7 @@
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a href="#" class="link-two">Zulmaury Saavedra
+                                        <a href="{% url 'agent-single' %}" class="link-two">Zulmaury Saavedra
                                             <br> Darwin</a>
                                     </h3>
                                 </div>
@@ -612,7 +612,7 @@
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a href="#" class="link-two">Alexis Toledo
+                                        <a href="{% url 'agent-single' %}" class="link-two">Alexis Toledo
                                             <br> Cascada</a>
                                     </h3>
                                 </div>
@@ -674,7 +674,7 @@
                             <h2 class="title-a">Latest News</h2>
                         </div>
                         <div class="title-link">
-                            <a href="#">All News
+                            <a href="{% url 'blog' %}">All News
                                 <span class="bi bi-chevron-right"></span>
                             </a>
                         </div>
@@ -687,97 +687,97 @@
 
                     <div class="carousel-item-c swiper-slide">
                         <div class="card-box-b card-shadow news-box">
-                            <div class="img-box-b">
-                                <img src="{% static 'images/home-pics/post-2.jpg' %}" alt="" class="img-b img-fluid">
+                          <div class="img-box-b">
+                            <img src="{% static 'images/home-pics/post-1.jpg' %}" alt="" class="img-b img-fluid">
+                          </div>
+                          <div class="card-overlay">
+                            <div class="card-header-b">
+                              <div class="card-category-b">
+                                <a href="{% url 'blog-single' %}" class="category-b">Travel</a>
+                              </div>
+                              <div class="card-title-b">
+                                <h2 class="title-2">
+                                  <a href="{% url 'blog-single' %}">Travel is coming
+                                    <br> new</a>
+                                </h2>
+                              </div>
+                              <div class="card-date">
+                                <span class="date-b">18 Sep. 2023</span>
+                              </div>
                             </div>
-                            <div class="card-overlay">
-                                <div class="card-header-b">
-                                    <div class="card-category-b">
-                                        <a href="#" class="category-b">House</a>
-                                    </div>
-                                    <div class="card-title-b">
-                                        <h2 class="title-2">
-                                            <a href="#">House is comming
-                                                <br> new</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-date">
-                                        <span class="date-b">18 Sep. 2017</span>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
                     </div><!-- End carousel item -->
 
                     <div class="carousel-item-c swiper-slide">
                         <div class="card-box-b card-shadow news-box">
-                            <div class="img-box-b">
-                                <img src="{% static 'images/home-pics/post-5.jpg' %}" alt="" class="img-b img-fluid">
+                          <div class="img-box-b">
+                            <img src="{% static 'images/home-pics/post-2.jpg' %}" alt="" class="img-b img-fluid">
+                          </div>
+                          <div class="card-overlay">
+                            <div class="card-header-b">
+                              <div class="card-category-b">
+                                <a href="{% url 'blog-single' %}" class="category-b">Tour</a>
+                              </div>
+                              <div class="card-title-b">
+                                <h2 class="title-2">
+                                  <a href="{% url 'blog-single' %}">Accelerate far
+                                    <br> and wide</a>
+                                </h2>
+                              </div>
+                              <div class="card-date">
+                                <span class="date-b">2 April. 2023</span>
+                              </div>
                             </div>
-                            <div class="card-overlay">
-                                <div class="card-header-b">
-                                    <div class="card-category-b">
-                                        <a href="#" class="category-b">Travel</a>
-                                    </div>
-                                    <div class="card-title-b">
-                                        <h2 class="title-2">
-                                            <a href="#">Travel is comming
-                                                <br> new</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-date">
-                                        <span class="date-b">18 Sep. 2017</span>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
                     </div><!-- End carousel item -->
 
                     <div class="carousel-item-c swiper-slide">
                         <div class="card-box-b card-shadow news-box">
-                            <div class="img-box-b">
-                                <img src="{% static 'images/home-pics/post-7.jpg' %}" alt="" class="img-b img-fluid">
+                          <div class="img-box-b">
+                            <img src="{% static 'images/home-pics/post-3.jpg' %}" alt="" class="img-b img-fluid">
+                          </div>
+                          <div class="card-overlay">
+                            <div class="card-header-b">
+                              <div class="card-category-b">
+                                <a href="{% url 'blog-single' %}" class="category-b">Business</a>
+                              </div>
+                              <div class="card-title-b">
+                                <h2 class="title-2">
+                                  <a href="{% url 'blog-single' %}">Money is trending
+                                    <br> worldwide</a>
+                                </h2>
+                              </div>
+                              <div class="card-date">
+                                <span class="date-b">23 July. 2023</span>
+                              </div>
                             </div>
-                            <div class="card-overlay">
-                                <div class="card-header-b">
-                                    <div class="card-category-b">
-                                        <a href="#" class="category-b">Park</a>
-                                    </div>
-                                    <div class="card-title-b">
-                                        <h2 class="title-2">
-                                            <a href="#">Park is comming
-                                                <br> new</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-date">
-                                        <span class="date-b">18 Sep. 2017</span>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
                     </div><!-- End carousel item -->
 
                     <div class="carousel-item-c swiper-slide">
                         <div class="card-box-b card-shadow news-box">
-                            <div class="img-box-b">
-                                <img src="{% static 'images/home-pics/post-3.jpg' %}" alt="" class="img-b img-fluid">
+                          <div class="img-box-b">
+                            <img src="{% static 'images/home-pics/post-4.jpg' %}" alt="" class="img-b img-fluid">
+                          </div>
+                          <div class="card-overlay">
+                            <div class="card-header-b">
+                              <div class="card-category-b">
+                                <a href="{% url 'blog-single' %}" class="category-b">Home</a>
+                              </div>
+                              <div class="card-title-b">
+                                <h2 class="title-2">
+                                  <a href="{% url 'blog-single' %}">Home is my
+                                    <br> destination</a>
+                                </h2>
+                              </div>
+                              <div class="card-date">
+                                <span class="date-b">12 Aug. 2023</span>
+                              </div>
                             </div>
-                            <div class="card-overlay">
-                                <div class="card-header-b">
-                                    <div class="card-category-b">
-                                        <a href="#" class="category-b">Travel</a>
-                                    </div>
-                                    <div class="card-title-b">
-                                        <h2 class="title-2">
-                                            <a href="#">Travel is comming
-                                                <br> new</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-date">
-                                        <span class="date-b">18 Sep. 2017</span>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
                     </div><!-- End carousel item -->
 
@@ -826,7 +826,7 @@
                                         </p>
                                     </div>
                                     <div class="testimonial-author-box">
-                                        <img src="mini-testimonial-1.jpg" alt=""
+                                        <img src="{% static 'images/home-pics/fam1.jpg' %}" alt=""
                                             class="testimonial-avatar">
                                         <h5 class="testimonial-author">Albert & Erika</h5>
                                     </div>
@@ -858,7 +858,7 @@
                                         </p>
                                     </div>
                                     <div class="testimonial-author-box">
-                                        <img src="mini-testimonial-2.jpg" alt=""
+                                        <img src="{% static 'images/home-pics/fam2.jpg' %}" alt=""
                                             class="testimonial-avatar">
                                         <h5 class="testimonial-author">Pablo & Emma</h5>
                                     </div>
