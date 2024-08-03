@@ -4,7 +4,8 @@ from users.models import Profile
 
 
 class Company(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='')
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                              related_name='companies')
     name = models.CharField(max_length=100, blank=False, null=False)
     address = models.TextField(max_length=200, blank=True, null=True)
     number = models.CharField(max_length=15, unique=True, blank=True, null=True,
@@ -21,4 +22,4 @@ class Company(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.email
+        return self.name

@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from companies.models import Company
+from locations.models import Country, State
 
 
 class Estate(models.Model):
@@ -55,6 +56,9 @@ class Estate(models.Model):
     vacancy_rate = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                        validators=[MinValueValidator(0)])
     estate_description = models.TextField(null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

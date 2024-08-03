@@ -8,8 +8,9 @@ from .models import Company
 def createCompanyProfile(sender, instance, created, **kwargs):
     if created:
         user = instance
-        if user.designation == 'companies':
+        if user.designation == 'company':
             Company.objects.create(
                 owner=user,
                 name=user.name,
+                email=user.email,
             )
