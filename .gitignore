@@ -26,4 +26,3 @@
 /estate_manage/locations/__pycache__
 /estate_manage/locations/migrations/*.py
 /estate_manage/locations/migrations/__pycache__
-estate_manage/locations/management
