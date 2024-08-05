@@ -1,3 +1,26 @@
+"""
+Django URL Configuration
+
+This file defines the URL patterns for the application.
+
+Examples:
+    - `/`: Homepage
+    - `/register/`: User registration page
+    - `/login/`: User login page
+    - `/logout/`: User logout page
+    - `/delete-user/`: Delete user account page
+    - `/dashboard/`: User dashboard page
+    - `/property-single/`: Single property details page
+    - `/property-grid/`: Property grid listing page
+    - `/blog-single/`: Single blog post page
+    - `/agents-grid/`: Agents grid listing page
+    - `/agent-single/`: Single agent details page
+    - `/about/`: About us page
+    - `/blog/`: Blog listing page
+    - `/contact-us/`: Contact us page
+
+"""
+
 from django.urls import path
 from .views import (home, userRegister, userLogin, userLogout,
                     dashboard, property_grid, property_single,
