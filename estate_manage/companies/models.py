@@ -1,6 +1,31 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from users.models import Profile
+from django.core.exceptions import ValidationError
+
+
+def validate_image_size(value):
+    """
+    Validates the size of an uploaded image.
+
+    Args:
+        value (File): The uploaded image file.
+
+    Raises:
+        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
+
+    Example:
+        >>> from django.core.files.uploadedfile import UploadedFile
+        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
+        >>> validate_image_size(file)
+        ValidationError: Maximum file size allowed is 1.0 MB
+    """
+    filesize = value.size
+
+    limit = 500 * 1024
+    
+    if filesize > limit:
+        raise ValidationError(f"Maximum file size allowed is {limit / (1024)} KB")
 
 
 class Company(models.Model):
@@ -47,7 +72,8 @@ class Company(models.Model):
     email = models.EmailField(unique=True, blank=True, null=True)
     website = models.CharField(max_length=200, blank=True, null=True)
     cac = models.CharField(max_length=200, blank=True, null=True)
-    logo = models.ImageField(blank=True, null=True, upload_to='company-logo/', default="company-logo/default.svg")
+    logo = models.ImageField(blank=True, null=True, upload_to='company-logo/', default="company-logo/default.svg", 
+                             validators=[validate_image_size])
     year_founded = models.CharField(max_length=50, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
