@@ -5,6 +5,40 @@ from locations.models import Country, State
 
 
 class Estate(models.Model):
+    """
+    Represents a real estate property.
+
+    Attributes:
+        company (Company): The company that owns the estate.
+        estate_name (str): The name of the estate.
+        estate_location (str): The location of the estate.
+        estate_type (str): The type of the estate (residential, commercial, mixed_use).
+        year_built (int): The year the estate was built.
+        number_of_houses (int): The number of houses in the estate.
+        number_of_apartments (int): The number of apartments in the estate.
+        total_area_covered (float): The total area covered by the estate.
+        land_area (float): The land area of the estate.
+        total_floor_number (int): The total number of floors in the estate.
+        estate_parking_spaces (int): The number of parking spaces in the estate.
+        amenities (ManyToManyField): The amenities available in the estate.
+        construction_type (str): The type of construction used in the estate.
+        maintenance_cost (float): The maintenance cost of the estate.
+        security_features (ManyToManyField): The security features available in the estate.
+        utilities (ManyToManyField): The utilities available in the estate.
+        current_occupancy (int): The current occupancy of the estate.
+        vacancy_rate (float): The vacancy rate of the estate.
+        estate_description (str): A description of the estate.
+        country (Country): The country where the estate is located.
+        state (State): The state where the estate is located.
+        city (str): The city where the estate is located.
+        created (datetime): The date and time the estate was created.
+        updated (datetime): The date and time the estate was last updated.
+
+    Examples:
+        >>> estate = Estate(estate_name='My Estate', estate_location='123 Main St', estate_type='residential', year_built=2000)
+        >>> estate.save()
+    """
+    
     DESIGNATION = [
         ('residential', 'Residential'),
         ('commercial', 'Commercial'),
