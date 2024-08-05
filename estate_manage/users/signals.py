@@ -8,6 +8,28 @@ from .models import Profile
 
 @receiver(post_save, sender=User)
 def createProfile(sender, instance, created, **kwargs):
+    """
+    Creates a new Profile instance when a new User instance is created.
+
+    Args:
+        sender (type): The model that sent the signal.
+        instance (User): The User instance that was created.
+        created (bool): Whether the User instance was created or updated.
+
+    Example:
+        When a new User instance is created, this function will be called automatically.
+        It will create a new Profile instance with the same username, email, and name as the User instance.
+
+        >>> from django.contrib.auth.models import User
+        >>> user = User.objects.create_user('john', 'john@example.com', 'password')
+        >>> profile = Profile.objects.get(user=user)
+        >>> profile.username
+        'john'
+        >>> profile.email
+        'john@example.com'
+        >>> profile.name
+        'John'
+    """
     if created:
         user = instance
         Profile.objects.create(
@@ -42,6 +64,23 @@ The EstateManage Team"""
 
 @receiver(post_delete, sender=Profile)
 def deleteUser(sender, instance, **kwargs):
+    """
+    Deletes the associated User instance when a Profile instance is deleted.
+
+    Args:
+        sender (type): The model that sent the signal.
+        instance (Profile): The Profile instance that was deleted.
+
+    Example:
+        When a Profile instance is deleted, this function will be called automatically.
+        It will delete the associated User instance.
+
+        >>> from .models import Profile
+        >>> profile = Profile.objects.get(id=1)
+        >>> profile.delete()
+        >>> User.objects.filter(id=profile.user.id).exists()
+        False
+    """
     user = instance.user
     user.delete()
 
