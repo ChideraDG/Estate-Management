@@ -38,7 +38,7 @@ class Estate(models.Model):
         >>> estate = Estate(estate_name='My Estate', estate_location='123 Main St', estate_type='residential', year_built=2000)
         >>> estate.save()
     """
-    
+
     DESIGNATION = [
         ('residential', 'Residential'),
         ('commercial', 'Commercial'),
@@ -101,33 +101,107 @@ class Estate(models.Model):
 
 
 class Amenity(models.Model):
+    """
+    Represents an amenity that an estate can have.
+
+    Attributes:
+        code (str): Unique code for the amenity (max length 50).
+        name (str): Name of the amenity (max length 100).
+
+    Example:
+        >>> amenity = Amenity(code="POOL", name="Swimming Pool")
+        >>> print(amenity)
+        Swimming Pool
+    """
     code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
+        """
+        Returns a string representation of the amenity.
+
+        Returns:
+            str: Name of the amenity.
+        """
         return self.name
 
 
 class SecurityFeatures(models.Model):
+    """
+    Represents a security feature that an estate can have.
+
+    Attributes:
+        code (str): Unique code for the security feature (max length 50).
+        name (str): Name of the security feature (max length 100).
+
+    Example:
+        >>> security_feature = SecurityFeatures(code="CAM", name="CCTV Camera")
+        >>> print(security_feature)
+        CCTV Camera
+    """
     code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
+        """
+        Returns a string representation of the security feature.
+
+        Returns:
+            str: Name of the security feature.
+        """
         return self.name
 
 
 class Utility(models.Model):
+    """
+    Represents a utility that an estate can have.
+
+    Attributes:
+        code (str): Unique code for the utility (max length 50).
+        name (str): Name of the utility (max length 100).
+
+    Example:
+        >>> utility = Utility(code="ELEC", name="Electricity")
+        >>> print(utility)
+        Electricity
+    """
     code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
+        """
+        Returns a string representation of the utility.
+
+        Returns:
+            str: Name of the utility.
+        """
         return self.name
 
 
 class Photo(models.Model):
+    """
+    Represents a photo of an estate.
+
+    Attributes:
+        estate (Estate): Foreign key referencing the Estate model.
+        image (ImageField): Image file (uploaded to 'estate_photos/').
+        description (str): Description of the photo (max length 255, optional).
+
+    Example:
+        >>> photo = Photo(estate=estate, image="path/to/image.jpg", description="Living room")
+        >>> print(photo)
+        Photo of Estate Name
+    """
     estate = models.ForeignKey(Estate, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='estate_photos/', default='estate_photos/default.jpg')
     description = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
+        """
+        Returns a string representation of the photo.
+
+        Returns:
+            str: "Photo of <Estate Name>".
+        """
         return f"Photo of {self.estate.name}"
+    
