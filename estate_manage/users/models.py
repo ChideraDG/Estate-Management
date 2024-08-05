@@ -1,7 +1,16 @@
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
+from django.core.exceptions import ValidationError
 
+
+def validate_image_size(value):
+    filesize = value.size
+
+    limit = 1 * 1024 * 1024
+    
+    if filesize > limit:
+        raise ValidationError(f"Maximum file size allowed is {limit / (1024 * 1024)} MB")
 
 class Profile(models.Model):
     GENDER = [
@@ -20,7 +29,7 @@ class Profile(models.Model):
     designation = models.CharField(max_length=25, null=False, blank=False, default='agent')
     bio = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profile-pics/',
-                                      default='profile-pics/users-default.png')
+                                      default='profile-pics/users-default.png', validators=[validate_image_size])
     state_of_residence = models.CharField(max_length=50, null=True, blank=True)
     address_1 = models.CharField(max_length=200, null=True, blank=True)
     address_2 = models.CharField(max_length=200, null=True, blank=True)
