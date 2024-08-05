@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django import forms
-from .models import *
+from .models import Profile
 
 
 class RegistrationForm(forms.Form):

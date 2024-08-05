@@ -2,13 +2,14 @@ from django.urls import path
 from .views import (home, userRegister, userLogin, userLogout,
                     dashboard, property_grid, property_single,
                     blog_single, agents_grid, agent_single, about,
-                    blog, contact_us)
+                    blog, contact_us, userDelete)
 
 urlpatterns = [
     path("", home, name='home'),
     path("register/", userRegister, name='register'),
     path("login/", userLogin, name='login'),
     path("logout/", userLogout, name='logout'),
+    path("delete-user/", userDelete, name='delete-user'),
     path("dashboard/", dashboard, name='dashboard'),
     path("property-single/", property_single, name='property-single'),
     path("property-grid/", property_grid, name='property-grid'),

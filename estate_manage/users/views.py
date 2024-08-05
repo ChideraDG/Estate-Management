@@ -1,8 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
-from .forms import *
-from .models import *
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView
@@ -10,6 +8,9 @@ from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.models import User
+from .forms import RegistrationForm, LoginForm, ContactForm, ContactAgentForm, CustomSetPasswordForm, CustomPasswordResetForm
+from .models import Profile
 
 
 def userRegister(request):
@@ -76,6 +77,13 @@ def userLogin(request):
     context = {'form': form}
 
     return render(request, 'users/login.html', context)
+
+
+@login_required(login_url='login')
+def userDelete(request):
+    user = request.user.profile
+    user.delete()
+    return redirect('home')
 
 
 def userLogout(request):
