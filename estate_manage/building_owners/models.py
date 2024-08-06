@@ -3,6 +3,31 @@ from django.core.validators import RegexValidator
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from companies.models import Company
+from django.core.exceptions import ValidationError
+
+
+def validate_image_size(value):
+    """
+    Validates the size of an uploaded image.
+
+    Args:
+        value (File): The uploaded image file.
+
+    Raises:
+        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
+
+    Example:
+        >>> from django.core.files.uploadedfile import UploadedFile
+        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
+        >>> validate_image_size(file)
+        ValidationError: Maximum file size allowed is 1.0 MB
+    """
+    filesize = value.size
+
+    limit = 500 * 1024
+    
+    if filesize > limit:
+        raise ValidationError(f"Maximum file size allowed is {limit / (1024)} KB")
 
 
 class BuildingOwner(models.Model):
@@ -61,6 +86,8 @@ class BuildingOwner(models.Model):
                                                  "'+2348012345678'. Up to 15 digits allowed.")])
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='building_owner')
     address = models.TextField(blank=True, null=True)
+    profile_pics = models.ImageField(blank=True, null=True, upload_to='building-owner-profile-pics/', 
+                             validators=[validate_image_size])
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='building_owner', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='building_owner', null=True, blank=True)
     city = models.CharField(max_length=200, blank=True, null=True)
