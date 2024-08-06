@@ -64,7 +64,7 @@ class BuildingOwnerForm(ModelForm):
             'portfolio_size': forms.NumberInput(attrs={'value': '1'}),
             'investment_strategy': forms.Select(choices=BuildingOwner.DESIGNATION),
             'tax_id': forms.TextInput(attrs={ 'placeholder': 'Enter tax id'}),
-            'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',  # Corrected the key here
+            'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',
                                                         'cols': 45,
                                                         'rows': 8,
                                                         }),
