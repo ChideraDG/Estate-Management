@@ -19,10 +19,20 @@
                         <div class="form-group">
                             <label><i class="zmdi zmdi-email"></i></label>
                             {{ form.username_or_email }}
+                            {% if form.username_or_email.errors %}
+                                <div class="alert alert-danger p-2 mb-2">
+                                    {{ form.username_or_email.errors }}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             <label><i class="zmdi zmdi-lock"></i></label>
                             {{ form.password }}
+                            {% if form.password.errors %}
+                                <div class="alert alert-danger p-2 mb-2">
+                                    {{ form.password.errors }}
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="form-group">
