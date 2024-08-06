@@ -57,7 +57,7 @@ class BuildingOwnerForm(ModelForm):
             'contact_email': forms.EmailInput(attrs={ 'placeholder': 'Enter contact email'}),
             'contact_phone': forms.TextInput(attrs={ 'placeholder': 'Enter contact phone number'}),
             'address': forms.TextInput(attrs={ 'placeholder': 'Enter address'}),
-             'profile_pics': forms.FileInput,
+            'profile_pics': forms.FileInput,
             'city': forms.TextInput(attrs={ 'placeholder': 'Enter city'}),
             'country': forms.Select(attrs={ 'placeholder': 'Select country'}),
             'state': forms.Select(attrs={ 'placeholder': 'Select state'}),
