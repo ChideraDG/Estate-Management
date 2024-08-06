@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<style>
+    .form-container{
+      margin-top: 110px;
+    }
+</style>
+
+<div class="form-container">
+    <h1 style="color: #007bff;">{{ house.house_number }} Profile</h1>
+
+    <p><strong>Address:</strong> {{ house.address }}</p>
+            <p><strong>City:</strong> {{ house.city }}</p>
+            <p><strong>State:</strong> {{ house.state }}</p>
+            <p><strong>Country:</strong> {{ house.country }}</p>
+
+            <p><strong>Size:</strong> {{ house.house_size }} sq. meters</p>
+            <p><strong>Number of Apartments:</strong> {{ house.number_of_apartments }}</p>
+            <p><strong>Total Floors:</strong> {{ house.total_floor_number }}</p>
+            <p><strong>Garage Space:</strong> {{ house.house_garage_space }} spaces</p>
+            <p><strong>Yard Size:</strong> {{ house.yard_size }} sq. meters</p>
+            <p><strong>Renovation Year:</strong> {{ house.renovation_year }}</p>
+            <p><strong>Condition:</strong> {{ house.get_condition_display }}</p>
+            <p><strong>Sale Price:</strong> ${{ house.sale_price }}</p>
+            <p><strong>Rent Price:</strong> ${{ house.rent_price }}</p>
+            <p><strong>Occupancy Status:</strong> {{ house.get_occupancy_status_display }}</p>
+
+            <h3>Features:</h3>
+            <ul>
+                {% for feature in house.features.all %}
+                    <li>{{ feature.name }}</li>
+                {% empty %}
+                    <li>No features listed.</li>
+                {% endfor %}
+            </ul>
+
+            <h3>Utilities:</h3>
+            <ul>
+                {% for utility in house.utilities.all %}
+                    <li>{{ utility.name }}</li>
+                {% empty %}
+                    <li>No utilities listed.</li>
+                {% endfor %}
+            </ul>
+
+            <p><strong>Notes:</strong> {{ house.notes }}</p>
+
+    
+</div>
+
+{% endblock content %}

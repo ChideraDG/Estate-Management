@@ -70,6 +70,9 @@ class Estate(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='estates')
     estate_name = models.CharField(max_length=100, blank=False, null=False)
     estate_location = models.TextField(null=False, blank=False)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
     year_built = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(1900)])
     number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
@@ -90,9 +93,6 @@ class Estate(models.Model):
     vacancy_rate = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                        validators=[MinValueValidator(0)])
     estate_description = models.TextField(null=True, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
-    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
-    city = models.CharField(max_length=200, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

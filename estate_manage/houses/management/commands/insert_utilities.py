@@ -19,5 +19,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         for code, name in self.UTILITIES:
-            Utility.objects.get_or_create(name=name)
+            Utility.objects.get_or_create(code=code, name=name)
         self.stdout.write(self.style.SUCCESS('Successfully inserted utilities'))
