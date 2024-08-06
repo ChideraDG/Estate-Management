@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<style>
+    .form-container{
+      margin-top: 110px;
+    }
+
+    #lin {
+      padding: 10px 20px;
+    }
+  </style>
+    <div class="form-container">
+        <div>
+          <a href="{% url 'create-building-owner' %}">Create profile</a>
+        </div>
+
+        <table>
+          <tr>
+            <th style="padding-right: 30px;">Owner Name</th>
+            <th style="padding-right: 30px;">Contact Email</th>
+            <th style="padding-left: 30px;">Action</th>
+          </tr>
+          {% for profile in profiles %}
+          <tr>
+            <td>{{ profile.building_owner_name }}</td>
+            <td>{{ profile.contact_email }}</td>
+            <td id="lin">
+              <a href="{% url 'update-building-owner' profile.id %}">Edit</a>
+              <a href="{% url 'view-building-owner' profile.id %}">View</a>
+              <a href="{% url 'delete-building-owner' profile.id %}">Delete</a
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+       
+    </div>
+
+
+{% endblock content%}

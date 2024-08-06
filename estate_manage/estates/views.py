@@ -3,9 +3,12 @@ from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from .forms import ProfileForm
 from .models import Estate
+from locations.models import Country, State
+from django.http import JsonResponse
 
 
 def createEstate(request):
+    countries = Country.objects.all()
     form = ProfileForm()
 
     if request.method == "POST":
@@ -41,7 +44,7 @@ def createEstate(request):
 
             return redirect('home-estate')
 
-    context = {'form': form}
+    context = {'form': form, 'countries': countries}
     return render(request, 'estates/createEstate.html', context)
 
 
@@ -52,6 +55,7 @@ def homeEstate(request):
 
 
 def updateEstate(request, pk):
+    countries = Country.objects.all()
     profile = Estate.objects.get(id=pk)
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
@@ -89,7 +93,7 @@ def updateEstate(request, pk):
 
             return redirect('home-estate')
 
-    context = {'form': form, 'profile': profile}
+    context = {'form': form, 'profile': profile, 'countries': countries}
     return render(request, 'estates/createEstate.html', context)
 
 
@@ -106,3 +110,10 @@ def viewEstate(request, pk):
     estate = Estate.objects.get(id=pk)
     context = {'estate': estate}
     return render(request, 'estates/viewEstate.html', context)
+
+def get_states(request):
+    country_id = request.GET.get('country_id')
+    states = State.objects.filter(country_id=country_id).order_by('name')
+    states_list = [{'id': state.id, 'name': state.name} for state in states]
+    return JsonResponse(states_list, safe=False)
+

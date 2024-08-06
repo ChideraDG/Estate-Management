@@ -10,7 +10,7 @@ class ProfileForm(ModelForm):
         fields = ['estate_name', 'estate_location', 'estate_type', 'year_built', 'number_of_houses',
                   'number_of_apartments', 'total_area_covered', 'land_area', 'total_floor_number',
                   'estate_parking_spaces', 'amenities', 'construction_type', 'maintenance_cost', 'security_features',
-                  'utilities', 'current_occupancy', 'vacancy_rate', 'estate_description']
+                  'utilities', 'current_occupancy', 'vacancy_rate', 'estate_description', 'country', 'state', 'city']
         widgets = {
             'year_built': forms.NumberInput(attrs={'value': 1900}),
             'amenities': forms.CheckboxSelectMultiple(),

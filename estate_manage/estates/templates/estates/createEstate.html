@@ -14,6 +14,12 @@
 {% endblock head %}
 
 {% block content%}
+<style>
+    .form-container{
+      margin-top: 100px;
+    }
+  </style>
+
     <div class="form-container">
         <form action="{% url 'home-estate' %}">
             <button type="submit" class="btn btn-success"><i class="bi-arrow-left-circle-fill" style="font-size:20px;"></i>
@@ -27,8 +33,36 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
+            
+
             <input type="submit" value="Submit">
         </form>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+            $('#id_country').change(function() {
+                var countryId = $(this).val();
+                if (countryId) {
+                    $.ajax({
+                        url: "{% url 'get-states' %}",
+                        data: {
+                            'country_id': countryId
+                        },
+                        success: function(data) {
+                            var options = '<option value="">Select a state</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                            }
+                            $('#id_state').html(options);
+                        }
+                    });
+                } else {
+                    $('#id_state').empty();
+                }
+            });
+        });
+    
+        </script>
     </div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
