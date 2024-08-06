@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.models import User
 from django import forms
 from .models import Profile
 
@@ -50,6 +51,18 @@ class RegistrationForm(forms.Form):
     password2 = forms.CharField(label='Confirm Password',
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
+    def clean_username(self):
+        username = self.changed_data['username']
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('Username already exists')
+        return username
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email already exists")
+        return email
+    
     def clean_password2(self):
         """
         Validate that the two password fields match.
@@ -85,6 +98,72 @@ class LoginForm(forms.Form):
 
     username_or_email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Username or Email'}))
     password = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+
+def clean_username_or_email(self):
+    """
+    Validates the username or email input.
+
+    Checks if the input exists as a username or email in the database.
+    If not, raises a ValidationError.
+
+    Args:
+        self: The form instance.
+
+    Returns:
+        str: The validated username or email.
+
+    Raises:
+        forms.ValidationError: If the username or email does not exist.
+
+    Example:
+        >>> form = LoginForm({'username_or_email': 'john Doe'})
+        >>> form.clean_username_or_email()
+        'john Doe'
+    """
+    username_or_email = self.cleaned_data.get('username_or_email')
+
+    user = User.objects.filter(username=username_or_email)
+    if not user.exists():
+        user = User.objects.filter(email=username_or_email)
+        if not user.exists():
+            raise forms.ValidationError('Username or Email does not exist')
+    
+    return username_or_email
+
+
+def clean_password(self):
+    """
+    Validates the password input.
+
+    Checks if the password matches the user's password in the database.
+    If not, raises a ValidationError.
+
+    Args:
+        self: The form instance.
+
+    Returns:
+        str: The validated password.
+
+    Raises:
+        forms.ValidationError: If the password is incorrect.
+
+    Example:
+        >>> form = LoginForm({'username_or_email': 'john Doe', 'password': 'mysecretpassword'})
+        >>> form.clean_password()
+        'mysecretpassword'
+    """
+    username_or_email = self.cleaned_data.get('username_or_email')
+
+    try:
+        user = User.objects.get(username=username_or_email)
+    except Exception:
+        raise forms.ValidationError("Wrong Password")
+
+    password = self.cleaned_data.get('password')
+
+    if not user.check_password(password):
+        raise forms.ValidationError("Wrong Password")
+    return password
 
 
 class CustomPasswordResetForm(PasswordResetForm):
