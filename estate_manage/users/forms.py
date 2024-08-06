@@ -1,10 +1,34 @@
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django import forms
-from .models import *
+from .models import Profile
 
 
 class RegistrationForm(forms.Form):
+    """
+    A form for user registration.
+
+    Attributes:
+        username (str): The username of the user.
+        full_name (str): The full name of the user.
+        email (str): The email address of the user.
+        designation (str): The designation of the user.
+        password1 (str): The password of the user.
+        password2 (str): The confirmation password of the user.
+
+    Example:
+        >>> form = RegistrationForm({
+        ...     'username': 'john_doe',
+        ...     'full_name': 'John Doe',
+        ...     'email': 'john@example.com',
+        ...     'designation': 'buyer',
+        ...     'password1': 'password123',
+        ...     'password2': 'password123'
+        ... })
+        >>> form.is_valid()
+        True
+    """
+
     DESIGNATION = [
         ('', 'Select a Designation'),
         ('buyer', 'Buyer'),
@@ -27,6 +51,12 @@ class RegistrationForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     def clean_password2(self):
+        """
+        Validate that the two password fields match.
+
+        Raises:
+            forms.ValidationError: If the two password fields do not match.
+        """
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
 
@@ -37,11 +67,41 @@ class RegistrationForm(forms.Form):
 
 
 class LoginForm(forms.Form):
+    """
+    A form for user login.
+
+    Attributes:
+        username_or_email (str): The username or email address of the user.
+        password (str): The password of the user.
+
+    Example:
+        >>> form = LoginForm({
+        ...     'username_or_email': 'john_doe',
+        ...     'password': 'password123'
+        ... })
+        >>> form.is_valid()
+        True
+    """
+
     username_or_email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Username or Email'}))
     password = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
 
 class CustomPasswordResetForm(PasswordResetForm):
+    """
+    A custom form for password reset.
+
+    Attributes:
+        email (str): The email address of the user.
+
+    Example:
+        >>> form = CustomPasswordResetForm({
+        ...     'email': 'john@example.com'
+        ... })
+        >>> form.is_valid()
+        True
+    """
+
     email = forms.EmailField(
         max_length=254,
         widget=forms.EmailInput(attrs={
@@ -51,6 +111,22 @@ class CustomPasswordResetForm(PasswordResetForm):
 
 
 class CustomSetPasswordForm(SetPasswordForm):
+    """
+    A custom form for setting a new password.
+
+    Attributes:
+        new_password1 (str): The new password of the user.
+        new_password2 (str): The confirmation of the new password.
+
+    Example:
+        >>> form = CustomSetPasswordForm({
+        ...     'new_password1': 'new_password123',
+        ...     'new_password2': 'new_password123'
+        ... })
+        >>> form.is_valid()
+        True
+    """
+
     new_password1 = forms.CharField(
         label="New password",
         widget=forms.PasswordInput(attrs={
@@ -66,6 +142,26 @@ class CustomSetPasswordForm(SetPasswordForm):
 
 
 class ContactForm(forms.Form):
+    """
+    A form for handling general contact inquiries.
+
+    Attributes:
+        name (CharField): The name of the person submitting the form.
+        email (EmailField): The email address of the person submitting the form.
+        subject (CharField): The subject of the contact inquiry.
+        message (CharField): The message being sent.
+
+    Example:
+        >>> from django import forms
+        >>> form = ContactForm({
+        ...     'name': 'John Doe',
+        ...     'email': 'john@example.com',
+        ...     'subject': 'Test Subject',
+        ...     'message': 'This is a test message.'
+        ... })
+        >>> form.is_valid()
+        True
+    """
     name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={
@@ -101,6 +197,24 @@ class ContactForm(forms.Form):
 
 
 class ContactAgentForm(forms.Form):
+    """
+    A form for handling contact inquiries specifically for agents.
+
+    Attributes:
+        name (CharField): The name of the person submitting the form.
+        email (EmailField): The email address of the person submitting the form.
+        message (CharField): The message being sent.
+
+    Example:
+        >>> from django import forms
+        >>> form = ContactAgentForm({
+        ...     'name': 'Jane Doe',
+        ...     'email': 'jane@example.com',
+        ...     'message': 'This is a test message for an agent.'
+        ... })
+        >>> form.is_valid()
+        True
+    """
     name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={
@@ -125,4 +239,4 @@ class ContactAgentForm(forms.Form):
             'required': 'required'
         })
     )
-
+    

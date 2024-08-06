@@ -1,44 +1,6 @@
-from login.html
-==============
-<!--<div class="container">-->
-<!--    <h1 class="title">Sign In</h1>-->
-<!--    <form method="POST" action="" class="styled-form">-->
-<!--        {% csrf_token %}-->
-<!--        {{form.as_p}}-->
-<!--        <hr>-->
-<!--        <div class="form-group">-->
-<!--            <input type="submit" value="Login" class="submit-btn">-->
-<!--        </div>-->
-<!--    </form>-->
-<!--    <br>-->
-<!--    <div class="container">-->
-<!--        <p>Don’t have an Account?</p>-->
-<!--        <h1 class="link"><a href="{% url 'register' %}">Sign Up</a></h1>-->
-<!--    </div>-->
-<!--</div>-->
-==============
+
 
 Media================================================
-/* Media Queries */
-@media (max-width: 767.98px) {
-    .container {
-        max-width: 100%;
-        height: auto;
-    }
-    .registration-form h2 {
-        font-size: 40px;
-    }
-    .form-group label {
-        font-size: 18px;
-    }
-    .form-group input,
-    .choice-field {
-        font-size: 18px;
-    }
-    .registration-form button {
-        font-size: 24px;
-    }
-}
 
 @media (min-width: 768px) and (max-width: 991.98px) {
     .container {

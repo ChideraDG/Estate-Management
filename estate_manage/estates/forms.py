@@ -4,6 +4,19 @@ from .models import Estate
 
 
 class ProfileForm(ModelForm):
+    """
+    A form for creating or editing an Estate profile.
+
+    The form includes fields for estate name, location, type, year built, and more.
+    It uses various widgets to enhance the user experience, such as checkbox select
+    multiple for amenities, security features, and utilities.
+
+    Attributes:
+        model (Estate): The model that this form is based on.
+        fields (list): A list of fields to include in the form.
+        widgets (dict): A dictionary of widgets to use for each field.
+        labels (dict): A dictionary of custom labels for each field.
+    """
 
     class Meta:
         model = Estate
