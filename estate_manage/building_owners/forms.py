@@ -5,7 +5,7 @@ from . models import BuildingOwner
 class BuildingOwnerForm(ModelForm):
     class Meta:
         model = BuildingOwner
-        fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'country', 'state', 'city',
+        fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'profile_pics', 'country', 'state', 'city',
                   'portfolio_size', 'investment_strategy', 'tax_id', 'notes']
         
         labels = {
@@ -13,6 +13,7 @@ class BuildingOwnerForm(ModelForm):
             'contact_email': 'Contact Email',
             'contact_phone': 'Contact Phone',
             'address': 'Address',
+            'profile_pics': 'Profile Pics',
             'city': 'City',
             'country': 'Country',
             'state': 'State',
@@ -27,6 +28,7 @@ class BuildingOwnerForm(ModelForm):
             'contact_email': forms.EmailInput(attrs={ 'placeholder': 'Enter contact email'}),
             'contact_phone': forms.TextInput(attrs={ 'placeholder': 'Enter contact phone number'}),
             'address': forms.TextInput(attrs={ 'placeholder': 'Enter address'}),
+             'profile_pics': forms.FileInput,
             'city': forms.TextInput(attrs={ 'placeholder': 'Enter city'}),
             'country': forms.Select(attrs={ 'placeholder': 'Select country'}),
             'state': forms.Select(attrs={ 'placeholder': 'Select state'}),
