@@ -19,7 +19,7 @@ class BuildingOwner(models.Model):
         city (str): The city where the building owner is located.
         country (Country): The country where the building owner is located.
         state (State): The state where the building owner is located.
-        portfolio_size (int): The size of the building owner's portfolio.
+        portfolio_size (int): Number of properties owned by the building owner.
         investment_strategy (str): The investment strategy of the building owner.
         tax_id (str): The tax ID of the building owner.
         notes (str): Any additional notes about the building owner.
