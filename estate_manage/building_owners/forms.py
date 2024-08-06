@@ -5,12 +5,11 @@ from . models import BuildingOwner
 class BuildingOwnerForm(ModelForm):
     class Meta:
         model = BuildingOwner
-        fields = ['building_owner_name', 'contact_person', 'contact_email', 'contact_phone', 'address', 'city', 'country', 'state',
+        fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'country', 'state', 'city',
                   'portfolio_size', 'investment_strategy', 'tax_id', 'notes']
         
         labels = {
             'building_owner_name': 'Building Owner Name',
-            'contact_person': 'Contact Person',
             'contact_email': 'Contact Email',
             'contact_phone': 'Contact Phone',
             'address': 'Address',
@@ -25,7 +24,6 @@ class BuildingOwnerForm(ModelForm):
 
         widgets = {
             'building_owner_name': forms.TextInput(attrs={ 'placeholder': 'Enter building owner name'}),
-            'contact_person': forms.TextInput(attrs={ 'placeholder': 'Enter contact person name'}),
             'contact_email': forms.EmailInput(attrs={ 'placeholder': 'Enter contact email'}),
             'contact_phone': forms.TextInput(attrs={ 'placeholder': 'Enter contact phone number'}),
             'address': forms.TextInput(attrs={ 'placeholder': 'Enter address'}),
