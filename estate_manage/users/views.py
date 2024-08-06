@@ -44,8 +44,6 @@ def home(request):
 
 
 def userLogin(request):
-    form = LoginForm()
-
     if request.user.is_authenticated:
         return redirect('dashboard')
 
@@ -72,6 +70,8 @@ def userLogin(request):
                 return redirect('dashboard')
             else:
                 messages.error(request, 'username or password is wrong')
+    else:
+        form = LoginForm()
 
     context = {'form': form}
 
