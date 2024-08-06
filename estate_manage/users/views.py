@@ -40,8 +40,7 @@ def userRegister(request):
 
 
 def home(request):
-    context = {'current_url': 'home'}
-    return render(request, 'users/home.html', context)
+    return render(request, 'users/home.html')
 
 
 def userLogin(request):
