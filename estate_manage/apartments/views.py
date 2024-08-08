@@ -36,7 +36,6 @@ def createApartment(request):
 
             return redirect('apartment-home')
 
-
     context = {'form': form, 'countries': countries}
     return render(request, 'apartments/apartmentReg.html', context)
 
