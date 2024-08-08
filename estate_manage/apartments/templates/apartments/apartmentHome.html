@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<style>
+    .form-container{
+      margin-top: 110px;
+    }
+
+    #lin {
+      padding: 10px 20px;
+    }
+  </style>
+    <div class="form-container">
+        <div>
+          <a href="{% url 'create-apartment' %}">Create Apartment</a>
+        </div>
+
+        <table>
+          <tr>
+            <th style="padding-right: 30px;">Apartment Number</th>
+            <th style="padding-right: 30px;">Country</th>
+            <th style="padding-left: 30px;">Action</th>
+          </tr>
+          {% for profile in profiles %}
+          <tr>
+            <td>{{ profile.apartment_number }}</td>
+            <td>{{ profile.country }}</td>
+            <td id="lin">
+              <a href="{% url 'update-apartment' profile.id %}">Edit</a>
+              <a href="{% url 'view-apartment' profile.id %}">View</a>
+              <a href="{% url 'delete-apartment' profile.id %}">Delete</a -->
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+    </div>
+
+
+{% endblock content%}
