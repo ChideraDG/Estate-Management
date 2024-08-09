@@ -52,7 +52,7 @@ class RegistrationForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     def clean_username(self):
-        username = self.changed_data['username']
+        username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError('Username already exists')
         return username
