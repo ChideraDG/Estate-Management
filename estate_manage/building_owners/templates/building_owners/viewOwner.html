@@ -13,7 +13,12 @@
     <p><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</p>
     <p><strong>Contact Email:</strong> {{ profile.contact_email }}</p>
     <p><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</p>
-    <p><strong>Profile Pics:</strong> <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }} Profile Pics" style="max-width: 200px;"> </p>
+    <strong>Profile Pics:</strong>
+    {% if profile.profile_pics %}
+        <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }} Profile Pics" style="max-width: 200px;">
+    {% else %}
+        <p>No profile picture available</p>
+    {% endif %}
     <p><strong>Address:</strong> {{ profile.address }}</p>
     <p><strong>City:</strong> {{ profile.city }}</p>
     <p><strong>Country:</strong> {{ profile.country }}</p>

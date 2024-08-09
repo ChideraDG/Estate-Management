@@ -1,0 +1,128 @@
+{% extends 'base.html'%}
+
+
+{% block content%}
+<style>
+
+    body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .apartment-details {
+            margin-top: 100px;
+            margin-left: 400px;
+            max-width: 600px;
+            margin: 110 auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .apartment-details h1 {
+            text-align: center;
+        }
+        .detail {
+            margin-bottom: 10px;
+        }
+        .detail label {
+            font-weight: bold;
+        }
+
+</style>
+
+<div class="apartment-details">
+    <h1>Tenant Details</h1>
+    <div class="detail">
+        <label>First Name:</label> {{ tenant.first_name }}
+    </div>
+
+    <div class="detail">
+        <label>Last Name:</label> {{ tenant.last_name }}
+    </div>
+
+    <div class="detail">
+        <label>Email:</label> {{ tenant.email }}
+    </div>
+
+    <div class="detail">
+        <label>Phone Number:</label> {{ tenant.phone_number }}
+    </div>
+
+    <div class="detail">
+        <label>Country:</label> {{ tenant.country.name }}
+    </div>
+
+    <div class="detail">
+        <label>State:</label> {{ tenant.state.name }}
+    </div>
+
+    <div class="detail">
+        <label>City:</label> {{ tenant.city }}
+    </div>
+
+    <div class="detail">
+        <label>Profile Pics:</label>
+    {% if tenant.profile_pics %}
+        <img src="{{ tenant.profile_pics.url }}" alt="{{ tenant.first_name }} Profile Pics" style="max-width: 200px;">
+    {% else %}
+        <p>No profile picture available</p>
+    {% endif %}
+    </div>
+
+    <div class="detail">
+        <label>Move in Date:</label> {{ tenant.move_in_date }}
+    </div>
+
+    <div class="detail">
+        <label>Lease Start Date:</label> {{ tenant.lease_start_date }}
+    </div>
+
+    <div class="detail">
+        <label>Lease End Date:</label> {{ tenant.lease_end_date }}
+    </div>
+
+    <div class="detail">
+        <label>Monthly Rent:</label> {{ tenant.monthly_rent }}
+    </div>
+
+    <div class="detail">
+        <label>Deposit Amount:</label> {{ tenant.deposit_amount }}
+    </div>
+
+    <div class="detail">
+        <label>Lease Term:</label> {{ tenant.lease_term }}
+    </div>
+    
+    <div class="detail">
+        <label>Payment Status:</label> {{ tenant.payment_status }}
+    </div>
+
+    <div class="detail">
+        <label> Emergency Contact Name:</label> {{ tenant.emergency_contact_name }}
+    </div>
+
+    <div class="detail">
+        <label> Emergency Contact Phone number:</label> {{ tenant.emergency_contact_number }}
+    </div>
+
+    <div class="detail">
+        <label> Employment Status:</label> {{ tenant.employment_status }}
+    </div>
+
+    <div class="detail">
+        <label>Occupation:</label> {{ tenant.occupation }}
+    </div>
+
+    <div class="detail">
+        <label>Notes:</label> {{ tenant.notes }}
+    </div>
+
+    <div class="detail">
+        <label>Created:</label> {{ tenant.created }}
+    </div>
+   
+    <div class="detail">
+        <label>Updated:</label> {{ tenant.updated }}
+    </div>
+</div>
+
+{% endblock content %}

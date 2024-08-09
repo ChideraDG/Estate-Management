@@ -4,7 +4,6 @@ from . forms import BuildingOwnerForm
 from locations.models import Country, State
 from django.http import JsonResponse
 
-# Create your views here.
 
 def buildingOwnersHome(request):
     profiles = BuildingOwner.objects.all()
@@ -19,12 +18,11 @@ def createProfile(request):
     if request.method == 'POST':
         form = BuildingOwnerForm(request.POST, request.FILES)
         if form.is_valid():
-             form.save()
-
-             return redirect('building-owner-home')
-        
-        # else:
-        #      form = BuildingOwnerForm()
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            if instance.building_owner_name:
+                instance.building_owner_name = instance.building_owner_name.strip().title()
+            instance.save()
+            return redirect('building-owner-home')
 
     context = {'form': form, 'countries': countries}
     return render (request, 'building_owners/buildingOwnerReg.html', context)
@@ -37,9 +35,12 @@ def updateProfile(request, pk):
     if request.method == 'POST':
         form = BuildingOwnerForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-             form.save()
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            if instance.building_owner_name:
+                instance.building_owner_name = instance.building_owner_name.strip().title()
+            instance.save()
 
-             return redirect('building-owner-home')
+            return redirect('building-owner-home')
         
     context = {'form': form, 'countries': countries, 'profile':profile}
     return render (request, 'building_owners/buildingOwnerReg.html', context)

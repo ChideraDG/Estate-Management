@@ -30,7 +30,11 @@
         <p><strong>Company Email:</strong> {{ company.email }}</p>
         <p><strong>Company Website:</strong> {{ company.website }}</p>
         <p><strong>Company CAC:</strong> {{ company.cac }}</p>
-        <p><strong>Company Logo:</strong> <img src="{{ company.logo.url }}" alt="{{ company.name }} Logo" style="max-width: 200px;"> </p>
+        <p><strong>Company Logo:</strong>  {% if company.logo %}
+            <img src="{{ company.logo.url }}" alt="{{ company.name }} Profile Pics" style="max-width: 200px;">
+        {% else %}
+            <p>No Company logo available</p>
+        {% endif %} </p>
         <p><strong>Year Founded:</strong> {{ company.year_founded }}</p>
         <p><strong>Last updated:</strong>{{ company.updated }}</p>
     </div>

@@ -8,7 +8,10 @@ def createCompany(request):
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            if instance.name:
+                instance.name = instance.name.strip().title()
+            instance.save()
 
             return redirect('company-home')
 
@@ -35,7 +38,10 @@ def updateCompany(request, pk):
         form = CompanyForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            if instance.name:
+                instance.name = instance.name.strip().title()
+            instance.save()
 
             return redirect('company-home')
 
