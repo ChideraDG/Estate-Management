@@ -38,6 +38,18 @@ class House(models.Model):
         >>> house.save()
     """
     
+    CONDITION = [ 
+        ('new', 'New'),
+        ('renovated', 'Renovated'),
+        ('requires_maintenance', 'Requires Maintenance'),
+    ]
+
+    OCCUPANCY = [
+        ('occupied', 'Ocuupied'),
+        ('vacant', 'Vacant'),
+        ('under_renovation', 'Under Renovation'),
+    ]
+
     estate = models.ForeignKey(Estate, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
     building_owner = models.ForeignKey(BuildingOwner, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
     house_number = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(0)])
