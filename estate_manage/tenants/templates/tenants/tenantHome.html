@@ -13,23 +13,23 @@
   </style>
     <div class="form-container">
         <div>
-          <a href="{% url 'create-house' %}">Create profile</a>
+          <a href="{% url 'create-tenant' %}">Create Tenant profile</a>
         </div>
 
         <table>
           <tr>
-            <th style="padding-right: 30px;">House Number</th>
-            <th style="padding-right: 30px;">Address</th>
+            <th style="padding-right: 30px;">First Name</th>
+            <th style="padding-right: 30px;">Email</th>
             <th style="padding-left: 30px;">Action</th>
           </tr>
           {% for profile in profiles %}
           <tr>
-            <td>{{ profile.house_number }}</td>
-            <td>{{ profile.address }}</td>
+            <td>{{ profile.first_name }}</td>
+            <td>{{ profile.email }}</td>
             <td id="lin">
-              <a href="{% url 'update-house' profile.id %}">Edit</a>
-              <a href="{% url 'view-house' profile.id %}">View</a>
-              <a href="{% url 'delete-house' profile.id %}">Delete</a -->
+              <a href="{% url 'update-tenant' profile.id %}">Edit</a>
+              <a href="{% url 'view-tenant' profile.id %}">View</a>
+              <a href="{% url 'delete-tenant' profile.id %}">Delete</a>
             </td>
           </tr>
           {% endfor %}

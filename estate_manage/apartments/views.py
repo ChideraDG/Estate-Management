@@ -20,19 +20,7 @@ def createApartment(request):
     if request.method == "POST":
         form = ApartmentForm(request.POST, request.FILES)
         if form.is_valid():
-            images = request.FILES.getlist(
-                '_images')  # Get the list of uploaded images from the form field named '_images'.
-            image_paths = []  # Initialize an empty list to store the paths of saved images.
-
-            for image in images:  # Iterate through each uploaded image.
-                # Save each image to the 'estate-pics/' directory and store its path in the 'path' variable.
-                path = default_storage.save('apartment-pics/' + image.name, ContentFile(image.read()))
-                image_paths.append(path)  # Append the saved image path to the image_paths list.
-
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            instance.estate_image = image_paths  # Set the house_image field of the instance to the list of image paths
-
-            instance.save()
+            form.save()
 
             return redirect('apartment-home')
 
@@ -47,19 +35,7 @@ def updateApartment(request, pk):
     if request.method == "POST":
         form = ApartmentForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            images = request.FILES.getlist(
-                '_images')  # Get the list of uploaded images from the form field named '_images'.
-            image_paths = []  # Initialize an empty list to store the paths of saved images.
-
-            for image in images:  # Iterate through each uploaded image.
-                # Save each image to the 'estate-pics/' directory and store its path in the 'path' variable.
-                path = default_storage.save('apartment-pics/' + image.name, ContentFile(image.read()))
-                image_paths.append(path)  # Append the saved image path to the image_paths list.
-
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            instance.estate_image = image_paths  # Set the house_image field of the instance to the list of image paths
-
-            instance.save()
+            form.save()
 
             return redirect('apartment-home')
 
