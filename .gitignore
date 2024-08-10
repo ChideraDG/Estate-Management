@@ -36,4 +36,7 @@
 /estate_manage/analytics/migrations/*.py
 /estate_manage/buyers/__pycache__
 /estate_manage/buyers/migrations/__pycache__
-/estate_manage/buyers/migrations/*.py 
+/estate_manage/buyers/migrations/*.py
+/estate_manage/communications/__pycache__
+/estate_manage/communications/migrations/__pycache__
+/estate_manage/communications/migrations/*.py 
