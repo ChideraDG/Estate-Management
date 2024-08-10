@@ -46,3 +46,6 @@
 /estate_manage/finances/__pycache__
 /estate_manage/finances/migrations/__pycache__
 /estate_manage/finances/migrations/*.py
+/estate_manage/maintenances/__pycache__
+/estate_manage/maintenances/migrations/__pycache__
+/estate_manage/maintenances/migrations/*.py
