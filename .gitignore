@@ -31,3 +31,6 @@
 /estate_manage/agents/migrations/__pycache__
 /estate_manage/agents/migrations/*.py 
 /estate_manage/houses/management
+/estate_manage/analytics/__pycache__
+/estate_manage/analytics/migrations/__pycache__
+/estate_manage/analytics/migrations/*.py 
