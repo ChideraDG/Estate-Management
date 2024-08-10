@@ -49,3 +49,6 @@
 /estate_manage/maintenances/__pycache__
 /estate_manage/maintenances/migrations/__pycache__
 /estate_manage/maintenances/migrations/*.py
+/estate_manage/leaseAgreements/__pycache__
+/estate_manage/leaseAgreements/migrations/__pycache__
+/estate_manage/leaseAgreements/migrations/*.py
