@@ -45,6 +45,13 @@ INSTALLED_APPS = [
     "houses.apps.HousesConfig",
     "tenants.apps.TenantsConfig",
     "locations.apps.LocationsConfig",
+    "agents.apps.AgentsConfig",
+    "analytics.apps.AnalyticsConfig",
+    "buyers.apps.BuyersConfig",
+    "communications.apps.CommunicationsConfig",
+    "documents.apps.DocumentsConfig",
+    "finances.apps.FinancesConfig",
+    "maintenances.apps.MaintenancesConfig",
 ]
 
 MIDDLEWARE = [
