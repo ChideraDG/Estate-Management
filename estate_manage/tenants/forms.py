@@ -6,7 +6,7 @@ class TenantForm(ModelForm):
     class Meta:
         model = Tenant
         fields = [
-            'first_name', 'last_name', 'email', 'phone_number','country', 'state', 'city', 'profile_pics', 'move_in_date', 'lease_start_date',
+            'first_name', 'last_name', 'email', 'phone_number','country', 'state', 'city', 'profile_picture', 'move_in_date', 'lease_start_date',
             'lease_end_date', 'monthly_rent', 'deposit_amount', 'lease_term', 'payment_status', 'emergency_contact_name',
             'emergency_contact_number', 'employment_status', 'occupation', 'notes'
         ]
@@ -19,7 +19,7 @@ class TenantForm(ModelForm):
             'country': 'Country',
             'state': 'State',
             'city': 'City',
-            'profile_pics': 'Profile Picture',
+            'profile_picture': 'Profile Picture',
             'move_in_date': 'Move In Date',
             'lease_start_date': 'Lease Start Date',
             'lease_end_date': 'Lease End Date',
@@ -42,7 +42,7 @@ class TenantForm(ModelForm):
             'city': forms.TextInput(attrs={ 'placeholder': 'Enter city'}),
             'country': forms.Select(attrs={ 'placeholder': 'Select country'}),
             'state': forms.Select(attrs={ 'placeholder': 'Select state'}),
-            'profile_pics': forms.FileInput(),
+            'profile_picture': forms.FileInput(),
             'move_in_date': forms.DateInput(attrs={'placeholder': 'Enter Move In Date', 'type': 'date'}),
             'lease_start_date': forms.DateInput(attrs={'placeholder': 'Enter Lease Start Date', 'type': 'date'}),
             'lease_end_date': forms.DateInput(attrs={'placeholder': 'Enter Lease End Date', 'type': 'date'}),
@@ -55,3 +55,4 @@ class TenantForm(ModelForm):
                                                         }),
 
         }
+        
