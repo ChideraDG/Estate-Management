@@ -35,6 +35,7 @@ class Buyer(models.Model):
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='buyers/', null=True, blank=True)
     budget = models.DecimalField(max_digits=12, decimal_places=2)
     preferred_property_type = models.CharField(max_length=100, choices=[
         ('residential', 'Residential'),
