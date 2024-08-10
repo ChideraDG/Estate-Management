@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "documents.apps.DocumentsConfig",
     "finances.apps.FinancesConfig",
     "maintenances.apps.MaintenancesConfig",
+    "leaseAgreements.apps.LeaseagreementsConfig"
 ]
 
 MIDDLEWARE = [
