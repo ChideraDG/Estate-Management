@@ -1,7 +1,33 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.core.exceptions import ValidationError
 from apartments.models import Apartment
 
+
+def validate_image_size(value):
+    """
+    Validates the size of an uploaded image.
+
+    Args:
+        value (File): The uploaded image file.
+
+    Raises:
+        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
+
+    Example:
+        >>> from django.core.files.uploadedfile import UploadedFile
+        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
+        >>> validate_image_size(file)
+        ValidationError: Maximum file size allowed is 1.0 MB
+    """
+    filesize = value.size
+
+    limit = 500 * 1024
+    
+    if filesize > limit:
+        raise ValidationError(f"Maximum file size allowed is {limit / (1024)} KB")
+    
+    
 class Agent(models.Model):
     """
     A model representing an agent who manages apartments within the estate management system.
@@ -60,7 +86,7 @@ class Agent(models.Model):
                                     validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                         message="Phone number must be entered in the format: '08012345678' or "
                                                 "'+2348012345678'. Up to 15 digits allowed.")])
-    profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True, validators=[validate_image_size])
     bio = models.TextField(null=True, blank=True)
     alternate_phone_number = models.CharField(max_length=20, null=True, blank=True)
     address = models.TextField(null=True, blank=True)

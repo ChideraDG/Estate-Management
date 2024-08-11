@@ -1,6 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
 from locations.models import Country, State
+from django.core.exceptions import ValidationError
+
+
+def validate_image_size(value):
+    """
+    Validates the size of an uploaded image.
+
+    Args:
+        value (File): The uploaded image file.
+
+    Raises:
+        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
+
+    Example:
+        >>> from django.core.files.uploadedfile import UploadedFile
+        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
+        >>> validate_image_size(file)
+        ValidationError: Maximum file size allowed is 1.0 MB
+    """
+    filesize = value.size
+
+    limit = 500 * 1024
+    
+    if filesize > limit:
+        raise ValidationError(f"Maximum file size allowed is {limit / (1024)} KB")
+    
 
 class Buyer(models.Model):
     """
@@ -35,7 +61,7 @@ class Buyer(models.Model):
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='buyers/', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='buyers/', null=True, blank=True, validators=[validate_image_size])
     budget = models.DecimalField(max_digits=12, decimal_places=2)
     preferred_property_type = models.CharField(max_length=100, choices=[
         ('residential', 'Residential'),
