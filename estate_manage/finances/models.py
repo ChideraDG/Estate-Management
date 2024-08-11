@@ -4,17 +4,31 @@ from leaseAgreements.models import LeaseAgreement
 
 
 class RentPayment(models.Model):
-    """This model represents individual rent payments made by tenants."""
+    """
+    Represents individual rent payments made by tenants.
+
+    Attributes
+    ----------
+    lease : ForeignKey
+        The lease agreement associated with the rent payment.
+    payment_date : date
+        The date the payment was made, automatically set to the current date.
+    amount : DecimalField
+        The amount of rent paid.
+    payment_method : str
+        The method used to make the payment, chosen from predefined options.
+    receipt : FileField, optional
+        An uploaded file representing the receipt for the payment.
+    """
 
     lease = models.ForeignKey(LeaseAgreement, on_delete=models.CASCADE, related_name='rent_payments')
     payment_date = models.DateField(auto_now_add=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.CharField(max_length=50, 
-                                      choices=[
-                                          ('bank_transfer', 'Bank Transfer'), 
-                                          ('cash', 'Cash'), 
-                                          ('online', 'Online Payment')
-                                          ])
+    payment_method = models.CharField(max_length=50, choices=[
+        ('bank_transfer', 'Bank Transfer'), 
+        ('cash', 'Cash'), 
+        ('online', 'Online Payment')
+    ])
     receipt = models.FileField(upload_to='rent_receipts/', null=True, blank=True)
     
     def __str__(self):
@@ -22,7 +36,24 @@ class RentPayment(models.Model):
 
 
 class Expense(models.Model):
-    """This model tracks the various expenses incurred in managing properties."""
+    """
+    Tracks various expenses incurred in managing properties.
+
+    Attributes
+    ----------
+    apartment : ForeignKey, optional
+        The apartment associated with the expense, nullable.
+    date : date
+        The date the expense was incurred, automatically set to the current date.
+    category : str
+        The category of the expense, chosen from predefined options.
+    amount : DecimalField
+        The amount of the expense.
+    description : str, optional
+        A description or note about the expense.
+    receipt : FileField, optional
+        An uploaded file representing the receipt for the expense.
+    """
 
     EXPENSE_CATEGORY_CHOICES = [
         ('maintenance', 'Maintenance'),
@@ -41,18 +72,37 @@ class Expense(models.Model):
     
     def __str__(self):
         return f"Expense: {self.category} - {self.amount} on {self.date}"
-    
+
 
 class FinancialReport(models.Model):
-    """This model handles the generation and storage of financial reports, 
-    such as monthly and annual reports, profit and loss statements, and budget tracking."""
+    """
+    Handles the generation and storage of financial reports, 
+    such as monthly and annual reports, profit and loss statements, and budget tracking.
 
-    report_type = models.CharField(max_length=50, 
-                                   choices=[
-                                       ('monthly', 'Monthly'), 
-                                       ('annual', 'Annual'), 
-                                       ('profit_loss', 'Profit & Loss'), 
-                                       ('budget', 'Budget')])
+    Attributes
+    ----------
+    report_type : str
+        The type of the financial report, chosen from predefined options.
+    report_date : date
+        The date for which the report is generated.
+    generated_on : datetime
+        The date and time when the report was generated, automatically set to the current date and time.
+    total_income : DecimalField
+        The total income reported.
+    total_expenses : DecimalField
+        The total expenses reported.
+    net_profit : DecimalField
+        The net profit reported.
+    report_file : FileField, optional
+        An uploaded file representing the report document.
+    """
+
+    report_type = models.CharField(max_length=50, choices=[
+        ('monthly', 'Monthly'), 
+        ('annual', 'Annual'), 
+        ('profit_loss', 'Profit & Loss'), 
+        ('budget', 'Budget')
+    ])
     report_date = models.DateField()
     generated_on = models.DateTimeField(auto_now_add=True)
     total_income = models.DecimalField(max_digits=12, decimal_places=2)
@@ -65,7 +115,20 @@ class FinancialReport(models.Model):
 
 
 class PaymentReminder(models.Model):
-    """This model is used to schedule and manage automated payment reminders for tenants."""
+    """
+    Schedules and manages automated payment reminders for tenants.
+
+    Attributes
+    ----------
+    lease : ForeignKey
+        The lease agreement associated with the payment reminder.
+    reminder_date : date
+        The date on which the reminder should be sent.
+    message : str
+        The message content of the reminder.
+    sent : bool
+        Indicates whether the reminder has been sent.
+    """
 
     lease = models.ForeignKey(LeaseAgreement, on_delete=models.CASCADE, related_name='payment_reminders')
     reminder_date = models.DateField()
@@ -77,7 +140,24 @@ class PaymentReminder(models.Model):
     
 
 class Receipt(models.Model):
-    """This model generates and stores receipts for both rent payments and expenses."""
+    """
+    Generates and stores receipts for both rent payments and expenses.
+
+    Attributes
+    ----------
+    receipt_type : str
+        The type of the receipt, either 'Rent' or 'Expense'.
+    payment : ForeignKey, optional
+        The rent payment associated with the receipt, nullable.
+    expense : ForeignKey, optional
+        The expense associated with the receipt, nullable.
+    receipt_number : str
+        A unique identifier for the receipt.
+    generated_on : datetime
+        The date and time when the receipt was generated, automatically set to the current date and time.
+    receipt_file : FileField, optional
+        An uploaded file representing the receipt document.
+    """
 
     receipt_type = models.CharField(max_length=50, choices=[('rent', 'Rent'), ('expense', 'Expense')])
     payment = models.ForeignKey(RentPayment, on_delete=models.CASCADE, related_name='receipts', null=True, blank=True)
@@ -103,4 +183,3 @@ class Receipt(models.Model):
         else:
             new_number = 1
         return f'ESM-{new_number:08}'
-
