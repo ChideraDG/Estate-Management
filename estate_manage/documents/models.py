@@ -3,11 +3,31 @@ from django.contrib.auth.models import User
 from apartments.models import Apartment
 from leaseAgreements.models import LeaseAgreement
 
-
 class Document(models.Model):
-    """This model represents a document stored in the system. It includes metadata such 
-    as the document type, the user who uploaded it, and related properties or leases."""
+    """
+    Represents a document stored in the system, including metadata such as the 
+    document type, the user who uploaded it, and any related properties or leases.
 
+    Attributes
+    ----------
+    title : str
+        The title of the document.
+    file : FileField
+        The file associated with the document.
+    document_type : str
+        The type of the document, chosen from predefined options.
+    uploaded_by : User
+        The user who uploaded the document.
+    related_apartment : Apartment, optional
+        The apartment related to the document, nullable.
+    related_lease : LeaseAgreement, optional
+        The lease agreement related to the document, nullable.
+    upload_date : datetime
+        The date and time when the document was uploaded (auto-generated).
+    shared_with : ManyToManyField
+        Users with whom the document is shared.
+    """
+    
     DOCUMENT_TYPE_CHOICES = [
         ('lease_agreement', 'Lease Agreement'),
         ('property_document', 'Property Document'),
@@ -30,9 +50,22 @@ class Document(models.Model):
 
 
 class DocumentSharing(models.Model):
-    """This model manages the sharing of documents with specific users, such as 
-    tenants, service providers, and company stakeholders."""
+    """
+    Manages the sharing of documents with specific users, such as tenants, service providers, 
+    and company stakeholders.
 
+    Attributes
+    ----------
+    document : Document
+        The document that is being shared.
+    shared_with : User
+        The user with whom the document is shared.
+    shared_date : datetime
+        The date and time when the document was shared (auto-generated).
+    access_granted : bool
+        Indicates whether access to the document is granted, default is True.
+    """
+    
     document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='sharings')
     shared_with = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_documents')
     shared_date = models.DateTimeField(auto_now_add=True)
