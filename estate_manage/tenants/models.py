@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from apartments.models import Apartment
@@ -85,4 +86,3 @@ class Tenant(models.Model):
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
-                                                
