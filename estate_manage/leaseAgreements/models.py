@@ -72,6 +72,19 @@ class LeaseAgreement(models.Model):
     
 
 class Reminder(models.Model):
+    """
+    Represents a reminder associated with a lease agreement.
+
+    Attributes
+    ----------
+    lease : ForeignKey
+        The lease agreement that the reminder is associated with.
+    reminder_date : date
+        The date on which the reminder is scheduled to be sent.
+    message : str
+        The content of the reminder message.
+    """
+
     lease = models.ForeignKey(LeaseAgreement, on_delete=models.CASCADE, related_name='reminders')
     reminder_date = models.DateField()
     message = models.TextField()
