@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from apartments.models import Apartment
@@ -53,16 +54,15 @@ class Tenant(models.Model):
     last_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False, unique=True,
-                                     validators=[RegexValidator(
-                                         r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
+                                     validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                          message="Phone number must be entered in the format: '08012345678' or "
                                                  "'+2348012345678'. Up to 15 digits allowed.")])  
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='tenant', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='tenant', null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
-    profile_pics = models.ImageField(blank=True, null=True, upload_to='tenants-profile-pics/', 
+    profile_picture = models.ImageField(blank=True, null=True, upload_to='tenants-profile-pics/', 
                              validators=[validate_image_size])
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenant') 
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenants') 
     move_in_date = models.DateField(null=True, blank=True)
     lease_start_date = models.DateField(null=True, blank=True)
     lease_end_date = models.DateField(null=True, blank=True)
@@ -86,4 +86,3 @@ class Tenant(models.Model):
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
-                                                

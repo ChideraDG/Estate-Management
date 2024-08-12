@@ -52,9 +52,11 @@ def viewProfile(request, pk):
 
 def deleteProfile(request, pk):
     profile = BuildingOwner.objects.get(id=pk)
+
     if request.method == 'POST':
         profile.delete()
         return redirect('building-owner-home')
+    
     context = {'obj': profile}
     return render(request, 'building_owners/deleteOwner.html', context)
 
