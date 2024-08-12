@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from django.core.validators import RegexValidator
@@ -29,7 +28,6 @@ class Buyer(models.Model):
         >>> buyer.save()
     """
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False,

@@ -5,8 +5,8 @@ from .models import Buyer
 from .forms import BuyerForm
 
 def buyerHome(request):
-    profile = Buyer.objects.all()
-    context = {'profile': profile}
+    profiles = Buyer.objects.all()
+    context = {'profiles': profiles}
     return render(request, 'buyers/buyerHome.html', context)
 
 def createBuyer(request):
@@ -26,13 +26,37 @@ def createBuyer(request):
     return render(request, 'buyers/buyerReg.html', context)
 
 def updateBuyer(request, pk):
-    pass
+    countries = Country.objects.all()
+    profile = Buyer.objects.get(id=pk)
+    form = BuyerForm(instance=profile)
+
+
+    if request.method == 'POST':
+        form = BuyerForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            buyer = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            if buyer.full_name:
+                buyer.full_name = buyer.full_name.strip().title()
+            buyer.save()
+            return redirect('buyer-home')
+
+    context = {'form': form, 'countries': countries, 'profile':profile}
+    return render(request, 'buyers/buyerReg.html', context)
 
 def viewBuyer(request, pk):
-    pass
+    buyer = Buyer.objects.get(id=pk)
+    context = {'buyer': buyer}
+    return render(request, 'buyers/viewBuyer.html', context)
 
 def deleteBuyer(request, pk):
-    pass
+    profile = Buyer.objects.get(id=pk)
+
+    if request.method == 'POST':
+        profile.delete()
+        return redirect('buyer-home')
+    
+    context = {'obj': profile}
+    return render(request, 'buyers/deleteBuyer.html', context)
 
 def get_states(request):
     country_id = request.GET.get('country_id')
