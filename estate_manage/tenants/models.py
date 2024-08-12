@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from apartments.models import Apartment
