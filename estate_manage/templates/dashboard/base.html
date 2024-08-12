@@ -7,5 +7,17 @@
             <p style="font-size: 30px">Dashboard still in construction....</p>
         <hr>
         <h1>This user is a {{ user.designation}}</h1>
+
+        {% if user.designation == "buyer" %}
+            <a href="{% url 'buyer-home' %}">Go to Buyer Home</a>
+        {% elif user.designation == "company" %}
+            <a href="{% url 'company-home' %}">Go to Company Home</a>
+        {% elif user.designation == "tenant" %}
+            <a href="{% url 'tenant-home' %}">Go to Tenant Home</a>
+        {% elif user.designation == "building owner" %}
+            <a href="{% url 'building-owner-home' %}">Go to Building owners Home</a>
+        {% else %}
+            <p>No dashboard available for this designation.</p>
+        {% endif %}
     </div>
 {% endblock content %}
