@@ -33,10 +33,10 @@
                 <td><i class="ri-account-circle-fill"></i> {{ profile.name }}</td>
                 <td><i class="bi bi-geo-alt-fill"></i> {{ profile.address }}</td>
                 <td>
-                    <a style="text-decoration: None" href="{% url 'view-company' profile.id %}">
-                        <i class="ri-eye-fill"></i></a> |
-                    <a style="text-decoration: None" href="{% url 'update-company' profile.id %}">
-                        <i class="ri-add-box-fill"></i></a> |
+                    <a href="{% url 'view-company' profile.id %}">View
+                    </a> |
+                    <a href="{% url 'update-company' profile.id %}">Edit
+                        </a> |
                     <a style="text-decoration: None" href="{% url 'delete-company' profile.id %}">
                         <i class="bi bi-trash"></i></a>
                 </td>
