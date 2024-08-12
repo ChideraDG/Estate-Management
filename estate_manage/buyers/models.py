@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from locations.models import Country, State
+from django.core.validators import MinValueValidator
+from django.core.validators import RegexValidator
 
 class Buyer(models.Model):
     """
@@ -30,12 +32,17 @@ class Buyer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=20)
-    address = models.TextField()
+    phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False,
+                                     validators=[RegexValidator(
+                                         r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
+                                         message="Phone number must be entered in the format: '08012345678' or "
+                                                 "'+2348012345678'. Up to 15 digits allowed.")])
+    address = models.TextField(null=True, blank=True)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
-    budget = models.DecimalField(max_digits=12, decimal_places=2)
+    budget = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, default=0.00,
+                                             validators=[MinValueValidator(0)])
     preferred_property_type = models.CharField(max_length=100, choices=[
         ('residential', 'Residential'),
         ('commercial', 'Commercial'),
