@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import glob
 import os
 from pathlib import Path
 
@@ -27,6 +28,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Automatically find all apps and generate the AppConfig paths
+app_configs = []
+for app_dir in glob.glob(os.path.join(BASE_DIR, '*/apps.py')):
+    app_name = os.path.basename(os.path.dirname(app_dir))
+    if app_name == 'building_owners':
+        continue
+    app_config = f"{app_name}.apps.{app_name.capitalize()}Config"
+    app_configs.append(app_config)
+
 
 # Application definition
 
@@ -37,16 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users.apps.UsersConfig",
-    "companies.apps.CompaniesConfig",
-    "estates.apps.EstatesConfig",
-    "apartments.apps.ApartmentsConfig",
     "building_owners.apps.BuildingOwnersConfig",
-    "houses.apps.HousesConfig",
-    "tenants.apps.TenantsConfig",
-    "locations.apps.LocationsConfig",
-    "buyers.apps.BuyersConfig",
-]
+] + app_configs
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
