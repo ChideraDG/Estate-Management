@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import Profile
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from apartments.models import Apartment
@@ -49,6 +50,8 @@ class Tenant(models.Model):
         ('student', 'Student'),
     ]
 
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                              related_name='tenants')
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)

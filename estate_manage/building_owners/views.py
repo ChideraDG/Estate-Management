@@ -65,3 +65,7 @@ def get_states(request):
     states = State.objects.filter(country_id=country_id).order_by('name')
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
+
+def buildingOwnerDashboard(request, pk):
+    context = {'username': pk}
+    return render(request, "building_owners/BO_dashboard.html", context)

@@ -12,11 +12,12 @@
     }
   
 </style>
+{% block styling %}{% endblock styling %}
     <div style="padding: 100px">
-        <h1>Welcome {{user.username}}</h1>
+        <h1>Welcome {{ request.user.profile.username.title }}</h1>
             <p style="font-size: 30px">Dashboard still in construction....</p>
         <hr>
-        <h1>This user is a {{ user.designation}}</h1>
+        <h1>This user is a {{ request.user.profile.designation}}</h1>
 
         {% if user.designation == "buyer" %}
             <a id="home" href="{% url 'buyer-home' %}">Go to Buyer Home</a>
@@ -126,48 +127,8 @@
                 <li><a href="">Documentation</a></li>
             </ul>
 
-        {% elif user.designation == "building_owner" %}
-            <a id="home" href="{% url 'building-owner-home' %}">Go to Building owners Home</a>
-            <h6>Overview section</h6>
-            <ul>
-                <li><a href="#">Property summary</a></li>
-                <li><a href="">Tenant Overview</a></li>
-                <li><a href="">Finanacial Snapshot</a></li>
-            </ul>
-            <h6>Tenant Management</h6>
-            <ul>
-                <li><a href="">Tenant Profiles</a></li>
-                <li><a href="">Lease Management</a></li>
-                <li><a href="">Communication Tools</a></li>
-            </ul>
-            <h6>Financial Management</h6>
-            <ul>
-                <li><a href="">Rent Collection</a></li>
-                <li><a href="">Expense Tracking</a></li>
-                <li><a href="">Financial Reports</a></li>
-            </ul>
-            <h6>Maintenance Management</h6>
-            <ul>
-                <li><a href="">Maintenance Requests</a></li>
-                <li><a href="">Service Schedule</a></li>
-                <li><a href="">Service Provider Management</a></li>
-            </ul>
-            <h6>Service Provider Management</h6>
-            <ul>
-                <li><a href="">Document Storage</a></li>
-                <li><a href="">Document Sharing</a></li>
-            </ul>
-            <h6>Analytics and Reporting</h6>
-            <ul>
-                <li><a href="">Real-time Analytics</a></li>
-                <li><a href="">Custom Reports</a></li>
-                <li><a href="">Forecasting Tools</a></li>
-            </ul>
-            <h6>User Management</h6>
-            <ul>
-                <li><a href="">Access Control</a></li>
-                <li><a href="">Activity Logs</a></li>
-            </ul>
+        {% elif request.user.profile.designation == "building_owner" %}
+            {% block BO %}{% endblock BO %}
 
         {% elif user.designation == "agent" %}
             <h6>Overview Section</h6>

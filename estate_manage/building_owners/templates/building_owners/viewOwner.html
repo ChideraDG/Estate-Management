@@ -1,15 +1,10 @@
-{% extends 'base.html'%}
+{% comment %} {% extends 'base.html'%} {% endcomment %}
 
-
+<h1></h1>
 {% block content%}
-<style>
-    .form-container{
-      margin-top: 110px;
-    }
-</style>
 
 <div class="form-container">
-    <h1 style="color: #007bff;">{{ profile.building_owner_name }}'s Profile</h1>
+    <h1 style="color: #007bff;">{{ request.user.profile.name }}'s Profile</h1>
     <p><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</p>
     <p><strong>Contact Email:</strong> {{ profile.contact_email }}</p>
     <p><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</p>
