@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<style>
-    li{
-        list-style-type: none;
-    }
-
-    h6{
-        margin-top: 10px;
-    }
-  
-</style>
     <div style="padding: 100px">
         <h1>Welcome {{ request.user.profile.name.title }}</h1>
             <p style="font-size: 30px">Dashboard still in construction....</p>
@@ -30,63 +19,7 @@
             {% block BO %}{% endblock BO %}
 
         {% elif request.user.profile.designation == "agent" %}
-            <h6>Overview Section</h6>
-            <ul>
-                <li><a href="">Portfolio Summary</a></li>
-                <li><a href="">Financial Snapshot</a></li>
-                <li><a href="">Key Performance Indicators (KPIs)</a></li>
-            </ul>
-            <h6>Property Management</h6>
-            <ul>
-                <li><a href="">Property Listings</a></li>
-                <li><a href="">Lease Managemen</a></li>
-                <li><a href="">Tenant Information</a></li>
-            </ul>
-            <h6>Tenant Management</h6>
-            <ul>
-                <li><a href="">Tenant Profiles</a></li>
-                <li><a href="">Communication Tools</a></li>
-                <li><a href="">Lease Renewals and Terminations</a></li>
-            </ul>
-            <h6>Financial Management</h6>
-            <ul>
-                <li><a href="">Rent Collection</a></li>
-                <li><a href="">Expense Tracking</a></li>
-                <li><a href="">Financial Reporting</a></li>
-            </ul>
-            <h6>Maintenance Management</h6>
-            <ul>
-                <li><a href="">Work Orders</a></li>
-                <li><a href="">Maintenance Schedule</a></li>
-                <li><a href="">Service Providers</a></li>
-            </ul>
-            <h6>Document Management</h6>
-            <ul>
-                <li><a href="">Document Storage</a></li>
-                <li><a href="">Document Sharing</a></li>
-            </ul>
-            <h6>Analytics and Reporting</h6>
-            <ul>
-                <li><a href="">Real-time Analytics</a></li>
-                <li><a href="">Custom Reports</a></li>
-                <li><a href="">Forecasting Tools</a></li>
-            </ul>
-            <h6>User Management</h6>
-            <ul>
-                <li><a href="">Access Contro</a></li>
-                <li><a href="">User Activity Logs</a></li>
-            </ul>
-            <h6>Marketing Tools</h6>
-            <ul>
-                <li><a href="">Property Listings Management</a></li>
-                <li><a href="">Lead Management</a></li>
-                <li><a href="">Advertising Tools</a></li>
-            </ul>
-            <h6>Community Features</h6>
-            <ul>
-                <li><a href="">Community Announcements</a></li>
-                <li><a href="">Feedback and Surveys</a></li>
-            </ul>
+            {% block agent %}{% endblock agent %}
 
         {% else %}
             <p>No dashboard available for this designation.</p>
