@@ -84,7 +84,7 @@ class BuildingOwner(models.Model):
                                          r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                          message="Phone number must be entered in the format: '08012345678' or "
                                                  "'+2348012345678'. Up to 15 digits allowed.")])
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='building_owner')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='building_owners')
     address = models.TextField(blank=True, null=True)
     profile_pics = models.ImageField(blank=True, null=True, upload_to='building-owner-profile-pics/', 
                              validators=[validate_image_size])
