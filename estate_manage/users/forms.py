@@ -123,6 +123,11 @@ class LoginForm(forms.Form):
         username_or_email = self.cleaned_data.get('username_or_email')
 
         user = User.objects.filter(username=username_or_email)
+
+        for i in user:
+            if not i.is_active:
+                raise forms.ValidationError('Username or Email does not exist')
+
         if not user.exists():
             user = User.objects.filter(email=username_or_email)
             if not user.exists():

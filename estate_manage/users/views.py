@@ -100,7 +100,6 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 @login_required(login_url='login')
 def dashboard(request):
-
     user = request.user.profile
 
     context = {'user': user}
