@@ -12,20 +12,19 @@
     }
   
 </style>
-{% block styling %}{% endblock styling %}
     <div style="padding: 100px">
         <h1>Welcome {{ request.user.profile.username.title }}</h1>
             <p style="font-size: 30px">Dashboard still in construction....</p>
         <hr>
-        <h1>This user is a {{ request.user.profile.designation}}</h1>
+        <h1>This user is a {{ request.user.profile.designation }}</h1>
 
-        {% if user.designation == "buyer" %}
+        {% if request.user.profile.designation == "buyer" %}
             <a id="home" href="{% url 'buyer-home' %}">Go to Buyer Home</a>
             <ul>
                 <li><a href="#"></a></li>
             </ul>
 
-        {% elif user.designation == "company" %}
+        {% elif request.user.profile.designation == "company" %}
             <a id="home" href="{% url 'company-home' %}">Go to Company Home</a>
             <h6>Overview Section</h6>
             <ul>
@@ -75,7 +74,7 @@
             </ul>
 
 
-        {% elif user.designation == "tenant" %}
+        {% elif request.user.profile.designation == "tenant" %}
             <a id="home" href="{% url 'tenant-home' %}">Go to Tenant Home</a>
             <h6>Tenant Overview</h6>
             <ul>
@@ -130,7 +129,7 @@
         {% elif request.user.profile.designation == "building_owner" %}
             {% block BO %}{% endblock BO %}
 
-        {% elif user.designation == "agent" %}
+        {% elif request.user.profile.designation == "agent" %}
             <h6>Overview Section</h6>
             <ul>
                 <li><a href="">Portfolio Summary</a></li>
