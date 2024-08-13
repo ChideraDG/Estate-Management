@@ -30,8 +30,8 @@ class Buyer(models.Model):
         >>> buyer.save()
     """
 
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
-                              related_name='buyers')
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                                related_name='buyers')
     full_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False,
