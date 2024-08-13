@@ -1,3 +1,231 @@
 {% extends "dashboard/base.html" %}
 
-{% block buyer %}{% endblock buyer %}
+{% block buyer %}
+    <style>
+        .containers {
+            display: flex;
+            width: 100%;
+        }
+
+        .left-side {
+            width: 20%;
+            padding-right: 10px;
+        }
+
+        .vertical-line {
+            width: 5px;
+            background-color: #2ed162;
+            margin: 0 20px;
+        }
+
+        .right-side {
+            width: 80%;
+            padding-left: 10px;
+            border-left: 1px solid #ddd; /* Optional border to define the content area */
+        }
+
+        h6 {
+            cursor: pointer;
+            background-color: #f1f1f1;
+            padding: 20px;
+            margin: 0;
+            border: 1px solid #ddd;
+        }
+
+        .mylist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none; /* Hide the dropdown content by default */
+        }
+
+        .mylist li {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-top: none; /* Remove the top border to make it look like a continuation */
+            background-color: #fafafa;
+        }
+
+        .mylist li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .mylist li a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .content {
+            display: none; /* Hide content by default */
+        }
+
+        .content.active {
+            display: block; /* Show the active content */
+        }
+    </style>
+
+    <div class="containers">
+        <div class="left-side">
+            <h6>Overview Section</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="property-listings">Property Listings</a></li>
+                <li><a href="#" data-content="saved-searches">Saved Searches</a></li>
+                <li><a href="#" data-content="market-trends">Market Trends</a></li>
+            </ul>
+            
+            <h6>Property Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="property-details">Property Details</a></li>
+                <li><a href="#" data-content="comparison-tool">Comparison Tool</a></li>
+                <li><a href="#" data-content="offer-management">Offer Management</a></li>
+            </ul>
+    
+            <h6>Financial Tools</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="mortgage-calculator">Mortgage Calculator</a></li>
+                <li><a href="#" data-content="budget-tracking">Budget Tracking</a></li>
+                <li><a href="#" data-content="investment-analysis">Investment Analysis</a></li>
+            </ul>
+    
+            <h6>Document Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="document-storage">Document Storage</a></li>
+                <li><a href="#" data-content="document-sharing">Document Sharing</a></li>
+            </ul>
+    
+            <h6>Communication Tools</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="agent-interaction">Agent Interaction</a></li>
+                <li><a href="#" data-content="notifications">Notifications</a></li>
+                <li><a href="#" data-content="feedback-system">Feedback System</a></li>
+            </ul>
+    
+            <h6>Analytics and Reporting</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="market-analytics">Property Market Analytics</a></li>
+                <li><a href="#" data-content="financial-reports">Financial Reports</a></li>
+                <li><a href="#" data-content="custom-dashboard">Customizable Dashboards</a></li>
+            </ul>
+    
+            <h6>User Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="profile-management">Profile Management</a></li>
+                <li><a href="{% url 'logout' %}" data-content="logout">Logout</a></li>
+            </ul>
+        </div>
+    
+        <div class="vertical-line"></div>
+    
+        <div class="right-side">
+            <div id="property-listings" class="content">
+                <h2>Property Listings</h2>
+                <p>Details about the property listings...</p>
+            </div>
+            <div id="saved-searches" class="content">
+                <h2>Saved Searches</h2>
+                <p>List of your saved searches...</p>
+            </div>
+            <div id="market-trends" class="content">
+                <h2>Market Trends</h2>
+                <p>Overview of the current market trends...</p>
+            </div>
+            <div id="property-details" class="content">
+                <h2>Property Details</h2>
+                <p>Detailed information about selected properties...</p>
+            </div>
+            <div id="comparison-tool" class="content">
+                <h2>Comparison Tool</h2>
+                <p>Compare multiple properties...</p>
+            </div>
+            <div id="offer-management" class="content">
+                <h2>Offer Management</h2>
+                <p>Track and manage your offers...</p>
+            </div>
+            <div id="mortgage-calculator" class="content">
+                <h2>Mortgage Calculator</h2>
+                <p>Estimate mortgage payments...</p>
+            </div>
+            <div id="budget-tracking" class="content">
+                <h2>Budget Tracking</h2>
+                <p>Track your budget and expenses...</p>
+            </div>
+            <div id="investment-analysis" class="content">
+                <h2>Investment Analysis</h2>
+                <p>Analyze potential returns on investment...</p>
+            </div>
+            <div id="document-storage" class="content">
+                <h2>Document Storage</h2>
+                <p>Store and manage your important documents...</p>
+            </div>
+            <div id="document-sharing" class="content">
+                <h2>Document Sharing</h2>
+                <p>Share documents with agents and other stakeholders...</p>
+            </div>
+            <div id="agent-interaction" class="content">
+                <h2>Agent Interaction</h2>
+                <p>Communicate with your real estate agent...</p>
+            </div>
+            <div id="notifications" class="content">
+                <h2>Notifications</h2>
+                <p>Receive alerts and notifications...</p>
+            </div>
+            <div id="feedback-system" class="content">
+                <h2>Feedback System</h2>
+                <p>Provide feedback on properties and services...</p>
+            </div>
+            <div id="market-analytics" class="content">
+                <h2>Property Market Analytics</h2>
+                <p>Analyze market data and trends...</p>
+            </div>
+            <div id="financial-reports" class="content">
+                <h2>Financial Reports</h2>
+                <p>Generate and view financial reports...</p>
+            </div>
+            <div id="custom-dashboard" class="content">
+                <h2>Customizable Dashboards</h2>
+                <p>Customize your dashboard layout and widgets...</p>
+            </div>
+            <div id="profile-management" class="content">
+                <h2>Profile Management</h2>
+                <p>Manage your profile and preferences...</p>
+            </div>
+            <div id="logout" class="content">
+                <h2>Logout</h2>
+                <p>You have successfully logged out...</p>
+            </div>
+    
+            <!-- Add more content sections as needed -->
+        </div>
+    </div>
+    
+    <script>
+        // JavaScript to toggle the visibility of the dropdown content
+        document.querySelectorAll('h6').forEach(header => {
+            header.addEventListener('click', () => {
+                const ul = header.nextElementSibling;
+                ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // JavaScript to display the right-side content
+        document.querySelectorAll('.left-side .mylist li a').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent the default link behavior
+                const contentId = link.getAttribute('data-content');
+
+                // Hide all content
+                document.querySelectorAll('.right-side .content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Show the selected content
+                const contentToShow = document.getElementById(contentId);
+                if (contentToShow) {
+                    contentToShow.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+{% endblock buyer %}
