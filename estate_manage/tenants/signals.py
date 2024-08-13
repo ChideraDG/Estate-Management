@@ -28,6 +28,6 @@ def createBuyerProfile(sender, instance, created, **kwargs):
         if user.designation == 'tenant':
             Tenant.objects.create(
                 user=user,
-                name=user.first_name,
+                first_name=user.name,
                 email=user.email,
             )

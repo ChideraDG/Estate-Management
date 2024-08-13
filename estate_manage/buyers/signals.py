@@ -28,6 +28,6 @@ def createBuyerProfile(sender, instance, created, **kwargs):
         if user.designation == 'buyer':
             Buyer.objects.create(
                 user=user,
-                name=user.full_name,
+                full_name=user.name,
                 email=user.email,
             )
