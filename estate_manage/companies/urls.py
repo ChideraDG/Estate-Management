@@ -23,5 +23,5 @@ urlpatterns = [
     path('company-home/', companyHome, name='company-home'),
     path('view/<str:pk>/', viewCompany, name='view-company'),
     path('delete/<str:pk>/', deleteCompany, name='delete-company'),
-    path('<str:pk>/', companyDashboard, name='C_dashboard'),
+    path('<str:pk>/', companyDashboard, name='dashboard-C'),
 ]

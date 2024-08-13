@@ -8,5 +8,5 @@ urlpatterns = [
     path('update/<str:pk>/', updateTenant, name='update-tenant'),
     path('view/<str:pk>/', viewTenant, name='view-tenant'),
     path('delete/<str:pk>/', deleteTenant, name='delete-tenant'),
-    path('<str:pk>/', tenantDashboard, name='T_dashboard'),
+    path('<str:pk>/', tenantDashboard, name='dashboard-T'),
 ]
