@@ -91,8 +91,8 @@ class BuildingOwner(models.Model):
     address = models.TextField(blank=True, null=True)
     profile_pics = models.ImageField(blank=True, null=True, upload_to='building-owner-profile-pics/', 
                              validators=[validate_image_size])
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='building_owner', null=True, blank=True)
-    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='building_owner', null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='building_owners', null=True, blank=True)
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='building_owners', null=True, blank=True)
     city = models.CharField(max_length=200, blank=True, null=True)
     portfolio_size = models.PositiveIntegerField(validators=[MinValueValidator(1)], default=1, null=True, blank=True, )
     investment_strategy = models.CharField(max_length=200, choices=DESIGNATION, null=True, blank=True, )
