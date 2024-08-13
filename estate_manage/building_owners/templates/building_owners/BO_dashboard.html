@@ -166,32 +166,45 @@
     </div>
 
     <script>
-        // JavaScript to toggle the visibility of the dropdown content
-        document.querySelectorAll('h6').forEach(header => {
-            header.addEventListener('click', () => {
-                const ul = header.nextElementSibling;
-                ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-
-        // JavaScript to display the right-side content
-        document.querySelectorAll('.left-side .mylist li a').forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent the default link behavior
-                const contentId = link.getAttribute('data-content');
-
-                // Hide all content
-                document.querySelectorAll('.right-side .content').forEach(content => {
-                    content.classList.remove('active');
-                });
-
-                // Show the selected content
-                const contentToShow = document.getElementById(contentId);
-                if (contentToShow) {
-                    contentToShow.classList.add('active');
+        document.addEventListener("DOMContentLoaded", function() {
+            // Automatically display the first content section on page load
+            const firstLink = document.querySelector('.left-side .mylist li a');
+            if (firstLink) {
+                const firstContentId = firstLink.getAttribute('data-content');
+                const firstContentToShow = document.getElementById(firstContentId);
+                if (firstContentToShow) {
+                    firstContentToShow.classList.add('active');
                 }
+            }
+    
+            // JavaScript to toggle the visibility of the dropdown content
+            document.querySelectorAll('h6').forEach(header => {
+                header.addEventListener('click', () => {
+                    const ul = header.nextElementSibling;
+                    ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+    
+            // JavaScript to display the right-side content
+            document.querySelectorAll('.left-side .mylist li a').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent the default link behavior
+                    const contentId = link.getAttribute('data-content');
+    
+                    // Hide all content
+                    document.querySelectorAll('.right-side .content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+    
+                    // Show the selected content
+                    const contentToShow = document.getElementById(contentId);
+                    if (contentToShow) {
+                        contentToShow.classList.add('active');
+                    }
+                });
             });
         });
     </script>
+    
 
 {% endblock BO %}
