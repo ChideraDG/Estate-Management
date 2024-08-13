@@ -28,6 +28,6 @@ def createBuildingOwnerProfile(sender, instance, created, **kwargs):
         if user.designation == 'building_owner':
             BuildingOwner.objects.create(
                 user=user,
-                name=user.building_owner_name,
-                email=user.contact_emaill,
+                building_owner_name=user.name,
+                contact_email=user.emaill,
             )
