@@ -29,5 +29,5 @@ def createBuildingOwnerProfile(sender, instance, created, **kwargs):
             BuildingOwner.objects.create(
                 user=user,
                 building_owner_name=user.name,
-                contact_email=user.emaill,
+                contact_email=user.email,
             )
