@@ -67,66 +67,65 @@
 
     <div class="containers">
         <div class="left-side">
-            <h6>Overview section</h6>
+            <h6>Overview Section</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="personal-info">Property summary</a></li>
+                <li><a href="#" data-content="personal-info">Property Summary</a></li>
                 <li><a href="#" data-content="lease-info">Tenant Overview</a></li>
-                <li><a href="#" data-content="payment-history">Finanacial Snapshot</a></li>
+                <li><a href="#" data-content="payment-history">Financial Snapshot</a></li>
             </ul>
             
             <h6>House Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="rent-portal">House Profiles</a></li>
-                <li><a href="#" data-content="payment-reminders">House Reports</a></li>
+                <li><a href="#" data-content="house-profiles">House Profiles</a></li>
+                <li><a href="#" data-content="house-reports">House Reports</a></li>
             </ul>
-
+    
             <h6>Tenant Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="rent-portal">Tenant Profiles</a></li>
-                <li><a href="#" data-content="payment-reminders">Lease Management</a></li>
-                <li><a href="#" data-content="receipt-generation">Communication Tools</a></li>
+                <li><a href="#" data-content="tenant-profiles">Tenant Profiles</a></li>
+                <li><a href="#" data-content="lease-management">Lease Management</a></li>
+                <li><a href="#" data-content="communication-tools">Communication Tools</a></li>
             </ul>
-
+    
             <h6>Financial Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="request-submission">Rent Collection</a></li>
-                <li><a href="#" data-content="tracking-updates">Expense Tracking</a></li>
-                <li><a href="#" data-content="service-info">Financial Reports</a></li>
+                <li><a href="#" data-content="rent-collection">Rent Collection</a></li>
+                <li><a href="#" data-content="expense-tracking">Expense Tracking</a></li>
+                <li><a href="#" data-content="financial-reports">Financial Reports</a></li>
             </ul>
             
             <h6>Maintenance Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="request-submission">Maintenance Requests</a></li>
-                <li><a href="#" data-content="tracking-updates">Service Schedule</a></li>
-                <li><a href="#" data-content="service-info">Service Provider Management</a></li>
+                <li><a href="#" data-content="maintenance-requests">Maintenance Requests</a></li>
+                <li><a href="#" data-content="service-schedule">Service Schedule</a></li>
+                <li><a href="#" data-content="service-provider-management">Service Provider Management</a></li>
             </ul>
-
+    
             <h6>Document Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="request-submission">Document Storage</a></li>
-                <li><a href="#" data-content="request-submission">Document Sharing</a></li>
+                <li><a href="#" data-content="document-storage">Document Storage</a></li>
+                <li><a href="#" data-content="document-sharing">Document Sharing</a></li>
             </ul>
-
+    
             <h6>Analytics and Reporting</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="request-submission">Real-time Analytics</a></li>
-                <li><a href="#" data-content="request-submission">Custom Reports</a></li>
-                <li><a href="#" data-content="request-submission">Forecasting Tools</a></li>
+                <li><a href="#" data-content="real-time-analytics">Real-time Analytics</a></li>
+                <li><a href="#" data-content="custom-reports">Custom Reports</a></li>
+                <li><a href="#" data-content="forecasting-tools">Forecasting Tools</a></li>
             </ul>
-
+    
             <h6>User Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="request-submission">Profile</a></li>
-                <li><a href="{% url 'logout' %}" data-content="request-submission">Logout</a></li>
+                <li><a href="#" id="show-profile" data-content="profile">Profile</a></li>
+                <li><a href="#" data-content="activity">Activity Logs</a></li>
             </ul>
         </div>
-
+    
         <div class="vertical-line"></div>
-
+    
         <div class="right-side">
             <div id="personal-info" class="content">
-                {% include "building_owners/viewOwner.html" %}
-                <p>Details about the tenant's personal information...</p>
+                <h2>Property Summary</h2>
             </div>
             <div id="lease-info" class="content">
                 <h2>Lease Information</h2>
@@ -136,39 +135,85 @@
                 <h2>Payment History</h2>
                 <p>Details about the payment history...</p>
             </div>
-            <div id="rent-portal" class="content">
-                <h2>Rent Payment Portal</h2>
-                <p>Access the rent payment portal...</p>
+            <div id="house-profiles" class="content">
+                <h2>House Profiles</h2>
+                <p>Details about house profiles...</p>
             </div>
-            <div id="payment-reminders" class="content">
-                <h2>Payment Reminders</h2>
-                <p>Set up and manage payment reminders...</p>
+            <div id="house-reports" class="content">
+                <h2>House Reports</h2>
+                <p>View house reports...</p>
             </div>
-            <div id="receipt-generation" class="content">
-                <h2>Receipt Generation</h2>
-                <p>Generate and view rent receipts...</p>
+            <div id="tenant-profiles" class="content">
+                <h2>Tenant Profiles</h2>
+                <p>View and manage tenant profiles...</p>
             </div>
-            <div id="request-submission" class="content">
-                <h2>Request Submission</h2>
-                <p>Submit maintenance requests...</p>
+            <div id="lease-management" class="content">
+                <h2>Lease Management</h2>
+                <p>Manage lease agreements...</p>
             </div>
-            <div id="tracking-updates" class="content">
-                <h2>Tracking and Updates</h2>
-                <p>Track and receive updates on maintenance requests...</p>
+            <div id="communication-tools" class="content">
+                <h2>Communication Tools</h2>
+                <p>Access communication tools...</p>
             </div>
-            <div id="service-info" class="content">
-                <h2>Service Provider Information</h2>
-                <p>Details about the service providers...</p>
+            <div id="rent-collection" class="content">
+                <h2>Rent Collection</h2>
+                <p>Manage rent collection...</p>
             </div>
-
+            <div id="expense-tracking" class="content">
+                <h2>Expense Tracking</h2>
+                <p>Track expenses...</p>
+            </div>
+            <div id="financial-reports" class="content">
+                <h2>Financial Reports</h2>
+                <p>View financial reports...</p>
+            </div>
+            <div id="maintenance-requests" class="content">
+                <h2>Maintenance Requests</h2>
+                <p>Submit and manage maintenance requests...</p>
+            </div>
+            <div id="service-schedule" class="content">
+                <h2>Service Schedule</h2>
+                <p>View service schedules...</p>
+            </div>
+            <div id="service-provider-management" class="content">
+                <h2>Service Provider Management</h2>
+                <p>Manage service providers...</p>
+            </div>
+            <div id="document-storage" class="content">
+                <h2>Document Storage</h2>
+                <p>Store and manage documents...</p>
+            </div>
+            <div id="document-sharing" class="content">
+                <h2>Document Sharing</h2>
+                <p>Share documents securely...</p>
+            </div>
+            <div id="real-time-analytics" class="content">
+                <h2>Real-time Analytics</h2>
+                <p>Access real-time analytics...</p>
+            </div>
+            <div id="custom-reports" class="content">
+                <h2>Custom Reports</h2>
+                <p>Generate custom reports...</p>
+            </div>
+            <div id="forecasting-tools" class="content">
+                <h2>Forecasting Tools</h2>
+                <p>Use forecasting tools...</p>
+            </div>
+            <div id="profile" class="content">
+                {% include "building_owners/viewOwner.html" %}
+            </div>
+            <div id="activity" class="content">
+                <h1>Activity Log</h1>
+            </div>
+    
             <!-- Add more content sections as needed -->
         </div>
-    </div>
+    </div>    
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Automatically display the first content section on page load
-            const firstLink = document.querySelector('.left-side .mylist li a');
+            const firstLink = document.getElementById("show-profile")
             if (firstLink) {
                 const firstContentId = firstLink.getAttribute('data-content');
                 const firstContentToShow = document.getElementById(firstContentId);

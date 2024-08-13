@@ -1,24 +1,25 @@
 {% block content%}
 
-<div class="form-container">
-    <h1 style="color: #007bff;">{{ request.user.profile.building_owners }}'s Profile</h1>
-    <p><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</p>
-    <p><strong>Contact Email:</strong> {{ profile.contact_email }}</p>
-    <p><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</p>
-    <strong>Profile Pics:</strong>
-    {% if profile.profile_pics %}
-        <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }} Profile Pics" style="max-width: 200px;">
-    {% else %}
-        <p>No profile picture available</p>
-    {% endif %}
-    <p><strong>Address:</strong> {{ profile.address }}</p>
-    <p><strong>City:</strong> {{ profile.city }}</p>
-    <p><strong>Country:</strong> {{ profile.country }}</p>
-    <p><strong>State:</strong> {{ profile.state }}</p>
-    <p><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</p>
-    <p><strong>Investment Strategy:</strong> {{ profile.investment_strategy }}</p>
-    <p><strong>TaxID:</strong> {{ profile.tax_id }}</p>
-    <p><strong>Notes:</strong> {{ profile.notes }}</p>
-</div>
-
+    {% with profile=request.user.profile.building_owners %}
+        <div class="form-container">
+            <h1 style="color: #007bff;">{{ profile }}'s Profile</h1>
+            <p><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</p>
+            <p><strong>Contact Email:</strong> {{ profile.contact_email }}</p>
+            <p><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</p>
+            <strong>Profile Pics:</strong>
+            {% if profile.profile_pics %}
+                <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }} Profile Pics" style="max-width: 200px;">
+            {% else %}
+                <p>No profile picture available</p>
+            {% endif %}
+            <p><strong>Address:</strong> {{ profile.address }}</p>
+            <p><strong>City:</strong> {{ profile.city }}</p>
+            <p><strong>Country:</strong> {{ profile.country }}</p>
+            <p><strong>State:</strong> {{ profile.state }}</p>
+            <p><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</p>
+            <p><strong>Investment Strategy:</strong> {{ profile.investment_strategy }}</p>
+            <p><strong>TaxID:</strong> {{ profile.tax_id }}</p>
+            <p><strong>Notes:</strong> {{ profile.notes }}</p>
+        </div>
+    {% endwith %}
 {% endblock content %}
