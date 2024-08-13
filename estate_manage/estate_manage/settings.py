@@ -32,11 +32,12 @@ ALLOWED_HOSTS = []
 app_configs = []
 for app_dir in glob.glob(os.path.join(BASE_DIR, '*/apps.py')):
     app_name = os.path.basename(os.path.dirname(app_dir))
-    if app_name == 'building_owners':
-        continue
-    app_config = f"{app_name}.apps.{app_name.capitalize()}Config"
-    app_configs.append(app_config)
+    
+    while "_" in app_name:
+        app_name = app_name.replace("_", " ")
 
+    app_config = f"{app_name.replace(' ', '_')}.apps.{''.join(app_name.title().split())}Config"
+    app_configs.append(app_config)
 
 # Application definition
 
@@ -46,8 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "building_owners.apps.BuildingOwnersConfig",
+    "django.contrib.staticfiles"
 ] + app_configs
 
 MIDDLEWARE = [
