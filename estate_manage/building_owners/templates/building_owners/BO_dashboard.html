@@ -1,0 +1,198 @@
+{% extends "dashboard/base.html" %}
+
+{% block BO%}
+    <style>
+        .containers {
+            display: flex;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .left-side {
+            width: 20%;
+            padding-right: 10px;
+        }
+
+        .vertical-line {
+            width: 2px;
+            background-color: black;
+            margin: 0 20px;
+        }
+
+        .right-side {
+            width: 80%;
+            padding-left: 10px;
+            border-left: 1px solid #ddd; /* Optional border to define the content area */
+        }
+
+        h6 {
+            cursor: pointer;
+            background-color: #f1f1f1;
+            padding: 20px;
+            margin: 0;
+            border: 1px solid #ddd;
+        }
+
+        .mylist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none; /* Hide the dropdown content by default */
+        }
+
+        .mylist li {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-top: none; /* Remove the top border to make it look like a continuation */
+            background-color: #fafafa;
+        }
+
+        .mylist li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .mylist li a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .content {
+            display: none; /* Hide content by default */
+        }
+
+        .content.active {
+            display: block; /* Show the active content */
+        }
+    </style>
+
+    <div class="containers">
+        <div class="left-side">
+            <h6>Overview section</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="personal-info">Property summary</a></li>
+                <li><a href="#" data-content="lease-info">Tenant Overview</a></li>
+                <li><a href="#" data-content="payment-history">Finanacial Snapshot</a></li>
+            </ul>
+            
+            <h6>House Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="rent-portal">House Profiles</a></li>
+                <li><a href="#" data-content="payment-reminders">House Reports</a></li>
+            </ul>
+
+            <h6>Tenant Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="rent-portal">Tenant Profiles</a></li>
+                <li><a href="#" data-content="payment-reminders">Lease Management</a></li>
+                <li><a href="#" data-content="receipt-generation">Communication Tools</a></li>
+            </ul>
+
+            <h6>Financial Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="request-submission">Rent Collection</a></li>
+                <li><a href="#" data-content="tracking-updates">Expense Tracking</a></li>
+                <li><a href="#" data-content="service-info">Financial Reports</a></li>
+            </ul>
+            
+            <h6>Maintenance Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="request-submission">Maintenance Requests</a></li>
+                <li><a href="#" data-content="tracking-updates">Service Schedule</a></li>
+                <li><a href="#" data-content="service-info">Service Provider Management</a></li>
+            </ul>
+
+            <h6>Document Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="request-submission">Document Storage</a></li>
+                <li><a href="#" data-content="request-submission">Document Sharing</a></li>
+            </ul>
+
+            <h6>Analytics and Reporting</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="request-submission">Real-time Analytics</a></li>
+                <li><a href="#" data-content="request-submission">Custom Reports</a></li>
+                <li><a href="#" data-content="request-submission">Forecasting Tools</a></li>
+            </ul>
+
+            <h6>User Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="request-submission">Profile</a></li>
+                <li><a href="{% url 'logout' %}" data-content="request-submission">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="vertical-line"></div>
+
+        <div class="right-side">
+            <div id="personal-info" class="content">
+                {% include "building_owners/viewOwner.html" %}
+                <p>Details about the tenant's personal information...</p>
+            </div>
+            <div id="lease-info" class="content">
+                <h2>Lease Information</h2>
+                <p>Details about the lease...</p>
+            </div>
+            <div id="payment-history" class="content">
+                <h2>Payment History</h2>
+                <p>Details about the payment history...</p>
+            </div>
+            <div id="rent-portal" class="content">
+                <h2>Rent Payment Portal</h2>
+                <p>Access the rent payment portal...</p>
+            </div>
+            <div id="payment-reminders" class="content">
+                <h2>Payment Reminders</h2>
+                <p>Set up and manage payment reminders...</p>
+            </div>
+            <div id="receipt-generation" class="content">
+                <h2>Receipt Generation</h2>
+                <p>Generate and view rent receipts...</p>
+            </div>
+            <div id="request-submission" class="content">
+                <h2>Request Submission</h2>
+                <p>Submit maintenance requests...</p>
+            </div>
+            <div id="tracking-updates" class="content">
+                <h2>Tracking and Updates</h2>
+                <p>Track and receive updates on maintenance requests...</p>
+            </div>
+            <div id="service-info" class="content">
+                <h2>Service Provider Information</h2>
+                <p>Details about the service providers...</p>
+            </div>
+
+            <!-- Add more content sections as needed -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to toggle the visibility of the dropdown content
+        document.querySelectorAll('h6').forEach(header => {
+            header.addEventListener('click', () => {
+                const ul = header.nextElementSibling;
+                ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // JavaScript to display the right-side content
+        document.querySelectorAll('.left-side .mylist li a').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent the default link behavior
+                const contentId = link.getAttribute('data-content');
+
+                // Hide all content
+                document.querySelectorAll('.right-side .content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Show the selected content
+                const contentToShow = document.getElementById(contentId);
+                if (contentToShow) {
+                    contentToShow.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+{% endblock BO %}

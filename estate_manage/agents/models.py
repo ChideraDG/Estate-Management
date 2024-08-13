@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from apartments.models import Apartment
+from users.models import Profile
 
 
 def validate_image_size(value):
@@ -80,6 +81,8 @@ class Agent(models.Model):
         ('inactive', 'Inactive'),
     ]
 
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                              related_name='agents')
     name = models.CharField(max_length=200, null=False, blank=False)
     email = models.EmailField(max_length=200, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=True, blank=True, unique=True,

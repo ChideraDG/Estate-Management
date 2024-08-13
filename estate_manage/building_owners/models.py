@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from users.models import Profile
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from companies.models import Company
@@ -77,6 +78,8 @@ class BuildingOwner(models.Model):
         ('mixed_use', 'Mixed use'),
     ]
 
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                              related_name='building_owners')
     building_owner_name = models.CharField(max_length=200, blank=False, null=False)
     contact_email = models.EmailField(unique=True, blank=False, null=False)
     contact_phone = models.CharField(max_length=15, unique=True, blank=False, null=False,

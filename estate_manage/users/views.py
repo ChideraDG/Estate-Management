@@ -67,7 +67,10 @@ def userLogin(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'{user.username.title()}, you successfully logged in.')
-                return redirect('dashboard')
+                
+                designation = request.user.profile.designation
+                if designation == "building_owner":
+                    return redirect('dashboard-BO', request.user.profile.username)
             else:
                 messages.error(request, 'username or password is wrong')
     else:
@@ -100,10 +103,9 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 @login_required(login_url='login')
 def dashboard(request):
-    user = request.user.profile
-
-    context = {'user': user}
-    return render(request, 'dashboard/base.html', context)
+    designation = request.user.profile.designation
+    if designation == "building_owner":
+        return redirect('dashboard-BO', request.user.profile.username)
 
 
 def property_single(request):

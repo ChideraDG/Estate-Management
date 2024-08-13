@@ -82,3 +82,5 @@ for deleting all migrations======================================
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 find . -path "*/migrations/*.pyc"  -delete
 ======================================================
+
+# Fix the dashboard url path

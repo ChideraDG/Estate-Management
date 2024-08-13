@@ -27,7 +27,7 @@ def createCompanyProfile(sender, instance, created, **kwargs):
         user = instance
         if user.designation == 'company':
             Company.objects.create(
-                owner=user,
+                user=user,
                 name=user.name,
                 email=user.email,
             )
