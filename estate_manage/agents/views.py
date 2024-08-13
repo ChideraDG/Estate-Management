@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+def agentsDashboard(request, pk):
+    context = {'username': pk}
+    return render(request, "agents/A_dashboard.html", context)
+

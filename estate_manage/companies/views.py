@@ -65,3 +65,7 @@ def deleteCompany(request, pk):
 
     context = {'obj': profile}
     return render(request, 'companies/deleteCompany.html', context)
+
+def companyDashboard(request, pk):
+    context = {'username': pk}
+    return render(request, "companies/C_dashboard.html", context)

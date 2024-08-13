@@ -64,6 +64,8 @@ def get_states(request):
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
     
-
+def buyerDashboard(request, pk):
+    context = {'username': pk}
+    return render(request, "buyers/B_dashboard.html", context)
 
 
