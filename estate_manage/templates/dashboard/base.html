@@ -21,53 +21,7 @@
             {% block buyer %}{% endblock buyer %}
 
         {% elif request.user.profile.designation == "company" %}
-            <a id="home" href="{% url 'company-home' %}">Go to Company Home</a>
-            <h6>Overview Section</h6>
-            <ul>
-                <li><a href="">Summary of Properties</a></li>
-                <li><a href="">Financial Overview</a></li>
-                <li><a href="">Key Performance Indicators (KPIs)</a></li>
-            </ul>
-            <h6>Property Management</h6>
-            <ul>
-                <li><a href="">Property Listings</a></li>
-                <li><a href="">Lease Management</a></li>
-                <li><a href="">Tenant Information</a></li>
-            </ul>
-            <h6>Financial Management</h6>
-            <ul>
-                <li><a href="">Rent Collection</a></li>
-                <li><a href="">Expense Tracking</a></li>
-                <li><a href="">Financial Reporting</a></li>
-            </ul>
-            <h6>Maintenance Management</h6>
-            <ul>
-                <li><a href="">Work Orders</a></li>
-                <li><a href="">Maintenance Schedule</a></li>
-                <li><a href="">Service Providers</a></li>
-            </ul>
-            <h6>Communication Tools</h6>
-            <ul>
-                <li><a href="">Tenant Communication</a></li>
-                <li><a href="">Announcements</a></li>
-                <li><a href="">Feedback and Surveys</a></li>
-            </ul>
-            <h6>Document Management</h6>
-            <ul>
-                <li><a href="">Document Storage</a></li>
-                <li><a href="">Document Sharing</a></li>
-            </ul>
-            <h6>Analytics and Reporting</h6>
-            <ul>
-                <li><a href="">Real-time Analytics</a></li>
-                <li><a href="">Custom Reports</a></li>
-                <li><a href="">Forecasting Tools</a></li>
-            </ul>
-            <h6>User Management</h6>
-            <ul>
-                <li><a href="">Access Control</a></li>
-                <li><a href="">User Activity Logs</a></li>
-            </ul>
+            {% block company %}{% endblock company %}
 
 
         {% elif request.user.profile.designation == "tenant" %}

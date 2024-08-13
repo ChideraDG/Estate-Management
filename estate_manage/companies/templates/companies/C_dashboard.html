@@ -1,3 +1,250 @@
 {% extends "dashboard/base.html" %}
 
-{% block company %}{% endblock company %}
+{% block company %}
+<style>
+    .containers {
+        display: flex;
+        width: 100%;
+    }
+
+    .left-side {
+        width: 20%;
+        padding-right: 10px;
+    }
+
+    .vertical-line {
+        width: 5px;
+        background-color: #2ed162;
+        margin: 0 20px;
+    }
+
+    .right-side {
+        width: 80%;
+        padding-left: 10px;
+        border-left: 1px solid #ddd; /* Optional border to define the content area */
+    }
+
+    h6 {
+        cursor: pointer;
+        background-color: #f1f1f1;
+        padding: 20px;
+        margin: 0;
+        border: 1px solid #ddd;
+    }
+
+    .mylist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: none; /* Hide the dropdown content by default */
+    }
+
+    .mylist li {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-top: none; /* Remove the top border to make it look like a continuation */
+        background-color: #fafafa;
+    }
+
+    .mylist li a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+    }
+
+    .mylist li a:hover {
+        background-color: #e0e0e0;
+    }
+
+    .content {
+        display: none; /* Hide content by default */
+    }
+
+    .content.active {
+        display: block; /* Show the active content */
+    }
+</style>
+
+<div class="containers">
+    <div class="left-side">
+        <h6>Overview Section</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="property-summary">Summary of Properties</a></li>
+            <li><a href="#" data-content="financial-overview">Financial Overview</a></li>
+            <li><a href="#" data-content="kpis">Key Performance Indicators (KPIs)</a></li>
+        </ul>
+        
+        <h6>Property Management</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="property-listings">Property Listings</a></li>
+            <li><a href="#" data-content="lease-management">Lease Management</a></li>
+            <li><a href="#" data-content="tenant-info">Tenant Information</a></li>
+        </ul>
+
+        <h6>Financial Management</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="rent-collection">Rent Collection</a></li>
+            <li><a href="#" data-content="expense-tracking">Expense Tracking</a></li>
+            <li><a href="#" data-content="financial-reporting">Financial Reporting</a></li>
+        </ul>
+        
+        <h6>Maintenance Management</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="work-orders">Work Orders</a></li>
+            <li><a href="#" data-content="maintenance-schedule">Maintenance Schedule</a></li>
+            <li><a href="#" data-content="service-providers">Service Providers</a></li>
+        </ul>
+
+        <h6>Communication Tools</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="tenant-communication">Tenant Communication</a></li>
+            <li><a href="#" data-content="announcements">Announcements</a></li>
+            <li><a href="#" data-content="feedback-surveys">Feedback and Surveys</a></li>
+        </ul>
+
+        <h6>Document Management</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="document-storage">Document Storage</a></li>
+            <li><a href="#" data-content="document-sharing">Document Sharing</a></li>
+        </ul>
+
+        <h6>Analytics and Reporting</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="real-time-analytics">Real-time Analytics</a></li>
+            <li><a href="#" data-content="custom-reports">Custom Reports</a></li>
+            <li><a href="#" data-content="forecasting-tools">Forecasting Tools</a></li>
+        </ul>
+
+        <h6>User Management</h6>
+        <ul class="mylist">
+            <li><a href="#" data-content="access-control">Access Control</a></li>
+            <li><a href="#" data-content="user-activity-logs">User Activity Logs</a></li>
+        </ul>
+    </div>
+
+    <div class="vertical-line"></div>
+
+    <div class="right-side">
+        <div id="property-summary" class="content">
+            <h2>Summary of Properties</h2>
+            <p>Details about the summary of properties...</p>
+        </div>
+        <div id="financial-overview" class="content">
+            <h2>Financial Overview</h2>
+            <p>Details about the financial overview...</p>
+        </div>
+        <div id="kpis" class="content">
+            <h2>Key Performance Indicators (KPIs)</h2>
+            <p>Details about the key performance indicators...</p>
+        </div>
+        <div id="property-listings" class="content">
+            <h2>Property Listings</h2>
+            <p>Details about the property listings...</p>
+        </div>
+        <div id="lease-management" class="content">
+            <h2>Lease Management</h2>
+            <p>Details about lease management...</p>
+        </div>
+        <div id="tenant-info" class="content">
+            <h2>Tenant Information</h2>
+            <p>Details about tenant information...</p>
+        </div>
+        <div id="rent-collection" class="content">
+            <h2>Rent Collection</h2>
+            <p>Details about rent collection...</p>
+        </div>
+        <div id="expense-tracking" class="content">
+            <h2>Expense Tracking</h2>
+            <p>Details about expense tracking...</p>
+        </div>
+        <div id="financial-reporting" class="content">
+            <h2>Financial Reporting</h2>
+            <p>Details about financial reporting...</p>
+        </div>
+        <div id="work-orders" class="content">
+            <h2>Work Orders</h2>
+            <p>Details about work orders...</p>
+        </div>
+        <div id="maintenance-schedule" class="content">
+            <h2>Maintenance Schedule</h2>
+            <p>Details about maintenance schedules...</p>
+        </div>
+        <div id="service-providers" class="content">
+            <h2>Service Providers</h2>
+            <p>Details about service providers...</p>
+        </div>
+        <div id="tenant-communication" class="content">
+            <h2>Tenant Communication</h2>
+            <p>Details about tenant communication...</p>
+        </div>
+        <div id="announcements" class="content">
+            <h2>Announcements</h2>
+            <p>Details about announcements...</p>
+        </div>
+        <div id="feedback-surveys" class="content">
+            <h2>Feedback and Surveys</h2>
+            <p>Details about feedback and surveys...</p>
+        </div>
+        <div id="document-storage" class="content">
+            <h2>Document Storage</h2>
+            <p>Details about document storage...</p>
+        </div>
+        <div id="document-sharing" class="content">
+            <h2>Document Sharing</h2>
+            <p>Details about document sharing...</p>
+        </div>
+        <div id="real-time-analytics" class="content">
+            <h2>Real-time Analytics</h2>
+            <p>Details about real-time analytics...</p>
+        </div>
+        <div id="custom-reports" class="content">
+            <h2>Custom Reports</h2>
+            <p>Details about custom reports...</p>
+        </div>
+        <div id="forecasting-tools" class="content">
+            <h2>Forecasting Tools</h2>
+            <p>Details about forecasting tools...</p>
+        </div>
+        <div id="access-control" class="content">
+            <h2>Access Control</h2>
+            <p>Details about access control...</p>
+        </div>
+        <div id="user-activity-logs" class="content">
+            <h2>User Activity Logs</h2>
+            <p>Details about user activity logs...</p>
+        </div>
+
+        <!-- Add more content sections as needed -->
+    </div>
+</div>
+
+
+<script>
+    // JavaScript to toggle the visibility of the dropdown content
+    document.querySelectorAll('h6').forEach(header => {
+        header.addEventListener('click', () => {
+            const ul = header.nextElementSibling;
+            ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+
+    // JavaScript to display the right-side content
+    document.querySelectorAll('.left-side .mylist li a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default link behavior
+            const contentId = link.getAttribute('data-content');
+
+            // Hide all content
+            document.querySelectorAll('.right-side .content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show the selected content
+            const contentToShow = document.getElementById(contentId);
+            if (contentToShow) {
+                contentToShow.classList.add('active');
+            }
+        });
+    });
+</script>
+{% endblock company %}
