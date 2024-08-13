@@ -20,7 +20,7 @@ from .views import (createCompany, updateCompany, companyHome, viewCompany, dele
 urlpatterns = [
     path('create/', createCompany, name='create-company'),
     path('update/<str:pk>/', updateCompany, name='update-company'),
-    path('home/', companyHome, name='company-home'),
+    path('company-home/', companyHome, name='company-home'),
     path('view/<str:pk>/', viewCompany, name='view-company'),
     path('delete/<str:pk>/', deleteCompany, name='delete-company'),
     path('<str:pk>/', companyDashboard, name='C_dashboard'),
