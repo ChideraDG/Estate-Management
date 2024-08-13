@@ -50,8 +50,8 @@ class Tenant(models.Model):
         ('student', 'Student'),
     ]
 
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
-                              related_name='tenants')
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                                related_name='tenants')
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)

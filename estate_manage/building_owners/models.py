@@ -78,8 +78,8 @@ class BuildingOwner(models.Model):
         ('mixed_use', 'Mixed use'),
     ]
 
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
-                              related_name='building_owners')
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                                related_name='building_owners')
     building_owner_name = models.CharField(max_length=200, blank=False, null=False)
     contact_email = models.EmailField(unique=True, blank=False, null=False)
     contact_phone = models.CharField(max_length=15, unique=True, blank=False, null=False,

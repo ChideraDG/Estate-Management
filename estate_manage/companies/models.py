@@ -60,8 +60,8 @@ class Company(models.Model):
         'example@example.com'
     """
 
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
-                              related_name='companies')
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                                related_name='companies')
     name = models.CharField(max_length=100, blank=False, null=False)
     address = models.TextField(max_length=200, blank=True, null=True)
     number = models.CharField(max_length=15, unique=True, blank=True, null=True,

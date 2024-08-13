@@ -81,8 +81,8 @@ class Agent(models.Model):
         ('inactive', 'Inactive'),
     ]
 
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
-                              related_name='agents')
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
+                                related_name='agents')
     name = models.CharField(max_length=200, null=False, blank=False)
     email = models.EmailField(max_length=200, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=True, blank=True, unique=True,
