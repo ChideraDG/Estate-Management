@@ -8,4 +8,5 @@ urlpatterns = [
     path('update/<str:pk>/', updateBuyer, name='update-buyer'),
     path('view/<str:pk>/', viewBuyer, name='view-buyer'),
     path('delete/<str:pk>/', deleteBuyer, name='delete-buyer'),
+    path('<str:pk>/', buyerDashboard, name='B_dashboard'),
 ]

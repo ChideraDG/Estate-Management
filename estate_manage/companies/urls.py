@@ -15,7 +15,7 @@ Note:
 """
 
 from django.urls import path
-from .views import createCompany, updateCompany, companyHome, viewCompany, deleteCompany
+from .views import (createCompany, updateCompany, companyHome, viewCompany, deleteCompany, companyDashboard)
 
 urlpatterns = [
     path('create/', createCompany, name='create-company'),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('home/', companyHome, name='company-home'),
     path('view/<str:pk>/', viewCompany, name='view-company'),
     path('delete/<str:pk>/', deleteCompany, name='delete-company'),
+    path('<str:pk>/', companyDashboard, name='C_dashboard'),
 ]

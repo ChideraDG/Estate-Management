@@ -74,4 +74,7 @@ def get_states(request):
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
     
+def tenantDashboard(request, pk):
+    context = {'username': pk}
+    return render(request, "tenants/T_dashboard.html", context)
 
