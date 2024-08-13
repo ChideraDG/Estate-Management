@@ -71,6 +71,14 @@ def userLogin(request):
                 designation = request.user.profile.designation
                 if designation == "building_owner":
                     return redirect('dashboard-BO', request.user.profile.username)
+                elif designation == "agent":
+                    return redirect('dashboard-A', request.user.profile.username)
+                elif designation == "buyer":
+                    return redirect('dashboard-B', request.user.profile.username)
+                elif designation == "company":
+                    return redirect('dashboard-C', request.user.profile.username)
+                elif designation == "tenant":
+                    return redirect('dashboard-T', request.user.profile.username)
             else:
                 messages.error(request, 'username or password is wrong')
     else:
@@ -106,6 +114,14 @@ def dashboard(request):
     designation = request.user.profile.designation
     if designation == "building_owner":
         return redirect('dashboard-BO', request.user.profile.username)
+    elif designation == "agent":
+        return redirect('dashboard-A', request.user.profile.username)
+    elif designation == "buyer":
+        return redirect('dashboard-B', request.user.profile.username)
+    elif designation == "company":
+        return redirect('dashboard-C', request.user.profile.username)
+    elif designation == "tenant":
+        return redirect('dashboard-T', request.user.profile.username)
 
 
 def property_single(request):
