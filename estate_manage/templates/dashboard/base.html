@@ -23,58 +23,8 @@
         {% elif request.user.profile.designation == "company" %}
             {% block company %}{% endblock company %}
 
-
         {% elif request.user.profile.designation == "tenant" %}
-            <a id="home" href="{% url 'tenant-home' %}">Go to Tenant Home</a>
-            <h6>Tenant Overview</h6>
-            <ul>
-                <li><a href="">Personal Information</a></li>
-                <li><a href="">Lease Information</a></li>
-                <li><a href="">Payment History</a></li>
-            </ul>
-            <h6>Rent Payment Management</h6>
-            <ul>
-                <li><a href="">Rent Payment Portal</a></li>
-                <li><a href="">Payment Reminders</a></li>
-                <li><a href="">Receipt Generation</a></li>
-            </ul>
-            <h6>Maintenance Requests</h6>
-            <ul>
-                <li><a href="">Request Submission</a></li>
-                <li><a href="">Tracking and Updates</a></li>
-                <li><a href="">Service Provider Information</a></li>
-            </ul>
-            <h6>Communication Tools</h6>
-            <ul>
-                <li><a href="">In-App Messaging</a></li>
-                <li><a href="">Announcements</a></li>
-                <li><a href="">Feedback and Surveys</a></li>
-            </ul>
-            <h6>Utilities and Services Management</h6>
-            <ul>
-                <li><a href="">Utility Tracking</a></li>
-                <li><a href="">Service Requests</a></li>
-            </ul>
-            <h6>Document Management</h6>
-            <ul>
-                <li><a href="">Lease and Agreements</a></li>
-                <li><a href="">Receipts and Invoices</a></li>
-            </ul>
-            <h6>Community Features</h6>
-            <ul>
-                <li><a href="">Community Bulletin Board</a></li>
-                <li><a href="">Neighbor Directory</a></li>
-            </ul>
-            <h6>Security Features</h6>
-            <ul>
-                <li><a href="">Visitor Management</a></li>
-                <li><a href="">Emergency Contacts</a></li>
-            </ul>
-            <h6>Move-In/Move-Out Process</h6>
-            <ul>
-                <li><a href="">Checklists</a></li>
-                <li><a href="">Documentation</a></li>
-            </ul>
+            {% block tenant %}{% endblock tenant %}
 
         {% elif request.user.profile.designation == "building_owner" %}
             {% block BO %}{% endblock BO %}
