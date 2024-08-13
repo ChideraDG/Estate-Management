@@ -2,11 +2,11 @@
 
 Media================================================
 
-@media (min-width: 768px) and (max-width: 991.98px) {
+/* @media (min-width: 768px) and (max-width: 991.98px) {
     .container {
         max-width: 90%;
         height: 650px; /* Adjusted height for this breakpoint */
-    }
+    /* }
     .registration-form h2 {
         font-size: 45px;
     }
@@ -20,13 +20,13 @@ Media================================================
     .registration-form button {
         font-size: 25px;
     }
-}
+} */
 
-@media (min-width: 992px) and (max-width: 1199.98px) {
+/* @media (min-width: 992px) and (max-width: 1199.98px) {
     .container {
         max-width: 80%;
         height: 700px; /* Adjusted height for this breakpoint */
-    }
+    /* }
     .registration-form h2 {
         font-size: 48px;
     }
@@ -40,12 +40,12 @@ Media================================================
     .registration-form button {
         font-size: 26px;
     }
-}
+} */
 
 @media (min-width: 1200px) {
     .container {
         max-width: 70%;
-        height: 750px; /* Adjusted height for this breakpoint */
+        height: 750px; Adjusted height for this breakpoint
     }
     .registration-form h2 {
         font-size: 50px;
@@ -60,7 +60,7 @@ Media================================================
     .registration-form button {
         font-size: 27px;
     }
-}
+} */
 =======================================
 
 
@@ -76,3 +76,9 @@ for amenity in amenities:  # Iterate through the selected amenities
 For making a folder work onn gitignore==========================
 git rm -r --cached media/
 =============================================
+
+
+for deleting all migrations======================================
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+======================================================
