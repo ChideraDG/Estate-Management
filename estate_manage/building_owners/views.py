@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
-from . models import BuildingOwner
-from . forms import BuildingOwnerForm
+from .forms import BuildingOwnerForm
 from locations.models import Country, State
 
 
@@ -16,16 +15,14 @@ def updateProfile(request, pk):
     if request.method == 'POST':
         form = BuildingOwnerForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            if instance.building_owner_name:
-                instance.building_owner_name = instance.building_owner_name.strip().title()
+            instance = form.save(commit=False)
+            instance.building_owner_name = instance.building_owner_name.strip().title() if instance.building_owner_name else None
             instance.save()
             messages.success(request, 'Profile updated successfully')
-
             return redirect('view-building-owner', pk=instance.user)
-        
-    context = {'form': form, 'countries': countries, 'profile':profile}
-    return render (request, 'building_owners/updateBuildingOwner.html', context)
+
+    context = {'form': form, 'countries': countries, 'profile': profile}
+    return render(request, 'building_owners/updateBuildingOwner.html', context)
 
 @login_required(login_url='login')
 def viewProfile(request, pk):

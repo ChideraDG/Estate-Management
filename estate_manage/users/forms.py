@@ -3,7 +3,6 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib import messages
 from .models import Profile
 
 
@@ -43,17 +42,12 @@ class RegistrationForm(forms.Form):
         ('agent', 'Agent'),
     ]
 
-    username = forms.CharField(max_length=20, required=True,
-                               widget=forms.TextInput(attrs={'placeholder': 'UserName'}))
-    full_name = forms.CharField(max_length=100, required=True,
-                                widget=forms.TextInput(attrs={'placeholder': 'Full Name'}))
-    email = forms.EmailField(max_length=100, required=True,
-                             widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    username = forms.CharField(max_length=20, required=True, widget=forms.TextInput(attrs={'placeholder': 'UserName'}))
+    full_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Full Name'}))
+    email = forms.EmailField(max_length=100, required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
     designation = forms.ChoiceField(choices=DESIGNATION, widget=forms.Select)
-    password1 = forms.CharField(label='Password',
-                                widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
-    password2 = forms.CharField(label='Confirm Password',
-                                widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     def clean_username(self):
         username = self.cleaned_data['username']
