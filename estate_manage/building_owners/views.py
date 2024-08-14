@@ -7,7 +7,7 @@ from locations.models import Country, State
 
 
 @login_required(login_url='login')
-def updateProfile(request, pk):
+def update_profile(request, pk):
     profile = request.user.profile.building_owners
     countries = Country.objects.all()
     form = BuildingOwnerForm(instance=profile)
@@ -25,7 +25,7 @@ def updateProfile(request, pk):
     return render(request, 'building_owners/updateBuildingOwner.html', context)
 
 @login_required(login_url='login')
-def viewProfile(request, pk):
+def view_profile(request, pk):
     profile = request.user.profile.building_owners
     context = {'profile': profile}
     return render(request, 'building_owners/viewBuildingOwner.html', context)
@@ -38,6 +38,6 @@ def get_states(request):
     return JsonResponse(states_list, safe=False)
 
 @login_required(login_url='login')
-def buildingOwnerDashboard(request, pk):
+def building_owner_dashboard(request, pk):
     context = {'username': pk}
     return render(request, "building_owners/BO_dashboard.html", context)
