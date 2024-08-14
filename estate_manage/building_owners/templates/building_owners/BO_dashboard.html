@@ -121,7 +121,7 @@
 
             <h6>Profile</h6>
             <ul class="mylist">
-                <li><a href='{% url "view-building-owner" request.user.profile.id %}' data-content="bo-profile">Building Owner Profile</a></li>
+                <li><a href='{% url "view-building-owner" pk=request.user.profile %}' data-content="bo-profile">Building Owner Profile</a></li>
                 <li><a href='{% url "view-user-profile" pk=request.user.profile.username %}' data-content="personal-profile">Personal Profile</a></li>
             </ul>
         </div>

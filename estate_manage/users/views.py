@@ -125,7 +125,7 @@ def userDelete(request):
     user.delete()
     return redirect('home')
 
-
+@login_required(login_url='login')
 def userLogout(request):
     logout(request)
     return redirect('home')

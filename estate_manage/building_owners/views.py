@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from . models import BuildingOwner
 from . forms import BuildingOwnerForm
 from locations.models import Country, State
-from django.http import JsonResponse
 
 
 def buildingOwnersHome(request):
@@ -27,6 +28,7 @@ def createProfile(request):
     context = {'form': form, 'countries': countries}
     return render (request, 'building_owners/buildingOwnerReg.html', context)
 
+@login_required(login_url='login')
 def updateProfile(request, pk):
     profile = BuildingOwner.objects.get(id=pk)
     countries = Country.objects.all()
@@ -45,8 +47,9 @@ def updateProfile(request, pk):
     context = {'form': form, 'countries': countries, 'profile':profile}
     return render (request, 'building_owners/buildingOwnerReg.html', context)
 
+@login_required(login_url='login')
 def viewProfile(request, pk):
-    profile = BuildingOwner.objects.get(id=pk)
+    profile = request.user.profile.building_owners
     context = {'profile': profile}
     return render(request, 'building_owners/viewOwner.html', context)
 
