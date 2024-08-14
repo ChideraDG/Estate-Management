@@ -34,6 +34,8 @@ def userRegister(request):
             user.save()
 
             login(request, user)
+            messages.success(request, f'{user.username.title()}, Welcome to Estate Manage')
+
 
             designation = request.user.profile.designation
             if designation == "building_owner":
@@ -46,6 +48,8 @@ def userRegister(request):
                 return redirect('dashboard-C', request.user.profile)
             elif designation == "tenant":
                 return redirect('dashboard-T', request.user.profile)
+        else:
+            messages.error(request, form.get_error())
             
     context = {'form': form}
     return render(request, 'users/register.html', context)
@@ -70,7 +74,6 @@ def userLogin(request):
             if not user.exists():
                 user = Profile.objects.filter(email=username_or_email)
                 if not user.exists():
-                    print('Account not Found')
                     messages.info(request, 'Account not Found')
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -92,9 +95,9 @@ def userLogin(request):
                 elif designation == "tenant":
                     return redirect('dashboard-T', request.user.profile)
             else:
-                messages.error(request, 'username or password is wrong')
+                messages.error(request, 'Password is wrong')
         else:
-            print("Form not valid")
+            messages.warning(request, 'Form not Valid')
     else:
         form = LoginForm()
 
@@ -126,6 +129,7 @@ def userUpdate(request, pk):
 
             instance.save()
             messages.success(request, 'Profile updated successfully')
+
             return redirect('view-user-profile', pk=instance.username)
 
     return render(request, 'users/update-profile.html', {'form': form})

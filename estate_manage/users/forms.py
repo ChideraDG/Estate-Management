@@ -3,6 +3,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django import forms
+from django.contrib import messages
 from .models import Profile
 
 
@@ -31,6 +32,8 @@ class RegistrationForm(forms.Form):
         True
     """
 
+    validation_error = None
+
     DESIGNATION = [
         ('', 'Select a Designation'),
         ('buyer', 'Buyer'),
@@ -55,13 +58,15 @@ class RegistrationForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError('Username already exists')
+            self.validation_error = 'Username already exists'
+            raise forms.ValidationError('')
         return username
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("Email already exists")
+            self.validation_error = 'Email already exists'
+            raise forms.ValidationError("")
         return email
     
     def clean_password2(self):
@@ -75,9 +80,13 @@ class RegistrationForm(forms.Form):
         password2 = self.cleaned_data.get('password2')
 
         if password1 and password2 and password1 != password2:
+            self.validation_error = 'Passwords do not match'
             raise forms.ValidationError("Passwords do not match")
 
         return password2
+    
+    def get_error(self):
+        return self.validation_error
 
 
 class LoginForm(forms.Form):
@@ -99,86 +108,6 @@ class LoginForm(forms.Form):
 
     username_or_email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Username or Email'}))
     password = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
-
-    def clean_username_or_email(self):
-        """
-        Validates the username or email input.
-
-        Checks if the input exists as a username or email in the database.
-        If not, raises a ValidationError.
-
-        Args:
-            self: The form instance.
-
-        Returns:
-            str: The validated username or email.
-
-        Raises:
-            forms.ValidationError: If the username or email does not exist.
-
-        Example:
-            >>> form = LoginForm({'username_or_email': 'john Doe'})
-            >>> form.clean_username_or_email()
-            'john Doe'
-        """
-        username_or_email = self.cleaned_data.get('username_or_email')
-
-        user = User.objects.filter(username=username_or_email)
-
-        
-        if not user.exists():
-            user = User.objects.filter(email=username_or_email)
-            if not user.exists():
-                raise forms.ValidationError('Username or Email does not exist')
-            else:
-                for i in user:
-                    if not i.is_active:
-                        raise forms.ValidationError('Username or Email does not exist')
-        else:
-            for i in user:
-                if not i.is_active:
-                    raise forms.ValidationError('Username or Email does not exist')
-
-        
-        return username_or_email
-
-
-    def clean_password(self):
-        """
-        Validates the password input.
-
-        Checks if the password matches the user's password in the database.
-        If not, raises a ValidationError.
-
-        Args:
-            self: The form instance.
-
-        Returns:
-            str: The validated password.
-
-        Raises:
-            forms.ValidationError: If the password is incorrect.
-
-        Example:
-            >>> form = LoginForm({'username_or_email': 'john Doe', 'password': 'mysecretpassword'})
-            >>> form.clean_password()
-            'mysecretpassword'
-        """
-        username_or_email = self.cleaned_data.get('username_or_email')
-
-        try:
-            user = User.objects.get(username=username_or_email)
-        except Exception:
-            try:
-                user = User.objects.get(email=username_or_email)
-            except Exception:
-                raise forms.ValidationError("Wrong Password")
-
-        password = self.cleaned_data.get('password')
-
-        if not user.check_password(password):
-            raise forms.ValidationError("Wrong Password")
-        return password
 
 
 class CustomPasswordResetForm(PasswordResetForm):

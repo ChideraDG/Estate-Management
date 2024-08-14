@@ -63,26 +63,10 @@
         .content.active {
             display: block; /* Show the active content */
         }
-
-        #success-message {
-            position: fixed;
-            top: 150px;
-            right: 20px;
-            z-index: 9999;
-            width: auto;
-            max-width: 500px; /* Adjust as needed */
-        }
     </style>
 
     <div class="containers">
-        {% if messages %}
-            {% for message in messages %}
-                <div id="success-message" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
+        
         <div class="left-side">
             <h6>Overview Section</h6>
             <ul class="mylist">
@@ -159,11 +143,7 @@
                 });
             });
 
-            window.setTimeout(function() {
-                const alert = document.getElementById('success-message');
-                const bootstrapAlert = new bootstrap.Alert(alert);
-                bootstrapAlert.close();
-            }, 5000); // 5000 milliseconds = 5 seconds
+            
     </script>
     
 

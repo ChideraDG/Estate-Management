@@ -28,10 +28,35 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body>
+    <style>
+        #success-message {
+            position: fixed;
+            top: 190px;
+            right: 45%;
+            z-index: 9999;
+            width: auto;
+            max-width: 500px; /* Adjust as needed */
+        }
+    </style>
     {% include 'navbar.html' %}
 
-    {% block content %}
-    {% endblock content %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div id="success-message" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% else %}
+                <div id="success-message" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock content %}
 
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -40,5 +65,12 @@
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/script.js' %}"></script>
+    <script>
+        window.setTimeout(function() {
+            const alert = document.getElementById('success-message');
+            const bootstrapAlert = new bootstrap.Alert(alert);
+            bootstrapAlert.close();
+        }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
 </body>
 </html>
