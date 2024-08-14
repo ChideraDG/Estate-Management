@@ -113,40 +113,41 @@
         }
     </style>
 
-        <div class="profile-container">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div class="profile-image">
-                    <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }}">
-                </div>
-
-                <div class="profile-actions" style="display: flex; gap: 10px;">
-                    <a href='{% url "update-building-owner" pk=profile.user %}' class="btn btn-primary">Update Profile</a>
-                </div>
+    <div class="profile-container">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="profile-image">
+                <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }}">
             </div>
 
-            <div class="card profile-details" style="width: 100%; max-width: 600px;">
-                <div class="card-body">
-                    <h5 class="card-title" style="color: #2ed162;">Profile Details</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</li>
-                        <li class="mb-2"><strong>Contact Email:</strong> {{ profile.contact_email }}</li>
-                        <li class="mb-2"><strong>Contact Phone:</strong> {{ profile.contact_phone }}</li>
-                        <li class="mb-2"><strong>Address:</strong> {{ profile.address }}</li>
-                        <li class="mb-2"><strong>Country:</strong> {{ profile.country }}</li>
-                        <li class="mb-2"><strong>State:</strong> {{ profile.state }}</li>
-                        <li class="mb-2"><strong>City:</strong> {{ profile.city }}</li>
-                        <li class="mb-2"><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</li>
-                        <li class="mb-2"><strong>Investment Strategy:</strong> {{ profile.investment_strategy }}</li>
-                        <li class="mb-2"><strong>TaxID:</strong> {{ profile.tax_id }}</li>
-                        <li class="mb-2"><strong>Notes:</strong> {{ profile.notes }}</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timestamps">
-                <p><strong>Profile Created:</strong> {{ profile.created|date:"F j, Y, g:i a" }}</p>
-                <p><strong>Last Updated:</strong> {{ profile.updated|date:"F j, Y, g:i a" }}</p>
+            <div class="profile-actions" style="display: flex; gap: 10px;">
+                <a href='{% url "update-building-owner" pk=profile.user %}' class="btn btn-primary">Update Profile</a>
             </div>
         </div>
+
+        <div class="card profile-details" style="width: 100%; max-width: 600px;">
+            <div class="card-body">
+                <h5 class="card-title" style="color: #2ed162;">Profile Details</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</li>
+                    <li class="mb-2"><strong>Contact Email:</strong> {{ profile.contact_email }}</li>
+                    <li class="mb-2"><strong>Contact Phone:</strong> {{ profile.contact_phone }}</li>
+                    <li class="mb-2"><strong>Address:</strong> {{ profile.address }}</li>
+                    <li class="mb-2"><strong>Country:</strong> {{ profile.country }}</li>
+                    <li class="mb-2"><strong>State:</strong> {{ profile.state }}</li>
+                    <li class="mb-2"><strong>City:</strong> {{ profile.city }}</li>
+                    <li class="mb-2"><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</li>
+                    <li class="mb-2"><strong>Private:</strong> {{ profile.is_visible }}</li>
+                    <li class="mb-2"><strong>Investment Strategy:</strong> {{ profile.investment_strategy.title }}</li>
+                    <li class="mb-2"><strong>TaxID:</strong> {{ profile.tax_id }}</li>
+                    <li class="mb-2"><strong>Notes:</strong> {{ profile.notes }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timestamps">
+            <p><strong>Profile Created:</strong> {{ profile.created|date:"F j, Y, g:i a" }}</p>
+            <p><strong>Last Updated:</strong> {{ profile.updated|date:"F j, Y, g:i a" }}</p>
+        </div>
+    </div>
 
 {% endblock details %}

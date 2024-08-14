@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.contrib import messages
 from . models import BuildingOwner
 from . forms import BuildingOwnerForm
 from locations.models import Country, State
@@ -19,6 +20,7 @@ def updateProfile(request, pk):
             if instance.building_owner_name:
                 instance.building_owner_name = instance.building_owner_name.strip().title()
             instance.save()
+            messages.success(request, 'Profile updated successfully')
 
             return redirect('view-building-owner', pk=instance.user)
         

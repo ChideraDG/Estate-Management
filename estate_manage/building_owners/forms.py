@@ -35,7 +35,7 @@ class BuildingOwnerForm(ModelForm):
     class Meta:
         model = BuildingOwner
         fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'profile_pics', 'country', 'state', 'city',
-                  'portfolio_size', 'investment_strategy', 'tax_id', 'notes']
+                  'is_visible', 'investment_strategy', 'tax_id', 'notes']
         
         labels = {
             'building_owner_name': 'Building Owner Name',
@@ -46,7 +46,7 @@ class BuildingOwnerForm(ModelForm):
             'city': 'City',
             'country': 'Country',
             'state': 'State',
-            'portfolio_size': 'Portfolio Size',
+            'is_visible': 'Private',
             'investment_strategy': 'Investment Strategy',
             'tax_id': 'Tax ID',
             'notes': 'Notes',
@@ -57,11 +57,9 @@ class BuildingOwnerForm(ModelForm):
             'contact_email': forms.EmailInput(attrs={ 'placeholder': 'Enter contact email'}),
             'contact_phone': forms.TextInput(attrs={ 'placeholder': 'Enter contact phone number'}),
             'address': forms.TextInput(attrs={ 'placeholder': 'Enter address'}),
-            'profile_pics': forms.FileInput,
             'city': forms.TextInput(attrs={ 'placeholder': 'Enter city'}),
             'country': forms.Select(attrs={ 'placeholder': 'Select country'}),
             'state': forms.Select(attrs={ 'placeholder': 'Select state'}),
-            'portfolio_size': forms.NumberInput(attrs={'value': '1'}),
             'investment_strategy': forms.Select(choices=BuildingOwner.DESIGNATION),
             'tax_id': forms.TextInput(attrs={ 'placeholder': 'Enter tax id'}),
             'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',

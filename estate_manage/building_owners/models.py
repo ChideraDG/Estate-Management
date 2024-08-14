@@ -98,6 +98,7 @@ class BuildingOwner(models.Model):
     investment_strategy = models.CharField(max_length=200, choices=DESIGNATION, null=True, blank=True, )
     tax_id = models.CharField(max_length=15, null=True, blank=True, unique=True)
     notes = models.TextField(blank=True, null=True)
+    is_visible = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
