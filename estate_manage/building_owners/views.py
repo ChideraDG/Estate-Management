@@ -30,7 +30,7 @@ def createProfile(request):
 
 @login_required(login_url='login')
 def updateProfile(request, pk):
-    profile = BuildingOwner.objects.get(id=pk)
+    profile = request.user.profile.building_owners
     countries = Country.objects.all()
     form = BuildingOwnerForm(instance=profile)
 
