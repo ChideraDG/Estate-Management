@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
 from .models import Profile
+from building_owners.models import BuildingOwner
 
 
 @receiver(post_save, sender=User)
@@ -109,7 +110,7 @@ Phone Number: +234 7033327493"""
     
 
 @receiver(post_save, sender=Profile)
-def updateUser(sender, instance, created, **kwargs):
+def updateProfile(sender, instance, created, **kwargs):
     if not created:
         user = User.objects.get(id=instance.id)
         if " " in instance.name:
@@ -119,4 +120,11 @@ def updateUser(sender, instance, created, **kwargs):
             user.first_name = instance.name
         user.username = instance.username
         user.email = instance.email
+
+        if instance.designation == 'building_owner':
+            bo = BuildingOwner.objects.get(user=instance)
+            bo.building_owner_name = instance.name
+            bo.contact_email = instance.email
+            bo.save()
+
         user.save()
