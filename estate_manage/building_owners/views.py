@@ -26,7 +26,7 @@ def update_building_owner_profile(request, pk):
 
 @login_required(login_url='login')
 def view_building_owner_profile(request, pk):
-    profile = get_object_or_404(request.user.profile, building_owners=pk)
+    profile = request.user.profile.building_owners
     context = {'profile': profile}
     return render(request, 'building_owners/viewBuildingOwner.html', context)
 
