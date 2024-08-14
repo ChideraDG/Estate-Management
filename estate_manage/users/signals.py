@@ -106,3 +106,13 @@ Phone Number: +234 7033327493"""
                   from_email=settings.EMAIL_HOST_USER,
                   recipient_list=recipient,
                   fail_silently=False)
+    
+
+@receiver(post_save, sender=Profile)
+def updateUser(sender, instance, created, **kwargs):
+    if not created:
+        user = User.objects.get(id=instance.id)
+        user.first_name = instance.name
+        user.username = instance.username
+        user.email = instance.email
+        user.save()

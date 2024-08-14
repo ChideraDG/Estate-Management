@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
@@ -124,14 +125,20 @@ class LoginForm(forms.Form):
 
         user = User.objects.filter(username=username_or_email)
 
-        for i in user:
-            if not i.is_active:
-                raise forms.ValidationError('Username or Email does not exist')
-
+        
         if not user.exists():
             user = User.objects.filter(email=username_or_email)
             if not user.exists():
                 raise forms.ValidationError('Username or Email does not exist')
+            else:
+                for i in user:
+                    if not i.is_active:
+                        raise forms.ValidationError('Username or Email does not exist')
+        else:
+            for i in user:
+                if not i.is_active:
+                    raise forms.ValidationError('Username or Email does not exist')
+
         
         return username_or_email
 
@@ -162,7 +169,10 @@ class LoginForm(forms.Form):
         try:
             user = User.objects.get(username=username_or_email)
         except Exception:
-            raise forms.ValidationError("Wrong Password")
+            try:
+                user = User.objects.get(email=username_or_email)
+            except Exception:
+                raise forms.ValidationError("Wrong Password")
 
         password = self.cleaned_data.get('password')
 
@@ -323,4 +333,15 @@ class ContactAgentForm(forms.Form):
             'required': 'required'
         })
     )
+
+class ProfileForm(forms.ModelForm):
     
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        exclude = ("user", "designation", "created", "updated")
+
+        widgets = {'date_of_birth': forms.DateInput(attrs={'type': 'date', 
+                                                           'min': str(datetime.datetime(year=1900, month=1, day=1).date()),
+                                                           'max': str(datetime.datetime(year=2014, month=1, day=1).date())}),
+                    'phone_number': forms.TextInput(attrs={'placeholder': "Enter your Phone Number"})}

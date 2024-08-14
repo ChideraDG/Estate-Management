@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
-from .forms import RegistrationForm, LoginForm, ContactForm, ContactAgentForm, CustomSetPasswordForm, CustomPasswordResetForm
+from .forms import (RegistrationForm, LoginForm, ContactForm, ContactAgentForm, 
+                    CustomSetPasswordForm, CustomPasswordResetForm, ProfileForm)
 from .models import Profile
 
 
@@ -81,6 +82,8 @@ def userLogin(request):
                     return redirect('dashboard-T', request.user.profile.username)
             else:
                 messages.error(request, 'username or password is wrong')
+        else:
+            print("Form not valid")
     else:
         form = LoginForm()
 
@@ -96,6 +99,25 @@ def userView(request, pk):
     context = {"user": profile}
     return render(request, "users/view-user.html", context)
 
+
+@login_required(login_url='login')
+def userUpdate(request, pk):
+    profile = Profile.objects.get(username=pk)
+    form = ProfileForm(instance=profile)
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.name = instance.name.strip().title()
+            instance.email = instance.email.strip().lower()
+
+            instance.save()
+            messages.success(request, 'Profile updated successfully')
+            return redirect('view-user-profile', pk=instance.username)
+
+    return render(request, 'users/update-profile.html', {'form': form})
 
 @login_required(login_url='login')
 def userDelete(request):
