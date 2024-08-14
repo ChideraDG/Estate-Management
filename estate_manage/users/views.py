@@ -1,3 +1,9 @@
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login
+from .forms import LoginForm
+from .models import Profile
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
@@ -15,42 +21,38 @@ from .models import Profile
 
 
 def userRegister(request):
-    form = RegistrationForm()
+    form = RegistrationForm(request.POST if request.method == 'POST' else None)
 
     if request.user.is_authenticated:
         return redirect('home')
 
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        user = User.objects.create_user(
+            username=form.cleaned_data['username'],
+            email=form.cleaned_data['email'].lower(),
+            password=form.cleaned_data['password2'],
+            first_name=form.cleaned_data['full_name'].title(),
+            last_name=form.cleaned_data['designation']
+        )
 
-        if form.is_valid():
-            user = User.objects.create_user(username=request.POST['username'],
-                                            email=request.POST['email'].lower(),
-                                            password=form.clean_password2(),
-                                            first_name=request.POST['full_name'].title(),
-                                            last_name=request.POST['designation'])
+        user.last_name = ''
+        user.save()
 
-            user.last_name = ''
-            user.save()
+        login(request, user)
+        messages.success(request, f'{user.username.title()}, Welcome to Estate Manage')
 
-            login(request, user)
-            messages.success(request, f'{user.username.title()}, Welcome to Estate Manage')
+        designation = request.user.profile.designation
+        redirects = {
+            "building_owner": 'update-user-profile',
+            "agent": 'dashboard-A',
+            "buyer": 'dashboard-B',
+            "company": 'dashboard-C',
+            "tenant": 'dashboard-T'
+        }
+        return redirect(redirects.get(designation, 'home'), request.user.profile)
+    elif request.method == 'POST':
+        messages.error(request, form.get_error())
 
-
-            designation = request.user.profile.designation
-            if designation == "building_owner":
-                return redirect('update-user-profile', request.user.profile)
-            elif designation == "agent":
-                return redirect('dashboard-A', request.user.profile)
-            elif designation == "buyer":
-                return redirect('dashboard-B', request.user.profile)
-            elif designation == "company":
-                return redirect('dashboard-C', request.user.profile)
-            elif designation == "tenant":
-                return redirect('dashboard-T', request.user.profile)
-        else:
-            messages.error(request, form.get_error())
-            
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
@@ -65,35 +67,23 @@ def userLogin(request):
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
-
         if form.is_valid():
             username_or_email = form.cleaned_data['username_or_email']
             password = form.cleaned_data['password']
 
-            user = Profile.objects.filter(username=username_or_email)
-            if not user.exists():
-                user = Profile.objects.filter(email=username_or_email)
-                if not user.exists():
-                    messages.info(request, 'Account not Found')
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            user = Profile.objects.filter(username=username_or_email).first() or Profile.objects.filter(email=username_or_email).first()
+            if not user:
+                messages.info(request, 'Account not Found')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-            user = authenticate(request, username=user[0].username, password=password)
-
+            user = authenticate(request, username=user.username, password=password)
             if user is not None:
                 login(request, user)
                 messages.success(request, f'{user.username.title()}, you successfully logged in.')
                 
-                designation = request.user.profile.designation
-                if designation == "building_owner":
-                    return redirect('dashboard-BO', request.user.profile)
-                elif designation == "agent":
-                    return redirect('dashboard-A', request.user.profile)
-                elif designation == "buyer":
-                    return redirect('dashboard-B', request.user.profile)
-                elif designation == "company":
-                    return redirect('dashboard-C', request.user.profile)
-                elif designation == "tenant":
-                    return redirect('dashboard-T', request.user.profile)
+                designation = user.profile.designation
+                labels = {"building_owner": "BO", "agent": "A", "buyer": "B", "company": "C", "tenant": "T"}
+                return redirect(f'dashboard-{labels.get(designation)}', user.profile)
             else:
                 messages.error(request, 'Password is wrong')
         else:
@@ -102,7 +92,6 @@ def userLogin(request):
         form = LoginForm()
 
     context = {'form': form}
-
     return render(request, 'users/login.html', context)
 
 
@@ -126,10 +115,8 @@ def userUpdate(request, pk):
             instance = form.save(commit=False)
             instance.name = instance.name.strip().title()
             instance.email = instance.email.strip().lower()
-
             instance.save()
             messages.success(request, 'Profile updated successfully')
-
             return redirect('view-user-profile', pk=instance.username)
 
     return render(request, 'users/update-profile.html', {'form': form})
@@ -157,24 +144,20 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 @login_required(login_url='login')
 def dashboard(request):
     designation = request.user.profile.designation
-    if designation == "building_owner":
-        return redirect('dashboard-BO', request.user.profile)
-    elif designation == "agent":
-        return redirect('dashboard-A', request.user.profile)
-    elif designation == "buyer":
-        return redirect('dashboard-B', request.user.profile)
-    elif designation == "company":
-        return redirect('dashboard-C', request.user.profile)
-    elif designation == "tenant":
-        return redirect('dashboard-T', request.user.profile)
+    dashboard_mapping = {
+        "building_owner": 'dashboard-BO',
+        "agent": 'dashboard-A',
+        "buyer": 'dashboard-B',
+        "company": 'dashboard-C',
+        "tenant": 'dashboard-T'
+    }
+    return redirect(dashboard_mapping.get(designation), request.user.profile)
 
 
 def property_single(request):
-    form = ContactAgentForm()
+    form = ContactAgentForm(request.POST if request.method == 'POST' else None)
 
-    if request.method == 'POST':
-        form = ContactAgentForm(request.POST)
-        if form.is_valid():
+    if request.method == 'POST' and form.is_valid():
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             subject = 'Estate Manage Agent'
@@ -187,8 +170,8 @@ def property_single(request):
                       fail_silently=False)
 
             return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
+    elif request.method == 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
     context = {'form': form}
 
@@ -220,11 +203,9 @@ def blog(request):
 
 
 def contact_us(request):
-    form = ContactForm()
+    form = ContactForm(request.POST if request.method == 'POST' else None)
 
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
+    if request.method == 'POST' and form.is_valid():
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             subject = form.cleaned_data.get('subject')
@@ -237,8 +218,8 @@ def contact_us(request):
                       fail_silently=False)
 
             return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
+    elif request.method == 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
     context = {'form': form}
 
