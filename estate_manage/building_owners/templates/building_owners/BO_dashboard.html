@@ -116,8 +116,13 @@
     
             <h6>User Management</h6>
             <ul class="mylist">
-                <li><a href="#" id="show-profile" data-content="profile">Profile</a></li>
                 <li><a href="#" data-content="activity">Activity Logs</a></li>
+            </ul>
+
+            <h6>Profile</h6>
+            <ul class="mylist">
+                <li><a href='{% url "view-building-owner" request.user.profile.id %}' data-content="bo-profile">Building Owner Profile</a></li>
+                <li><a href='{% url "view-user-profile" pk=request.user.profile.username %}' data-content="personal-profile">Personal Profile</a></li>
             </ul>
         </div>
     
@@ -125,7 +130,6 @@
     
         <div class="right-side">
             {% block details %}{% endblock details %}
-            {% comment %} {% include "building_owners/viewOwner.html" %} {% endcomment %}
         </div>
     </div>    
 

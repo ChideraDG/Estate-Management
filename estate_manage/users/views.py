@@ -90,6 +90,14 @@ def userLogin(request):
 
 
 @login_required(login_url='login')
+def userView(request, pk):
+    profile = Profile.objects.get(username=pk)
+
+    context = {"user": profile}
+    return render(request, "users/view-user.html", context)
+
+
+@login_required(login_url='login')
 def userDelete(request):
     user = request.user.profile
     user.delete()
