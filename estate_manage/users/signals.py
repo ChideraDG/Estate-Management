@@ -125,6 +125,8 @@ def updateProfile(sender, instance, created, **kwargs):
             bo = BuildingOwner.objects.get(user=instance)
             bo.building_owner_name = instance.name
             bo.contact_email = instance.email
+            bo.contact_phone = instance.phone_number
+            bo.profile_pics = instance.profile_image
             bo.save()
 
         user.save()

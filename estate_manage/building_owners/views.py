@@ -20,7 +20,7 @@ def updateProfile(request, pk):
                 instance.building_owner_name = instance.building_owner_name.strip().title()
             instance.save()
 
-            return redirect('building-owner-home')
+            return redirect('view-building-owner', pk=instance.user)
         
     context = {'form': form, 'countries': countries, 'profile':profile}
     return render (request, 'building_owners/updateBuildingOwner.html', context)
@@ -31,12 +31,14 @@ def viewProfile(request, pk):
     context = {'profile': profile}
     return render(request, 'building_owners/viewBuildingOwner.html', context)
 
+@login_required(login_url='login')
 def get_states(request):
     country_id = request.GET.get('country_id')
     states = State.objects.filter(country_id=country_id).order_by('name')
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
 
+@login_required(login_url='login')
 def buildingOwnerDashboard(request, pk):
     context = {'username': pk}
     return render(request, "building_owners/BO_dashboard.html", context)

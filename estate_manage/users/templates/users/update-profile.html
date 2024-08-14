@@ -1,20 +1,32 @@
 {% extends "building_owners/BO_dashboard.html" %}
 
 {% block details %}
-<!-- Update Profile Form -->
-<form method="POST" action="" enctype="multipart/form-data">
+    <!-- Update Profile Form -->
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
+        {% if form.errors %}
+            <ul>
+                {% for field_name, errors in form.errors.items %}
+                    <li>
+                        <strong>{{ field_name.title }}:</strong>
+                        {% for error in errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <div class="card">
             <div class="card-header text-white" style="background-color: #2ed162;">
                 <h4>Update Profile</h4>
             </div>
             <div class="card-body">
                 {% for data in form %}
-                <div class="form-group mb-4">
-                    <label for="social_website">{{data.label}}:</label>
-                    {{ data }}
-                </div>
+                    <div class="form-group mb-4">
+                        <label>{{data.label}}:</label>
+                        {{ data }}
+                    </div>
                 {% endfor %}
             </div>
             <div class="card-footer">

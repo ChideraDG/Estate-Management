@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="profile-actions" style="display: flex; gap: 10px;">
-                    <a href='{% url "update-user-profile" pk=user.username %}' class="btn btn-primary">Update Profile</a>
+                    <a href='{% url "update-building-owner" pk=profile.user %}' class="btn btn-primary">Update Profile</a>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
                     <ul class="list-unstyled">
                         <li class="mb-2"><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</li>
                         <li class="mb-2"><strong>Contact Email:</strong> {{ profile.contact_email }}</li>
-                        <li class="mb-2"><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</li>
+                        <li class="mb-2"><strong>Contact Phone:</strong> {{ profile.contact_phone }}</li>
                         <li class="mb-2"><strong>Address:</strong> {{ profile.address }}</li>
                         <li class="mb-2"><strong>Country:</strong> {{ profile.country }}</li>
                         <li class="mb-2"><strong>State:</strong> {{ profile.state }}</li>

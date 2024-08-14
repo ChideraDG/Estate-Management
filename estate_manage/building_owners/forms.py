@@ -66,6 +66,6 @@ class BuildingOwnerForm(ModelForm):
             'tax_id': forms.TextInput(attrs={ 'placeholder': 'Enter tax id'}),
             'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',
                                                         'cols': 45,
-                                                        'rows': 8,
+                                                        'rows': 3,
                                                         }),
         }

@@ -10,7 +10,7 @@ urlpatterns = [
     path("", include('users.urls')),
     path("estates/", include('estates.urls')),
     path("company/dashboard/", include('companies.urls')),
-    path('building-owner/dashboard/', include('building_owners.urls')),
+    path('', include('building_owners.urls')),
     path('houses/', include('houses.urls')),
     path('apartments/', include('apartments.urls')),
     path('tenant/dashboard/', include('tenants.urls')),

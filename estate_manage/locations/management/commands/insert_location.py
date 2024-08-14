@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from locations.models import Country, State
-import pycountry
+import pycountry # type: ignore
 
 
 class Command(BaseCommand):

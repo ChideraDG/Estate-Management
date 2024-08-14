@@ -82,7 +82,7 @@ class BuildingOwner(models.Model):
                                 related_name='building_owners')
     building_owner_name = models.CharField(max_length=200, blank=False, null=False)
     contact_email = models.EmailField(unique=True, blank=False, null=False)
-    contact_phone = models.CharField(max_length=15, unique=True, blank=False, null=False,
+    contact_phone = models.CharField(max_length=15, unique=True, blank=True, null=True,
                                      validators=[RegexValidator(
                                          r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                          message="Phone number must be entered in the format: '08012345678' or "
@@ -90,7 +90,7 @@ class BuildingOwner(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='building_owners')
     address = models.TextField(blank=True, null=True)
     profile_pics = models.ImageField(blank=True, null=True, upload_to='building-owner-profile-pics/', 
-                                    validators=[validate_image_size], default='building-owner-profile-pics/dp.jpg')
+                                    default='building-owner-profile-pics/dp.jpg')
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='building_owners', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='building_owners', null=True, blank=True)
     city = models.CharField(max_length=200, blank=True, null=True)

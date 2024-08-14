@@ -34,8 +34,19 @@ def userRegister(request):
             user.save()
 
             login(request, user)
-            return redirect('dashboard')
 
+            designation = request.user.profile.designation
+            if designation == "building_owner":
+                return redirect('update-user-profile', request.user.profile)
+            elif designation == "agent":
+                return redirect('dashboard-A', request.user.profile)
+            elif designation == "buyer":
+                return redirect('dashboard-B', request.user.profile)
+            elif designation == "company":
+                return redirect('dashboard-C', request.user.profile)
+            elif designation == "tenant":
+                return redirect('dashboard-T', request.user.profile)
+            
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
@@ -71,15 +82,15 @@ def userLogin(request):
                 
                 designation = request.user.profile.designation
                 if designation == "building_owner":
-                    return redirect('dashboard-BO', request.user.profile.username)
+                    return redirect('dashboard-BO', request.user.profile)
                 elif designation == "agent":
-                    return redirect('dashboard-A', request.user.profile.username)
+                    return redirect('dashboard-A', request.user.profile)
                 elif designation == "buyer":
-                    return redirect('dashboard-B', request.user.profile.username)
+                    return redirect('dashboard-B', request.user.profile)
                 elif designation == "company":
-                    return redirect('dashboard-C', request.user.profile.username)
+                    return redirect('dashboard-C', request.user.profile)
                 elif designation == "tenant":
-                    return redirect('dashboard-T', request.user.profile.username)
+                    return redirect('dashboard-T', request.user.profile)
             else:
                 messages.error(request, 'username or password is wrong')
         else:
@@ -143,15 +154,15 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 def dashboard(request):
     designation = request.user.profile.designation
     if designation == "building_owner":
-        return redirect('dashboard-BO', request.user.profile.username)
+        return redirect('dashboard-BO', request.user.profile)
     elif designation == "agent":
-        return redirect('dashboard-A', request.user.profile.username)
+        return redirect('dashboard-A', request.user.profile)
     elif designation == "buyer":
-        return redirect('dashboard-B', request.user.profile.username)
+        return redirect('dashboard-B', request.user.profile)
     elif designation == "company":
-        return redirect('dashboard-C', request.user.profile.username)
+        return redirect('dashboard-C', request.user.profile)
     elif designation == "tenant":
-        return redirect('dashboard-T', request.user.profile.username)
+        return redirect('dashboard-T', request.user.profile)
 
 
 def property_single(request):
