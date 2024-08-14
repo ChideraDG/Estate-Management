@@ -112,7 +112,11 @@ Phone Number: +234 7033327493"""
 def updateUser(sender, instance, created, **kwargs):
     if not created:
         user = User.objects.get(id=instance.id)
-        user.first_name = instance.name
+        if " " in instance.name:
+            user.first_name = instance.name.split(" ")[0]
+            user.last_name = instance.name.split(" ")[1]
+        else:
+            user.first_name = instance.name
         user.username = instance.username
         user.email = instance.email
         user.save()

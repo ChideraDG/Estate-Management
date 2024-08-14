@@ -113,66 +113,70 @@
         }
     </style>
 
-<div class="profile-container">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-        <div class="profile-image">
-            <img src="{{ user.profile_image.url }}" alt="{{ user.name }}">
+    <div class="profile-container">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="profile-image">
+                <img src="{{ user.profile_image.url }}" alt="{{ user.name }}">
+            </div>
+
+            <div class="profile-actions" style="display: flex; gap: 10px;">
+                <a href='{% url "update-user-profile" pk=user.username %}' class="btn btn-primary">Update Profile</a>
+                <a href='{% url "delete-user" %}' class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this profile?');">Delete Profile</a>
+            </div>
         </div>
 
-        <div class="profile-actions" style="display: flex; gap: 10px;">
-            <a href='{% url "update-user-profile" pk=user.username %}' class="btn btn-primary">Update Profile</a>
-            <a href="" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this profile?');">Delete Profile</a>
+        <div class="card profile-details" style="width: 100%; max-width: 600px;">
+            <div class="card-body">
+                <h5 class="card-title" style="color: #2ed162;">Profile Details</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><strong>Name:</strong> {{ user.name }}</li>
+                    <li class="mb-2"><strong>Username:</strong> {{ user.username }}</li>
+                    {% if user.gender is male %}
+                    <li class="mb-2"><strong>Gender:</strong><i class="bi bi-gender-male"></i>{{ user.gender.title }}</li>
+                    {% else %}
+                    <li class="mb-2"><strong>Gender:</strong><i class="bi bi-gender-female"></i>{{ user.gender.title }}</li>
+                    {% endif %}
+                    <li class="mb-2"><strong>Date of Birth:</strong> {{ user.date_of_birth|date:"F j, Y." }}</li>
+                    <li class="mb-2"><strong>Email:</strong> {{ user.email }}</li>
+                    <li class="mb-2"><strong>Phone Number:</strong> {{ user.phone_number }}</li>
+                    <li class="mb-2"><strong>Designation:</strong> {{ user.designation.title }}</li>
+                    <li class="mb-2"><strong>Bio:</strong> {{ user.bio }}</li>
+                    <li class="mb-2"><strong>State of Residence:</strong> {{ user.state_of_residence }}</li>
+                    <li class="mb-2"><strong>Address 1:</strong> {{ user.address_1 }}</li>
+                    <li class="mb-2"><strong>Address 2:</strong> {{ user.address_2 }}</li>
+                </ul>
+            </div>
+        </div>
+
+        {% if user.social_github or user.social_twitter or user.social_linkedin or user.social_youtube or user.social_website%}
+        <div class="card" style="width: 18rem; margin: 0px;">
+            <div class="card-body">
+                <h2 class="card-title" style="color: #2ed162;">Social Links</h2>
+                
+                <ul class="list-unstyled d-flex flex-wrap">
+                    {% if user.social_github %}
+                        <li class="me-4"><a href="{{ user.social_github }}" target="_blank"><i class="bi bi-github"></i></a></li>
+                    {% endif %}
+                    {% if user.social_twitter %}
+                        <li class="me-4"><a href="{{ user.social_twitter }}" target="_blank"><i class="bi bi-twitter"></i></a></li>
+                    {% endif %}
+                    {% if user.social_linkedin %}
+                        <li class="me-4"><a href="{{ user.social_linkedin }}" target="_blank"><i class="bi bi-linkedin"></i></a></li>
+                    {% endif %}
+                    {% if user.social_youtube %}
+                        <li class="me-4"><a href="{{ user.social_youtube }}" target="_blank"><i class="bi bi-youtube"></i></a></li>
+                    {% endif %}
+                    {% if user.social_website %}
+                        <li class="me-4"><a href="{{ user.social_website }}" target="_blank"><i class="bi bi-globe"></i></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>{% endif %}
+
+        <div class="timestamps">
+            <p><strong>Profile Created:</strong> {{ user.created|date:"F j, Y, g:i a" }}</p>
+            <p><strong>Last Updated:</strong> {{ user.updated|date:"F j, Y, g:i a" }}</p>
         </div>
     </div>
-
-    <div class="card profile-details" style="width: 100%; max-width: 600px;">
-        <div class="card-body">
-            <h5 class="card-title" style="color: #2ed162;">Profile Details</h5>
-            <ul class="list-unstyled">
-                <li class="mb-2"><strong>Name:</strong> {{ user.name }}</li>
-                <li class="mb-2"><strong>Username:</strong> {{ user.username }}</li>
-                <li class="mb-2"><strong>Gender:</strong> {{ user.gender }}</li>
-                <li class="mb-2"><strong>Date of Birth:</strong> {{ user.date_of_birth|date:"F j, Y." }}</li>
-                <li class="mb-2"><strong>Email:</strong> {{ user.email }}</li>
-                <li class="mb-2"><strong>Phone Number:</strong> {{ user.phone_number }}</li>
-                <li class="mb-2"><strong>Designation:</strong> {{ user.designation.title }}</li>
-                <li class="mb-2"><strong>Bio:</strong> {{ user.bio }}</li>
-                <li class="mb-2"><strong>State of Residence:</strong> {{ user.state_of_residence }}</li>
-                <li class="mb-2"><strong>Address 1:</strong> {{ user.address_1 }}</li>
-                <li class="mb-2"><strong>Address 2:</strong> {{ user.address_2 }}</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="card" style="width: 18rem; margin: 0px;">
-        <div class="card-body">
-            {% if user.social_github or user.social_twitter or user.social_linkedin or user.social_youtube or user.social_website%}
-            <h2 class="card-title" style="color: #2ed162;">Social Links</h2>
-            {% endif %}
-            <ul class="list-unstyled">
-                {% if user.social_github %}
-                    <li><a href="{{ user.social_github }}" target="_blank"><i class="bi bi-github"></i></a></li>
-                {% endif %}
-                {% if user.social_twitter %}
-                    <li><a href="{{ user.social_twitter }}" target="_blank">Twitter</a></li>
-                {% endif %}
-                {% if user.social_linkedin %}
-                    <li><a href="{{ user.social_linkedin }}" target="_blank">LinkedIn</a></li>
-                {% endif %}
-                {% if user.social_youtube %}
-                    <li><a href="{{ user.social_youtube }}" target="_blank">YouTube</a></li>
-                {% endif %}
-                {% if user.social_website %}
-                    <li><a href="{{ user.social_website }}" target="_blank">Website</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>  
-
-    <div class="timestamps">
-        <p><strong>Profile Created:</strong> {{ user.created|date:"F j, Y, g:i a" }}</p>
-        <p><strong>Last Updated:</strong> {{ user.updated|date:"F j, Y, g:i a" }}</p>
-    </div>
-</div>
 
 {% endblock details %}

@@ -1,26 +1,152 @@
 {% extends "building_owners/BO_dashboard.html" %}
 
 {% block details %}
-    {% with profile=request.user.profile.building_owners %}
-        <div class="form-container">
-            <h1 style="color: #007bff;">{{ profile }}'s Profile</h1>
-            <p><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</p>
-            <p><strong>Contact Email:</strong> {{ profile.contact_email }}</p>
-            <p><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</p>
-            <strong>Profile Pics:</strong>
-            {% if profile.profile_pics %}
-                <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }} Profile Pics" style="max-width: 200px;">
-            {% else %}
-                <p>No profile picture available</p>
-            {% endif %}
-            <p><strong>Address:</strong> {{ profile.address }}</p>
-            <p><strong>City:</strong> {{ profile.city }}</p>
-            <p><strong>Country:</strong> {{ profile.country }}</p>
-            <p><strong>State:</strong> {{ profile.state }}</p>
-            <p><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</p>
-            <p><strong>Investment Strategy:</strong> {{ profile.investment_strategy }}</p>
-            <p><strong>TaxID:</strong> {{ profile.tax_id }}</p>
-            <p><strong>Notes:</strong> {{ profile.notes }}</p>
+    <style>
+        .profile-container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Profile Image Styling */
+        .profile-image {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .profile-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        /* Profile Details Styling */
+        .profile-details {
+            margin-bottom: 20px;
+        }
+
+        .profile-details p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .profile-details strong {
+            color: #333;
+        }
+
+        /* Social Links Styling */
+        .social-links {
+            margin-bottom: 20px;
+        }
+
+        .social-links h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .social-links ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .social-links ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .social-links ul li a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .social-links ul li a:hover {
+            color: #0056b3;
+        }
+
+        /* Timestamps Styling */
+        .timestamps p {
+            font-size: 14px;
+            color: #888;
+            margin: 5px 0;
+        }
+
+        /* General Styling */
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .profile-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+
+        <div class="profile-container">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="profile-image">
+                    <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }}">
+                </div>
+
+                <div class="profile-actions" style="display: flex; gap: 10px;">
+                    <a href='{% url "update-user-profile" pk=user.username %}' class="btn btn-primary">Update Profile</a>
+                </div>
+            </div>
+
+            <div class="card profile-details" style="width: 100%; max-width: 600px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #2ed162;">Profile Details</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</li>
+                        <li class="mb-2"><strong>Contact Email:</strong> {{ profile.contact_email }}</li>
+                        <li class="mb-2"><strong>Contact Phone:</strong> {{ profile.contact_Phone }}</li>
+                        <li class="mb-2"><strong>Address:</strong> {{ profile.address }}</li>
+                        <li class="mb-2"><strong>Country:</strong> {{ profile.country }}</li>
+                        <li class="mb-2"><strong>State:</strong> {{ profile.state }}</li>
+                        <li class="mb-2"><strong>City:</strong> {{ profile.city }}</li>
+                        <li class="mb-2"><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</li>
+                        <li class="mb-2"><strong>Investment Strategy:</strong> {{ profile.investment_strategy }}</li>
+                        <li class="mb-2"><strong>TaxID:</strong> {{ profile.tax_id }}</li>
+                        <li class="mb-2"><strong>Notes:</strong> {{ profile.notes }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timestamps">
+                <p><strong>Profile Created:</strong> {{ profile.created|date:"F j, Y, g:i a" }}</p>
+                <p><strong>Last Updated:</strong> {{ profile.updated|date:"F j, Y, g:i a" }}</p>
+            </div>
         </div>
-    {% endwith %}
+
 {% endblock details %}

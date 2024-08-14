@@ -71,7 +71,7 @@ def userLogin(request):
                 
                 designation = request.user.profile.designation
                 if designation == "building_owner":
-                    return redirect('view-building-owner', request.user.profile.id)
+                    return redirect('dashboard-BO', request.user.profile.username)
                 elif designation == "agent":
                     return redirect('dashboard-A', request.user.profile.username)
                 elif designation == "buyer":

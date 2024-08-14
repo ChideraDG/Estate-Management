@@ -90,7 +90,7 @@ class BuildingOwner(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='building_owners')
     address = models.TextField(blank=True, null=True)
     profile_pics = models.ImageField(blank=True, null=True, upload_to='building-owner-profile-pics/', 
-                             validators=[validate_image_size])
+                                    validators=[validate_image_size], default='building-owner-profile-pics/dp.jpg')
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='building_owners', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='building_owners', null=True, blank=True)
     city = models.CharField(max_length=200, blank=True, null=True)
