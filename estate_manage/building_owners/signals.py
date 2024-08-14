@@ -5,7 +5,7 @@ from .models import BuildingOwner
 
 
 @receiver(post_save, sender=Profile)
-def createBuildingOwnerProfile(sender, instance, created, **kwargs):
+def create_building_owner_profile(sender, instance, created, **kwargs):
     """
     Creates a new Building Owner profile when a new Profile instance is saved with 'Building Owner' designation.
 

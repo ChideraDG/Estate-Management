@@ -8,7 +8,7 @@ from building_owners.models import BuildingOwner
 
 
 @receiver(post_save, sender=User)
-def createProfile(sender, instance, created, **kwargs):
+def create_profile(sender, instance, created, **kwargs):
     """
     Creates a new Profile instance when a new User instance is created.
 
@@ -64,7 +64,7 @@ The EstateManage Team"""
 
 
 @receiver(post_delete, sender=Profile)
-def deleteUser(sender, instance, **kwargs):
+def delete_user(sender, instance, **kwargs):
     """
     Deletes the associated User instance when a Profile instance is deleted.
 
@@ -110,23 +110,23 @@ Phone Number: +234 7033327493"""
     
 
 @receiver(post_save, sender=Profile)
-def updateProfile(sender, instance, created, **kwargs):
+def update_profile(sender, instance, created, **kwargs):
     if not created:
-        user = User.objects.get(id=instance.id)
         if " " in instance.name:
-            user.first_name = instance.name.split(" ")[0]
-            user.last_name = instance.name.split(" ")[1]
+            instance.user.first_name = instance.name.split(" ")[0]
+            instance.user.last_name = instance.name.split(" ")[1]
         else:
-            user.first_name = instance.name
-        user.username = instance.username
-        user.email = instance.email
+            instance.user.first_name = instance.name
+        instance.user.username = instance.username
+        instance.user.email = instance.email
 
         if instance.designation == 'building_owner':
-            bo = BuildingOwner.objects.get(user=instance)
-            bo.building_owner_name = instance.name
-            bo.contact_email = instance.email
-            bo.contact_phone = instance.phone_number
-            bo.profile_pics = instance.profile_image
-            bo.save()
+            bo = BuildingOwner.objects.filter(user=instance).first()
+            if bo:
+                bo.building_owner_name = instance.name
+                bo.contact_email = instance.email
+                bo.contact_phone = instance.phone_number
+                bo.profile_pics = instance.profile_image
+                bo.save()
 
-        user.save()
+        instance.user.save()
