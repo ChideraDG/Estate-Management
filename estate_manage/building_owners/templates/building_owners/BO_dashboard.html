@@ -124,104 +124,12 @@
         <div class="vertical-line"></div>
     
         <div class="right-side">
-            <div id="personal-info" class="content">
-                <h2>Property Summary</h2>
-            </div>
-            <div id="lease-info" class="content">
-                <h2>Lease Information</h2>
-                <p>Details about the lease...</p>
-            </div>
-            <div id="payment-history" class="content">
-                <h2>Payment History</h2>
-                <p>Details about the payment history...</p>
-            </div>
-            <div id="house-profiles" class="content">
-                <h2>House Profiles</h2>
-                <p>Details about house profiles...</p>
-            </div>
-            <div id="house-reports" class="content">
-                <h2>House Reports</h2>
-                <p>View house reports...</p>
-            </div>
-            <div id="tenant-profiles" class="content">
-                <h2>Tenant Profiles</h2>
-                <p>View and manage tenant profiles...</p>
-            </div>
-            <div id="lease-management" class="content">
-                <h2>Lease Management</h2>
-                <p>Manage lease agreements...</p>
-            </div>
-            <div id="communication-tools" class="content">
-                <h2>Communication Tools</h2>
-                <p>Access communication tools...</p>
-            </div>
-            <div id="rent-collection" class="content">
-                <h2>Rent Collection</h2>
-                <p>Manage rent collection...</p>
-            </div>
-            <div id="expense-tracking" class="content">
-                <h2>Expense Tracking</h2>
-                <p>Track expenses...</p>
-            </div>
-            <div id="financial-reports" class="content">
-                <h2>Financial Reports</h2>
-                <p>View financial reports...</p>
-            </div>
-            <div id="maintenance-requests" class="content">
-                <h2>Maintenance Requests</h2>
-                <p>Submit and manage maintenance requests...</p>
-            </div>
-            <div id="service-schedule" class="content">
-                <h2>Service Schedule</h2>
-                <p>View service schedules...</p>
-            </div>
-            <div id="service-provider-management" class="content">
-                <h2>Service Provider Management</h2>
-                <p>Manage service providers...</p>
-            </div>
-            <div id="document-storage" class="content">
-                <h2>Document Storage</h2>
-                <p>Store and manage documents...</p>
-            </div>
-            <div id="document-sharing" class="content">
-                <h2>Document Sharing</h2>
-                <p>Share documents securely...</p>
-            </div>
-            <div id="real-time-analytics" class="content">
-                <h2>Real-time Analytics</h2>
-                <p>Access real-time analytics...</p>
-            </div>
-            <div id="custom-reports" class="content">
-                <h2>Custom Reports</h2>
-                <p>Generate custom reports...</p>
-            </div>
-            <div id="forecasting-tools" class="content">
-                <h2>Forecasting Tools</h2>
-                <p>Use forecasting tools...</p>
-            </div>
-            <div id="profile" class="content">
-                {% include "building_owners/viewOwner.html" %}
-            </div>
-            <div id="activity" class="content">
-                <h1>Activity Log</h1>
-            </div>
-    
-            <!-- Add more content sections as needed -->
+            {% block details %}{% endblock details %}
+            {% comment %} {% include "building_owners/viewOwner.html" %} {% endcomment %}
         </div>
     </div>    
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Automatically display the first content section on page load
-            const firstLink = document.getElementById("show-profile")
-            if (firstLink) {
-                const firstContentId = firstLink.getAttribute('data-content');
-                const firstContentToShow = document.getElementById(firstContentId);
-                if (firstContentToShow) {
-                    firstContentToShow.classList.add('active');
-                }
-            }
-    
             // JavaScript to toggle the visibility of the dropdown content
             document.querySelectorAll('h6').forEach(header => {
                 header.addEventListener('click', () => {
@@ -229,26 +137,6 @@
                     ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
                 });
             });
-    
-            // JavaScript to display the right-side content
-            document.querySelectorAll('.left-side .mylist li a').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevent the default link behavior
-                    const contentId = link.getAttribute('data-content');
-    
-                    // Hide all content
-                    document.querySelectorAll('.right-side .content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-    
-                    // Show the selected content
-                    const contentToShow = document.getElementById(contentId);
-                    if (contentToShow) {
-                        contentToShow.classList.add('active');
-                    }
-                });
-            });
-        });
     </script>
     
 
