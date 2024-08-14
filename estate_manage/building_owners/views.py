@@ -6,28 +6,6 @@ from . forms import BuildingOwnerForm
 from locations.models import Country, State
 
 
-def buildingOwnersHome(request):
-    profiles = BuildingOwner.objects.all()
-    context = {'profiles': profiles}
-    return render(request, 'building_owners/buildingOwnersHome.html', context)
-
-
-def createProfile(request):
-    countries = Country.objects.all()
-    form = BuildingOwnerForm()
-
-    if request.method == 'POST':
-        form = BuildingOwnerForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            if instance.building_owner_name:
-                instance.building_owner_name = instance.building_owner_name.strip().title()
-            instance.save()
-            return redirect('building-owner-home')
-
-    context = {'form': form, 'countries': countries}
-    return render (request, 'building_owners/buildingOwnerReg.html', context)
-
 @login_required(login_url='login')
 def updateProfile(request, pk):
     profile = request.user.profile.building_owners
@@ -45,23 +23,13 @@ def updateProfile(request, pk):
             return redirect('building-owner-home')
         
     context = {'form': form, 'countries': countries, 'profile':profile}
-    return render (request, 'building_owners/buildingOwnerReg.html', context)
+    return render (request, 'building_owners/updateBuildingOwner.html', context)
 
 @login_required(login_url='login')
 def viewProfile(request, pk):
     profile = request.user.profile.building_owners
     context = {'profile': profile}
-    return render(request, 'building_owners/viewOwner.html', context)
-
-def deleteProfile(request, pk):
-    profile = BuildingOwner.objects.get(id=pk)
-
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('building-owner-home')
-    
-    context = {'obj': profile}
-    return render(request, 'building_owners/deleteOwner.html', context)
+    return render(request, 'building_owners/viewBuildingOwner.html', context)
 
 def get_states(request):
     country_id = request.GET.get('country_id')
