@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
@@ -7,7 +7,7 @@ from locations.models import Country, State
 
 
 @login_required(login_url='login')
-def update_profile(request, pk):
+def update_building_owner_profile(request, pk):
     profile = request.user.profile.building_owners
     countries = Country.objects.all()
     form = BuildingOwnerForm(instance=profile)
@@ -25,8 +25,8 @@ def update_profile(request, pk):
     return render(request, 'building_owners/updateBuildingOwner.html', context)
 
 @login_required(login_url='login')
-def view_profile(request, pk):
-    profile = request.user.profile.building_owners
+def view_building_owner_profile(request, pk):
+    profile = get_object_or_404(request.user.profile, building_owners=pk)
     context = {'profile': profile}
     return render(request, 'building_owners/viewBuildingOwner.html', context)
 
