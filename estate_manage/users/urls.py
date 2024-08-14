@@ -22,17 +22,17 @@ Examples:
 """
 
 from django.urls import path
-from .views import (home, userRegister, userLogin, userLogout,
+from .views import (home, user_register, user_login, user_logout,
                     dashboard, property_grid, property_single,
                     blog_single, agents_grid, agent_single, about,
-                    blog, contact_us, userDelete, userView, userUpdate)
+                    blog, contact_us, user_delete, user_view, user_update)
 
 urlpatterns = [
     path("", home, name='home'),
-    path("register/", userRegister, name='register'),
-    path("login/", userLogin, name='login'),
-    path("logout/", userLogout, name='logout'),
-    path("delete-user/", userDelete, name='delete-user'),
+    path("register/", user_register, name='register'),
+    path("login/", user_login, name='login'),
+    path("logout/", user_logout, name='logout'),
+    path("delete-user/", user_delete, name='delete-user'),
     path("dashboard/", dashboard, name='dashboard'),
     path("property-single/", property_single, name='property-single'),
     path("property-grid/", property_grid, name='property-grid'),
@@ -42,6 +42,6 @@ urlpatterns = [
     path("about/", about, name='about'),
     path("blog/", blog, name='blog'),
     path("contact-us/", contact_us, name='contact-us'),
-    path("dashboard/<str:pk>/view-profile/", userView, name="view-user-profile"),
-    path("dashboard/<str:pk>/update-profile/", userUpdate, name="update-user-profile")
+    path("dashboard/<str:pk>/view-profile/", user_view, name="view-user-profile"),
+    path("dashboard/<str:pk>/update-profile/", user_update, name="update-user-profile")
 ]

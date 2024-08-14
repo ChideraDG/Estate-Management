@@ -20,7 +20,7 @@ from .forms import (RegistrationForm, LoginForm, ContactForm, ContactAgentForm,
 from .models import Profile
 
 
-def userRegister(request):
+def user_register(request):
     form = RegistrationForm(request.POST if request.method == 'POST' else None)
 
     if request.user.is_authenticated:
@@ -61,7 +61,7 @@ def home(request):
     return render(request, 'users/home.html')
 
 
-def userLogin(request):
+def user_login(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
 
@@ -96,7 +96,7 @@ def userLogin(request):
 
 
 @login_required(login_url='login')
-def userView(request, pk):
+def user_view(request, pk):
     profile = Profile.objects.get(username=pk)
 
     context = {"user": profile}
@@ -104,7 +104,7 @@ def userView(request, pk):
 
 
 @login_required(login_url='login')
-def userUpdate(request, pk):
+def user_update(request, pk):
     profile = Profile.objects.get(username=pk)
     form = ProfileForm(instance=profile)
 
@@ -122,13 +122,13 @@ def userUpdate(request, pk):
     return render(request, 'users/update-profile.html', {'form': form})
 
 @login_required(login_url='login')
-def userDelete(request):
+def user_delete(request):
     user = request.user.profile
     user.delete()
     return redirect('home')
 
 @login_required(login_url='login')
-def userLogout(request):
+def user_logout(request):
     logout(request)
     return redirect('home')
 
