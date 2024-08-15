@@ -1,3 +1,8 @@
 /.idea
 /.idea/inspectionProfiles
 /estate_manage/estates/management
+**/__pycache__/
+
+# Ignore all migration files except __init__.py
+**/migrations/*.py[cod]
+!**/migrations/__init__.py
