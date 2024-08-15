@@ -2,6 +2,7 @@ import datetime
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django import forms
 from .models import Profile
 
@@ -126,6 +127,19 @@ class CustomPasswordResetForm(PasswordResetForm):
         })
     )
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        # Example validation: Check if the email exists in the database
+        if not User.objects.filter(email=email).exists():
+            raise ValidationError("This email address does not exist.")
+        
+        return email
+    
+    def get_error(self, email):
+        if not User.objects.filter(email=email).exists():
+            return "This email address does not exist."
+
 
 class CustomSetPasswordForm(SetPasswordForm):
     """
@@ -157,6 +171,32 @@ class CustomSetPasswordForm(SetPasswordForm):
         })
     )
 
+    def clean_new_password1(self):
+        password1 = self.cleaned_data.get('new_password1')
+
+        # Custom validation: check password length
+        if len(password1) < 8:
+            raise ValidationError("The password must be at least 8 characters long.")
+
+        return password1
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+
+        # Ensure that both passwords match
+        if password1 and password2 and password1 != password2:
+            raise ValidationError("The two password fields didn't match.")
+
+        return password2
+
+    def get_error(self, password1, password2):
+        if len(password1) < 8:
+            return "The password must be at least 8 characters long."
+
+        if password1 and password2 and password1 != password2:
+            return "The two password fields didn't match."
+    
 
 class ContactForm(forms.Form):
     """

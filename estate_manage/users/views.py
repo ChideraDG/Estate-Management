@@ -136,9 +136,20 @@ def user_logout(request):
 class CustomPasswordResetView(PasswordResetView):
     form_class = CustomPasswordResetForm
 
+    def form_invalid(self, form):
+        error_message = form.get_error(self.request.POST['email'])
+        messages.error(self.request, error_message)
+        return super().form_invalid(form)
+
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = CustomSetPasswordForm
+
+    def form_invalid(self, form):
+        print(self.request.POST)
+        error_message = form.get_error(self.request.POST['new_password1'], self.request.POST['new_password2'])
+        messages.error(self.request, error_message)
+        return super().form_invalid(form)
 
 
 @login_required(login_url='login')
