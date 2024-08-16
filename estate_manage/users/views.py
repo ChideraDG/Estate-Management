@@ -99,7 +99,15 @@ def user_login(request):
 def user_view(request, pk):
     profile = Profile.objects.get(username=pk)
 
-    context = {"user": profile}
+    active_menu = 'user-management'
+    active_sub_menu = 'personal-profile'
+
+    context = {
+        "user": profile,
+        "active_menu": active_menu,
+        "active_sub_menu": active_sub_menu
+    }
+
     return render(request, "users/view-user.html", context)
 
 
@@ -118,8 +126,18 @@ def user_update(request, pk):
             instance.save()
             messages.success(request, 'Profile updated successfully')
             return redirect('view-user-profile', pk=instance.username)
+    
+    active_menu = 'user-management'
+    active_sub_menu = 'personal-profile'
 
-    return render(request, 'users/update-profile.html', {'form': form})
+    context = {
+        "user": profile,
+        "active_menu": active_menu,
+        "active_sub_menu": active_sub_menu,
+        'form': form
+    }
+
+    return render(request, 'users/update-profile.html', context)
 
 @login_required(login_url='login')
 def user_delete(request):

@@ -21,19 +21,29 @@ def update_building_owner_profile(request, pk):
             messages.success(request, 'Profile updated successfully')
             return redirect('view-building-owner', pk=instance.user)
 
-    context = {'form': form, 'countries': countries, 'profile': profile}
+    active_menu = 'user-management'
+    active_sub_menu = 'bo-profile'
+
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+        'form': form, 
+        'countries': countries, 
+        'profile': profile
+        }
+    
     return render(request, 'building_owners/updateBuildingOwner.html', context)
 
 @login_required(login_url='login')
 def view_building_owner_profile(request, pk):
     profile = request.user.profile.building_owners
-    
-    active_menu = 'house-profiles'  # This could be dynamic based on the request
-    active_parent_menu = 'house-management' if active_menu in ['house-profiles', 'house-reports'] else ''
+
+    active_menu = 'user-management'
+    active_sub_menu = 'bo-profile'
     
     context = {
+        'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
-        'active_parent_menu': active_parent_menu,
         'profile': profile
     }
     return render(request, 'building_owners/viewBuildingOwner.html', context)
@@ -47,10 +57,11 @@ def get_states(request):
 
 @login_required(login_url='login')
 def building_owner_dashboard(request, pk):
-    active_parent_menu = ''
+    active_menu = 'building-owner-dashboard'
+
     context = {
         'username': pk,
-        'active_parent_menu': active_parent_menu,
+        'active_menu': active_menu,
     }
     return render(request, "building_owners/BO_dashboard.html", context)
 

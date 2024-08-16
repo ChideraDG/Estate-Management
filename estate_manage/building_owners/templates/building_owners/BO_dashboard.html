@@ -1,8 +1,12 @@
 {% extends "dashboard/main.html" %}
 
+{% block title %}
+<title>{{request.user.profile.username.title}}-Dashboard</title>
+{% endblock title %}
+
 {% block BO %}
     <!-- Dashboard -->
-    <li class="menu-item {% if active_parent_menu == '' %}active{% endif %}">
+    <li class="menu-item {% if active_menu == 'building-owner-dashboard' %}active{% endif %}">
         <a href='{% url "dashboard-BO" pk=request.user.profile %}' class="menu-link">
             <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
             <div data-i18n="Analytics">Dashboard</div>
@@ -13,16 +17,16 @@
         <span class="menu-header-text">Houses & Tenants</span>
     </li>
 
-    <!-- House Management -->
-    <li class="menu-item {% if active_parent_menu == 'house-management' %}active{% endif %}">
+    <!-- Houses Management -->
+    <li class="menu-item {% if active_menu == 'houses-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
             <div data-i18n="House Management">House Management</div>
         </a>
 
         <ul class="menu-sub">
-            <li class="menu-item {% if active_menu == 'house-profiles' %}active{% endif %}">
-                <a href='{% url "view-building-owner" pk=request.user.profile %}' class="menu-link">
+            <li class="menu-item {% if active_sub_menu == 'house-profiles' %}active{% endif %}">
+                <a href="#" class="menu-link">
                     <div data-i18n="house-profiles">House Profiles</div>
                 </a>
             </li>
@@ -35,7 +39,7 @@
     </li>
 
     <!-- Tenants Management -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'tenants-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
             <div data-i18n="tenant management">Tenant Management</div>
@@ -63,7 +67,7 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
 
     <!-- Finances -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'finances' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
             <div data-i18n="finances">Finances</div>
@@ -88,7 +92,7 @@
     </li>
 
     <!-- Maintenance -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'maintenance' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
             <div data-i18n="maintenance">Maintenance</div>
@@ -113,7 +117,7 @@
     </li>
 
     <!-- Documents -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'document' %}active{% endif %}">
         <a href="javascript:void(0)" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-folder-fill tiny-icon"></i>
             <div data-i18n="Extended UI">Documents</div>
@@ -136,7 +140,7 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Analytics & Reporting</span></li>
     
     <!-- Analytics -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'analytics' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-graph-up tiny-icon"></i>
             <div data-i18n="analytics">Analytics</div>
@@ -156,7 +160,7 @@
     </li>
 
     <!-- Reporting -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'reporting' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"></i>
             <div data-i18n="reports">Reports</div>
@@ -173,23 +177,22 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
                     
     <!-- User Management -->
-    <li class="menu-item">
+    <li class="menu-item {% if active_menu == 'user-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
             <div data-i18n="User Management">User Management</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="forms-basic-inputs.html" class="menu-link">
+            <li class="menu-item {% if active_sub_menu == 'bo-profile' %}active{% endif %}">
+                <a href='{% url "view-building-owner" pk=request.user.profile %}'  class="menu-link">
                     <div data-i18n="bo-profile">Building Owner Profile</div>
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="forms-input-groups.html" class="menu-link">
+            <li class="menu-item {% if active_sub_menu == 'personal-profile' %}active{% endif %}">
+                <a href='{% url "view-user-profile" pk=request.user.profile %}' class="menu-link">
                     <div data-i18n="personal-profile">Personal Profile</div>
                 </a>
             </li>
         </ul>
     </li>
-
 {% endblock BO %}
