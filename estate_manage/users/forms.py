@@ -64,6 +64,16 @@ class RegistrationForm(forms.Form):
             raise forms.ValidationError("")
         return email
     
+    def clean_password1(self):
+        password1 = self.cleaned_data.get('password1')
+
+        # Custom validation: check password length
+        if len(password1) < 8:
+            self.validation_error = 'The password must be at least 8 characters long.'
+            raise ValidationError("The password must be at least 8 characters long.")
+
+        return password1
+    
     def clean_password2(self):
         """
         Validate that the two password fields match.

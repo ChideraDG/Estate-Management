@@ -27,7 +27,15 @@ def update_building_owner_profile(request, pk):
 @login_required(login_url='login')
 def view_building_owner_profile(request, pk):
     profile = request.user.profile.building_owners
-    context = {'profile': profile}
+    
+    active_menu = 'house-profiles'  # This could be dynamic based on the request
+    active_parent_menu = 'house-management' if active_menu in ['house-profiles', 'house-reports'] else ''
+    
+    context = {
+        'active_menu': active_menu,
+        'active_parent_menu': active_parent_menu,
+        'profile': profile
+    }
     return render(request, 'building_owners/viewBuildingOwner.html', context)
 
 @login_required(login_url='login')
@@ -39,7 +47,11 @@ def get_states(request):
 
 @login_required(login_url='login')
 def building_owner_dashboard(request, pk):
-    context = {'username': pk}
+    active_parent_menu = ''
+    context = {
+        'username': pk,
+        'active_parent_menu': active_parent_menu,
+    }
     return render(request, "building_owners/BO_dashboard.html", context)
 
 def property_summary(request):

@@ -84,3 +84,214 @@ find . -path "*/migrations/*.pyc"  -delete
 ======================================================
 
 # Fix the dashboard url path
+
+
+old Building Owner frontend========================================
+
+    <style>
+        .containers {
+            display: flex;
+            width: 100%;
+        }
+
+        .left-side {
+            width: 20%;
+            padding-right: 10px;
+        }
+
+        .vertical-line {
+            width: 5px;
+            background-color: #2ed162;
+            margin: 0 20px;
+        }
+
+        .right-side {
+            width: 80%;
+            padding-left: 10px;
+            border-left: 1px solid #ddd; /* Optional border to define the content area */
+        }
+
+        h6 {
+            cursor: pointer;
+            background-color: #f1f1f1;
+            padding: 20px;
+            margin: 0;
+            border: 1px solid #ddd;
+        }
+
+        .mylist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none; /* Hide the dropdown content by default */
+        }
+
+        .mylist li {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-top: none; /* Remove the top border to make it look like a continuation */
+            background-color: #fafafa;
+        }
+
+        .mylist li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .mylist li a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .content {
+            display: none; /* Hide content by default */
+        }
+
+        .content.active {
+            display: block; /* Show the active content */
+        }
+    </style>
+
+    <div class="containers">
+        
+        <div class="left-side">
+            <h6>Overview Section</h6>
+            <ul class="mylist">
+                <li><a href='{% url "prop-summ" %}'  data-content="personal-info">Property Summary</a></li>
+                <li><a href="#" data-content="lease-info">Tenant Overview</a></li>
+                <li><a href="#" data-content="payment-history">Financial Snapshot</a></li>
+            </ul>
+            
+            <h6>House Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="house-profiles">House Profiles</a></li>
+                <li><a href="#" data-content="house-reports">House Reports</a></li>
+            </ul>
+    
+            <h6>Tenant Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="tenant-profiles">Tenant Profiles</a></li>
+                <li><a href="#" data-content="lease-management">Lease Management</a></li>
+                <li><a href="#" data-content="communication-tools">Communication Tools</a></li>
+            </ul>
+    
+            <h6>Financial Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="rent-collection">Rent Collection</a></li>
+                <li><a href="#" data-content="expense-tracking">Expense Tracking</a></li>
+                <li><a href="#" data-content="financial-reports">Financial Reports</a></li>
+            </ul>
+            
+            <h6>Maintenance Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="maintenance-requests">Maintenance Requests</a></li>
+                <li><a href="#" data-content="service-schedule">Service Schedule</a></li>
+                <li><a href="#" data-content="service-provider-management">Service Provider Management</a></li>
+            </ul>
+    
+            <h6>Document Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="document-storage">Document Storage</a></li>
+                <li><a href="#" data-content="document-sharing">Document Sharing</a></li>
+            </ul>
+    
+            <h6>Analytics and Reporting</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="real-time-analytics">Real-time Analytics</a></li>
+                <li><a href="#" data-content="custom-reports">Custom Reports</a></li>
+                <li><a href="#" data-content="forecasting-tools">Forecasting Tools</a></li>
+            </ul>
+    
+            <h6>User Management</h6>
+            <ul class="mylist">
+                <li><a href="#" data-content="activity">Activity Logs</a></li>
+            </ul>
+
+            <h6>Profile</h6>
+            <ul class="mylist">
+                <li><a href='{% url "view-building-owner" pk=request.user.profile %}' data-content="bo-profile">Building Owner Profile</a></li>
+                <li><a href='{% url "view-user-profile" pk=request.user.profile.username %}' data-content="personal-profile">Personal Profile</a></li>
+            </ul>
+        </div>
+    
+        <div class="vertical-line"></div>
+    
+        <div class="right-side">
+            {% block details %}{% endblock details %}
+        </div>
+    </div>    
+
+    <script>
+            // JavaScript to toggle the visibility of the dropdown content
+            document.querySelectorAll('h6').forEach(header => {
+                header.addEventListener('click', () => {
+                    const ul = header.nextElementSibling;
+                    ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            
+    </script>
+===================================================================
+
+
+
+alert bootstrap ========================================================
+/* Basic alert styling */
+.alert {
+  position: relative;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .375rem;
+}
+
+/* Alert variations based on type */
+.alert-primary {
+  color: #084298;
+  background-color: #cfe2ff;
+  border-color: #b6d4fe;
+}
+
+.alert-secondary {
+  color: #41464b;
+  background-color: #e2e3e5;
+  border-color: #d3d6d8;
+}
+
+.alert-success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+
+.alert-warning {
+  color: #664d03;
+  background-color: #fff3cd;
+  border-color: #ffecb5;
+}
+
+.alert-info {
+  color: #055160;
+  background-color: #cff4fc;
+  border-color: #b6effb;
+}
+
+.alert-light {
+  color: #636464;
+  background-color: #fefefe;
+  border-color: #fdfdfe;
+}
+
+.alert-dark {
+  color: #141619;
+  background-color: #d3d3d4;
+  border-color: #bcbebf;
+}
+=========================================

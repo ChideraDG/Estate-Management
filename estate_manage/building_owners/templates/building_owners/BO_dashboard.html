@@ -1,150 +1,172 @@
-{% extends "dashboard/base.html" %}
+{% extends "dashboard/main.html" %}
 
 {% block BO %}
-    <style>
-        .containers {
-            display: flex;
-            width: 100%;
-        }
+    <!-- Dashboard -->
+    <li class="menu-item {% if active_parent_menu == '' %}active{% endif %}">
+        <a href='{% url "dashboard-BO" pk=request.user.profile %}' class="menu-link">
+            <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
+            <div data-i18n="Analytics">Dashboard</div>
+        </a>
+    </li>
 
-        .left-side {
-            width: 20%;
-            padding-right: 10px;
-        }
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Houses & Tenants</span>
+    </li>
 
-        .vertical-line {
-            width: 5px;
-            background-color: #2ed162;
-            margin: 0 20px;
-        }
+    <!-- House Management -->
+    <li class="menu-item {% if active_parent_menu == 'house-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
+            <div data-i18n="House Management">House Management</div>
+        </a>
 
-        .right-side {
-            width: 80%;
-            padding-left: 10px;
-            border-left: 1px solid #ddd; /* Optional border to define the content area */
-        }
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_menu == 'house-profiles' %}active{% endif %}">
+                <a href='{% url "view-building-owner" pk=request.user.profile %}' class="menu-link">
+                    <div data-i18n="house-profiles">House Profiles</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="layouts-without-navbar.html" class="menu-link">
+                    <div data-i18n="house-reports">House Reports</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-        h6 {
-            cursor: pointer;
-            background-color: #f1f1f1;
-            padding: 20px;
-            margin: 0;
-            border: 1px solid #ddd;
-        }
+    <!-- Tenants Management -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
+            <div data-i18n="tenant management">Tenant Management</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="pages-account-settings-account.html" class="menu-link">
+                <div data-i18n="tenant-profiles">Tenant Profiles</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="pages-account-settings-notifications.html" class="menu-link">
+                <div data-i18n="lease-management">Lease Management</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="pages-account-settings-connections.html" class="menu-link">
+                <div data-i18n="communication-tools">Communication Tools</div>
+            </a>
+            </li>
+        </ul>
+    </li>
 
-        .mylist {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: none; /* Hide the dropdown content by default */
-        }
+    <!-- Services -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
 
-        .mylist li {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-top: none; /* Remove the top border to make it look like a continuation */
-            background-color: #fafafa;
-        }
+    <!-- Finances -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
+            <div data-i18n="finances">Finances</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                <div data-i18n="rent-collection">Rent Collection</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                <div data-i18n="expense-tracking">Expense Tracking</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
+                <div data-i18n="financial-reports">Financial Reports</div>
+            </a>
+            </li>
+        </ul>
+    </li>
 
-        .mylist li a {
-            text-decoration: none;
-            color: #333;
-            display: block;
-        }
+    <!-- Maintenance -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
+            <div data-i18n="maintenance">Maintenance</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="pages-misc-error.html" class="menu-link">
+                <div data-i18n="maintenance-requests">Maintenance Requests</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" class="menu-link">
+                <div data-i18n="service-schedule">Service Schedule</div>
+            </a>
+            </li>
+            <li class="menu-item">
+                <a href="pages-misc-under-maintenance.html" class="menu-link">
+                    <div data-i18n="service-provider-management">Service Provider</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-        .mylist li a:hover {
-            background-color: #e0e0e0;
-        }
+    <!-- Documents -->
+    <li class="menu-item">
+        <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-folder-fill tiny-icon"></i>
+            <div data-i18n="Extended UI">Documents</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+                    <div data-i18n="document-storage">Document Storage</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="extended-ui-text-divider.html" class="menu-link">
+                    <div data-i18n="document-sharing">Document Sharing</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-        .content {
-            display: none; /* Hide content by default */
-        }
-
-        .content.active {
-            display: block; /* Show the active content */
-        }
-    </style>
-
-    <div class="containers">
-        
-        <div class="left-side">
-            <h6>Overview Section</h6>
-            <ul class="mylist">
-                <li><a href='{% url "prop-summ" %}'  data-content="personal-info">Property Summary</a></li>
-                <li><a href="#" data-content="lease-info">Tenant Overview</a></li>
-                <li><a href="#" data-content="payment-history">Financial Snapshot</a></li>
-            </ul>
-            
-            <h6>House Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="house-profiles">House Profiles</a></li>
-                <li><a href="#" data-content="house-reports">House Reports</a></li>
-            </ul>
+    <!-- Analytics and Reporting -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Analytics & Reporting</span></li>
     
-            <h6>Tenant Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="tenant-profiles">Tenant Profiles</a></li>
-                <li><a href="#" data-content="lease-management">Lease Management</a></li>
-                <li><a href="#" data-content="communication-tools">Communication Tools</a></li>
-            </ul>
-    
-            <h6>Financial Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="rent-collection">Rent Collection</a></li>
-                <li><a href="#" data-content="expense-tracking">Expense Tracking</a></li>
-                <li><a href="#" data-content="financial-reports">Financial Reports</a></li>
-            </ul>
-            
-            <h6>Maintenance Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="maintenance-requests">Maintenance Requests</a></li>
-                <li><a href="#" data-content="service-schedule">Service Schedule</a></li>
-                <li><a href="#" data-content="service-provider-management">Service Provider Management</a></li>
-            </ul>
-    
-            <h6>Document Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="document-storage">Document Storage</a></li>
-                <li><a href="#" data-content="document-sharing">Document Sharing</a></li>
-            </ul>
-    
-            <h6>Analytics and Reporting</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="real-time-analytics">Real-time Analytics</a></li>
-                <li><a href="#" data-content="custom-reports">Custom Reports</a></li>
-                <li><a href="#" data-content="forecasting-tools">Forecasting Tools</a></li>
-            </ul>
-    
-            <h6>User Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="activity">Activity Logs</a></li>
-            </ul>
+    <!-- Analytics -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-graph-up tiny-icon"></i>
+            <div data-i18n="analytics">Analytics</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="forms-basic-inputs.html" class="menu-link">
+                    <div data-i18n="real-time-analytics">Real-time Analytics</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="forms-input-groups.html" class="menu-link">
+                    <div data-i18n="forecasting-tools">Forecasting Tools</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-            <h6>Profile</h6>
-            <ul class="mylist">
-                <li><a href='{% url "view-building-owner" pk=request.user.profile %}' data-content="bo-profile">Building Owner Profile</a></li>
-                <li><a href='{% url "view-user-profile" pk=request.user.profile.username %}' data-content="personal-profile">Personal Profile</a></li>
-            </ul>
-        </div>
-    
-        <div class="vertical-line"></div>
-    
-        <div class="right-side">
-            {% block details %}{% endblock details %}
-        </div>
-    </div>    
-
-    <script>
-            // JavaScript to toggle the visibility of the dropdown content
-            document.querySelectorAll('h6').forEach(header => {
-                header.addEventListener('click', () => {
-                    const ul = header.nextElementSibling;
-                    ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
-                });
-            });
-
-            
-    </script>
-    
+    <!-- Reporting -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"></i>
+            <div data-i18n="reports">Reports</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="form-layouts-vertical.html" class="menu-link">
+                <div data-i18n="custom-reports">Custom Reports</div>
+            </a>
+        </ul>
+    </li>
 
 {% endblock BO %}

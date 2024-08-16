@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+<head>
+<meta charset="utf-8" />
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+/>
+
+    {% block title %}<title>Dashboard</title>{% endblock title %}
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/icon3.png' %}" type="image/png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet"
+    />
+
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href='{% static "vendor/dashboard/boxicons.css" %}' />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href='{% static "vendor/dashboard/css/core.css" %}' class="template-customizer-core-css" />
+    <link rel="stylesheet" href='{% static "vendor/dashboard/css/theme-default.css" %}' class="template-customizer-theme-css" />
+    <link rel="stylesheet" href='{% static "vendor/dashboard/css/demo.css" %}' />
+    {% comment %} <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> {% endcomment %}
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href='{% static "vendor/dashboard/libs/perfect-scrollbar/perfect-scrollbar.css" %}' />
+
+    <link rel="stylesheet" href='{% static "vendor/dashboard/libs/apex-charts/apex-charts.css" %}' />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src='{% static "vendor/dashboard/js/helpers.js" %}'></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src='{% static "vendor/dashboard/js/config.js" %}'></script>
+</head>
+<body>
+    <style>
+        .tiny-icon {
+            font-size: 15px;
+        }
+
+        .notification-icon {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .notification-icon .badge-number {
+            position: absolute;
+            top: -10px; /* Adjusts the vertical position of the badge */
+            right: -10px; /* Adjusts the horizontal position of the badge */
+            padding: 5px 8px; /* Controls the size of the badge */
+            border-radius: 30%;
+            background-color: red;
+            color: white;
+            font-size: 10px;
+        }
+    
+        #success-message {
+            position: fixed;
+            top: 80px;
+            right: 45%;
+            z-index: 9999;
+            width: auto;
+            max-width: 500px; /* Adjust as needed */
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        /* Basic alert styling */
+        .alert {
+        position: relative;
+        padding: 1rem 2rem 1rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: .375rem;
+        }
+
+        /* Alert variations based on type */
+        .alert-primary {
+        color: #084298;
+        background-color: #cfe2ff;
+        border-color: #b6d4fe;
+        }
+
+        .alert-secondary {
+        color: #41464b;
+        background-color: #e2e3e5;
+        border-color: #d3d6d8;
+        }
+
+        .alert-success {
+        color: #0f5132;
+        background-color: #d1e7dd;
+        border-color: #badbcc;
+        }
+
+        .alert-danger {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+        }
+
+        .alert-warning {
+        color: #664d03;
+        background-color: #fff3cd;
+        border-color: #ffecb5;
+        }
+
+        .alert-info {
+        color: #055160;
+        background-color: #cff4fc;
+        border-color: #b6effb;
+        }
+
+        .alert-light {
+        color: #636464;
+        background-color: #fefefe;
+        border-color: #fdfdfe;
+        }
+
+        .alert-dark {
+        color: #141619;
+        background-color: #d3d3d4;
+        border-color: #bcbebf;
+        }
+    </style>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div id="success-message" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% else %}
+                <div id="success-message" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href={% url "home" %} class="app-brand-link">
+                        <div class="d-flex justify-content-center align-items-center mt-3 mb-3">
+                            <span class="app-brand-text demo menu-text fw-bolder fs-3 ms-2">
+                            <span style="color: #2ed162; font-family: 'Lobster', cursive;" class="fs-1"><img src="{% static 'images/icon3.png' %}" style="width: 50px; height: 50px;" alt="estateImage"></span> Manage
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="bi bi-arrow-left-short"></i>
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    
+                    {% if request.user.profile.designation == "buyer" %}
+                        {% block buyer %}{% endblock buyer %}
+
+                    {% elif request.user.profile.designation == "company" %}
+                        {% block company %}{% endblock company %}
+
+                    {% elif request.user.profile.designation == "tenant" %}
+                        {% block tenant %}{% endblock tenant %}
+
+                    {% elif request.user.profile.designation == "building_owner" %}
+                        {% block BO %}{% endblock BO %}
+
+                    {% elif request.user.profile.designation == "agent" %}
+                        {% block agent %}{% endblock agent %}
+                    {% endif %}
+
+                    <!-- Profiles -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
+                    
+                    <!-- User Management -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
+                            <div data-i18n="User Management">User Management</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="forms-basic-inputs.html" class="menu-link">
+                                    <div data-i18n="bo-profile">Building Owner Profile</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="forms-input-groups.html" class="menu-link">
+                                    <div data-i18n="personal-profile">Personal Profile</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Misc -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+                    
+                    <!-- Support -->
+                    <li class="menu-item">
+                        <a
+                            href="https://github.com/ChideraDG/Estate-Management"
+                            target="_blank"
+                            class="menu-link"
+                        >
+                            <i class="menu-icon tf-icons bi bi-life-preserver tiny-icon"></i>
+                            <div data-i18n="Support">Support</div>
+                        </a>
+                    </li>
+
+                    <!-- Feedback -->
+                    <li class="menu-item">
+                        <a
+                            href="https://github.com/ChideraDG/Estate-Management"
+                            target="_blank"
+                            class="menu-link"
+                        >
+                            <i class="menu-icon tf-icons bi bi-chat-dots tiny-icon"></i>
+                            <div data-i18n="Documentation">Feedback</div>
+                        </a>
+                    </li>
+
+                    <!-- Documentation -->
+                    <li class="menu-item">
+                        <a
+                            href="https://github.com/ChideraDG/Estate-Management/blob/main/README.md"
+                            target="_blank"
+                            class="menu-link"
+                        >
+                            <i class="menu-icon tf-icons bi bi-journal-text tiny-icon"></i>
+                            <div data-i18n="Documentation">Documentation</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav
+                  class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                  id="layout-navbar"
+                >
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+        
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <!-- Search -->
+                        <div class="navbar-nav align-items-center">
+                            <div class="nav-item d-flex align-items-center">
+                                <i class="bi bi-search"></i>
+                                <input
+                                type="text"
+                                class="form-control border-0 shadow-none"
+                                placeholder="Search..."
+                                aria-label="Search..."
+                                />
+                            </div>
+                        </div>
+                        <!-- /Search -->
+                        
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- Place this tag where you want the button to render. -->
+                            <li class="nav-item lh-1 me-3">
+                                <a href="#" class="notification-icon" style="margin-right: 16px;">
+                                    <i class="bi bi-bell-fill" style="font-size: 20px"></i>
+                                    <span class="badge bg-success badge-number">3</span>
+                                </a>
+                                
+                                <a href="#" class="notification-icon">
+                                    <i class="bi bi-envelope-fill" style="font-size: 20px"></i>
+                                    <span class="badge bg-success badge-number">4</span>
+                                </a>
+                            </li>
+
+            
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src='{% static "images/profile-pics/dera.jpg" %}' alt class="w-px-40 rounded-circle" />
+                                    </div>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src='{% static "images/profile-pics/dera.jpg" %}' alt class="w-px-40 rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">John Doe</span>
+                                                    <small class="text-muted">Building Owner</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="bi bi-person-badge-fill me-3"></i>
+                                                <span class="align-middle">My Profile</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="bi bi-gear-fill me-3"></i>
+                                                <span class="align-middle">Settings</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="flex-shrink-0 bi bi-receipt me-3"></i>
+                                                <span class="flex-grow-1 align-middle">Billing</span>
+                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href='{% url "logout" %}'>
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="bi bi-box-arrow-right-fill me-3"></i>
+                                                <span class="align-middle">Log Out</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                </nav>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        {% block details %}{% endblock details %}
+                    </div>
+                    <!-- / Content -->
+
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                ©
+                                <script>
+                                document.write(new Date().getFullYear());
+                                </script>
+                                , designed by
+                                <a href="https://github.com/ChideraDG/Estate-Management" target="_blank" class="footer-link fw-bolder">EstateManage Team</a>
+                            </div>
+                            <div>
+                                <a
+                                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                                target="_blank"
+                                class="footer-link me-4"
+                                >Documentation</a>
+            
+                                <a
+                                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                                target="_blank"
+                                class="footer-link me-4"
+                                >Support</a>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- / Footer -->
+        
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- Layout container -->
+        </div>
+        <!-- / Layout page -->
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    
+    <div class="buy-now">
+    <a
+        href="https://github.com/ChideraDG/Estate-Management"
+        target="_blank"
+        class="btn btn-danger btn-buy-now"
+        >Visit this Repo</a
+    >
+    </div>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src='{% static "vendor/dashboard/libs/jquery/jquery.js" %}'></script>
+    <script src='{% static "vendor/dashboard/libs/popper/popper.js" %}'></script>
+    <script src='{% static "vendor/dashboard/js/bootstrap.js" %}'></script>
+    <script src='{% static "vendor/dashboard/libs/perfect-scrollbar/perfect-scrollbar.js" %}'></script>
+
+    <script src='{% static "vendor/dashboard/js/menu.js" %}'></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src='{% static "vendor/dashboard/libs/apex-charts/apexcharts.js" %}'></script>
+
+    <!-- Main JS -->
+    <script src='{% static "vendor/dashboard/main_js/main.js" %}'></script>
+
+    <!-- Page JS -->
+    <script src='{% static "vendor/dashboard/main_js/dashboards-analytics.js" %}'></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- Message Timeout -->
+    <script>
+        window.setTimeout(function() {
+            const alert = document.getElementById('success-message');
+            const bootstrapAlert = new bootstrap.Alert(alert);
+            bootstrapAlert.close();
+        }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+</body>
+</html>
+  
