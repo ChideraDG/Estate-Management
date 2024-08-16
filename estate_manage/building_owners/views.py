@@ -41,3 +41,6 @@ def get_states(request):
 def building_owner_dashboard(request, pk):
     context = {'username': pk}
     return render(request, "building_owners/BO_dashboard.html", context)
+
+def property_summary(request):
+    return render(request, "building_owners/prop_summ.html")
