@@ -13,7 +13,7 @@ def update_building_owner_profile(request, pk):
     form = BuildingOwnerForm(instance=profile)
 
     if request.method == 'POST':
-        form = BuildingOwnerForm(request.POST, request.FILES, instance=profile)
+        form = BuildingOwnerForm(request.POST, request.FILES, instance=profile, request=request)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.building_owner_name = instance.building_owner_name.strip().title() if instance.building_owner_name else None

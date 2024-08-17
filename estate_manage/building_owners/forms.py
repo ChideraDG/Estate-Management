@@ -1,6 +1,10 @@
+import re
 from django.forms import ModelForm
 from django import forms
+from django.contrib import messages
 from .models import BuildingOwner
+from django.core.exceptions import ValidationError
+
 
 class BuildingOwnerForm(ModelForm):
     """
@@ -42,11 +46,11 @@ class BuildingOwnerForm(ModelForm):
             'contact_email': 'Contact Email',
             'contact_phone': 'Contact Phone',
             'address': 'Address',
-            'profile_pics': 'Profile Pics',
+            'profile_pics': 'Profile Picture',
             'city': 'City',
             'country': 'Country',
             'state': 'State',
-            'is_visible': 'Private',
+            'is_visible': 'Private Account',
             'investment_strategy': 'Investment Strategy',
             'tax_id': 'Tax ID',
             'notes': 'Notes',
@@ -102,3 +106,45 @@ class BuildingOwnerForm(ModelForm):
                 'class': 'form-control'
             })
         }
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(BuildingOwnerForm, self).__init__(*args, **kwargs)
+
+    def clean_contact_phone(self):
+        contact_phone = self.cleaned_data.get('contact_phone')
+
+        # Example: Ensure the phone number is numeric and has 10 digits
+        if not contact_phone.isdigit() or len(contact_phone) <=10:
+            messages.error(self.request, "Enter a valid Phone Number.")
+            raise ValidationError('Enter a valid Phone number.')
+        
+        return contact_phone
+    
+    def clean_contact_email(self):
+        email = self.cleaned_data.get('contact_email')
+
+        # Check if email is not empty (although required=True should handle this)
+        if not email:
+            messages.error(self.request, "Email address is required.")
+            raise ValidationError("Email address is required.")
+        
+        # Ensure email format is correct
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_regex, email):
+            messages.error(self.request, "Invalid email format.")
+            raise ValidationError("Invalid email format.")
+        
+        # Example: Check if email contains a specific word
+        if 'spam' in email:
+            messages.error(self.request, "Email address cannot contain the word 'spam'.")
+            raise ValidationError("Email address cannot contain the word 'spam'.")
+
+        return email      
+    
+    def clean_building_owner_name(self):
+        building_owner_name = self.cleaned_data.get('building_owner_name')
+
+        if not building_owner_name:
+            messages.error(self.request, "Owner name is Required")
+            raise ValidationError("Owner name is Required")
