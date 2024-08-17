@@ -3,6 +3,8 @@ from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 from .models import Profile
 from building_owners.models import BuildingOwner
 
@@ -130,3 +132,12 @@ def update_profile(sender, instance, created, **kwargs):
                 bo.save()
 
         instance.user.save()
+
+
+@receiver(post_delete, sender=User)
+def delete_user_sessions(sender, instance, **kwargs):
+    sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    for session in sessions:
+        data = session.get_decoded()
+        if data.get('_auth_user_id') == str(instance.id):
+            session.delete()
