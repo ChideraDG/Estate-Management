@@ -313,12 +313,21 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
+                                        {% if request.user.profile.designation == "building_owner" %}
                                         <a class="dropdown-item" href='{% url "view-building-owner" pk=request.user.profile %}'>
                                             <span class="d-flex align-items-center align-middle">
                                                 <i class="bi bi-person-badge-fill me-3"></i>
                                                 <span class="align-middle">My Profile</span>
                                             </span>
                                         </a>
+                                        {% elif request.user.profile.designation == "agent" %}
+                                        <a class="dropdown-item" href='{% url "view-user-profile" pk=request.user.profile %}'>
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="bi bi-person-badge-fill me-3"></i>
+                                                <span class="align-middle">My Profile</span>
+                                            </span>
+                                        </a>
+                                        {% endif %}
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#">
