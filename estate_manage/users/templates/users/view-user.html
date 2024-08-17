@@ -30,12 +30,10 @@
                         id="uploadedAvatar"
                         />
                         <div class="button-wrapper">
-                            <a href='{% url "update-user-profile" pk=user %}'>
-                                <button type="button" class="btn btn-primary me-3 mb-4 d-flex align-items-center">
-                                    <span class="d-none d-sm-block me-2">Update Profile</span>
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-primary me-3 mb-4 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exLargeModal">
+                                <span class="d-none d-sm-block me-2">Update Profile</span>
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -180,6 +178,43 @@
             </form>
         </div>
     </div>
+
+    <!-- Update Profile Modal -->
+    <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="card-header">Personal Profile Details</h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="">
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for field in form %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{field.label}}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                            </button>
+                            <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const checkbox = document.getElementById('accountActivation');
         const button = document.getElementById('deactivateButton');
