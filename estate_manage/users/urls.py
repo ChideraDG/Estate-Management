@@ -25,7 +25,7 @@ from django.urls import path
 from .views import (home, user_register, user_login, user_logout,
                     dashboard, property_grid, property_single,
                     blog_single, agents_grid, agent_single, about,
-                    blog, contact_us, user_delete, user_view, user_update)
+                    blog, contact_us, user_delete, user_view)
 
 urlpatterns = [
     path("", home, name='home'),
