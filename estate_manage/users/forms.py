@@ -312,14 +312,92 @@ class ProfileForm(forms.ModelForm):
     
     class Meta:
         model = Profile
-        fields = '__all__'
-        exclude = ("user", "username", "designation", "created", "updated")
+        fields = [
+            'name', 'email', 'gender', 'date_of_birth', 
+            'phone_number', 'bio', 'state_of_residence', 
+            'address_1', 'address_2', 'social_github', 
+            'social_twitter', 'social_linkedin', 
+            'social_youtube', 'social_website', 'profile_image',
+        ]
 
-        widgets = {'date_of_birth': forms.DateInput(attrs={'type': 'date', 
-                                                           'min': str(datetime.datetime(year=1900, month=1, day=1).date()),
-                                                           'max': str(datetime.datetime(year=2014, month=1, day=1).date())}),
-                    'phone_number': forms.TextInput(attrs={'placeholder': "Enter your Phone Number"})}
-        
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={
+                'type': 'date', 
+                'min': str(datetime.datetime(year=1900, month=1, day=1).date()),
+                'max': str(datetime.datetime(year=2014, month=1, day=1).date()),
+                'class': 'form-control',
+            }),
+            'phone_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': "Enter your Phone Number",
+                'required': False
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter name',
+                'required': True
+            }),
+            'gender': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Select gender',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter email',
+                'required': True
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter bio',
+                'rows': 3,
+                'required': False
+            }),
+            'profile_image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'required': False
+            }),
+            'state_of_residence': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter state of residence',
+                'required': False
+            }),
+            'address_1': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter address 1',
+                'required': False
+            }),
+            'address_2': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter address 2',
+                'required': False
+            }),
+            'social_github': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter GitHub URL',
+                'required': False
+            }),
+            'social_twitter': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Twitter URL',
+                'required': False
+            }),
+            'social_linkedin': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter LinkedIn URL',
+                'required': False
+            }),
+            'social_youtube': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter YouTube URL',
+                'required': False
+            }),
+            'social_website': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter website URL',
+                'required': False
+            }),
+        }
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(ProfileForm, self).__init__(*args, **kwargs)
@@ -331,6 +409,12 @@ class ProfileForm(forms.ModelForm):
                 if User.objects.filter(email=email).exists():
                     messages.error(self.request, "Email already exists")
                     raise forms.ValidationError("")
-                
             return email
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number and not phone_number.replace('+', '').isdigit():
+            messages.error(self.request, "Phone number must only contain digits.")
+            raise forms.ValidationError("Phone number must only contain digits.")
+        return phone_number
     
