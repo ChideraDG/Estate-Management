@@ -327,8 +327,10 @@ class ProfileForm(forms.ModelForm):
     def clean_email(self):
             email = self.cleaned_data.get('email')
 
-            if User.objects.filter(email=email).exists():
-                messages.error(self.request, "Email already exists")
-                raise forms.ValidationError("")
+            if self.request.user.profile.email != email:
+                if User.objects.filter(email=email).exists():
+                    messages.error(self.request, "Email already exists")
+                    raise forms.ValidationError("")
+                
             return email
     
