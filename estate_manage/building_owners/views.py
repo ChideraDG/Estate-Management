@@ -2,40 +2,39 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
+from .models import BuildingOwner
 from .forms import BuildingOwnerForm
 from locations.models import Country, State
 
 
 @login_required(login_url='login')
-def update_building_owner_profile(request, pk):
+def view_building_owner_profile(request, pk):
     profile = request.user.profile.building_owners
     countries = Country.objects.all()
-    form = BuildingOwnerForm(instance=profile)
 
     if request.method == 'POST':
         form = BuildingOwnerForm(request.POST, request.FILES, instance=profile, request=request)
+
         if form.is_valid():
             instance = form.save(commit=False)
+            old_instance = BuildingOwner.objects.get(user=profile.user.id)
+
             instance.building_owner_name = instance.building_owner_name.strip().title() if instance.building_owner_name else None
+
+            # Track changes
+            changes = []
+            for field in form.changed_data:
+                original_value = getattr(old_instance, field)
+                new_value = getattr(instance, field)
+                if original_value != new_value:
+                    changes.append(field)
+                
             instance.save()
-            messages.success(request, 'Profile updated successfully')
-            return redirect('view-building-owner', pk=instance.user)
 
-    active_menu = 'user-management'
-    active_sub_menu = 'bo-profile'
-
-    context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
-        'form': form, 
-        'countries': countries, 
-        'profile': profile
-    }
-    return render(request, 'building_owners/updateBuildingOwner.html', context)
-
-@login_required(login_url='login')
-def view_building_owner_profile(request, pk):
-    profile = request.user.profile.building_owners
+            if changes:
+                messages.success(request, 'Profile Updated!')
+    else:
+        form = BuildingOwnerForm(instance=profile)
 
     active_menu = 'user-management'
     active_sub_menu = 'bo-profile'
@@ -43,7 +42,9 @@ def view_building_owner_profile(request, pk):
     context = {
         'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
-        'profile': profile
+        'profile': profile,
+        'form': form, 
+        'countries': countries, 
     }
     return render(request, 'building_owners/viewBuildingOwner.html', context)
 
