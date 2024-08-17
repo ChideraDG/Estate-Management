@@ -8,7 +8,7 @@ from locations.models import Country, State
 
 
 @login_required(login_url='login')
-def view_building_owner_profile(request, pk):
+def building_owner_profile(request, pk):
     profile = request.user.profile.building_owners
     countries = Country.objects.all()
 
@@ -46,7 +46,7 @@ def view_building_owner_profile(request, pk):
         'form': form, 
         'countries': countries, 
     }
-    return render(request, 'building_owners/viewBuildingOwner.html', context)
+    return render(request, 'building_owners/BuildingOwner.html', context)
 
 @login_required(login_url='login')
 def get_states(request):

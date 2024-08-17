@@ -25,7 +25,7 @@ from django.urls import path
 from .views import (home, user_register, user_login, user_logout,
                     dashboard, property_grid, property_single,
                     blog_single, agents_grid, agent_single, about,
-                    blog, contact_us, user_delete, user_view)
+                    blog, contact_us, user_delete, user_profile)
 
 urlpatterns = [
     path("", home, name='home'),
@@ -42,5 +42,5 @@ urlpatterns = [
     path("about/", about, name='about'),
     path("blog/", blog, name='blog'),
     path("contact-us/", contact_us, name='contact-us'),
-    path("dashboard/<str:pk>/view-profile/", user_view, name="view-user-profile"),
+    path("dashboard/<str:pk>/profile/", user_profile, name="view-user-profile"),
 ]

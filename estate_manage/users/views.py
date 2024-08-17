@@ -96,7 +96,7 @@ def user_login(request):
 
 
 @login_required(login_url='login')
-def user_view(request, pk):
+def user_profile(request, pk):
     profile = Profile.objects.get(username=pk)
 
     if request.method == "POST":
@@ -136,7 +136,7 @@ def user_view(request, pk):
         'form': form
     }
 
-    return render(request, "users/view-user.html", context)
+    return render(request, "users/user-profile.html", context)
 
 @login_required(login_url='login')
 def user_delete(request):
