@@ -403,13 +403,13 @@ class ProfileForm(forms.ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
     
     def clean_email(self):
-            email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email')
 
-            if self.request.user.profile.email != email:
-                if User.objects.filter(email=email).exists():
-                    messages.error(self.request, "Email already exists")
-                    raise forms.ValidationError("")
-            return email
+        if self.request.user.profile.email != email:
+            if User.objects.filter(email=email).exists():
+                messages.error(self.request, "Email already exists")
+                raise forms.ValidationError("")
+        return email
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
