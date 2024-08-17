@@ -123,6 +123,9 @@ def user_update(request, pk):
             instance = form.save(commit=False)
             instance.name = instance.name.strip().title()
             instance.email = instance.email.strip().lower()
+            if not instance.profile_image:
+                instance.profile_image = 'profile-pics/dp.jpg'
+                
             instance.save()
             messages.success(request, 'Profile updated successfully')
             return redirect('view-user-profile', pk=instance.username)
