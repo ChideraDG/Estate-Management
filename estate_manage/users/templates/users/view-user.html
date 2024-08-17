@@ -193,7 +193,7 @@
                     ></button>
                 </div>
                 <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" action="">
+                    <form method="POST" enctype="multipart/form-data" action='{% url "view-user-profile" pk=user %}'>
                         {% csrf_token %}
                         <div class="row">
                             {% for field in form %}
