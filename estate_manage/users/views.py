@@ -138,38 +138,6 @@ def user_view(request, pk):
 
     return render(request, "users/view-user.html", context)
 
-
-@login_required(login_url='login')
-def user_update(request, pk):
-    profile = Profile.objects.get(username=pk)
-    form = ProfileForm(instance=profile)
-
-    if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=profile, request=request)
-
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.name = instance.name.strip().title()
-            instance.email = instance.email.strip().lower()
-            if not instance.profile_image:
-                instance.profile_image = 'profile-pics/dp.jpg'
-                
-            instance.save()
-            messages.success(request, 'Profile updated successfully')
-            return redirect('view-user-profile', pk=instance.username)
-    
-    active_menu = 'user-management'
-    active_sub_menu = 'personal-profile'
-
-    context = {
-        "user": profile,
-        "active_menu": active_menu,
-        "active_sub_menu": active_sub_menu,
-        'form': form
-    }
-
-    return render(request, 'users/update-profile.html', context)
-
 @login_required(login_url='login')
 def user_delete(request):
     user = request.user.profile

@@ -43,5 +43,4 @@ urlpatterns = [
     path("blog/", blog, name='blog'),
     path("contact-us/", contact_us, name='contact-us'),
     path("dashboard/<str:pk>/view-profile/", user_view, name="view-user-profile"),
-    path("dashboard/<str:pk>/update-profile/", user_update, name="update-user-profile")
 ]
