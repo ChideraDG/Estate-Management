@@ -352,7 +352,7 @@ class ProfileForm(forms.ModelForm):
                 'rows': 3,
                 'required': False
             }),
-            'profile_image': forms.FileInput(attrs={
+            'profile_image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'required': False
             }),
