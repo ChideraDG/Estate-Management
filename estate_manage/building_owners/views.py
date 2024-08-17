@@ -64,10 +64,11 @@ def building_owner_dashboard(request, pk):
     }
     return render(request, "building_owners/BO_dashboard.html", context)
 
+@login_required(login_url='login')
 def view_connections(request, pk):
     active_menu = 'user-management'
-    active_sub_menu = 'bo-profile'
-    
+    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
+
     context = {
         'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
