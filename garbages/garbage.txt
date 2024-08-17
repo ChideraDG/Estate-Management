@@ -237,61 +237,228 @@ old Building Owner frontend========================================
 
 
 alert bootstrap ========================================================
-/* Basic alert styling */
-.alert {
-  position: relative;
-  padding: 1rem 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid transparent;
-  border-radius: .375rem;
-}
+    /* Basic alert styling */
+    .alert {
+    position: relative;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .375rem;
+    }
 
-/* Alert variations based on type */
-.alert-primary {
-  color: #084298;
-  background-color: #cfe2ff;
-  border-color: #b6d4fe;
-}
+    /* Alert variations based on type */
+    .alert-primary {
+    color: #084298;
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+    }
 
-.alert-secondary {
-  color: #41464b;
-  background-color: #e2e3e5;
-  border-color: #d3d6d8;
-}
+    .alert-secondary {
+    color: #41464b;
+    background-color: #e2e3e5;
+    border-color: #d3d6d8;
+    }
 
-.alert-success {
-  color: #0f5132;
-  background-color: #d1e7dd;
-  border-color: #badbcc;
-}
+    .alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+    }
 
-.alert-danger {
-  color: #842029;
-  background-color: #f8d7da;
-  border-color: #f5c2c7;
-}
+    .alert-danger {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    }
 
-.alert-warning {
-  color: #664d03;
-  background-color: #fff3cd;
-  border-color: #ffecb5;
-}
+    .alert-warning {
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+    }
 
-.alert-info {
-  color: #055160;
-  background-color: #cff4fc;
-  border-color: #b6effb;
-}
+    .alert-info {
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+    }
 
-.alert-light {
-  color: #636464;
-  background-color: #fefefe;
-  border-color: #fdfdfe;
-}
+    .alert-light {
+    color: #636464;
+    background-color: #fefefe;
+    border-color: #fdfdfe;
+    }
 
-.alert-dark {
-  color: #141619;
-  background-color: #d3d3d4;
-  border-color: #bcbebf;
-}
+    .alert-dark {
+    color: #141619;
+    background-color: #d3d3d4;
+    border-color: #bcbebf;
+    }
 =========================================
+
+old view Building Owner html=========================================
+    <style>
+        .profile-container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Profile Image Styling */
+        .profile-image {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .profile-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        /* Profile Details Styling */
+        .profile-details {
+            margin-bottom: 20px;
+        }
+
+        .profile-details p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .profile-details strong {
+            color: #333;
+        }
+
+        /* Social Links Styling */
+        .social-links {
+            margin-bottom: 20px;
+        }
+
+        .social-links h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .social-links ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .social-links ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .social-links ul li a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .social-links ul li a:hover {
+            color: #0056b3;
+        }
+
+        /* Timestamps Styling */
+        .timestamps p {
+            font-size: 14px;
+            color: #888;
+            margin: 5px 0;
+        }
+
+        /* General Styling */
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .profile-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+
+    <div class="profile-container">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="profile-image">
+                <img src="{{ profile.profile_pics.url }}" alt="{{ profile.building_owner_name }}">
+            </div>
+
+            <div class="profile-actions" style="display: flex; gap: 10px;">
+                <a href='{% url "update-building-owner" pk=profile.user %}' class="btn btn-primary">Update Profile</a>
+            </div>
+        </div>
+
+        <div class="card profile-details" style="width: 100%; max-width: 600px;">
+            <div class="card-body">
+                <h5 class="card-title" style="color: #2ed162;">Profile Details</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><strong>Building Owner Name:</strong> {{ profile.building_owner_name }}</li>
+                    <li class="mb-2"><strong>Contact Email:</strong> {{ profile.contact_email }}</li>
+                    <li class="mb-2"><strong>Contact Phone:</strong> {{ profile.contact_phone }}</li>
+                    <li class="mb-2"><strong>Address:</strong> {{ profile.address }}</li>
+                    <li class="mb-2"><strong>Country:</strong> {{ profile.country }}</li>
+                    <li class="mb-2"><strong>State:</strong> {{ profile.state }}</li>
+                    <li class="mb-2"><strong>City:</strong> {{ profile.city }}</li>
+                    <li class="mb-2"><strong>Portfolio Size:</strong> {{ profile.portfolio_size }}</li>
+                    <li class="mb-2"><strong>Private:</strong> {{ profile.is_visible }}</li>
+                    <li class="mb-2"><strong>Investment Strategy:</strong> {{ profile.investment_strategy.title }}</li>
+                    <li class="mb-2"><strong>TaxID:</strong> {{ profile.tax_id }}</li>
+                    <li class="mb-2"><strong>Notes:</strong> {{ profile.notes }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timestamps">
+            <p><strong>Profile Created:</strong> {{ profile.created|date:"F j, Y, g:i a" }}</p>
+            <p><strong>Last Updated:</strong> {{ profile.updated|date:"F j, Y, g:i a" }}</p>
+        </div>
+    </div>
+==================================================================================
+
+upload new photos==================================================
+    <div class="button-wrapper">
+        <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+            <span class="d-none d-sm-block">Upload new photo</span>
+            <i class="bx bx-upload d-block d-sm-none"></i>
+            {{ form.profile_pics }} <!-- This will render the input field with the specified attributes -->
+        </label>
+        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+            <i class="bx bx-reset d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">Reset</span>
+        </button>
+
+        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+    </div>
+==================================================================================

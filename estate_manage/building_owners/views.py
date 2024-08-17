@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
@@ -30,8 +30,7 @@ def update_building_owner_profile(request, pk):
         'form': form, 
         'countries': countries, 
         'profile': profile
-        }
-    
+    }
     return render(request, 'building_owners/updateBuildingOwner.html', context)
 
 @login_required(login_url='login')
@@ -65,5 +64,12 @@ def building_owner_dashboard(request, pk):
     }
     return render(request, "building_owners/BO_dashboard.html", context)
 
-def property_summary(request):
-    return render(request, "building_owners/prop_summ.html")
+def view_connections(request, pk):
+    active_menu = 'user-management'
+    active_sub_menu = 'bo-profile'
+    
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+    }
+    return render(request, "building_owners/view_connections.html", context)

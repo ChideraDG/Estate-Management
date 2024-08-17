@@ -53,17 +53,52 @@ class BuildingOwnerForm(ModelForm):
         }
 
         widgets = {
-            'building_owner_name': forms.TextInput(attrs={ 'placeholder': 'Enter building owner name'}),
-            'contact_email': forms.EmailInput(attrs={ 'placeholder': 'Enter contact email'}),
-            'contact_phone': forms.TextInput(attrs={ 'placeholder': 'Enter contact phone number'}),
-            'address': forms.TextInput(attrs={ 'placeholder': 'Enter address'}),
-            'city': forms.TextInput(attrs={ 'placeholder': 'Enter city'}),
-            'country': forms.Select(attrs={ 'placeholder': 'Select country'}),
-            'state': forms.Select(attrs={ 'placeholder': 'Select state'}),
-            'investment_strategy': forms.Select(choices=BuildingOwner.DESIGNATION),
-            'tax_id': forms.TextInput(attrs={ 'placeholder': 'Enter tax id'}),
-            'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',
-                                                        'cols': 45,
-                                                        'rows': 6,
-                                                        }),
+            'contact_phone': forms.TextInput(attrs={
+                'placeholder': 'Enter contact phone number',
+                'class': 'form-control'
+            }),
+            'address': forms.TextInput(attrs={
+                'placeholder': 'Enter address',
+                'class': 'form-control'
+            }),
+            'city': forms.TextInput(attrs={
+                'placeholder': 'Enter city',
+                'class': 'form-control'
+            }),
+            'country': forms.Select(attrs={
+                'placeholder': 'Select country',
+                'class': 'form-control'
+            }),
+            'state': forms.Select(attrs={
+                'placeholder': 'Select state',
+                'class': 'form-control'
+            }),
+            'investment_strategy': forms.Select(choices=BuildingOwner.DESIGNATION, attrs={
+                'class': 'form-control'
+            }),
+            'tax_id': forms.TextInput(attrs={
+                'placeholder': 'Enter tax id',
+                'class': 'form-control'
+            }),
+            'notes': forms.Textarea(attrs={
+                'placeholder': 'Enter notes',
+                'cols': 45,
+                'rows': 6,
+                'class': 'form-control'
+            }),
+            'is_visible': forms.NullBooleanSelect(attrs={
+                'class': 'form-control'
+            }),
+            'contact_email': forms.EmailInput(attrs={
+                'placeholder': 'Enter email',
+                'class': 'form-control',
+                'required': True
+            }),
+            'building_owner_name': forms.TextInput(attrs={
+                'placeholder': 'Enter contact email',
+                'class': "form-control"
+            }),
+            'profile-pics': forms.FileInput(attrs={
+                'class': 'form-control'
+            })
         }
