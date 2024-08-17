@@ -2,18 +2,32 @@
 {% load static %}
 
 {% block details %}
-    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">User Management / Building Owners Profile /</span> Connections
-    </h4>
+    {% if active_sub_menu == "bo-profile" %}
+        <h4 class="fw-bold py-3 mb-4">
+            <span class="text-muted fw-light">User Management / Building Owners Profile /</span> Connections
+        </h4>
+    {% else %}
+        <h4 class="fw-bold py-3 mb-4">
+            <span class="text-muted fw-light">User Management / Personal Profile /</span> Connections
+        </h4>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                <li class="nav-item">
-                    <a class="nav-link" href='{% url "view-building-owner" pk=request.user.profile %}'>
-                        <i class="bi bi-person-fill me-1"></i></i> Building Owner Profile
-                    </a>
-                </li>
+                {% if active_sub_menu == "bo-profile" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href='{% url "view-building-owner" pk=request.user.profile %}'>
+                            <i class="bi bi-person-fill me-1"></i></i> Building Owner Profile
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href='{% url "view-user-profile" pk=request.user.profile %}'>
+                            <i class="bi bi-person-fill me-1"></i></i> Personal Profile
+                        </a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link active" href="javascript:void(0);">
                         <i class="bi bi-link me-1"></i> Connections
