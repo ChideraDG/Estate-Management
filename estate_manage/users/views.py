@@ -104,7 +104,7 @@ def user_view(request, pk):
 
         if form.is_valid():
             instance = form.save(commit=False)
-            profile = Profile.objects.get(username=pk)
+            old_instance = Profile.objects.get(username=pk)
             
             instance.name = instance.name.strip().title()
             instance.email = instance.email.strip().lower()
@@ -114,7 +114,7 @@ def user_view(request, pk):
             # Track changes
             changes = []
             for field in form.changed_data:
-                original_value = getattr(profile, field)
+                original_value = getattr(old_instance, field)
                 new_value = getattr(instance, field)
                 if original_value != new_value:
                     changes.append(field)
@@ -122,7 +122,7 @@ def user_view(request, pk):
             instance.save()
 
             if changes:
-                messages.success(request, 'Profile updated successfully')
+                messages.success(request, 'Profile Updated!')
     else:
         form = ProfileForm(instance=profile)
 
