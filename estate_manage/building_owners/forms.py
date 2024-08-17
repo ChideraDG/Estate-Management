@@ -38,7 +38,7 @@ class BuildingOwnerForm(ModelForm):
 
     class Meta:
         model = BuildingOwner
-        fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'profile_pics', 'country', 'state', 'city',
+        fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'country', 'state', 'city',
                   'is_visible', 'investment_strategy', 'tax_id', 'notes']
         
         labels = {
@@ -46,7 +46,6 @@ class BuildingOwnerForm(ModelForm):
             'contact_email': 'Contact Email',
             'contact_phone': 'Contact Phone',
             'address': 'Address',
-            'profile_pics': 'Profile Picture',
             'city': 'City',
             'country': 'Country',
             'state': 'State',
@@ -102,9 +101,6 @@ class BuildingOwnerForm(ModelForm):
                 'placeholder': 'Enter contact email',
                 'class': "form-control"
             }),
-            'profile-pics': forms.FileInput(attrs={
-                'class': 'form-control'
-            })
         }
 
     def __init__(self, *args, **kwargs):
