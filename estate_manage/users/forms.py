@@ -3,6 +3,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.contrib import messages
 from django import forms
 from .models import Profile
 
@@ -312,9 +313,21 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = '__all__'
-        exclude = ("user", "designation", "created", "updated")
+        exclude = ("user", "username", "designation", "created", "updated")
 
         widgets = {'date_of_birth': forms.DateInput(attrs={'type': 'date', 
                                                            'min': str(datetime.datetime(year=1900, month=1, day=1).date()),
                                                            'max': str(datetime.datetime(year=2014, month=1, day=1).date())}),
                     'phone_number': forms.TextInput(attrs={'placeholder': "Enter your Phone Number"})}
+        
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(ProfileForm, self).__init__(*args, **kwargs)
+    
+    def clean_email(self):
+            email = self.cleaned_data.get('email')
+
+            if User.objects.filter(email=email).exists():
+                messages.error(self.request, "Email already exists")
+                raise forms.ValidationError("")
+            return email

@@ -117,7 +117,7 @@ def user_update(request, pk):
     form = ProfileForm(instance=profile)
 
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance=profile, request=request)
 
         if form.is_valid():
             instance = form.save(commit=False)
