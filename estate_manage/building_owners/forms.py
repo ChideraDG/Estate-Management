@@ -70,11 +70,13 @@ class BuildingOwnerForm(ModelForm):
             }),
             'country': forms.Select(attrs={
                 'placeholder': 'Select country',
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'id_country',
             }),
             'state': forms.Select(attrs={
                 'placeholder': 'Select state',
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'id_state',
             }),
             'investment_strategy': forms.Select(choices=BuildingOwner.DESIGNATION, attrs={
                 'class': 'form-control'
@@ -99,7 +101,8 @@ class BuildingOwnerForm(ModelForm):
             }),
             'building_owner_name': forms.TextInput(attrs={
                 'placeholder': 'Enter contact email',
-                'class': "form-control"
+                'class': "form-control",
+                'required': True
             }),
         }
 
@@ -111,7 +114,7 @@ class BuildingOwnerForm(ModelForm):
         contact_phone = self.cleaned_data.get('contact_phone')
 
         # Example: Ensure the phone number is numeric and has 10 digits
-        if not contact_phone.isdigit() or len(contact_phone) <=10:
+        if not contact_phone.replace("+", "").isdigit() or len(contact_phone) <=10:
             messages.error(self.request, "Enter a valid Phone Number.")
             raise ValidationError('Enter a valid Phone number.')
         
@@ -124,12 +127,6 @@ class BuildingOwnerForm(ModelForm):
         if not email:
             messages.error(self.request, "Email address is required.")
             raise ValidationError("Email address is required.")
-        
-        # Ensure email format is correct
-        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-        if not re.match(email_regex, email):
-            messages.error(self.request, "Invalid email format.")
-            raise ValidationError("Invalid email format.")
         
         # Example: Check if email contains a specific word
         if 'spam' in email:
@@ -144,3 +141,5 @@ class BuildingOwnerForm(ModelForm):
         if not building_owner_name:
             messages.error(self.request, "Owner name is Required")
             raise ValidationError("Owner name is Required")
+        
+        return building_owner_name
