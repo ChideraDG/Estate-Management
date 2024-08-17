@@ -98,20 +98,33 @@ def user_login(request):
 @login_required(login_url='login')
 def user_view(request, pk):
     profile = Profile.objects.get(username=pk)
-    form = ProfileForm(instance=profile)
 
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile, request=request)
 
         if form.is_valid():
             instance = form.save(commit=False)
+            profile = Profile.objects.get(username=pk)
+            
             instance.name = instance.name.strip().title()
             instance.email = instance.email.strip().lower()
             if not instance.profile_image:
                 instance.profile_image = 'profile-pics/dp.jpg'
+
+            # Track changes
+            changes = []
+            for field in form.changed_data:
+                original_value = getattr(profile, field)
+                new_value = getattr(instance, field)
+                if original_value != new_value:
+                    changes.append(field)
                 
             instance.save()
-            messages.success(request, 'Profile updated successfully')
+
+            if changes:
+                messages.success(request, 'Profile updated successfully')
+    else:
+        form = ProfileForm(instance=profile)
 
     active_menu = 'user-management'
     active_sub_menu = 'personal-profile'
