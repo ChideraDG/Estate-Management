@@ -331,3 +331,4 @@ class ProfileForm(forms.ModelForm):
                 messages.error(self.request, "Email already exists")
                 raise forms.ValidationError("")
             return email
+    
