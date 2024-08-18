@@ -83,7 +83,9 @@ def user_login(request):
                 
                 designation = user.profile.designation
                 labels = {"building_owner": "BO", "agent": "A", "buyer": "B", "company": "C", "tenant": "T"}
-                return redirect(f'dashboard-{labels.get(designation)}', user.profile)
+                
+                next_url = request.GET.get("next", f'dashboard-{labels.get(designation)}')
+                return redirect(next_url, user.profile)
             else:
                 messages.error(request, 'Password is wrong')
         else:
@@ -179,7 +181,9 @@ def dashboard(request):
         "company": 'dashboard-C',
         "tenant": 'dashboard-T'
     }
-    return redirect(dashboard_mapping.get(designation), request.user.profile)
+
+    next_url = request.GET.get('next', dashboard_mapping.get(designation))
+    return redirect(next_url, request.user.profile)
 
 
 def property_single(request):
