@@ -1,4 +1,15 @@
 {% extends "building_owners/BO_dashboard.html" %}
 
 {% block details %}
+    <!-- Content -->
+
+    <!-- Location header -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">House Management / 
+            <a href='{% url "bo-houses" pk=request.user.profile %}' class="text-muted fw-light">
+                House Profiles
+            </a> /
+        </span> All Houses
+    </h4>
+    <!-- Content -->
 {% endblock details %}
