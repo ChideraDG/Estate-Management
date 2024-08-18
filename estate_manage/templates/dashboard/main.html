@@ -321,7 +321,7 @@
                                             </span>
                                         </a>
                                         {% elif request.user.profile.designation == "agent" %}
-                                        <a class="dropdown-item" href='{% url "view-user-profile" pk=request.user.profile %}'>
+                                        <a class="dropdown-item" href='{% url "view-user-profile" pk=request.user.profile type="A" %}'>
                                             <span class="d-flex align-items-center align-middle">
                                                 <i class="bi bi-person-badge-fill me-3"></i>
                                                 <span class="align-middle">My Profile</span>
