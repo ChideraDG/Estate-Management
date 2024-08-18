@@ -10,11 +10,11 @@ urlpatterns = [
     path("", include('users.urls')),
     path("estates/", include('estates.urls')),
     path("company/dashboard/", include('companies.urls')),
-    path('', include('building_owners.urls')),
+    path("", include('building_owners.urls')),
     path('houses/', include('houses.urls')),
     path('apartments/', include('apartments.urls')),
     path('tenant/dashboard/', include('tenants.urls')),
-    path('agent/dashboard/', include('agents.urls')),
+    path("", include('agents.urls')),
     path('buyer/dashboard/', include('buyers.urls')),
 
     path("reset_password/", CustomPasswordResetView.as_view(template_name='reset_password.html'),
