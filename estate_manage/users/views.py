@@ -96,7 +96,7 @@ def user_login(request):
 
 
 @login_required(login_url='login')
-def user_profile(request, pk):
+def user_profile(request, type, pk):
     profile = Profile.objects.get(username=pk)
 
     if request.method == "POST":

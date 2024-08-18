@@ -75,3 +75,18 @@ def view_connections(request, pk):
         'active_menu': active_menu,
     }
     return render(request, "building_owners/view_connections.html", context)
+
+@login_required(login_url='login')
+def building_owner_houses(request, pk):
+    profile = request.user.profile.building_owners
+    houses =  request.user.profile.building_owners.houses
+    active_menu = 'houses-management'
+    active_sub_menu = 'house-profiles'
+
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+        'profile': profile,
+        'houses': houses,
+    }
+    return render(request, "building_owners/BO_houses.html", context)

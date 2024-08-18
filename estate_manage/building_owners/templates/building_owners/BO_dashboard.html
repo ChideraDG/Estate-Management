@@ -210,7 +210,7 @@
                 </a>
             </li>
             <li class="menu-item {% if active_sub_menu == 'personal-profile' %}active{% endif %}">
-                <a href='{% url "view-user-profile" pk=request.user.profile %}' class="menu-link">
+                <a href='{% url "view-user-profile" pk=request.user.profile type="bo" %}' class="menu-link">
                     <div data-i18n="personal-profile">Personal Profile</div>
                 </a>
             </li>

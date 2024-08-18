@@ -42,5 +42,5 @@ urlpatterns = [
     path("about/", about, name='about'),
     path("blog/", blog, name='blog'),
     path("contact-us/", contact_us, name='contact-us'),
-    path("dashboard/<str:pk>/profile/", user_profile, name="view-user-profile"),
+    path("<str:type>/<str:pk>/profile/", user_profile, name="view-user-profile"),
 ]
