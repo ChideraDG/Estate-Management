@@ -82,11 +82,13 @@ def building_owner_houses(request, pk):
     houses =  request.user.profile.building_owners.houses
     active_menu = 'houses-management'
     active_sub_menu = 'house-profiles'
+    menu = request.GET.get('menu', 'All')
 
     context = {
         'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
         'profile': profile,
         'houses': houses,
+        'menu': menu,
     }
     return render(request, "building_owners/BO_houses.html", context)
