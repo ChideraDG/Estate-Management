@@ -210,33 +210,67 @@ def property_single(request):
     elif request.method == 'POST':
         return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
-    context = {'form': form}
+    next_url = request.GET.get('next', '/')
 
+    context = {
+        'form': form,
+        'next_url': next_url,
+    }
     return render(request, 'users/property-single.html', context)
 
 
 def property_grid(request):
-    return render(request, 'users/property-grid.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/property-grid.html', context)
 
 
 def blog_single(request):
-    return render(request, 'users/blog-single.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/blog-single.html', context)
 
 
 def agents_grid(request):
-    return render(request, 'users/agents-grid.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/agents-grid.html', context)
 
 
 def agent_single(request):
-    return render(request, 'users/agent-single.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/agent-single.html', context)
 
 
 def about(request):
-    return render(request, 'users/about.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/about.html', context)
 
 
 def blog(request):
-    return render(request, 'users/blog.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/blog.html', context)
 
 
 def contact_us(request):
@@ -258,6 +292,10 @@ def contact_us(request):
     elif request.method == 'POST':
         return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
-    context = {'form': form}
+    next_url = request.GET.get('next', '/')
 
+    context = {
+        'form': form,
+        'next_url': next_url,
+    }
     return render(request, 'users/contact-us.html', context)

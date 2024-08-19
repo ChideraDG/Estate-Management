@@ -111,45 +111,34 @@
             <ul class="navbar-nav">
 
                 {% if request.path == '/' %}
-                <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href={% url 'home' %}?next={{ next_url }}>Home</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link " href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link " href={% url 'home' %}?next={{ next_url }}>Home</a></li>
                 {% endif %}
 
                 {% if request.path == '/about/' %}
-                <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link active" href={% url 'about' %}?next={{ next_url }}>About</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link " href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link " href={% url 'about' %}?next={{ next_url }}>About</a></li>
                 {% endif %}
 
                 {% if request.path == '/property-grid/' %}
-                <li class="nav-item"><a class="nav-link active" href="{% url 'property-grid' %}">Property</a></li>
+                <li class="nav-item"><a class="nav-link active" href={% url 'property-grid' %}?next={{ next_url }}>Property</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link " href="{% url 'property-grid' %}">Property</a></li>
+                <li class="nav-item"><a class="nav-link " href={% url 'property-grid' %}?next={{ next_url }}>Property</a></li>
                 {% endif %}
 
                 {% if request.path == '/blog/' %}
-                <li class="nav-item"><a class="nav-link active" href="{% url 'blog' %}">Blog</a></li>
+                <li class="nav-item"><a class="nav-link active" href={% url 'blog' %}?next={{ next_url }}>Blog</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link " href="{% url 'blog' %}">Blog</a></li>
+                <li class="nav-item"><a class="nav-link " href={% url 'blog' %}?next={{ next_url }}>Blog</a></li>
                 {% endif %}
 
                 {% if request.path == '/contact-us/' %}
-                <li class="nav-item"><a class="nav-link active" href="{% url 'contact-us' %}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link active" href={% url 'contact-us' %}?next={{ next_url }}>Contact</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link " href="{% url 'contact-us' %}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link " href={% url 'contact-us' %}?next={{ next_url }}>Contact</a></li>
                 {% endif %}
-
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
-<!--                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>-->
-<!--                    <div class="dropdown-menu">-->
-<!--                        <a class="dropdown-item " href="{% url 'property-single' %}">Property Single</a>-->
-<!--                        <a class="dropdown-item " href="{% url 'blog-single' %}">Blog Single</a>-->
-<!--                        <a class="dropdown-item " href="{% url 'agents-grid' %}">Agents Grid</a>-->
-<!--                        <a class="dropdown-item " href="{% url 'agent-single' %}">Agent Single</a>-->
-<!--                    </div>-->
-<!--                </li>-->
 
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link " href="{% url 'logout' %}">Logout</a></li>
