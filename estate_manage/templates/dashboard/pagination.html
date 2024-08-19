@@ -1,0 +1,31 @@
+{% if query_set.has_other_pages %}
+    <nav aria-label="Page navigation" class="d-flex justify-content-center">
+        <ul class="pagination">
+        {% if query_set.has_previous %}
+        <li class="page-item prev">
+            <a class="page-link" href="?page={{ query_set.previous_page_number }}">
+            <i class="tf-icon bi bi-chevron-left"></i> Prev
+            </a>
+        </li>
+        {% endif %}
+        {% for page in custom_range %}
+            {% if page == query_set.number %}
+            <li class="page-item active">
+                <a class="page-link" href="?menu={{ query_menu }}&page={{ page }}">{{ page }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?menu={{ query_menu }}&page={{ page }}">{{ page }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        {% if query_set.has_next %}
+        <li class="page-item next">
+            <a class="page-link" href="?menu={{ query_menu }}&page={{ query_set.next_page_number }}">
+            Next <i class="tf-icon bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+        </ul>
+    </nav>
+{% endif %}
