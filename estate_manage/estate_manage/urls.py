@@ -11,7 +11,7 @@ urlpatterns = [
     path("estates/", include('estates.urls')),
     path("company/dashboard/", include('companies.urls')),
     path("", include('building_owners.urls')),
-    path('houses/', include('houses.urls')),
+    path("", include('houses.urls')),
     path('apartments/', include('apartments.urls')),
     path('tenant/dashboard/', include('tenants.urls')),
     path("", include('agents.urls')),
