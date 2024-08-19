@@ -58,7 +58,12 @@ def user_register(request):
 
 
 def home(request):
-    return render(request, 'users/home.html')
+    next_url = request.GET.get('next', '/')
+
+    context = {
+        'next_url': next_url
+    }
+    return render(request, 'users/home.html', context)
 
 
 def user_login(request):
