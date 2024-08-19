@@ -57,10 +57,9 @@ def get_states(request):
 @login_required(login_url='login')
 def building_owner_houses(request, pk):
     profile = request.user.profile.building_owners
-    houses =  request.user.profile.building_owners.houses
+    houses =  request.user.profile.building_owners.houses.all()
     active_menu = 'houses-management'
     active_sub_menu = 'house-profiles'
-    menu = request.GET.get('menu', 'All')
     countries = Country.objects.all()
 
     if request.method == "POST":
@@ -96,7 +95,6 @@ def building_owner_houses(request, pk):
         'active_menu': active_menu,
         'profile': profile,
         'houses': houses,
-        'menu': menu,
         'countries': countries,
         'form': form,
     }
