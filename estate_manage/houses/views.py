@@ -1,39 +1,10 @@
 from django.shortcuts import render, redirect
 from locations.models import Country, State
 from django.http import JsonResponse
-from .models import House
+from django.contrib.auth.decorators import login_required
+from .models import House, Photo
 from.forms import HouseForm
 
-
-def houseHome(request):
-    profiles = House.objects.all()
-    context = {'profiles': profiles}
-    return render(request, 'houses/houseHome.html', context)
-
-def createHouse(request):
-    countries = Country.objects.all()
-    form = HouseForm()
-
-    if request.method == "POST":
-        form = HouseForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-
-            instance.save()
-
-            HouseUtilities = House.utilities.through  # Accessing a Many-to-Many Table of Utility
-            for utility in request.POST.getlist('utilities'):
-                HouseUtilities.objects.create(house_id=instance.id, utility_id=utility)
-
-            HouseFeatures = House.features.through  # Accessing a Many-to-Many Table of Utility
-            for feature in request.POST.getlist('features'):
-                HouseFeatures.objects.create(house_id=instance.id, feature_id=feature)
-
-            return redirect('house-home')
-
-
-    context = {'form': form, 'countries': countries}
-    return render(request, 'houses/houseReg.html', context)
 
 def updateHouse(request, pk):
     countries = Country.objects.all()
@@ -82,3 +53,51 @@ def get_states(request):
     states = State.objects.filter(country_id=country_id).order_by('name')
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
+
+@login_required(login_url='login')
+def building_owner_houses(request, pk):
+    profile = request.user.profile.building_owners
+    houses =  request.user.profile.building_owners.houses
+    active_menu = 'houses-management'
+    active_sub_menu = 'house-profiles'
+    menu = request.GET.get('menu', 'All')
+    countries = Country.objects.all()
+
+    if request.method == "POST":
+        form = HouseForm(request.POST)
+        images = request.FILES.getlist('images')
+
+        if form.is_valid():
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            instance.building_owner = profile
+
+            instance.save()
+
+            HouseUtilities = House.utilities.through  # Accessing a Many-to-Many Table of Utility
+            for utility in request.POST.getlist('utilities'):
+                HouseUtilities.objects.create(house_id=instance.id, utility_id=utility)
+
+            HouseFeatures = House.features.through  # Accessing a Many-to-Many Table of Utility
+            for feature in request.POST.getlist('features'):
+                HouseFeatures.objects.create(house_id=instance.id, feature_id=feature)
+
+            for image in images:
+                Photo.objects.create(
+                    image=image,
+                    house=instance,
+                )
+            
+            return redirect('bo-houses', pk=profile)
+    else:
+        form = HouseForm()
+
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+        'profile': profile,
+        'houses': houses,
+        'menu': menu,
+        'countries': countries,
+        'form': form,
+    }
+    return render(request, "houses/BO_houses.html", context)
