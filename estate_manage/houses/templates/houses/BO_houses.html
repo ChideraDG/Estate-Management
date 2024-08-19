@@ -1,146 +1,275 @@
 {% extends "building_owners/BO_dashboard.html" %}
+{% load static %}
 
 {% block details %}
-    <!-- Content -->
+  <!-- Content -->
 
-    <!-- Location header -->
-    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">House Management / 
-            <a href='{% url "bo-houses" pk=request.user.profile %}?menu=All' class="text-muted fw-light">
-                House Profiles
-            </a> /
-        </span> {{ menu }}
-    </h4>
-    <!-- End Location header -->
+  <!-- Location header -->
+  <h4 class="fw-bold py-3 mb-4">
+      <span class="text-muted fw-light">House Management / </span>House Profiles
+  </h4>
+  <!-- End Location header -->
 
-    <!-- House Profile -->
-    <div class="nav-align-top mb-4">
-        <!-- Tabs -->
-        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-            <!--Houses Tabs Button -->
-            <li class="nav-item">
-                <button
-                type="button"
-                class="nav-link active"
-                role="tab"
-                data-bs-toggle="tab"
-                data-bs-target="#navs-pills-justified-houses"
-                aria-controls="navs-pills-justified-houses"
-                aria-selected="true"
-                >
-                <i class="tf-icons bi bi-house-fill"></i> Houses
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{houses.count}}</span>
-                </button>
-            </li>
+  <!-- House Profile -->
+  <div class="nav-align-top mb-4">
+      <!-- Tabs -->
+      <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+          <!--Houses Tabs Button -->
+          <li class="nav-item">
+              <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+              data-bs-target="#navs-pills-justified-houses" aria-controls="navs-pills-justified-houses" aria-selected="true">
+                  <i class="tf-icons bi bi-house-fill"></i> Houses
+                  <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{houses.count}}</span>
+              </button>
+          </li>
 
-            <!-- Add a House Tabs Button -->
-            <li class="nav-item">
-                <button
-                type="button"
-                class="nav-link"
-                role="tab"
-                data-bs-toggle="tab"
-                data-bs-target="#navs-pills-justified-profile"
-                aria-controls="navs-pills-justified-profile"
-                aria-selected="false"
-                >
-                <i class="tf-icons bi bi-plus"></i> Add a House
-                </button>
-            </li>
-        </ul>
-        <!-- End Tabs -->
+          <!-- Add a House Tabs Button -->
+          <li class="nav-item">
+              <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+              data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile" aria-selected="false">
+                  <i class="tf-icons bi bi-plus-circle-fill"></i> Add a House
+              </button>
+          </li>
+      </ul>
+      <!-- End Tabs -->
 
-        <!-- Details -->
-        <div class="tab-content">
-            <!-- Houses Tabs Details -->
-            <div class="tab-pane fade show active" id="navs-pills-justified-houses" role="tabpanel">
-                <form class="d-flex" action='{% url "home" %}'>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
-                <div class="nav-align-top mb-4">
-                    <ul class="nav nav-pills mb-3 pt-3" role="tablist">
+      <!-- Details -->
+      <div class="tab-content">
+          <!-- Houses Tabs Details -->
+          <div class="tab-pane fade show active" id="navs-pills-justified-houses" role="tabpanel">
+              <!-- House Tab Details Box -->
+              
+              <div class="nav-align-top">
+                  <ul class="nav nav-pills mb-3" role="tablist">
                       <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link active"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-pills-top-home"
-                          aria-controls="navs-pills-top-home"
-                          aria-selected="true"
-                        >
-                          Home
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                          All
                         </button>
                       </li>
                       <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-pills-top-profile"
-                          aria-controls="navs-pills-top-profile"
-                          aria-selected="false"
-                        >
-                          Profile
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
+                            Occupied Houses
                         </button>
                       </li>
                       <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-pills-top-messages"
-                          aria-controls="navs-pills-top-messages"
-                          aria-selected="false"
-                        >
-                          Messages
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
+                            Vacant Houses
                         </button>
                       </li>
-                    </ul>
-                    <div class="tab-content">
-                      <div class="tab-pane fade show active" id="navs-pills-top-home" role="tabpanel">
-                        <p>
-                          Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps
-                          powder. Bear claw candy topping.
-                        </p>
-                        <p class="mb-0">
-                          Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon
-                          jelly-o jelly-o ice cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow
-                          jujubes sweet.
-                        </p>
+                      <li>
+                        <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                          Filter Houses
+                        </button>
+                      </li>
+                  </ul>
+
+                  <!-- House Tab Details Inner -->
+                  <div class="tab-content">
+                      <!-- All Houses Tab Details -->
+                      <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                        <div class="row mb-5">
+                          {% for house in houses %}
+                          <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100">
+                              {% if house.images.exists %}
+                              <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                <ol class="carousel-indicators">
+                                  {% for image in house.images.all %}
+                                      <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                                  {% endfor %}
+                                </ol>
+                                <div class="carousel-inner">
+                                  {% for image in house.images.all %}
+                                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                      </div>
+                                  {% endfor %}
+                                </div>
+                                <a class="carousel-control-prev" href="javascript:void(0);" role="button" data-bs-slide="prev">
+                                  <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="javascript:void(0);" role="button" data-bs-slide="next">
+                                  <span class="visually-hidden">Next</span>
+                                </a>
+                              </div>
+                              {% else %}
+                              <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                  </div>
+                                </div>
+                              </div>
+                              {% endif %}
+                        
+                              <div class="card-body">
+                                <h5 class="card-title">No. {{ house }} {{ house.address.title }}</h5>
+                                <p class="card-text">
+                                Number of Apartments: {{ house.number_of_apartments }}
+                                </p>
+                                <p class="card-text">
+                                  Occupancy Status: {{ house.occupancy_status.title }}
+                                </p>
+                                <a href="javascript:void(0)" class="btn btn-outline-primary">House Details</a>
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                        
+                        <!--Paginator for All Houses-->
+                        {% include "dashboard/pagination.html" with query_set=houses custom_range=custom_range query_menu='all' %}
+                        <!--End Paginator-->
+                      </div>  
+                      <!-- End All Houses Tab Details -->
+
+                      <!-- Occupied Houses Tab Details -->
+                      <div class="tab-pane fade {% if menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
+                        <div class="row mb-5">
+                          {% for house in occupied_houses %}
+                          <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100">
+                              {% if house.images.exists %}
+                              <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                <ol class="carousel-indicators">
+                                  {% for image in house.images.all %}
+                                      <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                                  {% endfor %}
+                                </ol>
+                                <div class="carousel-inner">
+                                  {% for image in house.images.all %}
+                                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                      </div>
+                                  {% endfor %}
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExample-cf" role="button" data-bs-slide="prev">
+                                  {% comment %} <span class="carousel-control-prev-icon" aria-hidden="true"></span> {% endcomment %}
+                                  <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExample-cf" role="button" data-bs-slide="next">
+                                  {% comment %} <span class="carousel-control-next-icon" aria-hidden="true"></span> {% endcomment %}
+                                  <span class="visually-hidden">Next</span>
+                                </a>
+                              </div>
+                              {% else %}
+                              <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                  </div>
+                                </div>
+                              </div>
+                              {% endif %}
+                        
+                              <div class="card-body">
+                                <h5 class="card-title">No. {{ house }} {{ house.address.title }}</h5>
+                                <p class="card-text">
+                                Number of Apartments: {{ house.number_of_apartments }}
+                                </p>
+                                <p class="card-text">
+                                  Occupancy Status: {{ house.occupancy_status.title }}
+                                </p>
+                                <a href="javascript:void(0)" class="btn btn-outline-primary">House Details</a>
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                        <!--Paginator for Occupied Houses-->
+                        {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' %}
+                        <!--End Paginator-->
                       </div>
-                      <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
-                        <p>
-                          Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer candy oat cake ice
-                          cream. Gummies halvah tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
-                          cheesecake fruitcake.
-                        </p>
-                        <p class="mb-0">
-                          Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin pie tiramisu halvah
-                          cotton candy liquorice caramels.
-                        </p>
+                      <!-- End Occupied Houses Tab Details -->
+
+                      <!-- Vacant Houses Tab Details -->
+                      <div class="tab-pane fade {% if menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
+                        <div class="row mb-5">
+                          {% for house in vacant_houses %}
+                          <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100">
+                              {% if house.images.exists %}
+                              <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                <ol class="carousel-indicators">
+                                  {% for image in house.images.all %}
+                                      <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                                  {% endfor %}
+                                </ol>
+                                <div class="carousel-inner">
+                                  {% for image in house.images.all %}
+                                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                      </div>
+                                  {% endfor %}
+                                </div>
+                                <a class="carousel-control-prev" href="" role="button" data-bs-slide="prev">
+                                  {% comment %} <span class="carousel-control-prev-icon" aria-hidden="true"></span> {% endcomment %}
+                                  <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="" role="button" data-bs-slide="next">
+                                  {% comment %} <span class="carousel-control-next-icon" aria-hidden="true"></span> {% endcomment %}
+                                  <span class="visually-hidden">Next</span>
+                                </a>
+                              </div>
+                              {% else %}
+                              <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                  </div>
+                                </div>
+                              </div>
+                              {% endif %}
+                        
+                              <div class="card-body">
+                                <h5 class="card-title">No. {{ house }} {{ house.address.title }}</h5>
+                                <p class="card-text">
+                                Number of Apartments: {{ house.number_of_apartments }}
+                                </p>
+                                <p class="card-text">
+                                  Occupancy Status: {{ house.occupancy_status.title }}
+                                </p>
+                                <a href="javascript:void(0)" class="btn btn-outline-primary">House Details</a>
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                        <!--Paginator for Vacant Houses-->
+                        {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' %}
+                        <!-- End Paginator-->
                       </div>
-                      <div class="tab-pane fade" id="navs-pills-top-messages" role="tabpanel">
-                        <p>
-                          Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans macaroon gummies
-                          cupcake gummi bears cake chocolate.
-                        </p>
-                        <p class="mb-0">
-                          Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple pie brownie cake. Sweet
-                          roll icing sesame snaps caramels danish toffee. Brownie biscuit dessert dessert. Pudding jelly
-                          jelly-o tart brownie jelly.
-                        </p>
-                      </div>
-                    </div>
+                      <!-- End Vacant Houses Tab Details -->
+
+
+                      <!-- Filter Backdrop -->
+                      <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
+                          <div class="offcanvas-header">
+                              <h5 id="offcanvasBothLabel" class="offcanvas-title">Filter Houses</h5>
+                              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                          </div>
+                          <form class="offcanvas-header d-flex" action='{% url "home" %}'>
+                              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                              <button class="btn btn-outline-primary" type="submit">Search</button>
+                          </form>
+                          <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                              <p class="text-center">
+                                  Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.
+                              </p>
+                              <button type="button" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
+                              <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas">Cancel</button>
+                          </div>
+                      </div>  
+                      <!-- End Filter Backdrop -->                        
                   </div>
-            </div>
-            <!-- End of Houses Tabs Details -->
+                  <!-- House Tab Details Inner -->
+              </div>
+              <!-- End House Tab Details Box -->
+          </div>
+          <!-- End of Houses Tabs Details -->
 
-            <!-- Add a House Tabs Details -->
-            <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+          <!-- Add a House Tabs Details -->
+          <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
               <form method="POST" enctype="multipart/form-data" action=''>
                   {% csrf_token %}
                   <div class="row">
@@ -151,44 +280,43 @@
                           </div>
                       {% endfor %}
                       <div class="mb-3 col-md-6">
-                        <label class="form-label">Upload Images</label>
-                        <input type="file" name='images' multiple class="form-control">
+                          <label class="form-label">Upload Images</label>
+                          <input type="file" name='images' multiple class="form-control">
                       </div>
                   </div>
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-primary me-2">Add House</button>
                   </div>
               </form>
-            </div>
-            <!-- End of Add a House Tabs Details -->
-        </div>
-        <!-- End Details -->
-    </div>
-    <!-- End Profile -->
+          </div>
+          <!-- End of Add a House Tabs Details -->
+      </div>
+      <!-- End Details -->
+  </div>
+  <!-- End Profile -->
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        // Attach a change event listener to the country dropdown
-        var countrySelect = document.getElementById('id_country');
-        countrySelect.addEventListener('change', function() {
-            var countryId = this.value;
-            if (countryId) {
-                fetch("{% url 'get-states' %}?country_id=" + countryId)
-                    .then(response => response.json())
-                    .then(data => {
-                        var options = '<option value="">Select a state</option>';
-                        data.forEach(function(state) {
-                            options += '<option value="' + state.id + '">' + state.name + '</option>';
-                        });
-                        document.getElementById('id_state').innerHTML = options;
-                    })
-                    .catch(error => console.error("Error fetching states:", error));
-            } else {
-                document.getElementById('id_state').innerHTML = '';
-            }
-        });
-      });        
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Attach a change event listener to the country dropdown
+      var countrySelect = document.getElementById('id_country');
+      countrySelect.addEventListener('change', function() {
+          var countryId = this.value;
+          if (countryId) {
+              fetch("{% url 'get-states' %}?country_id=" + countryId)
+                  .then(response => response.json())
+                  .then(data => {
+                      var options = '<option value="">Select a state</option>';
+                      data.forEach(function(state) {
+                          options += '<option value="' + state.id + '">' + state.name + '</option>';
+                      });
+                      document.getElementById('id_state').innerHTML = options;
+                  })
+                  .catch(error => console.error("Error fetching states:", error));
+          } else {
+              document.getElementById('id_state').innerHTML = '';
+          }
+      });
+    });        
   </script>
-
-    <!-- End Content -->
+  <!-- End Content -->
 {% endblock details %}
