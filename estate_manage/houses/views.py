@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from locations.models import Country, State
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger,EmptyPage
 from .models import House, Photo
 from.forms import HouseForm
+from .utils import paginateHouses
 
 
 def updateHouse(request, pk):
@@ -58,9 +60,16 @@ def get_states(request):
 def building_owner_houses(request, pk):
     profile = request.user.profile.building_owners
     houses =  request.user.profile.building_owners.houses.all()
+    menu = request.GET.get('menu', '/')
     active_menu = 'houses-management'
     active_sub_menu = 'house-profiles'
     countries = Country.objects.all()
+    occupied_houses  = request.user.profile.building_owners.houses.filter(occupancy_status="occupied")
+    vacant_houses  = request.user.profile.building_owners.houses.filter(occupancy_status="vacant")
+    custom_range, houses = paginateHouses(request, houses, 3)
+    oh_custom_range, occupied_houses = paginateHouses(request, occupied_houses, 3)
+    vh_custom_range, vacant_houses = paginateHouses(request, vacant_houses, 3)
+    
 
     if request.method == "POST":
         form = HouseForm(request.POST)
@@ -97,5 +106,11 @@ def building_owner_houses(request, pk):
         'houses': houses,
         'countries': countries,
         'form': form,
+        'occupied_houses': occupied_houses,
+        'vacant_houses': vacant_houses,
+        'custom_range': custom_range,
+        'oh_custom_range': oh_custom_range,
+        'vh_custom_range': vh_custom_range,
+        'menu': menu,
     }
     return render(request, "houses/BO_houses.html", context)
