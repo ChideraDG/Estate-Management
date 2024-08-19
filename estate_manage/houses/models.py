@@ -45,7 +45,7 @@ class House(models.Model):
     ]
 
     OCCUPANCY = [
-        ('occupied', 'Ocuupied'),
+        ('occupied', 'Occupied'),
         ('vacant', 'Vacant'),
         ('under_renovation', 'Under Renovation'),
     ]
@@ -75,6 +75,9 @@ class House(models.Model):
 
     def __str__(self) -> str:
         return str(self.house_number)
+    
+    class Meta:
+        ordering = ['-created']  # to order the houses from latest to oldest.
 
 
 class Utility(models.Model):
