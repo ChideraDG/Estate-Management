@@ -26,7 +26,7 @@
 
         <ul class="menu-sub">
             <li class="menu-item {% if active_sub_menu == 'house-profiles' %}active{% endif %}">
-                <a href='{% url "bo-houses" pk=request.user.profile %}?menu=All' class="menu-link">
+                <a href='{% url "bo-houses" pk=request.user.profile %}' class="menu-link">
                     <div data-i18n="house-profiles">House Profiles</div>
                 </a>
             </li>
