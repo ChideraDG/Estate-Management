@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def paginateHouses(request, houses, data_num):
-    page = request.GET.get('page')
+    page = request.GET.get('page', 1)
     paginator = Paginator(houses, data_num)
 
     try:
