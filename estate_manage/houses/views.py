@@ -60,7 +60,7 @@ def get_states(request):
 def building_owner_houses(request, pk):
     profile = request.user.profile.building_owners
     houses =  request.user.profile.building_owners.houses.all()
-    menu = request.GET.get('menu', '/')
+    menu = request.GET.get('menu', 'all')
     active_menu = 'houses-management'
     active_sub_menu = 'house-profiles'
     countries = Country.objects.all()
