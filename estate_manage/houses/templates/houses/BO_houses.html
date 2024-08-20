@@ -42,17 +42,17 @@
               <div class="nav-align-top">
                   <ul class="nav nav-pills mb-3" role="tablist">
                       <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                        <button type="button" class="nav-link {% if menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
                           All
                         </button>
                       </li>
                       <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
+                        <button type="button" class="nav-link {% if menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
                             Occupied Houses
                         </button>
                       </li>
                       <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
+                        <button type="button" class="nav-link {% if menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
                             Vacant Houses
                         </button>
                       </li>
@@ -256,8 +256,10 @@
                               <p class="text-center">
                                   Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.
                               </p>
-                              <button type="button" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
-                              <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas">Cancel</button>
+                              <form action="" method="POST">
+                                <button type="button" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
+                                <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas">Reset</button>
+                              </form>
                           </div>
                       </div>  
                       <!-- End Filter Backdrop -->                        
@@ -270,7 +272,7 @@
 
           <!-- Add a House Tabs Details -->
           <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
-              <form method="POST" enctype="multipart/form-data" action=''>
+              <form method="POST" enctype="multipart/form-data" action={% url "bo-houses" pk=profile%}?menu=all&page=1>
                   {% csrf_token %}
                   <div class="row">
                       {% for field in form %}
