@@ -61,12 +61,18 @@
                           Filter Houses
                         </button>
                       </li>
+                      {% if reset_filter == "filtering" %}
+                      <li>
+                        <button type="button" class="btn btn-outline-secondary d-grid w-100 ms-2" id="reset-filter">Reset Filter</button>
+                      </li>
+                      {% endif %}
                   </ul>
 
                   <!-- House Tab Details Inner -->
                   <div class="tab-content">
                       <!-- All Houses Tab Details -->
                       <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                        {% if exist.0 %}
                         <div class="row mb-5">
                           {% for house in houses %}
                           <div class="col-md-6 col-lg-4 mb-3">
@@ -111,6 +117,9 @@
                                   Occupancy Status: {{ house.occupancy_status.title }}
                                 </p>
                                 <a href="javascript:void(0)" class="btn btn-outline-primary">House Details</a>
+                                {% if house.apartments.count < house.number_of_apartments %}
+                                <a href="javascript:void(0)" class="btn btn-outline-primary ms-2">Add Apartments</a>
+                                {% endif %}
                               </div>
                             </div>
                           </div>
@@ -118,13 +127,17 @@
                         </div>
                         
                         <!--Paginator for All Houses-->
-                        {% include "dashboard/pagination.html" with query_set=houses custom_range=custom_range query_menu='all' %}
+                        {% include "dashboard/pagination.html" with query_set=houses custom_range=custom_range query_menu='all' query_string=query_string %}
                         <!--End Paginator-->
+                        {% else %}
+                          <h2>No House Found</h2>
+                        {% endif %}
                       </div>  
                       <!-- End All Houses Tab Details -->
 
                       <!-- Occupied Houses Tab Details -->
                       <div class="tab-pane fade {% if menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
+                        {% if exist.1 %}
                         <div class="row mb-5">
                           {% for house in occupied_houses %}
                           <div class="col-md-6 col-lg-4 mb-3">
@@ -177,13 +190,17 @@
                           {% endfor %}
                         </div>
                         <!--Paginator for Occupied Houses-->
-                        {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' %}
+                        {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' query_string=query_string %}
                         <!--End Paginator-->
+                        {% else %}
+                          <h2>No House Found</h2>
+                        {% endif %}
                       </div>
                       <!-- End Occupied Houses Tab Details -->
 
                       <!-- Vacant Houses Tab Details -->
                       <div class="tab-pane fade {% if menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
+                        {% if exist.2 %}
                         <div class="row mb-5">
                           {% for house in vacant_houses %}
                           <div class="col-md-6 col-lg-4 mb-3">
@@ -235,9 +252,13 @@
                           </div>
                           {% endfor %}
                         </div>
+
                         <!--Paginator for Vacant Houses-->
-                        {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' %}
+                        {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %}
                         <!-- End Paginator-->
+                        {% else %}
+                        <h2>No House Found</h2>
+                        {% endif %}
                       </div>
                       <!-- End Vacant Houses Tab Details -->
 
@@ -248,17 +269,12 @@
                               <h5 id="offcanvasBothLabel" class="offcanvas-title">Filter Houses</h5>
                               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                           </div>
-                          <form class="offcanvas-header d-flex" action='{% url "home" %}'>
-                              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                              <button class="btn btn-outline-primary" type="submit">Search</button>
-                          </form>
                           <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-                              <p class="text-center">
-                                  Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.
-                              </p>
-                              <form action="" method="POST">
-                                <button type="button" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
-                                <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas">Reset</button>
+                              <form id="filterForm" action={% url "bo-houses" pk=profile %}?menu=all&page=1 method="GET">
+                                {{ filter_form.as_p }}
+                                <input type='text' value="filtering" name="reset_filter" hidden/>
+                                <button type="submit" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
+                                <button type="button" class="btn btn-outline-secondary d-grid w-100" id="reset-button">Reset</button>
                               </form>
                           </div>
                       </div>  
@@ -320,5 +336,21 @@
       });
     });        
   </script>
+  <script>
+    document.getElementById('reset-button').addEventListener('click', function() {
+        // Select the form
+        var form = this.closest('form');
+        
+        // Clear all input fields in the form
+        form.reset();
+        window.location.href = window.location.pathname;
+    });
+  </script>
+  <script>
+    document.getElementById('reset-filter').addEventListener('click', function() {
+        window.location.href = window.location.pathname;
+    });
+  </script>
+
   <!-- End Content -->
 {% endblock details %}
