@@ -175,7 +175,7 @@ class HouseFilterForm(forms.ModelForm):
             'house_no': 'Enter house number',
             'house_address': 'Enter address',
             '_country': 'Select country',
-            'state': 'Select state',
+            '_state': 'Select state',
             'city': 'Enter city',
             'house_size_min': 'Min house size',
             'house_size_max': 'Max house size',
