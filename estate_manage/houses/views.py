@@ -180,3 +180,39 @@ def filterHouses(request):
         query_string = urlencode(cleaned_query_dict)
 
     return houses, query_string
+
+@login_required(login_url='login')
+def house_details(request, pk, house_id):
+    house = request.user.profile.building_owners.houses.get(id=house_id)
+
+    if request.method == "POST":
+        form = HouseForm(request.POST, instance=house)
+        images = request.FILES.getlist('images')
+
+        if form.is_valid():
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            instance.save()
+
+            HouseUtilities = House.utilities.through  # Accessing a Many-to-Many Table of Utility
+            for utility in request.POST.getlist('utilities'):
+                HouseUtilities.objects.get_or_create(house_id=instance.id, utility_id=utility)
+
+            HouseFeatures = House.features.through  # Accessing a Many-to-Many Table of Utility
+            for feature in request.POST.getlist('features'):
+                HouseFeatures.objects.get_or_create(house_id=instance.id, feature_id=feature)
+
+            for image in images:
+                Photo.objects.get_or_create(
+                    image=image,
+                    house=instance,
+                )
+            
+            return redirect('house-details', pk=house.building_owner, house_id=house.id)
+    else:
+        form = HouseForm(instance=house)
+
+    context = {
+        'house': house,
+        'form': form,
+    }
+    return render(request, "houses/update_BO_houses.html", context)
