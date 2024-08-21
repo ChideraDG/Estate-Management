@@ -57,9 +57,6 @@ class Apartment(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, blank=True, null=True, related_name='apartments')
     apartment_number = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(0)], default=0)
     floor_number = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='apartments', null=True, blank=True)
-    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='apartments', null=True, blank=True)
-    city = models.CharField(max_length=200, null=True, blank=True)
     apartment_size = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.00,
                                          validators=[MinValueValidator(0)])
     number_of_rooms = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=1)
@@ -84,6 +81,9 @@ class Apartment(models.Model):
             str: The apartment number.
         """
         return str(self.apartment_number)
+    
+    class Meta:
+        ordering = ['-created']  # to order the houses from latest to oldest.
  
 
 class Photo(models.Model):
