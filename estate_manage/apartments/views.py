@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from locations.models import Country, State
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from .models import Apartment
 from.forms import ApartmentForm
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 
-# Create your views here.
 
 def apartmentHome(request):
     profiles = Apartment.objects.all()
@@ -60,3 +58,21 @@ def get_states(request):
     states = State.objects.filter(country_id=country_id).order_by('name')
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
+
+@login_required(login_url='login')
+def building_owner_apartments(request, pk):
+    active_menu = 'apartments-management'
+    active_sub_menu = 'apartment-profiles'
+    houses = request.user.profile.building_owners.houses.all()
+    apartments = []
+    for house in houses:
+        apartments.extend(house.apartments.all())
+
+    
+    context = {
+        'active_menu': active_menu,
+        'active_sub_menu': active_sub_menu,
+        'apartments': apartments,
+        'houses': houses,
+    }
+    return render(request, 'apartments/BO_apartments.html', context)
