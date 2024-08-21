@@ -142,6 +142,8 @@ def filterHouses(request):
 @login_required(login_url='login')
 def house_details(request, pk, house_id):
     house = request.user.profile.building_owners.houses.get(id=house_id)
+    active_menu = 'houses-management'
+    active_sub_menu = 'house-profiles'
 
     if request.method == "POST":
         form = HouseForm(request.POST, instance=house)
@@ -176,5 +178,7 @@ def house_details(request, pk, house_id):
     context = {
         'house': house,
         'form': form,
+        'active_menu': active_menu,
+        'active_sub_menu': active_sub_menu,
     }
     return render(request, "houses/BO_house_details.html", context)
