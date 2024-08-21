@@ -69,9 +69,9 @@ def building_owner_houses(request, pk):
     occupied_houses  = houses.filter(occupancy_status="occupied")
     vacant_houses  = houses.filter(occupancy_status="vacant")
     exist = [houses.exists(), occupied_houses.exists(), vacant_houses.exists()]
-    custom_range, houses = paginateHouses(request, houses, 3)
-    oh_custom_range, occupied_houses = paginateHouses(request, occupied_houses, 3)
-    vh_custom_range, vacant_houses = paginateHouses(request, vacant_houses, 3)
+    custom_range, houses = paginateHouses(request, houses, 6)
+    oh_custom_range, occupied_houses = paginateHouses(request, occupied_houses, 6)
+    vh_custom_range, vacant_houses = paginateHouses(request, vacant_houses, 6)
 
 
     if request.method == "POST":
