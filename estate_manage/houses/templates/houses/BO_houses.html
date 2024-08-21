@@ -18,7 +18,7 @@
           <li class="nav-item">
               <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
               data-bs-target="#navs-pills-justified-houses" aria-controls="navs-pills-justified-houses" aria-selected="true">
-                  <i class="tf-icons bi bi-house-fill"></i> Houses
+                  <i class="tf-icons bi bi-building-fill"></i> Houses
                   <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{houses.count}}</span>
               </button>
           </li>
@@ -69,7 +69,7 @@
                   </ul>
 
                   <!-- House Tab Details Inner -->
-                  <div class="tab-content">
+                  <div class="tab-content" style="background-color: #e7e8ff;">
                       <!-- All Houses Tab Details -->
                       <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
                         {% if exist.0 %}
@@ -87,7 +87,7 @@
                                 <div class="carousel-inner">
                                   {% for image in house.images.all %}
                                       <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
                                       </div>
                                   {% endfor %}
                                 </div>
@@ -102,20 +102,16 @@
                               <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                   <div class="carousel-item active">
-                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
                                   </div>
                                 </div>
                               </div>
                               {% endif %}
                         
                               <div class="card-body">
-                                <h5 class="card-title">No. {{ house }} {{ house.address.title }}</h5>
-                                <p class="card-text">
-                                Number of Apartments: {{ house.number_of_apartments }}
-                                </p>
-                                <p class="card-text">
-                                  Occupancy Status: {{ house.occupancy_status.title }}
-                                </p>
+                                <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">No. {{ house }} {{ house.address.title }}</span></h4>
+                                <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Apartments: {{ house.number_of_apartments }}</span></p>
+                                <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ house.occupancy_status.title }}</span></p>
                                 <a href={% url "house-details" pk=profile house_id=house.id %} class="btn btn-outline-primary">House Details</a>
                                 {% if house.apartments.count < house.number_of_apartments %}
                                 <a href="javascript:void(0)" class="btn btn-outline-primary ms-2">Add Apartments</a>
@@ -152,16 +148,14 @@
                                 <div class="carousel-inner">
                                   {% for image in house.images.all %}
                                       <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
                                       </div>
                                   {% endfor %}
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExample-cf" role="button" data-bs-slide="prev">
-                                  {% comment %} <span class="carousel-control-prev-icon" aria-hidden="true"></span> {% endcomment %}
                                   <span class="visually-hidden">Previous</span>
                                 </a>
                                 <a class="carousel-control-next" href="#carouselExample-cf" role="button" data-bs-slide="next">
-                                  {% comment %} <span class="carousel-control-next-icon" aria-hidden="true"></span> {% endcomment %}
                                   <span class="visually-hidden">Next</span>
                                 </a>
                               </div>
@@ -169,20 +163,16 @@
                               <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                   <div class="carousel-item active">
-                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="border-top-left-radius: 7px; border-top-right-radius: 7px; width: 400px; height: 400px;" alt="...">
                                   </div>
                                 </div>
                               </div>
                               {% endif %}
                         
                               <div class="card-body">
-                                <h5 class="card-title">No. {{ house }} {{ house.address.title }}</h5>
-                                <p class="card-text">
-                                Number of Apartments: {{ house.number_of_apartments }}
-                                </p>
-                                <p class="card-text">
-                                  Occupancy Status: {{ house.occupancy_status.title }}
-                                </p>
+                                <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">No. {{ house }} {{ house.address.title }}</span></h4>
+                                <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Apartments: {{ house.number_of_apartments }}</span></p>
+                                <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ house.occupancy_status.title }}</span></p>
                                 <a href={% url "house-details" pk=profile house_id=house.id %} class="btn btn-outline-primary">House Details</a>
                                 {% if house.apartments.count < house.number_of_apartments %}
                                 <a href="javascript:void(0)" class="btn btn-outline-primary ms-2">Add Apartments</a>
@@ -218,7 +208,7 @@
                                 <div class="carousel-inner">
                                   {% for image in house.images.all %}
                                       <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                          <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
                                       </div>
                                   {% endfor %}
                                 </div>
@@ -235,20 +225,16 @@
                               <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                   <div class="carousel-item active">
-                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px;" alt="...">
+                                    <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
                                   </div>
                                 </div>
                               </div>
                               {% endif %}
                         
                               <div class="card-body">
-                                <h5 class="card-title">No. {{ house }} {{ house.address.title }}</h5>
-                                <p class="card-text">
-                                Number of Apartments: {{ house.number_of_apartments }}
-                                </p>
-                                <p class="card-text">
-                                  Occupancy Status: {{ house.occupancy_status.title }}
-                                </p>
+                                <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">No. {{ house }} {{ house.address.title }}</span></h4>
+                                <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Apartments: {{ house.number_of_apartments }}</span></p>
+                                <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ house.occupancy_status.title }}</span></p>
                                 <a href={% url "house-details" pk=profile house_id=house.id %} class="btn btn-outline-primary">House Details</a>
                                 {% if house.apartments.count < house.number_of_apartments %}
                                 <a href="javascript:void(0)" class="btn btn-outline-primary ms-2">Add Apartments</a>
@@ -301,6 +287,18 @@
                           <div class="mb-3 col-md-6">
                               <label class="form-label">{{ field.label }}</label>
                               {{ field }}
+                              
+                              {% if field.label == "Address" %}
+                                <div id="floatingInputHelp" class="form-text">
+                                  Do not add your House Number to the Address
+                                </div>
+                              {% endif %}
+
+                              {% if field.label == "House Number" %}
+                                <div id="floatingInputHelp" class="form-text">
+                                  This field is compulsory
+                                </div>
+                              {% endif %}
                           </div>
                       {% endfor %}
                       <div class="mb-3 col-md-6">
@@ -324,21 +322,21 @@
       // Attach a change event listener to the country dropdown
       var countrySelect = document.getElementById('id_country');
       countrySelect.addEventListener('change', function() {
-          var countryId = this.value;
-          if (countryId) {
-              fetch("{% url 'get-states' %}?country_id=" + countryId)
-                  .then(response => response.json())
-                  .then(data => {
-                      var options = '<option value="">Select a state</option>';
-                      data.forEach(function(state) {
-                          options += '<option value="' + state.id + '">' + state.name + '</option>';
-                      });
-                      document.getElementById('id_state').innerHTML = options;
-                  })
-                  .catch(error => console.error("Error fetching states:", error));
-          } else {
-              document.getElementById('id_state').innerHTML = '';
-          }
+        var countryId = this.value;
+        if (countryId) {
+            fetch("{% url 'get-states' %}?country_id=" + countryId)
+                .then(response => response.json())
+                .then(data => {
+                    var options = '<option value="">Select a state</option>';
+                    data.forEach(function(state) {
+                        options += '<option value="' + state.id + '">' + state.name + '</option>';
+                    });
+                    document.getElementById('id_state').innerHTML = options;
+                })
+                .catch(error => console.error("Error fetching states:", error));
+        } else {
+            document.getElementById('id_state').innerHTML = '';
+        }
       });
     });        
   </script>
