@@ -3,54 +3,12 @@ from django.shortcuts import render, redirect
 from locations.models import Country, State
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, PageNotAnInteger,EmptyPage
 from .models import House, Photo
 from.forms import HouseForm, HouseFilterForm
 from .utils import paginateHouses
 
 
-def updateHouse(request, pk):
-    countries = Country.objects.all()
-    profile = House.objects.get(id=pk)
-    form = HouseForm(instance=profile)
-
-    if request.method == 'POST':
-        form = HouseForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-
-            # Clear existing many-to-many relationships
-            instance.utilities.clear()
-            instance.features.clear()
-
-            # Add new many to many relationship
-            for utility in request.POST.getlist('utilities'):
-                instance.utilities.add(utility)
-
-            for feature in request.POST.getlist('features'):
-                instance.features.add(feature)
-
-            instance.save
-
-            return redirect('house-home')
-
-    context = {'form': form, 'countries': countries, 'profile': profile}
-    return render(request, 'houses/houseReg.html', context)
-
-def viewHouse(request, pk):
-    house = House.objects.get(id=pk)
-    context = {'house': house}
-    return render(request, 'houses/viewhouse.html', context)
-
-def deleteHouse(request, pk):
-    profile = House.objects.get(id=pk)
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('house-home')
-    context = {'obj': profile}
-    return render(request, 'houses/deleteHouse.html', context)
-
+@login_required(login_url='login')
 def get_states(request):
     country_id = request.GET.get('country_id')
     states = State.objects.filter(country_id=country_id).order_by('name')
@@ -194,10 +152,14 @@ def house_details(request, pk, house_id):
             instance.save()
 
             HouseUtilities = House.utilities.through  # Accessing a Many-to-Many Table of Utility
+            #  Clear all existing utilities for this house
+            instance.utilities.clear()
             for utility in request.POST.getlist('utilities'):
                 HouseUtilities.objects.get_or_create(house_id=instance.id, utility_id=utility)
 
-            HouseFeatures = House.features.through  # Accessing a Many-to-Many Table of Utility
+            HouseFeatures = House.features.through  # Accessing a Many-to-Many Table of Feature
+            #  Clear all existing utilities for this house
+            instance.features.clear()
             for feature in request.POST.getlist('features'):
                 HouseFeatures.objects.get_or_create(house_id=instance.id, feature_id=feature)
 
@@ -215,4 +177,4 @@ def house_details(request, pk, house_id):
         'house': house,
         'form': form,
     }
-    return render(request, "houses/update_BO_houses.html", context)
+    return render(request, "houses/BO_house_details.html", context)
