@@ -100,7 +100,7 @@ class Photo(models.Model):
         >>> photo.save()
     """
 
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='apartment_photos/', default='apartment_photos/default.jpg')
     description = models.CharField(max_length=255, blank=True)
 
