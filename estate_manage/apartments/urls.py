@@ -8,4 +8,5 @@ urlpatterns = [
     path('update/<str:pk>/', updateApartment, name='update-apartment'),
     path('view/<str:pk>/', viewApartment, name='view-apartment'),
     path('delete/<str:pk>/', deleteApartment, name='delete-apartment'),
+    path('bo/<str:pk>/apartments/', building_owner_apartments, name='bo-apartments'),
 ]
