@@ -43,7 +43,7 @@ def user_register(request):
 
         designation = request.user.profile.designation
         redirects = {
-            "building_owner": 'update-user-profile',
+            "building_owner": 'view-building-owner',
             "agent": 'dashboard-A',
             "buyer": 'dashboard-B',
             "company": 'dashboard-C',
