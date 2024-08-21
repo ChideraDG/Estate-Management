@@ -182,3 +182,10 @@ def house_details(request, pk, house_id):
         'active_sub_menu': active_sub_menu,
     }
     return render(request, "houses/BO_house_details.html", context)
+
+@login_required(login_url='login')
+def delete_house(request, pk):
+    house = request.user.profile.building_owners.houses.get(id=pk)
+    house.delete()
+
+    return redirect('bo-houses', pk=request.user.profile)
