@@ -16,7 +16,7 @@ def get_states(request):
     return JsonResponse(states_list, safe=False)
 
 @login_required(login_url='login')
-def building_owner_houses(request, pk):
+def houses(request, pk, type):
     """
     Manage and display houses for a building owner.
 
@@ -46,8 +46,12 @@ def building_owner_houses(request, pk):
       managing the many-to-many fields for utilities and features and saving 
       images related to the house.
     """
-    # Get the building owner's profile from the current user's profile.
-    profile = request.user.profile.building_owners
+    
+    if type == 'bo':
+        # Get the building owner's profile from the current user's profile.
+        profile = request.user.profile.building_owners
+    elif type == 'C':
+        profile = request.user.profile.companies
 
     # Filter houses using the filterHouses function and get the query string for filtering.
     houses, query_string = filterHouses(request)
@@ -89,8 +93,11 @@ def building_owner_houses(request, pk):
         if form.is_valid():
             # Create a model instance from the form but don't save it yet.
             instance = form.save(commit=False)
-            # Assign the building owner to the house instance.
-            instance.building_owner = profile
+            if request.user.profile.designation == 'building_owner':
+                # Assign the building owner to the house instance.
+                instance.building_owner = profile
+            elif request.user.profile.designation == 'company':
+                instance.estate = profile
 
             # Save the house instance to the database.
             instance.save()
@@ -113,7 +120,7 @@ def building_owner_houses(request, pk):
                 )
             
             # Redirect to the same view after successful form submission.
-            return redirect('bo-houses', pk=profile)
+            return redirect('houses', pk=profile)
 
     # If the request method is GET, instantiate an empty HouseForm.
     else:
@@ -137,10 +144,11 @@ def building_owner_houses(request, pk):
         'exist': exist,
         'reset_filter': reset_filter,
         'query_string': query_string,
+        'type': type,
     }
 
     # Render the 'BO_houses.html' template with the prepared context.
-    return render(request, "houses/BO_houses.html", context)
+    return render(request, "houses/houses.html", context)
 
 
 def filterHouses(request):
@@ -172,8 +180,13 @@ def filterHouses(request):
       using the `__in` lookup.
     """
     
-    # Get all houses related to the current user's profile
-    houses = request.user.profile.building_owners.houses.all()
+    if request.user.profile.designation == 'building_owner':
+        # Get all houses related to the current user's profile
+        houses = request.user.profile.building_owners.houses.all()  
+    elif request.user.profile.designation == 'company':
+        # Needs fixing
+        houses = request.user.profile.companies.estate.all()
+    
     form = HouseFilterForm(request.GET)
 
     if form.is_valid():
@@ -232,8 +245,9 @@ def filterHouses(request):
     return houses, query_string
 
 @login_required(login_url='login')
-def house_details(request, pk, house_id):
-    house = request.user.profile.building_owners.houses.get(id=house_id)
+def house_details(request, pk, house_id, type):
+    house = House.objects.get(id=house_id)
+
     active_menu = 'houses-management'
     active_sub_menu = 'house-profiles'
 
@@ -272,12 +286,13 @@ def house_details(request, pk, house_id):
         'form': form,
         'active_menu': active_menu,
         'active_sub_menu': active_sub_menu,
+        'type': type,
     }
-    return render(request, "houses/BO_house_details.html", context)
+    return render(request, "houses/house_details.html", context)
 
 @login_required(login_url='login')
 def delete_house(request, pk):
-    house = request.user.profile.building_owners.houses.get(id=pk)
+    house = House.objects.get(id=pk)
     house.delete()
 
-    return redirect('bo-houses', pk=request.user.profile)
+    return redirect('houses', pk=request.user.profile)
