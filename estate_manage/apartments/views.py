@@ -48,12 +48,17 @@ def house_apartments(request, pk, type):
     active_sub_menu = 'apartment-profiles'
     if type == "bo":
         houses = request.user.profile.building_owners.houses.all()
-    
+
+    template_routes = {
+        'building_owner': "building_owners/BO_dashboard.html",
+        'tenant': "tenants/T_dashboard.html"
+    }
     context = {
         'active_menu': active_menu,
         'active_sub_menu': active_sub_menu,
         'houses': houses,
         'type': type,
+        'template_routes': template_routes.get(request.user.profile.designation),
     }
     return render(request, 'apartments/house_apartments.html', context)
 
