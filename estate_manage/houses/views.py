@@ -226,6 +226,8 @@ def filterHouses(request):
         # Generate the query string for the current GET parameters
         cleaned_query_dict = {key: value for key, value in request.GET.items() if value}
         query_string = urlencode(cleaned_query_dict)
+    else:
+        query_string = ""
 
     return houses, query_string
 
