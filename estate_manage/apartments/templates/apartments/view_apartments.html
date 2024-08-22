@@ -1,0 +1,85 @@
+{% extends template_routes %}
+
+{% block details %}
+    <!-- Content -->
+
+    <!-- Location header -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            <a class="text-muted fw-light" href={% url "house-apartments" pk=request.user.profile type=type %}>
+                Apartment Control
+            </a> /
+            <a class="text-muted fw-light" href={% url "house-details" pk=request.user.profile house_id=house.id type=type %}> 
+                No. {{ house.house_number }}, {{ house.address.title }}
+            </a> / 
+        </span>
+        Apartment Profiles
+    </h4>
+    <!-- End Location header -->
+
+    <!-- Apartment Profile -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- apartment Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-apartments" aria-controls="navs-pills-justified-apartments" aria-selected="true">
+                    <i class="tf-icons bi bi-card-list"></i> Apartments
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ apartment.count }}</span>
+                </button>
+            </li>
+
+            <!-- Add an Apartment Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-add-apartment" aria-controls="navs-pills-justified-add-apartment" aria-selected="false">
+                    <i class="tf-icons bi bi-plus-square-fill"></i> Add an Apartment
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Apartments Tabs Details -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-apartments" role="tabpanel">
+                <!-- Apartments Tab Details Box -->
+                <div class="nav-align-top">
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                                All
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
+                                Occupied Houses
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
+                                Vacant Houses
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                                Filter Houses
+                            </button>
+                        </li>
+                        {% if reset_filter == "filtering" %}
+                        <li>
+                        <button type="button" class="btn btn-outline-secondary d-grid w-100 ms-2" id="reset-filter">Reset Filter</button>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- End Apartments Tab Details Box -->
+            </div>
+            <!-- End Apartments Tabs Details -->
+        </div>
+        <!-- End Details -->
+    </div>
+    <!-- End Apartment Profile -->
+
+{% endblock details %}
