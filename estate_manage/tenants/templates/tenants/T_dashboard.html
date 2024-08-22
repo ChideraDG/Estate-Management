@@ -1,266 +1,245 @@
-{% extends "dashboard/base.html" %}
+{% extends "dashboard/main.html" %}
+
+{% block title %}
+<title>{{request.user.profile.username.title}}-Tenant</title>
+{% endblock title %}
 
 {% block tenant %}
-<style>
-    .containers {
-        display: flex;
-        width: 100%;
-    }
+    <!-- Dashboard -->
+    <li class="menu-item {% if active_menu == 'tenant-dashboard' %}active{% endif %}">
+        <a href='{% url "dashboard-T" pk=request.user.profile %}' class="menu-link">
+            <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
+            <div data-i18n="Analytics">Dashboard</div>
+        </a>
+    </li>
 
-    .left-side {
-        width: 20%;
-        padding-right: 10px;
-    }
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Properties</span>
+    </li>
 
-    .vertical-line {
-        width: 5px;
-        background-color: #2ed162;
-        margin: 0 20px;
-    }
+    <!-- Tenant Overview -->
+    <li class="menu-item {% if active_menu == 'tenants-overview' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+            <div data-i18n="Tenant Overview">Tenant Overview</div>
+        </a>
 
-    .right-side {
-        width: 80%;
-        padding-left: 10px;
-        border-left: 1px solid #ddd; /* Optional border to define the content area */
-    }
-
-    h6 {
-        cursor: pointer;
-        background-color: #f1f1f1;
-        padding: 20px;
-        margin: 0;
-        border: 1px solid #ddd;
-    }
-
-    .mylist {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: none; /* Hide the dropdown content by default */
-    }
-
-    .mylist li {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-top: none; /* Remove the top border to make it look like a continuation */
-        background-color: #fafafa;
-    }
-
-    .mylist li a {
-        text-decoration: none;
-        color: #333;
-        display: block;
-    }
-
-    .mylist li a:hover {
-        background-color: #e0e0e0;
-    }
-
-    .content {
-        display: none; /* Hide content by default */
-    }
-
-    .content.active {
-        display: block; /* Show the active content */
-    }
-</style>
-
-<div class="containers">
-    <div class="left-side">
-        <h6>Tenant Overview</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="personal-info">Personal Information</a></li>
-            <li><a href="#" data-content="lease-info">Lease Information</a></li>
-            <li><a href="#" data-content="payment-history">Payment History</a></li>
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'lease-info' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="lease-info">Lease Information</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="payment-history">Payment History</div>
+                </a>
+            </li>
         </ul>
-        
-        <h6>Rent Payment Management</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="rent-portal">Rent Payment Portal</a></li>
-            <li><a href="#" data-content="payment-reminders">Payment Reminders</a></li>
-            <li><a href="#" data-content="receipt-generation">Receipt Generation</a></li>
+    </li>
+
+    <!-- Rent Payment Management -->
+    <li class="menu-item {% if active_menu == 'rent-payment-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
+            <div data-i18n="Rent Payment Management">Rent Payment Management</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'rent-payment-portal' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="rent-payment-portal">Rent Payment Portal</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="layouts-without-navbar.html" class="menu-link">
+                    <div data-i18n="payment-reminders">Payment Reminders</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="layouts-without-navbar.html" class="menu-link">
+                    <div data-i18n="receipt-generation">Receipt Generation</div>
+                </a>
+            </li>
         </ul>
+    </li>
 
-        <h6>Maintenance Requests</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="request-submission">Request Submission</a></li>
-            <li><a href="#" data-content="tracking-updates">Tracking and Updates</a></li>
-            <li><a href="#" data-content="service-info">Service Provider Information</a></li>
+    <!-- Maintenance Requests -->
+    <li class="menu-item {% if active_menu == 'maintenance-requests' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
+            <div data-i18n="maintenance requests">Maintenance Requests</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="pages-account-settings-account.html" class="menu-link">
+                <div data-i18n="request-submission">Request Submission</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="pages-account-settings-notifications.html" class="menu-link">
+                <div data-i18n="tracking-updates">Tracking and Updates</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="pages-account-settings-connections.html" class="menu-link">
+                <div data-i18n="service-info">Service Provider Information</div>
+            </a>
+            </li>
         </ul>
-        
-        <h6>Communication Tools</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="in-app-messaging">In-App Messaging</a></li>
-            <li><a href="#" data-content="announcements">Announcements</a></li>
-            <li><a href="#" data-content="feedback-surveys">Feedback and Surveys</a></li>
+    </li>
+
+    <!-- Services -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
+
+    <!-- Communication Tools -->
+    <li class="menu-item {% if active_menu == 'communication-tools' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
+            <div data-i18n="communication-tools">Communication Tools</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                <div data-i18n="in-app-messaging">In-App Messaging</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                <div data-i18n="announcements">Announcements</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
+                <div data-i18n="feedback-surveys">Feedback and Surveys</div>
+            </a>
+            </li>
         </ul>
+    </li>
 
-        <h6>Utilities and Services Management</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="utility-tracking">Utility Tracking</a></li>
-            <li><a href="#" data-content="service-requests">Service Requests</a></li>
+    <!-- Utilities and Services Management -->
+    <li class="menu-item {% if active_menu == 'utilities-and-services-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
+            <div data-i18n="utilities-and-services-management">Utilities and Services Management</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="pages-misc-error.html" class="menu-link">
+                <div data-i18n="utility-tracking">Utility Tracking</div>
+            </a>
+            </li>
+            <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" class="menu-link">
+                <div data-i18n="service-requests">Service Requests</div>
+            </a>
+            </li>
         </ul>
+    </li>
 
-        <h6>Document Management</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="lease-agreements">Lease and Agreements</a></li>
-            <li><a href="#" data-content="receipts-invoices">Receipts and Invoices</a></li>
+    <!-- Document Management -->
+    <li class="menu-item {% if active_menu == 'document-management' %}active{% endif %}">
+        <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-folder-fill tiny-icon"></i>
+            <div data-i18n="Extended UI">Document Management</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+                    <div data-i18n="lease-agreements">Lease and Agreements</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="extended-ui-text-divider.html" class="menu-link">
+                    <div data-i18n="receipts-invoices">Receipts and Invoices</div>
+                </a>
+            </li>
         </ul>
+    </li>
 
-        <h6>Community Features</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="bulletin-board">Community Bulletin Board</a></li>
-            <li><a href="#" data-content="neighbor-directory">Neighbor Directory</a></li>
+    <!-- Community -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Community</span></li>
+    
+    <!-- Community Features -->
+    <li class="menu-item {% if active_menu == 'community-features' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-graph-up tiny-icon"></i>
+            <div data-i18n="community-features">Community Features</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="forms-basic-inputs.html" class="menu-link">
+                    <div data-i18n="bulletin-board">Community Bulletin Board</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="forms-input-groups.html" class="menu-link">
+                    <div data-i18n="neighbor-directory">Neighbor Directory</div>
+                </a>
+            </li>
         </ul>
+    </li>
 
-        <h6>Security Features</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="visitor-management">Visitor Management</a></li>
-            <li><a href="#" data-content="emergency-contacts">Emergency Contacts</a></li>
+    <!-- Security Features -->
+    <li class="menu-item {% if active_menu == 'security-features' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"></i>
+            <div data-i18n="security-features">Security Features</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="form-layouts-vertical.html" class="menu-link">
+                <div data-i18n="visitor-management">Visitor Management</div>
+            </a>
+            </li>
+            <li class="menu-item">
+                <a href="forms-input-groups.html" class="menu-link">
+                    <div data-i18n="emergency-contacts">Emergency Contacts</div>
+                </a>
+            </li>
         </ul>
+    </li>
 
-        <h6>Move-In/Move-Out Process</h6>
-        <ul class="mylist">
-            <li><a href="#" data-content="checklists">Checklists</a></li>
-            <li><a href="#" data-content="documentation">Documentation</a></li>
+      <!-- Move-In/Move-Out Process -->
+      <li class="menu-item {% if active_menu == 'move-in-move-out-process' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"></i>
+            <div data-i18n="move-in-move-out-process">Move-In/Move-Out Process</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+            <a href="form-layouts-vertical.html" class="menu-link">
+                <div data-i18n="checklists">Checklists</div>
+            </a>
+            </li>
+            <li class="menu-item">
+                <a href="forms-input-groups.html" class="menu-link">
+                    <div data-i18n="documentation">Documentation</div>
+                </a>
+            </li>
         </ul>
-    </div>
+    </li>
 
-    <div class="vertical-line"></div>
-
-    <div class="right-side">
-        <div id="personal-info" class="content">
-            <h2>Personal Information</h2>
-            <p>Details about the tenant's personal information...</p>
-        </div>
-        <div id="lease-info" class="content">
-            <h2>Lease Information</h2>
-            <p>Details about the lease...</p>
-        </div>
-        <div id="payment-history" class="content">
-            <h2>Payment History</h2>
-            <p>Details about the payment history...</p>
-        </div>
-        <div id="rent-portal" class="content">
-            <h2>Rent Payment Portal</h2>
-            <p>Access the rent payment portal...</p>
-        </div>
-        <div id="payment-reminders" class="content">
-            <h2>Payment Reminders</h2>
-            <p>Set up and manage payment reminders...</p>
-        </div>
-        <div id="receipt-generation" class="content">
-            <h2>Receipt Generation</h2>
-            <p>Generate and view rent receipts...</p>
-        </div>
-        <div id="request-submission" class="content">
-            <h2>Request Submission</h2>
-            <p>Submit maintenance requests...</p>
-        </div>
-        <div id="tracking-updates" class="content">
-            <h2>Tracking and Updates</h2>
-            <p>Track and receive updates on maintenance requests...</p>
-        </div>
-        <div id="service-info" class="content">
-            <h2>Service Provider Information</h2>
-            <p>Details about the service providers...</p>
-        </div>
-        <div id="in-app-messaging" class="content">
-            <h2>In-App Messaging</h2>
-            <p>Communicate with tenants through the in-app messaging feature...</p>
-        </div>
-        <div id="announcements" class="content">
-            <h2>Announcements</h2>
-            <p>View and create announcements...</p>
-        </div>
-        <div id="feedback-surveys" class="content">
-            <h2>Feedback and Surveys</h2>
-            <p>Gather feedback and conduct surveys...</p>
-        </div>
-        <div id="utility-tracking" class="content">
-            <h2>Utility Tracking</h2>
-            <p>Track utility usage and payments...</p>
-        </div>
-        <div id="service-requests" class="content">
-            <h2>Service Requests</h2>
-            <p>Submit and manage service requests...</p>
-        </div>
-        <div id="lease-agreements" class="content">
-            <h2>Lease and Agreements</h2>
-            <p>View and manage lease agreements...</p>
-        </div>
-        <div id="receipts-invoices" class="content">
-            <h2>Receipts and Invoices</h2>
-            <p>View and store receipts and invoices...</p>
-        </div>
-        <div id="bulletin-board" class="content">
-            <h2>Community Bulletin Board</h2>
-            <p>Post and view community announcements...</p>
-        </div>
-        <div id="neighbor-directory" class="content">
-            <h2>Neighbor Directory</h2>
-            <p>View and connect with neighbors...</p>
-        </div>
-        <div id="visitor-management" class="content">
-            <h2>Visitor Management</h2>
-            <p>Manage visitor access and logs...</p>
-        </div>
-        <div id="emergency-contacts" class="content">
-            <h2>Emergency Contacts</h2>
-            <p>Access and manage emergency contacts...</p>
-        </div>
-        <div id="checklists" class="content">
-            <h2>Move-In/Move-Out Checklists</h2>
-            <p>Manage move-in and move-out processes with checklists...</p>
-        </div>
-        <div id="documentation" class="content">
-            <h2>Documentation</h2>
-            <p>View and submit necessary documentation...</p>
-        </div>
-
-        <!-- Add more content sections as needed -->
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Automatically display the first content section on page load
-        const firstLink = document.querySelector('.left-side .mylist li a');
-        if (firstLink) {
-            const firstContentId = firstLink.getAttribute('data-content');
-            const firstContentToShow = document.getElementById(firstContentId);
-            if (firstContentToShow) {
-                firstContentToShow.classList.add('active');
-            }
-        }
-
-        // JavaScript to toggle the visibility of the dropdown content
-        document.querySelectorAll('h6').forEach(header => {
-            header.addEventListener('click', () => {
-                const ul = header.nextElementSibling;
-                ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-
-        // JavaScript to display the right-side content
-        document.querySelectorAll('.left-side .mylist li a').forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent the default link behavior
-                const contentId = link.getAttribute('data-content');
-
-                // Hide all content
-                document.querySelectorAll('.right-side .content').forEach(content => {
-                    content.classList.remove('active');
-                });
-
-                // Show the selected content
-                const contentToShow = document.getElementById(contentId);
-                if (contentToShow) {
-                    contentToShow.classList.add('active');
-                }
-            });
-        });
-    });
-</script>
-
+    <!-- Profiles -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
+                    
+    <!-- User Management -->
+    <li class="menu-item {% if active_menu == 'user-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
+            <div data-i18n="User Management">User Management</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 't-profile' %}active{% endif %}">
+                <a href='{% url "view-tenant" pk=request.user.profile %}'  class="menu-link">
+                    <div data-i18n="t-profile">Tenant Profile</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'personal-profile' %}active{% endif %}">
+                <a href='{% url "view-user-profile" pk=request.user.profile type="t" %}' class="menu-link">
+                    <div data-i18n="personal-profile">Personal Profile</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 {% endblock tenant %}

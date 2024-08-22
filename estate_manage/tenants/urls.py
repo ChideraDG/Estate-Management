@@ -1,12 +1,10 @@
 from django.urls import path
-from .views import *
+from .views import (get_states, view_connections, tenantDashboard,
+                                tenant_profile)
 
 urlpatterns = [
-    path('tenant-home/', tenantHome, name='tenant-home'),
     path('get_states/', get_states, name='get-states'),
-    path('create/', createTenant, name='create-tenant'),
-    path('update/<str:pk>/', updateTenant, name='update-tenant'),
-    path('view/<str:pk>/', viewTenant, name='view-tenant'),
-    path('delete/<str:pk>/', deleteTenant, name='delete-tenant'),
-    path('<str:pk>/', tenantDashboard, name='dashboard-T'),
+    path('tenant/<str:pk>/t-profile/', tenant_profile, name='view-tenant'),
+    path('tenant/<str:pk>/view-connections/', view_connections, name='view-connections'),
+    path('tenant/<str:pk>/', tenantDashboard, name='dashboard-T'),
 ]

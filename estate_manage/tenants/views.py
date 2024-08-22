@@ -3,78 +3,82 @@ from .models import Tenant
 from .forms import TenantForm
 from django.http import JsonResponse
 from locations.models import Country, State
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
-def tenantHome(request):
-    profiles = Tenant.objects.all()
-    context = {'profiles': profiles}
-    return render(request, 'tenants/tenantHome.html', context)
-
-def createTenant(request):
+@login_required(login_url='login')
+def tenant_profile(request, pk):
+    profile = request.user.profile.tenants
     countries = Country.objects.all()
-    form = TenantForm()
-
-    if request.method == 'POST':
-        form = TenantForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            
-            if instance.first_name:
-                instance.first_name = instance.first_name.strip().title()
-            if instance.last_name:
-                instance.last_name = instance.last_name.strip().title()
-            if instance.emergency_contact_name:
-                instance.emergency_contact_name = instance.emergency_contact_name.strip().title()
-            instance.save()
-            return redirect('tenant-home')
-        
-    context = {'form': form, 'countries': countries}
-    return render(request, 'tenants/tenantReg.html', context)
-
-def updateTenant(request, pk):
-    countries = Country.objects.all()
-    profile = Tenant.objects.get(id=pk)
-    form = TenantForm(instance=profile)
-
-    if request.method == 'POST':
-        form = TenantForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-           
-            if instance.first_name:
-                instance.first_name = instance.first_name.strip().title()
-            if instance.last_name:
-                instance.last_name = instance.last_name.strip().title()
-            if instance.emergency_contact_name:
-                instance.emergency_contact_name = instance.emergency_contact_name.strip().title()
-            instance.save()
-            return redirect('tenant-home')
-        
-    context = {'form': form, 'profile': profile, 'countries': countries}
-    return render(request, 'tenants/tenantReg.html', context)
-
-def viewTenant(request, pk):
-    tenant = Tenant.objects.get(id=pk)
-    context = {'tenant': tenant}
-    return render(request, 'tenants/viewTenant.html', context)
-
-def deleteTenant(request, pk):
-    profile = Tenant.objects.get(id=pk)
-
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('tenant-home')
     
-    context = {'obj': profile}
-    return render(request, 'tenants/deleteTenant.html', context)
 
+    if request.method == 'POST':
+        form = TenantForm(request.POST, request.FILES, instance=profile, request=request)
+
+        if form.is_valid():
+            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            old_instance = Tenant.objects.get(user=profile.user.id)
+
+            if instance.first_name:
+                instance.first_name = instance.first_name.strip().title()
+            if instance.last_name:
+                instance.last_name = instance.last_name.strip().title()
+            if instance.emergency_contact_name:
+                instance.emergency_contact_name = instance.emergency_contact_name.strip().title()
+
+             # Track changes
+            changes = []
+            for field in form.changed_data:
+                original_value = getattr(old_instance, field)
+                new_value = getattr(instance, field)
+                if original_value != new_value:
+                    changes.append(field)
+
+            instance.save()
+            
+            if changes:
+                messages.success(request, 'Profile Updated!')
+    else:
+        form = TenantForm(instance=profile)
+
+    active_menu = 'user-management'
+    active_sub_menu = 't-profile'
+        
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+        'profile': profile,
+        'form': form, 
+        'countries': countries
+        }
+    return render(request, 'tenants/tenant.html', context)
+
+@login_required(login_url='login')
+def view_connections(request, pk):
+    active_menu = 'user-management'
+    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
+
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+    }
+    return render(request, "tenants/view_connections.html", context)
+
+@login_required(login_url='login')
 def get_states(request):
     country_id = request.GET.get('country_id')
     states = State.objects.filter(country_id=country_id).order_by('name')
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
     
+@login_required(login_url='login')
 def tenantDashboard(request, pk):
-    context = {'username': pk}
+    active_menu = 'tenant-dashboard'
+
+    context = {
+        'username': pk, 
+        'active_menu': active_menu,
+        }
     return render(request, "tenants/T_dashboard.html", context)
 
