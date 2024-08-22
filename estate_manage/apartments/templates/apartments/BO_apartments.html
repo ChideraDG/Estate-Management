@@ -49,7 +49,7 @@
                     {% endfor %}
                   </ul>
                 </td>
-                <td><span class="badge {% if house.occupancy_status == 'occupied' %}bg-label-dark{% elif house.occupancy_status == 'vacant' %}bg-label-primary{% else %}bg-label-danger{% endif %} me-1">{{ house.occupancy_status }}</span></td>
+                <td><span class="badge {% if house.occupancy_status == 'occupied' %}bg-label-primary{% elif house.occupancy_status == 'vacant' %}bg-label-danger{% else %}bg-label-dark{% endif %} me-1">{{ house.occupancy_status }}</span></td>
                 <td>
                     <i class="fab fa-angular fa-lg text-danger me-1"></i>
                     <a href="#">
