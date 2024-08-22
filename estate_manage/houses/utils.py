@@ -12,7 +12,7 @@ def paginateHouses(request, houses, data_num):
     except EmptyPage:
         houses = paginator.page(paginator.num_pages)
 
-    leftIndex = max(1, int(page) - 1)
+    leftIndex = max(1, int(page) - 4)
     rightIndex = min(paginator.num_pages + 1, int(page) + 5)
 
     custom_range = range(leftIndex, rightIndex)

@@ -1,10 +1,10 @@
 from django.forms import ModelForm
 from django import forms
-from . models import Apartment
-
 from django.forms import ModelForm
 from django import forms
+from . models import Apartment
 from .models import Apartment
+
 
 class ApartmentForm(ModelForm):
     """
@@ -34,16 +34,13 @@ class ApartmentForm(ModelForm):
     class Meta:
         model = Apartment
         fields = [
-            'apartment_number', 'floor_number', 'country', 'state', 'city', 'apartment_size', 'number_of_rooms', 'rent_amount',
+            'apartment_number', 'floor_number', 'apartment_size', 'number_of_rooms', 'rent_amount',
             'deposit_amount', 'lease_start_date', 'lease_end_date', 'occupancy_status', 'condition', 'pet_allowed', 'notes'
         ]
 
         labels = {
             'apartment_number': 'Apartment Number',
-            'floor_number': 'Floor Number', 
-            'country': 'Country', 
-            'state': 'State', 
-            'city': 'City', 
+            'floor_number': 'Floor Number',
             'apartment_size': 'Apartment Size (Square metres)', 
             'number_of_rooms ': 'Number of Rooms', 
             'rent_amount': 'Rent Amount',
@@ -57,10 +54,7 @@ class ApartmentForm(ModelForm):
         }
 
         widgets = {
-            'apartment_number': forms.NumberInput(attrs={'placeholder': 'Enter Apartment Number'}), 
-            'city': forms.TextInput(attrs={ 'placeholder': 'Enter city'}),
-            'country': forms.Select(attrs={ 'placeholder': 'Select country'}),
-            'state': forms.Select(attrs={ 'placeholder': 'Select state'}),
+            'apartment_number': forms.NumberInput(attrs={'placeholder': 'Enter Apartment Number'}),
             'lease_start_date': forms.DateInput(attrs={'type': 'date'}),
             'lease_end_date': forms.DateInput(attrs={'type': 'date'}),
             'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',

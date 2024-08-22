@@ -19,3 +19,8 @@ def delete_portfolio_size(sender, instance, **kwargs):
         bo_user = BuildingOwner.objects.get(id=instance.building_owner.id)
         bo_user.portfolio_size -= 1
         bo_user.save()
+
+
+@receiver(pre_delete, sender=House)
+def delete_apartments(sender, instance, **kwargs):
+    instance.apartments.all().delete()

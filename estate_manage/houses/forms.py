@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from .models import House
 
+
 class HouseForm(ModelForm):
     """
     A Django form class for creating and editing House instances.
@@ -72,7 +73,7 @@ class HouseForm(ModelForm):
             'address': forms.Textarea(attrs={
                 'placeholder': 'Enter address',
                 'cols': 45,
-                'rows': 8,
+                'rows': 4,
             }),
             'city': forms.TextInput(attrs={
                 'placeholder': 'Enter city',
@@ -91,7 +92,7 @@ class HouseForm(ModelForm):
             'notes': forms.Textarea(attrs={
                 'placeholder': 'Enter notes',
                 'cols': 45,
-                'rows': 8,
+                'rows': 4,
             }),
         }
 
@@ -101,6 +102,10 @@ class HouseForm(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
+
+            # Set the 'min' attribute to 0 for all decimal and integer fields
+            if isinstance(field, (forms.DecimalField, forms.IntegerField)):
+                field.widget.attrs.update({'min': '0'})
 
     def clean_house_number(self):
         house_number = self.cleaned_data.get('house_number')
@@ -120,4 +125,81 @@ class HouseForm(ModelForm):
                 raise ValidationError("Enter a valid renovation year.")
 
         return renovation_year
-     
+
+country_choice = [('', 'Select a Country')]
+for country in House.objects.values_list('country_id__name', flat=True):
+    choice = (country, country)
+    if choice not in country_choice and choice != (None, None):
+        country_choice.append(choice)
+
+state_choice = [('', 'Select a State')]
+for state in House.objects.values_list('state_id__name', flat=True):
+    choice = (state, state)
+    if choice not in state_choice and choice != (None, None):
+        state_choice.append(choice)
+    
+class HouseFilterForm(forms.ModelForm):
+    house_no = forms.IntegerField(required=False, label="House number")
+    house_address = forms.CharField(required=False)
+    house_size_min = forms.DecimalField(required=False)
+    house_size_max = forms.DecimalField(required=False)
+    sale_price_min = forms.DecimalField(required=False)
+    sale_price_max = forms.DecimalField(required=False)
+    rent_price_min = forms.DecimalField(required=False)
+    rent_price_max = forms.DecimalField(required=False)
+    yard_size_min = forms.IntegerField(required=False)
+    yard_size_max = forms.IntegerField(required=False)
+    _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
+    _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
+
+    class Meta:
+        model = House
+        fields = [
+            'house_no', 'house_address', '_country', '_state', 'city',
+            'number_of_apartments', 'number_of_floors', 'garage_space',
+            'renovation_year', 'condition', 'features', 'utilities'
+        ]
+        widgets = {
+            'house_address': forms.Textarea(attrs={
+                'placeholder': 'Enter address',
+                'cols': 45,
+                'rows': 2,
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(HouseFilterForm, self).__init__(*args, **kwargs)
+
+        # Define placeholders for each field
+        placeholders = {
+            'house_no': 'Enter house number',
+            'house_address': 'Enter address',
+            '_country': 'Select country',
+            '_state': 'Select state',
+            'city': 'Enter city',
+            'house_size_min': 'Min house size',
+            'house_size_max': 'Max house size',
+            'sale_price_min': 'Min sale price',
+            'sale_price_max': 'Max sale price',
+            'rent_price_min': 'Min rent price',
+            'rent_price_max': 'Max rent price',
+            'number_of_apartments': 'Enter number of apartments',
+            'number_of_floors': 'Enter number of floors',
+            'garage_space': 'Enter garage space',
+            'yard_size_min': 'Min yard size',
+            'yard_size_max': 'Max yard size',
+            'renovation_year': 'Enter renovation year',
+            'condition': 'Select condition',
+            'features': 'Select features',
+            'utilities': 'Select utilities',
+        }
+
+        # Apply 'form-control' class and placeholders to all fields
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+            if name in placeholders:
+                field.widget.attrs.update({'placeholder': placeholders[name]})
+
+            # Set the 'min' attribute to 0 for all decimal and integer fields
+            if isinstance(field, (forms.DecimalField, forms.IntegerField)):
+                field.widget.attrs.update({'min': '0'})
