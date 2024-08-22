@@ -136,11 +136,17 @@ def user_profile(request, type, pk):
     active_menu = 'user-management'
     active_sub_menu = 'personal-profile'
 
+    template_routes = {
+        'building_owner': "building_owners/BO_dashboard.html",
+        'tenant': "tenants/T_dashboard.html"
+    }
+
     context = {
         "user": profile,
         "active_menu": active_menu,
         "active_sub_menu": active_sub_menu,
-        'form': form
+        'form': form,
+        'template_routes': template_routes.get(profile.designation),
     }
 
     return render(request, "users/user-profile.html", context)
