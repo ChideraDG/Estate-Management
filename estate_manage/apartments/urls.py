@@ -1,12 +1,7 @@
 from django.urls import path
-from .views import *
+from .views import house_apartments, view_apartments
 
 urlpatterns = [
-    path('apartment-home/', apartmentHome, name='apartment-home'),
-    path('get_states/', get_states, name='get-states'),
-    path('create/', createApartment, name='create-apartment'),
-    path('update/<str:pk>/', updateApartment, name='update-apartment'),
-    path('view/<str:pk>/', viewApartment, name='view-apartment'),
-    path('delete/<str:pk>/', deleteApartment, name='delete-apartment'),
-    path('bo/<str:pk>/apartments/', building_owner_apartments, name='bo-apartments'),
+    path('<str:type>/<str:pk>/apartment-control/', house_apartments, name='house-apartments'),
+    path('<str:type>/<str:pk>/<str:house_id>/apartments/', view_apartments, name='view-apartments'),
 ]
