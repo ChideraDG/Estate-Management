@@ -126,6 +126,10 @@ def houses(request, pk, type):
     else:
         form = HouseForm()
 
+    template_routes = {
+        'building_owner': "building_owners/BO_dashboard.html",
+        'tenant': "tenants/T_dashboard.html"
+    }
     # Prepare the context to be passed to the template.
     context = {
         'active_sub_menu': active_sub_menu,
@@ -145,6 +149,7 @@ def houses(request, pk, type):
         'reset_filter': reset_filter,
         'query_string': query_string,
         'type': type,
+        'template_routes': template_routes.get(request.user.profile.designation),
     }
 
     # Render the 'BO_houses.html' template with the prepared context.
@@ -281,12 +286,17 @@ def house_details(request, pk, house_id, type):
     else:
         form = HouseForm(instance=house)
 
+    template_routes = {
+        'building_owner': "building_owners/BO_dashboard.html",
+        'tenant': "tenants/T_dashboard.html"
+    }
     context = {
         'house': house,
         'form': form,
         'active_menu': active_menu,
         'active_sub_menu': active_sub_menu,
         'type': type,
+        'template_routes': template_routes.get(request.user.profile.designation),
     }
     return render(request, "houses/house_details.html", context)
 
