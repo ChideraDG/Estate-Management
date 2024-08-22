@@ -17,49 +17,109 @@ def get_states(request):
 
 @login_required(login_url='login')
 def building_owner_houses(request, pk):
+    """
+    Manage and display houses for a building owner.
+
+    This view retrieves houses related to the building owner's profile, filters them, 
+    and paginates the results. It also handles form submissions for adding new houses, 
+    including managing Many-to-Many relationships for utilities and features and 
+    uploading house images.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object containing user data and GET/POST parameters.
+    pk : int
+        The primary key of the building owner's profile.
+
+    Returns
+    -------
+    HttpResponse
+        Renders the 'BO_houses.html' template with the context, including 
+        filtered house data, form data, and pagination.
+
+    Notes
+    -----
+    - The function handles both GET and POST requests.
+    - On GET, it filters and paginates houses, then renders the page.
+    - On POST, it processes the form for creating a new house, along with 
+      managing the many-to-many fields for utilities and features and saving 
+      images related to the house.
+    """
+    # Get the building owner's profile from the current user's profile.
     profile = request.user.profile.building_owners
-    houses, query_string =  filterHouses(request)
+
+    # Filter houses using the filterHouses function and get the query string for filtering.
+    houses, query_string = filterHouses(request)
+
+    # Get the current menu or default to 'all' if not provided.
     menu = request.GET.get('menu', 'all')
+
+    # Get the reset filter URL or default to '/' if not provided.
     reset_filter = request.GET.get('reset_filter', '/')
+
+    # Set the active menu and sub-menu for UI highlighting.
     active_menu = 'houses-management'
     active_sub_menu = 'house-profiles'
+
+    # Retrieve all countries (presumably for filtering options).
     countries = Country.objects.all()
-    occupied_houses  = houses.filter(occupancy_status="occupied")
-    vacant_houses  = houses.filter(occupancy_status="vacant")
+
+    # Filter houses by their occupancy status.
+    occupied_houses = houses.filter(occupancy_status="occupied")
+    vacant_houses = houses.filter(occupancy_status="vacant")
+
+    # Check if there are any houses, occupied houses, or vacant houses.
     exist = [houses.exists(), occupied_houses.exists(), vacant_houses.exists()]
+
+    # Paginate the houses, showing 6 houses per page.
     custom_range, houses = paginateHouses(request, houses, 6)
     oh_custom_range, occupied_houses = paginateHouses(request, occupied_houses, 6)
     vh_custom_range, vacant_houses = paginateHouses(request, vacant_houses, 6)
 
-
+    # If the request method is POST, process the form for adding a new house.
     if request.method == "POST":
+        # Instantiate the HouseForm with POST data.
         form = HouseForm(request.POST)
+
+        # Get the list of images uploaded with the form.
         images = request.FILES.getlist('images')
 
+        # Check if the form is valid.
         if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            # Create a model instance from the form but don't save it yet.
+            instance = form.save(commit=False)
+            # Assign the building owner to the house instance.
             instance.building_owner = profile
 
+            # Save the house instance to the database.
             instance.save()
 
-            HouseUtilities = House.utilities.through  # Accessing a Many-to-Many Table of Utility
+            # Access the Many-to-Many Table for utilities and save selected utilities.
+            HouseUtilities = House.utilities.through
             for utility in request.POST.getlist('utilities'):
                 HouseUtilities.objects.create(house_id=instance.id, utility_id=utility)
 
-            HouseFeatures = House.features.through  # Accessing a Many-to-Many Table of Utility
+            # Access the Many-to-Many Table for features and save selected features.
+            HouseFeatures = House.features.through
             for feature in request.POST.getlist('features'):
                 HouseFeatures.objects.create(house_id=instance.id, feature_id=feature)
 
+            # Save each uploaded image to the Photo model with the associated house.
             for image in images:
                 Photo.objects.create(
                     image=image,
                     house=instance,
                 )
             
+            # Redirect to the same view after successful form submission.
             return redirect('bo-houses', pk=profile)
+
+    # If the request method is GET, instantiate an empty HouseForm.
     else:
         form = HouseForm()
 
+    # Prepare the context to be passed to the template.
     context = {
         'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
@@ -78,10 +138,40 @@ def building_owner_houses(request, pk):
         'reset_filter': reset_filter,
         'query_string': query_string,
     }
+
+    # Render the 'BO_houses.html' template with the prepared context.
     return render(request, "houses/BO_houses.html", context)
 
 
 def filterHouses(request):
+    """
+    Filter houses based on the current user's profile and the provided form data.
+
+    This function retrieves all houses related to the current user's profile 
+    and filters them according to the criteria provided in the HouseFilterForm. 
+    It handles both direct and lookup-based filtering, including filtering for 
+    ForeignKey and ManyToManyField relationships.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object containing the user and GET parameters for filtering.
+
+    Returns
+    -------
+    tuple
+        A tuple containing:
+        - QuerySet : The filtered houses based on the applied criteria.
+        - str : The generated query string from the GET parameters.
+        
+    Notes
+    -----
+    - This function handles country and state filters using ForeignKey lookups.
+    - For other fields, it directly maps form fields to model field filters.
+    - ManyToManyField and ForeignKey fields with multiple options are handled 
+      using the `__in` lookup.
+    """
+    
     # Get all houses related to the current user's profile
     houses = request.user.profile.building_owners.houses.all()
     form = HouseFilterForm(request.GET)
