@@ -1,0 +1,48 @@
+{% load static %}
+
+<div class="row mb-5">
+    {% for apartment in apartments %}
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100">
+        {% if apartment.images.exists %}
+        <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for image in apartment.images.all %}
+                <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for image in apartment.images.all %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
+                </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="javascript:void(0);" role="button" data-bs-slide="prev">
+            <span class="visually-hidden">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="javascript:void(0);" role="button" data-bs-slide="next">
+            <span class="visually-hidden">Next</span>
+          </a>
+        </div>
+        {% else %}
+        <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src={% static "images/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
+            </div>
+          </div>
+        </div>
+        {% endif %}
+  
+        <div class="card-body">
+          <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">Apartment {{ apartment.apartment_number }} - Floor {{ apartment.floor_number }}</span></h4>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Rooms: {{ apartment.number_of_rooms }}</span></p>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ apartment.is_occupied.title }}</span></p>
+          {% comment %} <a href={% url "apartment-details" pk=profile apartment_id=apartment.id type=type %} class="btn btn-outline-primary">Apartment Details</a> {% endcomment %}
+          
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
