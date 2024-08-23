@@ -38,7 +38,7 @@
         <div class="card-body">
           <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">Apartment {{ apartment.apartment_number }} - Floor {{ apartment.floor_number }}</span></h4>
           <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Rooms: {{ apartment.number_of_rooms }}</span></p>
-          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ apartment.is_occupied.title }}</span></p>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ apartment.is_occupied }}</span></p>
           {% comment %} <a href={% url "apartment-details" pk=profile apartment_id=apartment.id type=type %} class="btn btn-outline-primary">Apartment Details</a> {% endcomment %}
           
         </div>
