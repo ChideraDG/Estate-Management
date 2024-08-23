@@ -36,7 +36,7 @@
         {% endif %}
   
         <div class="card-body">
-          <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">No. {{ house }} {{ house.address.title }}</span></h4>
+          <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">No. {{ house.house_number }} {{ house.address.title }}</span></h4>
           <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Apartments: {{ house.number_of_apartments }}</span></p>
           <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ house.occupancy_status.title }}</span></p>
           <a href={% url "house-details" pk=profile house_id=house.id type=type %} class="btn btn-outline-primary">House Details</a>
