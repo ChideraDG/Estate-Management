@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from houses.models import House
-from .models import Apartment
-from.forms import ApartmentForm
+from .models import Apartment, Photo
+from .forms import ApartmentForm
 
 
 def createApartment(request):
@@ -66,8 +66,33 @@ def house_apartments(request, pk, type):
 def view_apartments(request, type, pk, house_id):
     active_menu = request.GET.get('active_menu', '/')
     active_sub_menu = request.GET.get('active_sub_menu', '/')
+    menu = request.GET.get('menu', 'all')
     house = House.objects.get(id=house_id)
     apartments = house.apartments.all()
+    occupied_apartments = [ apartment for apartment in apartments if apartment.is_occupied ]
+    vacant_apartments = [ apartment for apartment in apartments if not apartment.is_occupied ]
+    exist = [apartments.exists(), len(occupied_apartments), len(vacant_apartments)]
+
+    if request.method == 'POST':
+        form = ApartmentForm(request.POST, request=request)
+        # Get the list of images uploaded with the form.
+        images = request.FILES.getlist('images')
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.house = house
+            instance.save()
+
+            for image in images:
+                Photo.objects.create(
+                    image=image,
+                    apartment=instance,
+                    description=f'{instance}'
+                )
+
+            return redirect('view-apartments', type=type, pk=pk, house_id=house_id)
+    else:
+        form = ApartmentForm()
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
@@ -80,5 +105,10 @@ def view_apartments(request, type, pk, house_id):
         'house': house,
         'apartments': apartments,
         'type': type,
+        'form': form,
+        'menu': menu,
+        'occupied_apartments': occupied_apartments,
+        'vacant_apartments': vacant_apartments,
+        'exist': exist,
     }
     return render(request, 'apartments/view_apartments.html', context)
