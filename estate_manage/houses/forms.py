@@ -139,7 +139,7 @@ class HouseFilterForm(forms.ModelForm):
         fields = [
             'house_no', 'house_address', '_country', '_state', 'city',
             'number_of_apartments', 'number_of_floors', 'garage_space',
-            'renovation_year', 'condition', 'features', 'utilities'
+            'renovation_year', 'features', 'utilities'
         ]
         widgets = {
             'house_address': forms.Textarea(attrs={
@@ -171,7 +171,6 @@ class HouseFilterForm(forms.ModelForm):
             'yard_size_min': 'Min yard size',
             'yard_size_max': 'Max yard size',
             'renovation_year': 'Enter renovation year',
-            'condition': 'Select condition',
             'features': 'Select features',
             'utilities': 'Select utilities',
         }
