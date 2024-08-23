@@ -1,3 +1,4 @@
+import datetime
 from django.forms import ModelForm
 from django import forms
 from django.contrib import messages
@@ -39,10 +40,10 @@ class HouseForm(ModelForm):
     class Meta:
         model = House
         fields = [
-            'house_number', 'address', 'country', 'state', 'city', 'house_size', 
-            'number_of_apartments', 'number_of_floors', 'garage_space', 'yard_size', 
+            'house_number', 'address', 'country', 'state', 'city', 'house_size',
+            'number_of_floors', 'garage_space', 'yard_size', 
             'renovation_year', 'condition', 'features', 'utilities', 'sale_price', 
-            'rent_price', 'occupancy_status', 'notes'
+            'rent_price', 'notes'
         ]
 
         labels = {
@@ -52,7 +53,6 @@ class HouseForm(ModelForm):
             'state': 'State',
             'city': 'City',
             'house_size': 'House Size (square metres)',
-            'number_of_apartments': 'Number of Apartments',
             'number_of_floors': 'Total Floor Number',
             'garage_space': 'Garage Space',
             'yard_size': 'Yard Size (square metres)',
@@ -62,7 +62,6 @@ class HouseForm(ModelForm):
             'utilities': 'Utilities',
             'sale_price': 'Sale Price',
             'rent_price': 'Rent Price',
-            'occupancy_status': 'Occupancy Status',
             'notes': 'Notes',
         }
 
@@ -87,8 +86,9 @@ class HouseForm(ModelForm):
             'renovation_year': forms.NumberInput(attrs={
                 'placeholder': 'Enter renovation year',
                 'value': 1900,
+                'min': '1900',
+                'max': f'{datetime.datetime.now().year}',
             }),
-            'occupancy_status': forms.Select(choices=House.OCCUPANCY),
             'notes': forms.Textarea(attrs={
                 'placeholder': 'Enter notes',
                 'cols': 45,
@@ -107,24 +107,6 @@ class HouseForm(ModelForm):
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
 
-    def clean_house_number(self):
-        house_number = self.cleaned_data.get('house_number')
-
-        if house_number <= 0:
-            messages.error(self.request, "House number must be greater than zero.")
-            raise ValidationError('House number must be greater than zero.')
-        
-        return house_number
-    
-    def clean_renovation_year(self):
-        renovation_year = self.cleaned_data.get('renovation_year')
-
-        if renovation_year.isdigit():
-            if int(renovation_year) < 1900 or int(renovation_year) > 2100:
-                messages.error(self.request, "Enter a valid renovation year between 1900 and 2100")
-                raise ValidationError("Enter a valid renovation year.")
-
-        return renovation_year
 
 country_choice = [('', 'Select a Country')]
 for country in House.objects.values_list('country_id__name', flat=True):
