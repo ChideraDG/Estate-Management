@@ -117,6 +117,7 @@ def houses(request, pk, type):
                 Photo.objects.create(
                     image=image,
                     house=instance,
+                    description=f'{instance}'
                 )
             
             # Redirect to the same view after successful form submission.
