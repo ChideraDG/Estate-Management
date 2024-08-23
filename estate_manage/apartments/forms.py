@@ -1,64 +1,94 @@
-from django.forms import ModelForm
+import datetime
+from django.contrib import messages
 from django import forms
-from django.forms import ModelForm
-from django import forms
-from . models import Apartment
 from .models import Apartment
 
 
-class ApartmentForm(ModelForm):
-    """
-    A Django form class for creating and editing Apartment instances.
-
-    The form includes fields for apartment details, lease information, and occupancy status.
-    It uses Django's built-in form widgets and validation.
-
-    Fields:
-        - apartment_number: The unique identifier for the apartment.
-        - floor_number: The floor number where the apartment is located.
-        - country: The country where the apartment is located.
-        - state: The state or province where the apartment is located.
-        - city: The city where the apartment is located.
-        - apartment_size: The size of the apartment in square meters.
-        - number_of_rooms: The number of rooms in the apartment.
-        - rent_amount: The monthly rent amount.
-        - deposit_amount: The security deposit amount.
-        - lease_start_date: The start date of the lease.
-        - lease_end_date: The end date of the lease.
-        - occupancy_status: The current occupancy status of the apartment.
-        - condition: The condition of the apartment.
-        - pet_allowed: Whether pets are allowed in the apartment.
-        - notes: Additional notes about the apartment.
-    """
-
+class ApartmentForm(forms.ModelForm):
     class Meta:
         model = Apartment
         fields = [
-            'apartment_number', 'floor_number', 'apartment_size', 'number_of_rooms', 'rent_amount',
-            'deposit_amount', 'lease_start_date', 'lease_end_date', 'occupancy_status', 'condition', 'pet_allowed', 'notes'
+            'apartment_number', 
+            'floor_number', 
+            'number_of_rooms', 
+            'size_in_sqft', 
+            'balcony', 
+            'parking_space', 
+            'is_furnished', 
+            'number_of_bathrooms', 
+            'number_of_bedrooms', 
+            'kitchen_type', 
+            'flooring_type', 
+            'heating_system', 
+            'air_conditioning', 
+            'water_supply', 
+            'electricity_supply', 
+            'internet_ready', 
+            'cable_tv_ready', 
+            'rent_price', 
+            'sale_price', 
+            'security_deposit', 
+            'maintenance_fee', 
+            'is_occupied',
+            'last_renovation_year', 
+            'condition', 
+            'notes',
         ]
-
-        labels = {
-            'apartment_number': 'Apartment Number',
-            'floor_number': 'Floor Number',
-            'apartment_size': 'Apartment Size (Square metres)', 
-            'number_of_rooms ': 'Number of Rooms', 
-            'rent_amount': 'Rent Amount',
-            'deposit_amount': 'Deposit Amount', 
-            'lease_start_date': 'Lease Start Date', 
-            'lease_end_date': 'Lease End Date', 
-            'occupancy_status': 'Occupancy Status', 
-            'condition': 'Condition', 
-            'pet_allowed': 'Pets Allowed', 
-            'notes': 'Notes',
-        }
-
+        
         widgets = {
-            'apartment_number': forms.NumberInput(attrs={'placeholder': 'Enter Apartment Number'}),
-            'lease_start_date': forms.DateInput(attrs={'type': 'date'}),
-            'lease_end_date': forms.DateInput(attrs={'type': 'date'}),
-            'notes': forms.Textarea(attrs={'placeholder': 'Enter notes',
-                                                        'cols': 45,
-                                                        'rows': 8,
-                                                        }),
+            'apartment_number': forms.TextInput(attrs={'placeholder': 'Enter apartment number'}),
+            'floor_number': forms.NumberInput(attrs={'placeholder': 'Enter floor number'}),
+            'number_of_rooms': forms.NumberInput(attrs={'placeholder': 'Enter number of rooms'}),
+            'size_in_sqft': forms.NumberInput(attrs={'placeholder': 'Enter apartment size in square feet'}),
+            'balcony': forms.NullBooleanSelect,
+            'parking_space': forms.NullBooleanSelect,
+            'is_furnished': forms.NullBooleanSelect,
+            'number_of_bathrooms': forms.NumberInput(attrs={'placeholder': 'Enter number of bathrooms'}),
+            'number_of_bedrooms': forms.NumberInput(attrs={'placeholder': 'Enter number of bedrooms'}),
+            'kitchen_type': forms.Select(attrs={'placeholder': 'Select kitchen type'}),
+            'flooring_type': forms.Select(attrs={'placeholder': 'Select flooring type'}),
+            'heating_system': forms.Select(attrs={'placeholder': 'Select heating system'}),
+            'air_conditioning': forms.NullBooleanSelect,
+            'water_supply': forms.Select(attrs={'placeholder': 'Select water supply type'}),
+            'electricity_supply': forms.Select(attrs={'placeholder': 'Select electricity supply type'}),
+            'internet_ready': forms.NullBooleanSelect,
+            'cable_tv_ready': forms.NullBooleanSelect,
+            'rent_price': forms.NumberInput(attrs={'placeholder': 'Enter rent price'}),
+            'sale_price': forms.NumberInput(attrs={'placeholder': 'Enter sale price (if applicable)'}),
+            'security_deposit': forms.NumberInput(attrs={'placeholder': 'Enter security deposit amount'}),
+            'maintenance_fee': forms.NumberInput(attrs={'placeholder': 'Enter maintenance fee (if applicable)'}),
+            'is_occupied': forms.NullBooleanSelect,
+            'last_renovation_year': forms.NumberInput(attrs={
+                'placeholder': 'Enter last renovation year',
+                'value': 1900,
+                'min': '1900',
+                'max': f'{datetime.datetime.now().year}',
+            }),
+            'condition': forms.Select(attrs={'placeholder': 'Select apartment condition'}),
+            'notes': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter any additional notes'}),
         }
+
+        labels= {
+            'apartment_number': 'Apartment Number',
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(ApartmentForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+            # Set the 'min' attribute to 0 for all decimal and integer fields
+            if isinstance(field, (forms.DecimalField, forms.IntegerField)):
+                field.widget.attrs.update({'min': '0'})
+    
+    def clean_apartment_number(self):
+        apartment_number = self.cleaned_data.get('apartment_number')
+        
+        # Check if the apartment number already exists
+        if Apartment.objects.filter(apartment_number=apartment_number).exists():
+            messages.error(self.request, "This apartment number is already in use. Please choose a unique apartment number.")
+            raise forms.ValidationError("This apartment number is already in use. Please choose a unique apartment number.")
+        
+        return apartment_number
