@@ -55,6 +55,7 @@ def houses(request, pk, type):
 
     # Filter houses using the filterHouses function and get the query string for filtering.
     houses, query_string = filterHouses(request)
+    total_houses = houses.count
 
     # Get the current menu or default to 'all' if not provided.
     menu = request.GET.get('menu', 'all')
@@ -151,6 +152,7 @@ def houses(request, pk, type):
         'query_string': query_string,
         'type': type,
         'template_routes': template_routes.get(request.user.profile.designation),
+        'total_houses': total_houses
     }
 
     # Render the 'BO_houses.html' template with the prepared context.

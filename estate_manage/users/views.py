@@ -140,6 +140,10 @@ def user_profile(request, type, pk):
         'building_owner': "building_owners/BO_dashboard.html",
         'tenant': "tenants/T_dashboard.html"
     }
+    connection_route = {
+        'building_owner': "bo-view-connections",
+        'tenant': "t-view-connections",
+    }
 
     context = {
         "user": profile,
@@ -147,6 +151,7 @@ def user_profile(request, type, pk):
         "active_sub_menu": active_sub_menu,
         'form': form,
         'template_routes': template_routes.get(profile.designation),
+        'connection_route': connection_route.get(profile.designation)
     }
 
     return render(request, "users/user-profile.html", context)

@@ -82,6 +82,6 @@ def view_connections(request, pk):
     context = {
         'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
-        "type": labels.get(user_type)
+        'type': labels.get(user_type)
     }
     return render(request, "building_owners/view_connections.html", context)
