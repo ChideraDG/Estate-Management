@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.contrib import messages
 from houses.models import House
 from .models import Apartment, Photo
 from .forms import ApartmentForm
@@ -81,7 +83,10 @@ def view_apartments(request, type, pk, house_id):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.house = house
-            instance.save()
+            try:
+                instance.save()
+            except IntegrityError:
+                messages.error(request, f"Apartment {request.POST['apartment_number']} already exists in this house.")
 
             for image in images:
                 Photo.objects.create(
