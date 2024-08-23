@@ -181,3 +181,62 @@ def filterApartments(request, house):
         query_string = ""
 
     return apartments, query_string
+
+
+@login_required(login_url='login')
+def apartment_details(request, type, pk, house_id, apartment_number):
+    house = House.objects.get(id=house_id)
+    apartment = house.apartments.get(apartment_number=apartment_number)
+    active_menu = request.GET.get('active_menu', '/')
+    active_sub_menu = request.GET.get('active_sub_menu', '/')
+
+    if request.method == "POST":
+        form = ApartmentForm(request.POST, instance=apartment, request=request)
+        images = request.FILES.getlist('images')
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            try:
+                instance.save()
+            except IntegrityError:
+                messages.error(request, f"Apartment {request.POST['apartment_number']} already exists in this house.")
+
+            for image in images:
+                Photo.objects.create(
+                    image=image,
+                    apartment=instance,
+                    description=f'{instance}'
+                )
+
+            return redirect('apartment-details', type, pk, house_id, instance.apartment_number)
+    else:
+        form = ApartmentForm(instance=apartment)
+
+    template_routes = {
+        'building_owner': "building_owners/BO_dashboard.html",
+        'tenant': "tenants/T_dashboard.html"
+    }
+    context = {
+        'house': house,
+        'house_id': house_id,
+        'type': type,
+        'apartment': apartment,
+        'active_menu': active_menu,
+        'active_sub_menu': active_sub_menu,
+        'template_routes': template_routes.get(request.user.profile.designation),
+        'form': form,
+    }
+    return render(request, 'apartments/apartment_details.html', context)
+
+@login_required(login_url='login')
+def delete_apartment(request, pk):
+    user = request.user.profile.designation
+    apartment = Apartment.objects.get(id=pk)
+    house = apartment.house
+    apartment.delete()
+
+    designation_type = {
+        'building_owner': "bo",
+        'tenant': "T"
+    }
+    return redirect('view-apartments', designation_type.get(user), request.user.profile, house.id)
