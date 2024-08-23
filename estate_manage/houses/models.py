@@ -74,7 +74,7 @@ class House(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return str(self.house_number)
+        return f'{self.house_number} - {self.address}'
     
     class Meta:
         ordering = ['-created']  # to order the houses from latest to oldest.
