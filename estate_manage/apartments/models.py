@@ -40,7 +40,7 @@ class Apartment(models.Model):
     """
     
     # Basic Information
-    apartment_number = models.IntegerField(unique=True)
+    apartment_number = models.IntegerField()
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='apartments', null=True, blank=True)
     floor_number = models.IntegerField(default=1)
     number_of_rooms = models.IntegerField(default=1)
