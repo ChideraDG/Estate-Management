@@ -48,12 +48,13 @@
                                 {{ profile.first_name }}
                             </div>
                         </div>  
+                        {% if profile.last_name %}
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Last Name</label>
                             <div class="form-control" style="background-color: #e9ecef;">
                                 {{ profile.last_name }}
                             </div>
-                        </div>
+                        </div>{% endif %}
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Email</label>
                             <div class="form-control" style="background-color: #e9ecef;">
