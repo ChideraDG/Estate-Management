@@ -1,6 +1,4 @@
 from django.db import models
-from locations.models import Country, State
-from django.core.validators import MinValueValidator
 from houses.models import House
 
 
@@ -9,82 +7,93 @@ class Apartment(models.Model):
     Represents an apartment within a house in the estate management system.
 
     Attributes:
-        CONDITION (list of tuple): Choices for the condition of the apartment.
-        OCCUPANCY (list of tuple): Choices for the occupancy status of the apartment.
-        PET (list of tuple): Choices indicating whether pets are allowed in the apartment.
-
+        apartment_number (str): The unique number of the apartment.
         house (House): The house to which the apartment belongs.
-        apartment_number (int): The number of the apartment.
         floor_number (int): The floor on which the apartment is located.
-        country (Country): The country where the apartment is located.
-        state (State): The state where the apartment is located.
-        city (str): The city where the apartment is located.
-        apartment_size (Decimal): The size of the apartment in square meters.
         number_of_rooms (int): The number of rooms in the apartment.
-        rent_amount (Decimal): The rent amount for the apartment.
-        deposit_amount (Decimal): The deposit amount required for the apartment.
-        lease_start_date (DateField): The start date of the lease.
-        lease_end_date (DateField): The end date of the lease.
-        occupancy_status (str): The current occupancy status of the apartment.
-        condition (str): The current condition of the apartment.
-        pet_allowed (str): Indicates whether pets are allowed in the apartment.
+        size_in_sqft (Decimal): The size of the apartment in square feet.
+        balcony (bool): Indicates if the apartment has a balcony.
+        parking_space (bool): Indicates if the apartment has a parking space.
+        is_furnished (bool): Indicates if the apartment is furnished.
+        number_of_bathrooms (int): The number of bathrooms in the apartment.
+        number_of_bedrooms (int): The number of bedrooms in the apartment.
+        kitchen_type (str): The type of kitchen in the apartment (Open or Closed).
+        flooring_type (str): The type of flooring in the apartment (Tile, Wood, Carpet).
+        heating_system (str): The type of heating system (Central, Electric, Gas).
+        air_conditioning (bool): Indicates if the apartment has air conditioning.
+        water_supply (str): The source of water supply (Public, Well, Borehole).
+        electricity_supply (str): The source of electricity supply (Grid, Solar, Generator).
+        internet_ready (bool): Indicates if the apartment is internet ready.
+        cable_tv_ready (bool): Indicates if the apartment is cable TV ready.
+        rent_price (Decimal): The rent price of the apartment.
+        sale_price (Decimal): The sale price of the apartment.
+        security_deposit (Decimal): The security deposit for the apartment.
+        maintenance_fee (Decimal): The maintenance fee for the apartment.
+        is_occupied (bool): Indicates if the apartment is occupied.
+        tenant (Tenant): The tenant occupying the apartment.
+        last_renovation_year (int): The year when the apartment was last renovated.
+        condition (str): The current condition of the apartment (New, Good, Needs Renovation).
+        maintenance_requests (ManyToMany): Maintenance requests related to the apartment.
         notes (str): Additional notes or comments about the apartment.
         created (datetime): The date and time when the apartment record was created.
         updated (datetime): The date and time when the apartment record was last updated.
-
-    Examples:
-        >>> apartment = Apartment(apartment_number=101, floor_number=1, rent_amount=1000.00)
-        >>> apartment.save()
     """
+    
+    # Basic Information
+    apartment_number = models.IntegerField()
+    house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='apartments', null=True, blank=True)
+    floor_number = models.IntegerField(default=1)
+    number_of_rooms = models.IntegerField(default=1)
+    size_in_sqft = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    balcony = models.BooleanField(default=False)
+    parking_space = models.BooleanField(default=False)
 
-    CONDITION = [ 
-        ('new', 'New'),
-        ('renovated', 'Renovated'),
-        ('requires_maintenance', 'Requires Maintenance'),
-    ]
+    # Apartment Features
+    is_furnished = models.BooleanField(default=False)
+    number_of_bathrooms = models.IntegerField(null=True, blank=True)
+    number_of_bedrooms = models.IntegerField(null=True, blank=True)
+    kitchen_type = models.CharField(max_length=50, choices=[('Open', 'Open'), ('Closed', 'Closed')], null=True, blank=True)
+    flooring_type = models.CharField(max_length=50, choices=[('Tile', 'Tile'), ('Wood', 'Wood'), ('Carpet', 'Carpet')], null=True, blank=True)
+    heating_system = models.CharField(max_length=50, choices=[('Central', 'Central'), ('Electric', 'Electric'), ('Gas', 'Gas')], null=True, blank=True)
+    air_conditioning = models.BooleanField(default=False)
 
-    OCCUPANCY = [
-        ('occupied', 'Occupied'),
-        ('vacant', 'Vacant'),
-        ('under_renovation', 'Under Renovation'),
-    ]
+    # Utilities
+    water_supply = models.CharField(max_length=50, choices=[('Public', 'Public'), ('Well', 'Well'), ('Borehole', 'Borehole')], null=True, blank=True)
+    electricity_supply = models.CharField(max_length=50, choices=[('Grid', 'Grid'), ('Solar', 'Solar'), ('Generator', 'Generator')], null=True, blank=True)
+    internet_ready = models.BooleanField(default=False)
+    cable_tv_ready = models.BooleanField(default=False)
 
-    PET = [
-        ('yes', 'Yes'),
-        ('no', 'No'),
-    ]
+    # Financial Information
+    rent_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    sale_price = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True,  default=0.00)
+    security_deposit = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    maintenance_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    house = models.ForeignKey(House, on_delete=models.CASCADE, blank=True, null=True, related_name='apartments')
-    apartment_number = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(0)], default=0)
-    floor_number = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
-    apartment_size = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.00,
-                                         validators=[MinValueValidator(0)])
-    number_of_rooms = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=1)
-    rent_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.00,
-                                      validators=[MinValueValidator(0)])
-    deposit_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.00,
-                                         validators=[MinValueValidator(0)])
-    lease_start_date = models.DateField(null=True, blank=True)
-    lease_end_date = models.DateField(null=True, blank=True)
-    occupancy_status = models.CharField(max_length=50, choices=OCCUPANCY, null=True, blank=True)
-    condition = models.CharField(max_length=50, choices=CONDITION, null=True, blank=True)
-    pet_allowed = models.CharField(max_length=50, choices=PET, null=True, blank=True)
+    # Occupancy Details
+    is_occupied = models.BooleanField(default=False)
+
+    # Maintenance & Condition
+    last_renovation_year = models.IntegerField(null=True, blank=True)
+    condition = models.CharField(max_length=50, choices=[('New', 'New'), ('Good', 'Good'), ('Needs Renovation', 'Needs Renovation')], null=True, blank=True, default='New')
+
+    # Additional Information
     notes = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def __str__(self) -> str:
+    def __str__(self):
         """
         Returns a string representation of the apartment.
-
+        
         Returns:
-            str: The apartment number.
+            str: The apartment number and floor number.
         """
-        return str(self.apartment_number)
-    
+        return f"Apartment {self.apartment_number} - Floor {self.floor_number}"
+
     class Meta:
-        ordering = ['-created']  # to order the houses from latest to oldest.
- 
+        ordering = ['apartment_number', 'floor_number']
+        unique_together = ('house', 'apartment_number')
+
 
 class Photo(models.Model):
     """

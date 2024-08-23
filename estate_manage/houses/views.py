@@ -117,6 +117,7 @@ def houses(request, pk, type):
                 Photo.objects.create(
                     image=image,
                     house=instance,
+                    description=f'{instance}'
                 )
             
             # Redirect to the same view after successful form submission.
@@ -302,7 +303,12 @@ def house_details(request, pk, house_id, type):
 
 @login_required(login_url='login')
 def delete_house(request, pk):
+    user = request.user.profile.designation
     house = House.objects.get(id=pk)
     house.delete()
 
-    return redirect('houses', pk=request.user.profile)
+    designation_type = {
+        'building_owner': "bo",
+        'tenant': "T"
+    }
+    return redirect('houses', pk=request.user.profile, type=designation_type.get(user))

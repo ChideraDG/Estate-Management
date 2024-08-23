@@ -1,18 +1,18 @@
 {% load static %}
 
 <div class="row mb-5">
-    {% for house in houses %}
+    {% for apartment in apartments %}
     <div class="col-md-6 col-lg-4 mb-3">
       <div class="card h-100">
-        {% if house.images.exists %}
+        {% if apartment.images.exists %}
         <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
           <ol class="carousel-indicators">
-            {% for image in house.images.all %}
+            {% for image in apartment.images.all %}
                 <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
             {% endfor %}
           </ol>
           <div class="carousel-inner">
-            {% for image in house.images.all %}
+            {% for image in apartment.images.all %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <img src="{{ image.image.url }}" class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
                 </div>
@@ -29,18 +29,18 @@
         <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
+              <img src={% static "images/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
             </div>
           </div>
         </div>
         {% endif %}
   
         <div class="card-body">
-          <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">No. {{ house.house_number }} {{ house.address.title }}</span></h4>
-          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Apartments: {{ house.number_of_apartments }}</span></p>
-          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ house.occupancy_status.title }}</span></p>
-          <a href={% url "house-details" pk=profile house_id=house.id type=type %} class="btn btn-outline-primary">House Details</a>
-          <a href={% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-house-fill'></i> Apartments</a>
+          <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">Apartment {{ apartment.apartment_number }} - Floor {{ apartment.floor_number }}</span></h4>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Rooms: {{ apartment.number_of_rooms }}</span></p>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ apartment.is_occupied }}</span></p>
+          {% comment %} <a href={% url "apartment-details" pk=profile apartment_id=apartment.id type=type %} class="btn btn-outline-primary">Apartment Details</a> {% endcomment %}
+          
         </div>
       </div>
     </div>
