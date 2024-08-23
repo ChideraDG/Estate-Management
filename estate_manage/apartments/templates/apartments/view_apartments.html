@@ -26,7 +26,7 @@
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
                 data-bs-target="#navs-pills-justified-apartments" aria-controls="navs-pills-justified-apartments" aria-selected="true">
                     <i class="tf-icons bi bi-card-list"></i> Apartments
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ apartment.count }}</span>
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ house.apartments.count }}</span>
                 </button>
             </li>
 
@@ -54,17 +54,17 @@
                         </li>
                         <li class="nav-item">
                             <button type="button" class="nav-link {% if menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
-                                Occupied Houses
+                                Occupied Apartments
                             </button>
                         </li>
                         <li class="nav-item">
                             <button type="button" class="nav-link {% if menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
-                                Vacant Houses
+                                Vacant Apartments
                             </button>
                         </li>
                         <li>
                             <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
-                                Filter Houses
+                                Filter Apartments
                             </button>
                         </li>
                         {% if reset_filter == "filtering" %}
@@ -73,10 +73,74 @@
                         </li>
                         {% endif %}
                     </ul>
+
+                    <!-- House Tab Details Inner -->
+                    <div class="tab-content" style="background-color: #f5f5f9;">
+                        <!-- All Houses Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                        {% if exist.0 %}
+                            {% include "apartments/apartment_content.html" with apartments=apartments type=type %}
+                        {% else %}
+                            <h2>No Apartment Found</h2>
+                        {% endif %}
+                        </div>  
+                        <!-- End All Houses Tab Details -->
+
+                        <!-- Occupied Houses Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
+                        {% if exist.1 %}
+                            {% include "apartments/apartment_content.html" with apartments=occupied_apartments type=type %}
+                        {% else %}
+                            <h2>No Apartment Found</h2>
+                        {% endif %}
+                        </div>
+                        <!-- End Occupied Houses Tab Details -->
+
+                        <!-- Vacant Houses Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
+                        {% if exist.2 %}
+                            {% include "apartments/apartment_content.html" with apartments=vacant_apartments type=type %}
+                        {% else %}
+                        <h2>No Apartment Found</h2>
+                        {% endif %}
+                        </div>
+                        <!-- End Vacant Houses Tab Details -->
+                     
+                    </div>
+                    <!-- House Tab Details Inner -->
                 </div>
                 <!-- End Apartments Tab Details Box -->
             </div>
             <!-- End Apartments Tabs Details -->
+
+            <!-- Add an Apartment Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-add-apartment" role="tabpanel">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field }}
+
+                                {% if field.label == "Apartment Number" %}
+                                <div id="floatingInputHelp" class="form-text">
+                                    This field is compulsory
+                                </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Upload Images</label>
+                            <input type="file" name='images' multiple class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary me-2">Add House</button>
+                    </div>
+                </form>
+            </div>
+            <!-- End of Add a Apartment Tabs Details -->
         </div>
         <!-- End Details -->
     </div>
