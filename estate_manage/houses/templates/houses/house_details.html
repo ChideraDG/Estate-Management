@@ -313,8 +313,8 @@
 
 {% block floater %}
     <div class="buy-now">
-    <a href={% url "view-apartments" type="bo" pk=request.user.profile house_id=house.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles target="_blank" class="btn btn-danger btn-buy-now">
-        Go to Apartment
+    <a href={% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles target="_blank" class="btn btn-danger btn-buy-now">
+        Go to Apartments
     </a>
     </div>
 {% endblock floater %}
