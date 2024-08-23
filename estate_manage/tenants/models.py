@@ -64,7 +64,7 @@ class Tenant(models.Model):
     city = models.CharField(max_length=200, null=True, blank=True)
     profile_picture = models.ImageField(blank=True, null=True, upload_to='tenants-profile-pics/', 
                              validators=[validate_image_size], default='tenants-profile-pics/dp.jpg')
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenants') 
+    apartment = models.OneToOneField(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenant') 
     move_in_date = models.DateField(null=True, blank=True)
     lease_start_date = models.DateField(null=True, blank=True)
     lease_end_date = models.DateField(null=True, blank=True)
