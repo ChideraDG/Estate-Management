@@ -85,10 +85,11 @@ class ApartmentForm(forms.ModelForm):
     
     def clean_apartment_number(self):
         apartment_number = self.cleaned_data.get('apartment_number')
-        
-        # Check if the apartment number already exists
-        if Apartment.objects.filter(apartment_number=apartment_number).exists():
-            messages.error(self.request, "This apartment number is already in use. Please choose a unique apartment number.")
-            raise forms.ValidationError("This apartment number is already in use. Please choose a unique apartment number.")
+        house = self.cleaned_data.get('house')
+
+        # Check if another apartment with the same number exists in the same house
+        if Apartment.objects.filter(house=house, apartment_number=apartment_number).exists():
+            messages.error(self.request, f"Apartment {apartment_number} already exists in this house.")
+            raise forms.ValidationError(f"Apartment {apartment_number} already exists in this house.")
         
         return apartment_number
