@@ -82,7 +82,6 @@ def view_apartments(request, type, pk, house_id):
     oa_custom_range, occupied_apartments = paginateApartments(request, occupied_apartments, 6)
     va_custom_range, vacant_apartments = paginateApartments(request, vacant_apartments, 6)
     filter_form = ApartmentFilterForm()
-    print(occupied_apartments, apartments)
 
     if request.method == 'POST':
         form = ApartmentForm(request.POST, request=request)
