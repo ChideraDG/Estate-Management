@@ -74,7 +74,7 @@ class Apartment(models.Model):
 
     # Maintenance & Condition
     last_renovation_year = models.IntegerField(null=True, blank=True)
-    condition = models.CharField(max_length=50, choices=[('New', 'New'), ('Good', 'Good'), ('Needs Renovation', 'Needs Renovation')], null=True, blank=True)
+    condition = models.CharField(max_length=50, choices=[('New', 'New'), ('Good', 'Good'), ('Needs Renovation', 'Needs Renovation')], null=True, blank=True, default='New')
 
     # Additional Information
     notes = models.TextField(blank=True, null=True)
