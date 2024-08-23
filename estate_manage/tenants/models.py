@@ -55,7 +55,7 @@ class Tenant(models.Model):
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)
-    phone_number = models.CharField(max_length=20, null=False, blank=False, unique=True,
+    phone_number = models.CharField(max_length=20, null=True, blank=True, unique=True,
                                      validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                          message="Phone number must be entered in the format: '08012345678' or "
                                                  "'+2348012345678'. Up to 15 digits allowed.")])  

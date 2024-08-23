@@ -14,18 +14,15 @@ def tenant_profile(request, pk):
     
 
     if request.method == 'POST':
-        form = TenantForm(request.POST, request.FILES, instance=profile, request=request)
+        form = TenantForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
             instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
             old_instance = Tenant.objects.get(user=profile.user.id)
 
-            if instance.first_name:
-                instance.first_name = instance.first_name.strip().title()
-            if instance.last_name:
-                instance.last_name = instance.last_name.strip().title()
-            if instance.emergency_contact_name:
-                instance.emergency_contact_name = instance.emergency_contact_name.strip().title()
+            instance.first_name = instance.first_name.strip().title() if instance.first_name else None
+            instance.last_name = instance.last_name.strip().title() if instance.last_name else None
+            instance.emergency_contact_name = instance.emergency_contact_name.strip().title() if instance.emergency_contact_name else None
 
              # Track changes
             changes = []
