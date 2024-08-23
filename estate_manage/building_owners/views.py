@@ -69,18 +69,19 @@ def building_owner_dashboard(request, pk):
 def view_connections(request, pk):
     active_menu = 'user-management'
     active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
-    # user_type = request.user.profile.designation
-    # labels = {
-    #     "building_owner": 'BO',
-    #     "agent": 'A',
-    #     "buyer": 'B',
-    #     "company": 'C',
-    #     "tenant": 'T'
-    # }
+    user_type = request.user.profile.designation
+    labels = {
+        "building_owner": 'BO',
+        "agent": 'A',
+        "buyer": 'B',
+        "company": 'C',
+        "tenant": 'T'
+    }
 
 
     context = {
         'active_sub_menu': active_sub_menu,
         'active_menu': active_menu,
+        'type': labels.get(user_type)
     }
     return render(request, "building_owners/view_connections.html", context)
