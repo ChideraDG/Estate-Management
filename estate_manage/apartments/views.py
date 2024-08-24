@@ -137,7 +137,7 @@ def view_apartments(request, type, pk, house_id):
 
 def filterApartments(request, house):
     apartments = house.apartments.all()
-    form = ApartmentFilterForm(request.GET)
+    form = ApartmentFilterForm(request.GET, request=request)
 
     if form.is_valid():
         filters = {}
