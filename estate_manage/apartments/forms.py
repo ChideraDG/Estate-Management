@@ -218,12 +218,15 @@ class ApartmentFilterForm(forms.Form):
         sale_price_max = cleaned_data.get("sale_price_max")
 
         if square_feet_min and square_feet_max and square_feet_min > square_feet_max:
+            messages.error(self.request, "Min Square Feet cannot be greater than Max Square Feet.")
             self.add_error("square_feet_min", "Min Square Feet cannot be greater than Max Square Feet.")
         
         if rent_price_min and rent_price_max and rent_price_min > rent_price_max:
+            messages.error(self.request, "Min Rent Price cannot be greater than Max Rent Price.")
             self.add_error("rent_price_min", "Min Rent Price cannot be greater than Max Rent Price.")
         
         if sale_price_min and sale_price_max and sale_price_min > sale_price_max:
+            messages.error(self.request, "Min Sale Price cannot be greater than Max Sale Price.")
             self.add_error("sale_price_min", "Min Sale Price cannot be greater than Max Sale Price.")
 
         return cleaned_data
