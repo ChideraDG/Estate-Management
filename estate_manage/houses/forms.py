@@ -2,7 +2,6 @@ import datetime
 from django.forms import ModelForm
 from django import forms
 from django.contrib import messages
-from django.core.exceptions import ValidationError
 from .models import House
 
 
@@ -150,6 +149,7 @@ class HouseFilterForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
         super(HouseFilterForm, self).__init__(*args, **kwargs)
 
         # Define placeholders for each field
@@ -184,3 +184,36 @@ class HouseFilterForm(forms.ModelForm):
             # Set the 'min' attribute to 0 for all decimal and integer fields
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Retrieve form fields
+        house_size_min = cleaned_data.get("house_size_min")
+        house_size_max = cleaned_data.get("house_size_max")
+        sale_price_min = cleaned_data.get("sale_price_min")
+        sale_price_max = cleaned_data.get("sale_price_max")
+        rent_price_min = cleaned_data.get("rent_price_min")
+        rent_price_max = cleaned_data.get("rent_price_max")
+        yard_size_min = cleaned_data.get("yard_size_min")
+        yard_size_max = cleaned_data.get("yard_size_max")
+
+        # Validate that minimum values are not greater than maximum values
+        if house_size_min and house_size_max and house_size_min > house_size_max:
+            messages.error(self.request, "Min House Size cannot be greater than Max House Size.")
+            self.add_error("house_size_min", "Min House Size cannot be greater than Max House Size.")
+        
+        if sale_price_min and sale_price_max and sale_price_min > sale_price_max:
+            messages.error(self.request, "Min Sale Price cannot be greater than Max Sale Price.")
+            self.add_error("sale_price_min", "Min Sale Price cannot be greater than Max Sale Price.")
+        
+        if rent_price_min and rent_price_max and rent_price_min > rent_price_max:
+            messages.error(self.request, "Min Rent Price cannot be greater than Max Rent Price.")
+            self.add_error("rent_price_min", "Min Rent Price cannot be greater than Max Rent Price.")
+        
+        if yard_size_min and yard_size_max and yard_size_min > yard_size_max:
+            messages.error(self.request, "Min Yard Size cannot be greater than Max Yard Size.")
+            self.add_error("yard_size_min", "Min Yard Size cannot be greater than Max Yard Size.")
+
+        return cleaned_data
+    
