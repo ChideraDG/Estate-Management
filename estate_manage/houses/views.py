@@ -195,7 +195,7 @@ def filterHouses(request):
         # Needs fixing
         houses = request.user.profile.companies.estate.all()
     
-    form = HouseFilterForm(request.GET)
+    form = HouseFilterForm(request.GET, request=request)
 
     if form.is_valid():
         filters = {}
