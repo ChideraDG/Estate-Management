@@ -40,5 +40,3 @@ def deleteAgentProfile(sender, instance, **kwargs):
         house.agent = None
         house.save()
     
-    instance.delete()
-    
