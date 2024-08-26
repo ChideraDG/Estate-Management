@@ -47,14 +47,14 @@
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Email</label>
                             <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.contact_email }}
+                                {{ profile.email }}
                             </div>
                         </div>
-                        {% if profile.contact_phone %}
+                        {% if profile.phone_number %}
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Phone Number</label>
                             <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.contact_phone }}
+                                {{ profile.phone_number }}
                             </div>
                         </div>{% endif %}
                         {% if profile.address %}
@@ -78,4 +78,138 @@
                                 {{ profile.state }}
                             </div>
                         </div>{% endif %}
+                        {% if profile.bio %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Bio</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.bio }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if profile.alternate_phone_number %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Alternate Phone Number</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.alternate_phone_number }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if profile.date_of_hire %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Date of Hire</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.date_of_hire|date:"F j, Y" }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if profile.employment_status %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Employment Status</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.employment_status }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if profile.number_of_apartments_managed %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Number of Apartments Managed</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.number_of_apartments_managed }}
+                                </div>
+                            </div>
+                        {% endif %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Rating</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.rating }}%
+                                </div>
+                            </div>
+                        {% if profile.created %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Created</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.created|date:"F j, Y. g:i a" }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if profile.updated %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Updated</label>
+                                <div class="form-control" style="background-color: #e9ecef;">
+                                    {{ profile.updated|date:"F j, Y. g:i a" }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- /Account -->
+            </div>
+        </div>
+    </div>
+
+     <!-- Update Building Owner Modal -->
+     <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="fw-bold py-3 mb-1"><span class="text-muted fw-light">User Management / Agent Profile /</span>  Update</h4>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action='{% url "view-agent" pk=request.user.profile %}'>
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for field in form %}
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                            </button>
+                            <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Listen for the modal to be shown
+            var modalElement = document.getElementById('exLargeModal');
+            modalElement.addEventListener('shown.bs.modal', function() {
+                // Attach a change event listener to the country dropdown
+                var countrySelect = document.getElementById('id_country');
+                countrySelect.addEventListener('change', function() {
+                    var countryId = this.value;
+                    if (countryId) {
+                        fetch("{% url 'get-states' %}?country_id=" + countryId)
+                            .then(response => response.json())
+                            .then(data => {
+                                var options = '<option value="">Select a state</option>';
+                                data.forEach(function(state) {
+                                    options += '<option value="' + state.id + '">' + state.name + '</option>';
+                                });
+                                document.getElementById('id_state').innerHTML = options;
+                            })
+                            .catch(error => console.error("Error fetching states:", error));
+                    } else {
+                        document.getElementById('id_state').innerHTML = '';
+                    }
+                });
+            });
+        });        
+    </script>
+    <!-- / Content -->
+
 {% endblock details %}
