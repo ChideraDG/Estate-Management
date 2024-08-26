@@ -3,6 +3,7 @@ from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from estates.models import Estate
 from building_owners.models import BuildingOwner
+from agents.models import Agent
 
 
 class House(models.Model):
@@ -52,6 +53,7 @@ class House(models.Model):
 
     estate = models.ForeignKey(Estate, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
     building_owner = models.ForeignKey(BuildingOwner, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
+    agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, related_name='houses')
     house_number = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(0)])
     address = models.TextField(blank=False, null=False)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='houses', null=True, blank=True)
