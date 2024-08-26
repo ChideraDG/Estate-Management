@@ -37,7 +37,7 @@ class HouseForm(ModelForm):
         widgets (dict): A dictionary of widgets for each field.
     """
 
-    _agent = forms.ModelChoiceField(queryset=Agent.objects.all(), empty_label="Select an Agent (if needed)")
+    _agent = forms.ModelChoiceField(queryset=Agent.objects.all(), empty_label="Select an Agent (if needed)", required=False)
     class Meta:
         model = House
         fields = [
