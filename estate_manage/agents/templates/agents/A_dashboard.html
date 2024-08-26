@@ -1,294 +1,125 @@
 {% extends "dashboard/main.html" %}
 
-{% comment %} {% block agent %}
-    <style>
-        .containers {
-            display: flex;
-            width: 100%;
-        }
+{% block title %}
+<title>{{request.user.profile.username.title}}-Agent</title>
+{% endblock title %}
 
-        .left-side {
-            width: 20%;
-            padding-right: 10px;
-        }
+{% block agent %}
+    <!-- Dashboard -->
+    <li class="menu-item {% if active_menu == 'agent-dashboard' %}active{% endif %}">
+        <a href='{% url "dashboard-A" pk=request.user.profile %}' class="menu-link">
+            <i class="menu-icon tf-icons bi bi-bar-chart-fill tiny-icon"></i>
+            <div data-i18n="Analytics">Dashboard</div>
+        </a>
+    </li>
 
-        .vertical-line {
-            width: 5px;
-            background-color: #2ed162;
-            margin: 0 20px;
-        }
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Management</span>
+    </li>
 
-        .right-side {
-            width: 80%;
-            padding-left: 10px;
-            border-left: 1px solid #ddd; /* Optional border to define the content area */
-        }
+    <!-- Property Management -->
+    <li class="menu-item {% if active_menu == 'property-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-house-door-fill tiny-icon"></i>
+            <div data-i18n="Property Management">My Properties</div>
+        </a>
 
-        h6 {
-            cursor: pointer;
-            background-color: #f1f1f1;
-            padding: 20px;
-            margin: 0;
-            border: 1px solid #ddd;
-        }
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'house-profiles' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="property-listings">Property Listings</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="lease-management">Lease Management</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-        .mylist {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: none; /* Hide the dropdown content by default */
-        }
+    <!-- Tenant Management -->
+    <li class="menu-item {% if active_menu == 'tenant-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
+            <div data-i18n="Tenant Management">My tenants</div>
+        </a>
 
-        .mylist li {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-top: none; /* Remove the top border to make it look like a continuation */
-            background-color: #fafafa;
-        }
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'tenant-profiles' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="tenant-profiles">Tenant Profiles</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="communication-tools">Messaging</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="communication-tools">Lease Control</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-        .mylist li a {
-            text-decoration: none;
-            color: #333;
-            display: block;
-        }
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Finance & Reporting</span>
+    </li>
 
-        .mylist li a:hover {
-            background-color: #e0e0e0;
-        }
+    <!-- Financial Management -->
+    <li class="menu-item {% if active_menu == 'financial-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-cash-stack tiny-icon"></i>
+            <div data-i18n="Financial Management">My Finances</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'rent-collection' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="rent-collection">Rent Collection</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'expense-tracking' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="expense-tracking">Expense Tracking</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'financial-reporting' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="financial-reporting">Financial Reporting</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-        .content {
-            display: none; /* Hide content by default */
-        }
+    <!-- Analytics Management -->
+    <li class="menu-item {% if active_menu == 'analytics-reporting' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-speedometer2 tiny-icon"></i>
+            <div data-i18n="Analytics and Reporting">Analytics</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'real-time-analytics' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="real-time-analytics">Real-time Analytics</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'custom-reports' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="custom-reports">Custom Reports</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'forecasting-tools' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="forecasting-tools">Forecasting Tools</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    
+{% endblock agent %}
 
-        .content.active {
-            display: block; /* Show the active content */
-        }
-    </style>
-
-    <div class="containers">
-        <div class="left-side">
-            <h6>Overview Section</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="portfolio-summary">Portfolio Summary</a></li>
-                <li><a href="#" data-content="financial-snapshot">Financial Snapshot</a></li>
-                <li><a href="#" data-content="kpis">Key Performance Indicators (KPIs)</a></li>
-            </ul>
-
-            <h6>Property Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="property-listings">Property Listings</a></li>
-                <li><a href="#" data-content="lease-management">Lease Management</a></li>
-                <li><a href="#" data-content="tenant-info">Tenant Information</a></li>
-            </ul>
-
-            <h6>Tenant Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="tenant-profiles">Tenant Profiles</a></li>
-                <li><a href="#" data-content="communication-tools">Communication Tools</a></li>
-                <li><a href="#" data-content="lease-renewals-terminations">Lease Renewals and Terminations</a></li>
-            </ul>
-
-            <h6>Financial Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="rent-collection">Rent Collection</a></li>
-                <li><a href="#" data-content="expense-tracking">Expense Tracking</a></li>
-                <li><a href="#" data-content="financial-reporting">Financial Reporting</a></li>
-            </ul>
-
-            <h6>Maintenance Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="work-orders">Work Orders</a></li>
-                <li><a href="#" data-content="maintenance-schedule">Maintenance Schedule</a></li>
-                <li><a href="#" data-content="service-providers">Service Providers</a></li>
-            </ul>
-
-            <h6>Document Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="document-storage">Document Storage</a></li>
-                <li><a href="#" data-content="document-sharing">Document Sharing</a></li>
-            </ul>
-
-            <h6>Analytics and Reporting</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="real-time-analytics">Real-time Analytics</a></li>
-                <li><a href="#" data-content="custom-reports">Custom Reports</a></li>
-                <li><a href="#" data-content="forecasting-tools">Forecasting Tools</a></li>
-            </ul>
-
-            <h6>User Management</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="access-control">Access Control</a></li>
-                <li><a href="#" data-content="user-activity-logs">User Activity Logs</a></li>
-            </ul>
-
-            <h6>Marketing Tools</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="property-listings-management">Property Listings Management</a></li>
-                <li><a href="#" data-content="lead-management">Lead Management</a></li>
-                <li><a href="#" data-content="advertising-tools">Advertising Tools</a></li>
-            </ul>
-
-            <h6>Community Features</h6>
-            <ul class="mylist">
-                <li><a href="#" data-content="community-announcements">Community Announcements</a></li>
-                <li><a href="#" data-content="feedback-surveys">Feedback and Surveys</a></li>
-            </ul>
-        </div>
-
-        <div class="vertical-line"></div>
-
-        <div class="right-side">
-            <div id="portfolio-summary" class="content">
-                <h2>Portfolio Summary</h2>
-                <p>Overview of your property portfolio...</p>
-            </div>
-            <div id="financial-snapshot" class="content">
-                <h2>Financial Snapshot</h2>
-                <p>Summary of your financial standing...</p>
-            </div>
-            <div id="kpis" class="content">
-                <h2>Key Performance Indicators (KPIs)</h2>
-                <p>Details about your key performance indicators...</p>
-            </div>
-            <div id="property-listings" class="content">
-                <h2>Property Listings</h2>
-                <p>Manage your property listings...</p>
-            </div>
-            <div id="lease-management" class="content">
-                <h2>Lease Management</h2>
-                <p>Oversee and manage leases...</p>
-            </div>
-            <div id="tenant-info" class="content">
-                <h2>Tenant Information</h2>
-                <p>Access tenant information...</p>
-            </div>
-            <div id="tenant-profiles" class="content">
-                <h2>Tenant Profiles</h2>
-                <p>Manage tenant profiles...</p>
-            </div>
-            <div id="communication-tools" class="content">
-                <h2>Communication Tools</h2>
-                <p>Tools for tenant communication...</p>
-            </div>
-            <div id="lease-renewals-terminations" class="content">
-                <h2>Lease Renewals and Terminations</h2>
-                <p>Manage lease renewals and terminations...</p>
-            </div>
-            <div id="rent-collection" class="content">
-                <h2>Rent Collection</h2>
-                <p>Collect and track rent payments...</p>
-            </div>
-            <div id="expense-tracking" class="content">
-                <h2>Expense Tracking</h2>
-                <p>Track your expenses...</p>
-            </div>
-            <div id="financial-reporting" class="content">
-                <h2>Financial Reporting</h2>
-                <p>Generate financial reports...</p>
-            </div>
-            <div id="work-orders" class="content">
-                <h2>Work Orders</h2>
-                <p>Manage work orders...</p>
-            </div>
-            <div id="maintenance-schedule" class="content">
-                <h2>Maintenance Schedule</h2>
-                <p>Track and manage maintenance schedules...</p>
-            </div>
-            <div id="service-providers" class="content">
-                <h2>Service Providers</h2>
-                <p>Details about service providers...</p>
-            </div>
-            <div id="document-storage" class="content">
-                <h2>Document Storage</h2>
-                <p>Store and manage documents...</p>
-            </div>
-            <div id="document-sharing" class="content">
-                <h2>Document Sharing</h2>
-                <p>Share documents securely...</p>
-            </div>
-            <div id="real-time-analytics" class="content">
-                <h2>Real-time Analytics</h2>
-                <p>Access real-time analytics...</p>
-            </div>
-            <div id="custom-reports" class="content">
-                <h2>Custom Reports</h2>
-                <p>Create and manage custom reports...</p>
-            </div>
-            <div id="forecasting-tools" class="content">
-                <h2>Forecasting Tools</h2>
-                <p>Use tools for forecasting...</p>
-            </div>
-            <div id="access-control" class="content">
-                <h2>Access Control</h2>
-                <p>Manage user access...</p>
-            </div>
-            <div id="user-activity-logs" class="content">
-                <h2>User Activity Logs</h2>
-                <p>View and manage user activity logs...</p>
-            </div>
-            <div id="property-listings-management" class="content">
-                <h2>Property Listings Management</h2>
-                <p>Manage property listings...</p>
-            </div>
-            <div id="lead-management" class="content">
-                <h2>Lead Management</h2>
-                <p>Manage and track leads...</p>
-            </div>
-            <div id="advertising-tools" class="content">
-                <h2>Advertising Tools</h2>
-                <p>Tools for advertising properties...</p>
-            </div>
-            <div id="community-announcements" class="content">
-                <h2>Community Announcements</h2>
-                <p>View and create community announcements...</p>
-            </div>
-            <div id="feedback-surveys" class="content">
-                <h2>Feedback and Surveys</h2>
-                <p>Conduct and view surveys...</p>
-            </div>
-
-            <!-- Add more content sections as needed -->
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Automatically display the first content section on page load
-            const firstLink = document.querySelector('.left-side .mylist li a');
-            if (firstLink) {
-                const firstContentId = firstLink.getAttribute('data-content');
-                const firstContentToShow = document.getElementById(firstContentId);
-                if (firstContentToShow) {
-                    firstContentToShow.classList.add('active');
-                }
-            }
-
-            // JavaScript to toggle the visibility of the dropdown content
-            document.querySelectorAll('h6').forEach(header => {
-                header.addEventListener('click', () => {
-                    const ul = header.nextElementSibling;
-                    ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
-                });
-            });
-
-            // JavaScript to display the right-side content
-            document.querySelectorAll('.left-side .mylist li a').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevent the default link behavior
-                    const contentId = link.getAttribute('data-content');
-
-                    // Hide all content
-                    document.querySelectorAll('.right-side .content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-
-                    // Show the selected content
-                    const contentToShow = document.getElementById(contentId);
-                    if (contentToShow) {
-                        contentToShow.classList.add('active');
-                    }
-                });
-            });
-        });
-    </script>
-{% endblock agent %} {% endcomment %}
