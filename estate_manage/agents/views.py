@@ -14,6 +14,23 @@ def agent_profile(request, pk):
 
     if request.method == "POST":
         form  = AgentForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            old_instance = Agent.objects.get(user=profile.user.id)
+
+            # Track changes
+            changes = []
+            for field in form.changed_data:
+                original_value = getattr(old_instance, field)
+                new_value = getattr(instance, field)
+                if original_value != new_value:
+                    changes.append(field)
+                
+            instance.save()
+
+            if changes:
+                messages.success(request, 'Profile Updated!')
     else:
         form = AgentForm(instance=profile)
 
