@@ -1,32 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
-from django.core.exceptions import ValidationError
-from apartments.models import Apartment
 from users.models import Profile
-
-
-def validate_image_size(value):
-    """
-    Validates the size of an uploaded image.
-
-    Args:
-        value (File): The uploaded image file.
-
-    Raises:
-        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
-
-    Example:
-        >>> from django.core.files.uploadedfile import UploadedFile
-        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
-        >>> validate_image_size(file)
-        ValidationError: Maximum file size allowed is 1.0 MB
-    """
-    filesize = value.size
-
-    limit = 500 * 1024
-    
-    if filesize > limit:
-        raise ValidationError(f"Maximum file size allowed is {limit / (1024)} KB")
     
     
 class Agent(models.Model):
@@ -89,16 +63,15 @@ class Agent(models.Model):
                                     validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                         message="Phone number must be entered in the format: '08012345678' or "
                                                 "'+2348012345678'. Up to 15 digits allowed.")])
-    profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True, 
-                                        validators=[validate_image_size], default='agents/dp.jpg')
+    profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True, default='agents/dp.jpg')
     bio = models.TextField(null=True, blank=True)
     alternate_phone_number = models.CharField(max_length=20, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     date_of_hire = models.DateField(null=True, blank=True)
-    employment_status = models.CharField(max_length=10, choices=EMPLOYMENT_STATUS_CHOICES, default='active')
+    employment_status = models.CharField(max_length=10, choices=EMPLOYMENT_STATUS_CHOICES, default='inactive')
     number_of_apartments_managed = models.PositiveIntegerField(default=0)
     rating = models.DecimalField(max_digits=3, decimal_places=2, 
-                                 validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], null=True, blank=True)
+                                 validators=[MinValueValidator(0.0), MaxValueValidator(100.0)], null=True, blank=True)
     linkedin_url = models.URLField(null=True, blank=True)
     twitter_url = models.URLField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
