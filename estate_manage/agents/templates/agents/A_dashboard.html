@@ -253,8 +253,8 @@
             <div data-i18n="User Management">User Management</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'bo-profile' %}active{% endif %}">
-                <a href='{% url "view-building-owner" pk=request.user.profile %}'  class="menu-link">
+            <li class="menu-item {% if active_sub_menu == 'a-profile' %}active{% endif %}">
+                <a href='{% url "view-agent" pk=request.user.profile %}'  class="menu-link">
                     <div data-i18n="bo-profile">Agent Profile</div>
                 </a>
             </li>
