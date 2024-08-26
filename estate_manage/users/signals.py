@@ -7,6 +7,7 @@ from django.contrib.sessions.models import Session
 from django.utils import timezone
 from .models import Profile
 from building_owners.models import BuildingOwner
+from agents.models import Agent
 
 
 @receiver(post_save, sender=User)
@@ -131,6 +132,15 @@ def update_profile(sender, instance, created, **kwargs):
                 bo.profile_pics = instance.profile_image
                 bo.save()
 
+        if instance.designation == 'agent':
+            agent = Agent.objects.filter(user=instance).first()
+            if agent:
+                agent.name = instance.name
+                agent.email = instance.email
+                agent.phone_number = instance.phone_number
+                agent.profile_picture = instance.profile_image
+                agent.save()
+                
         instance.user.save()
 
 
