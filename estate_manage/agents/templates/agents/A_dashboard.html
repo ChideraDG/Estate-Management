@@ -20,7 +20,7 @@
     <!-- Property Management -->
     <li class="menu-item {% if active_menu == 'property-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-house-door-fill tiny-icon"></i>
+            <i class="menu-icon tf-icons bi bi-house-door tiny-icon"></i>
             <div data-i18n="Property Management">My Properties</div>
         </a>
 
@@ -41,7 +41,7 @@
     <!-- Tenant Management -->
     <li class="menu-item {% if active_menu == 'tenant-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
+            <i class="menu-icon tf-icons bi bi-people tiny-icon"></i>
             <div data-i18n="Tenant Management">My tenants</div>
         </a>
 
@@ -119,7 +119,152 @@
             </li>
         </ul>
     </li>
+
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Operations</span>
+    </li>
     
+    <!-- Maintenance Management -->
+    <li class="menu-item {% if active_menu == 'maintenance-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-wrench tiny-icon"></i>
+            <div data-i18n="Maintenance Management">Work Maintenance</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'work-orders' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="work-orders">Work Orders</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'maintenance-schedule' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="maintenance-schedule">Schedules</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'service-providers' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="service-providers">Service Providers</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Document Management -->
+    <li class="menu-item {% if active_menu == 'document-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-folder tiny-icon"></i>
+            <div data-i18n="Document Management">My Documents</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'document-storage' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="document-storage">Document Storage</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'document-sharing' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="document-sharing">Document Sharing</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Engagements</span>
+    </li>
+
+    <!-- Marketing Tools -->
+    <li class="menu-item {% if active_menu == 'marketing-tools' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-megaphone tiny-icon"></i>
+            <div data-i18n="Marketing Tools">Marketing Tools</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'property-listings-management' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="property-listings-management">Property Listings</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'lead-management' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="lead-management">Lead Management</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'advertising-tools' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="advertising-tools">Advertising Tools</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+     <!-- Users Tools -->
+     <li class="menu-item {% if active_menu == 'activity-control' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-lock tiny-icon"></i>
+            <div data-i18n="Activity Control">Activities Control</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'access-control' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="access-control">Access Control</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'user-activity-logs' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="user-activity-logs">User Activity Logs</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+           
+    <!-- Community Features -->
+    <li class="menu-item {% if active_menu == 'community-features' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-broadcast tiny-icon"></i>
+            <div data-i18n="Community Features">Community Features</div>
+        </a>
+    
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'community-announcements' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="community-announcements">Announcements</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'feedback-surveys' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="feedback-surveys">Feedback and Surveys</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    <!-- Profiles -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
+                    
+    <!-- User Management -->
+    <li class="menu-item {% if active_menu == 'user-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
+            <div data-i18n="User Management">User Management</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'bo-profile' %}active{% endif %}">
+                <a href='{% url "view-building-owner" pk=request.user.profile %}'  class="menu-link">
+                    <div data-i18n="bo-profile">Agent Profile</div>
+                </a>
+            </li>
+            <li class="menu-item {% if active_sub_menu == 'personal-profile' %}active{% endif %}">
+                <a href='{% url "view-user-profile" pk=request.user.profile type="A" %}' class="menu-link">
+                    <div data-i18n="personal-profile">Personal Profile</div>
+                </a>
+            </li>
+        </ul>
+    </li>
     
 {% endblock agent %}
 
