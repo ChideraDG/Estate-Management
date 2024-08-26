@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from users.models import Profile
+from locations.models import Country, State
     
     
 class Agent(models.Model):
@@ -66,9 +67,11 @@ class Agent(models.Model):
     profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True, default='agents/dp.jpg')
     bio = models.TextField(null=True, blank=True)
     alternate_phone_number = models.CharField(max_length=20, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='agents', null=True, blank=True)
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='agents', null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     date_of_hire = models.DateField(null=True, blank=True)
-    employment_status = models.CharField(max_length=10, choices=EMPLOYMENT_STATUS_CHOICES, default='inactive')
+    employment_status = models.CharField(max_length=10, choices=EMPLOYMENT_STATUS_CHOICES, default='active')
     number_of_apartments_managed = models.PositiveIntegerField(default=0)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0,
                                  validators=[MinValueValidator(0.0), MaxValueValidator(100.0)], null=True, blank=True)
