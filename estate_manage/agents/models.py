@@ -101,7 +101,6 @@ class Agent(models.Model):
                                  validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], null=True, blank=True)
     linkedin_url = models.URLField(null=True, blank=True)
     twitter_url = models.URLField(null=True, blank=True)
-    apartments = models.ManyToManyField(Apartment, related_name='agents')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
