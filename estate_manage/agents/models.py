@@ -90,3 +90,6 @@ class Agent(models.Model):
             The name of the agent.
         """
         return f'{self.name} - {self.rating}%'
+    
+    class Meta:
+        ordering = ['-rating']  # Order agents by creation date in descending order
