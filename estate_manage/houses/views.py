@@ -100,6 +100,10 @@ def houses(request, pk, type):
             elif request.user.profile.designation == 'company':
                 instance.estate = profile
 
+            agent = form.cleaned_data['_agent']
+            if agent:
+                instance.agent = agent
+
             # Save the house instance to the database.
             instance.save()
 
@@ -265,6 +269,11 @@ def house_details(request, pk, house_id, type):
 
         if form.is_valid():
             instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+
+            agent = form.cleaned_data['_agent']
+            if agent:
+                instance.agent = agent
+
             instance.save()
 
             HouseUtilities = House.utilities.through  # Accessing a Many-to-Many Table of Utility
@@ -285,7 +294,7 @@ def house_details(request, pk, house_id, type):
                     house=instance,
                 )
             
-            return redirect('house-details', pk=house.building_owner, house_id=house.id)
+            return redirect('house-details', pk=house.building_owner, house_id=house.id, type=type)
     else:
         form = HouseForm(instance=house)
 
