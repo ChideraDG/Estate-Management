@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from users.models import Profile
 from .models import Agent
@@ -31,3 +31,14 @@ def createAgentProfile(sender, instance, created, **kwargs):
                 name=user.name,
                 email=user.email,
             )
+
+
+@receiver(pre_delete, sender=Agent)
+def deleteAgentProfile(sender, instance, **kwargs):
+    houses = instance.houses.all()
+    for house in houses:
+        house.agent = None
+        house.save()
+    
+    instance.delete()
+    
