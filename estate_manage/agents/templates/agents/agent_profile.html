@@ -1,0 +1,81 @@
+{% extends "agents/A_dashboard.html" %}
+
+{% block details %}
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">User Management /</span> Agent Profile</h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript:void(0);">
+                        <i class="bi bi-person-fill me-1"></i> Agent Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "a-view-connections" pk=request.user.profile %}?active_sub_menu=a-profile>
+                        <i class="bi bi-link"></i> Connections
+                    </a>
+                </li>
+            </ul>
+
+            <div class="card mb-4">
+                <h5 class="card-header">Agent Profile Details</h5>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="{{ profile.profile_picture.url }}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar"/>
+                        <div class="button-wrapper">
+                            <button type="button" class="btn btn-primary me-3 mb-4 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exLargeModal">
+                                <span class="d-none d-sm-block me-2">Update Profile</span>
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-0" />
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Agent Name</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.name }}
+                            </div>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Email</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.contact_email }}
+                            </div>
+                        </div>
+                        {% if profile.contact_phone %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.contact_phone }}
+                            </div>
+                        </div>{% endif %}
+                        {% if profile.address %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Address</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.address }}
+                            </div>
+                        </div>{% endif %}
+                        {% if profile.country %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Country</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.country }}
+                            </div>
+                        </div>{% endif %}
+                        {% if profile.state %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">State</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.state }}
+                            </div>
+                        </div>{% endif %}
+{% endblock details %}
