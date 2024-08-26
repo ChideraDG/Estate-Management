@@ -82,3 +82,16 @@ def view_connections(request, pk):
         'type': labels.get(user_type)
     }
     return render(request, "agents/view_connections.html", context)
+
+@login_required(login_url='login')
+def my_properties(request, pk):
+    active_menu = "my-properties"
+    active_sub_menu = 'property-list'
+    apartments = request.user.profile.agents.houses.all()
+
+    context = {
+        'active_menu': active_menu,
+        'apartments': apartments,
+        'active_sub_menu': active_sub_menu,
+    }
+    return render(request, "agents/my_properties.html", context)
