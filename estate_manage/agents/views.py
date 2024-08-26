@@ -87,11 +87,11 @@ def view_connections(request, pk):
 def my_properties(request, pk):
     active_menu = "my-properties"
     active_sub_menu = 'property-list'
-    apartments = request.user.profile.agents.houses.all()
+    properties = request.user.profile.agents.houses.all()
 
     context = {
         'active_menu': active_menu,
-        'apartments': apartments,
+        'properties': properties,
         'active_sub_menu': active_sub_menu,
     }
     return render(request, "agents/my_properties.html", context)
