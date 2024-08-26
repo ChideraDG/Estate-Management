@@ -16,9 +16,6 @@ class AgentForm(forms.ModelForm):
             'profile_picture',
         ]
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your name'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your phone number'}),
             'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
             'bio': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your bio', 'rows': 3}),
             'alternate_phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter alternate phone number'}),
