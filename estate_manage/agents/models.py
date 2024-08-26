@@ -70,7 +70,7 @@ class Agent(models.Model):
     date_of_hire = models.DateField(null=True, blank=True)
     employment_status = models.CharField(max_length=10, choices=EMPLOYMENT_STATUS_CHOICES, default='inactive')
     number_of_apartments_managed = models.PositiveIntegerField(default=0)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, 
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0,
                                  validators=[MinValueValidator(0.0), MaxValueValidator(100.0)], null=True, blank=True)
     linkedin_url = models.URLField(null=True, blank=True)
     twitter_url = models.URLField(null=True, blank=True)
@@ -86,4 +86,4 @@ class Agent(models.Model):
         str
             The name of the agent.
         """
-        return self.name
+        return f'{self.name} - {self.rating}%'
