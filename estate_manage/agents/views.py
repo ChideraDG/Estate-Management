@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
+from django.db.models import Q
 from locations.models import Country, State
 from .models import Agent
-from  .forms import AgentForm
+from .forms import AgentForm
 
 
 @login_required(login_url='login')
@@ -87,12 +88,21 @@ def view_connections(request, pk):
 def agent_properties(request, pk):
     active_menu = "agent-properties"
     active_sub_menu = 'property-list'
-    houses = request.user.profile.agents.houses.all()
+    search_query = request.GET.get('search_query', '')
+    if not search_query.isdigit() and search_query:
+        houses = request.user.profile.agents.houses.filter(Q(address__icontains=search_query) |
+                                                           Q(building_owner__building_owner_name__icontains=search_query) |
+                                                           Q(occupancy_status__icontains=search_query))
+    elif search_query.isdigit():
+        houses = request.user.profile.agents.houses.filter(Q(house_number__icontains=search_query))
+    else:
+        houses = request.user.profile.agents.houses.all()
 
     context = {
         'active_menu': active_menu,
         'houses': houses,
         'active_sub_menu': active_sub_menu,
+        'search_query': search_query,
     }
     return render(request, "agents/agent_properties.html", context)
 
@@ -100,18 +110,24 @@ def agent_properties(request, pk):
 def agent_house_apartments(request, pk, house_id):
     active_menu = "agent-properties"
     active_sub_menu = 'property-list'
+    search_query = request.GET.get('search_query', '')
     house = request.user.profile.agents.houses.get(id=house_id)
-    apartments = house.apartments.all()
-    occupied_apartments = house.apartments.filter(is_occupied=True)
-    vacant_apartments = house.apartments.filter(is_occupied=False)
+    if not search_query.isdigit() and search_query:
+        apartments = house.apartments.filter(Q(condition__icontains=search_query) |
+                                             Q(is_occupied__iexact=search_query))
+    elif search_query.isdigit():
+        apartments = house.apartments.filter(Q(apartment_number__icontains=search_query) |
+                                             Q(floor_number__icontains=search_query) |
+                                             Q(number_of_rooms__icontains=search_query))
+    else:
+        apartments = house.apartments.all()
     context = {
         'active_menu': active_menu,
         'apartments': apartments,
         'active_sub_menu': active_sub_menu,
         'house': house,
-        'occupied_apartments': occupied_apartments,
-        'vacant_apartments': vacant_apartments,
         'type': 'A',
+        'search_query': search_query,
     }
     return render(request, "agents/agent_house_apartments.html", context)
 
