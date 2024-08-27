@@ -11,10 +11,20 @@ def increase_number_of_apartments(sender, instance, created, **kwargs):
             house.occupancy_status = 'occupied'
         house.number_of_apartments += 1
         house.save()
+
+        if not house.agent:
+            agent = house.agent
+            agent.number_of_apartments_managed += 1
+            agent.save()
     else:
         if instance.is_occupied:
             house.occupancy_status = 'occupied'
         house.save()
+        
+        if not house.agent:
+            agent = house.agent
+            agent.number_of_apartments_managed += 1
+            agent.save()
 
 
 @receiver(pre_delete, sender=Apartment)
@@ -25,3 +35,8 @@ def decrease_number_of_apartments(sender, instance, **kwargs):
         
     house.number_of_apartments -= 1
     house.save()
+
+    if not house.agent:
+        agent = house.agent
+        agent.number_of_apartments_managed -= 1
+        agent.save()
