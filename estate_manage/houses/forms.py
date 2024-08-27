@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib import messages
 from .models import House
+from agents.models import Agent
 
 
 class HouseForm(ModelForm):
@@ -36,10 +37,11 @@ class HouseForm(ModelForm):
         widgets (dict): A dictionary of widgets for each field.
     """
 
+    _agent = forms.ModelChoiceField(queryset=Agent.objects.all(), empty_label="Select an Agent (if needed)", required=False)
     class Meta:
         model = House
         fields = [
-            'house_number', 'address', 'country', 'state', 'city', 'house_size',
+            'house_number', '_agent', 'address', 'country', 'state', 'city', 'house_size',
             'number_of_floors', 'garage_space', 'yard_size', 
             'renovation_year', 'condition', 'features', 'utilities', 'sale_price', 
             'rent_price', 'notes'
@@ -47,6 +49,7 @@ class HouseForm(ModelForm):
 
         labels = {
             'house_number': 'House Number',
+            '_agent': 'Agent',
             'address': 'Address',
             'country': 'Country',
             'state': 'State',
