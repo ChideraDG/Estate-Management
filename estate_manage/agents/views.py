@@ -87,20 +87,20 @@ def view_connections(request, pk):
 def agent_properties(request, pk):
     active_menu = "agent-properties"
     active_sub_menu = 'property-list'
-    properties = request.user.profile.agents.houses.all()
+    houses = request.user.profile.agents.houses.all()
 
     context = {
         'active_menu': active_menu,
-        'properties': properties,
+        'houses': houses,
         'active_sub_menu': active_sub_menu,
     }
     return render(request, "agents/agent_properties.html", context)
 
 @login_required(login_url='login')
-def agent_house_apartments(request, pk, p_id):
+def agent_house_apartments(request, pk, house_id):
     active_menu = "agent-properties"
     active_sub_menu = 'property-list'
-    house = request.user.profile.agents.houses.get(id=p_id)
+    house = request.user.profile.agents.houses.get(id=house_id)
     apartments = house.apartments.all()
     occupied_apartments = house.apartments.filter(is_occupied=True)
     vacant_apartments = house.apartments.filter(is_occupied=False)
@@ -114,3 +114,19 @@ def agent_house_apartments(request, pk, p_id):
         'type': 'A',
     }
     return render(request, "agents/agent_house_apartments.html", context)
+
+@login_required(login_url='login')
+def agent_house_apartment_details(request, pk, house_id, apartment_no):
+    active_menu = "agent-properties"
+    active_sub_menu = 'property-list'
+    house = request.user.profile.agents.houses.get(id=house_id)
+    apartment = house.apartments.filter(apartment_number=apartment_no).first()
+    
+    context = {
+        'active_menu': active_menu,
+        'apartment': apartment,
+        'active_sub_menu': active_sub_menu,
+        'house': house,
+        'type': 'A',
+    }
+    return render(request, "agents/agent_house_apartment_details.html", context)
