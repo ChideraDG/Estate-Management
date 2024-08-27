@@ -1,71 +1,70 @@
 from django.shortcuts import render, redirect
 from .forms import CompanyForm
 from .models import Company
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
-def createCompany(request):
-    form = CompanyForm()
-    if request.method == 'POST':
-        form = CompanyForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            if instance.name:
-                instance.name = instance.name.strip().title()
-            instance.save()
+@login_required(login_url='login')
+def companyDashboard(request, pk):
+    active_menu = 'company-dashboard'
 
-            return redirect('company-home')
+    context = {
+        'username': pk, 
+        'active_menu': active_menu,
+        }
+    return render(request, "companies/C_dashboard.html", context)
 
-    context = {'form': form}
-    return render(request, 'companies/companyRegistration.html', context)
-
-
-def companyHome(request):
-    profiles = Company.objects.all()
-
-    context = {'profiles': profiles}
-    return render(request, 'companies/companyHome.html', context)
-
-
-def updateCompany(request, pk):
+@login_required(login_url='login')
+def companyProfile(request, pk):
     try:
-        profile = Company.objects.get(id=pk)
+        profile = request.user.profile.companies
     except Company.DoesNotExist:
         return redirect('custom_404')
-
-    form = CompanyForm(instance=profile)
 
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
             instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            old_instance = Company.objects.get(user=profile.user.id)
+
             if instance.name:
                 instance.name = instance.name.strip().title()
+            
+             # Track changes
+            changes = []
+            for field in form.changed_data:
+                original_value = getattr(old_instance, field)
+                new_value = getattr(instance, field)
+                if original_value != new_value:
+                    changes.append(field)
+
             instance.save()
 
-            return redirect('company-home')
+            if changes:
+                messages.success(request, 'Profile Updated!')
+    else:
+        form = CompanyForm(instance=profile)
 
-    context = {'form': form, 'profile': profile}
-    return render(request, 'companies/updateCompany.html', context)
+    active_menu = 'user-management'
+    active_sub_menu = 'c-profile'
+        
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+        'profile': profile,
+        'form': form, 
+        }
+    return render(request, 'companies/company.html', context)
 
+@login_required(login_url='login')
+def view_connections(request, pk):
+    active_menu = 'user-management'
+    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
 
-def viewCompany(request, pk):
-    company = Company.objects.get(id=pk)
-
-    context = {'company': company}
-    return render(request, 'companies/viewCompany.html', context)
-
-
-def deleteCompany(request, pk):
-    profile = Company.objects.get(id=pk)
-
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('company-home')
-
-    context = {'obj': profile}
-    return render(request, 'companies/deleteCompany.html', context)
-
-def companyDashboard(request, pk):
-    context = {'username': pk}
-    return render(request, "companies/C_dashboard.html", context)
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+    }
+    return render(request, 'companies/viewConnections.html', context)

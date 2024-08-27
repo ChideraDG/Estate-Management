@@ -53,14 +53,14 @@ class CompanyForm(ModelForm):
         }
 
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': "Enter Company Name"}),
-            'website': forms.URLInput(attrs={'placeholder': 'https://www.example.com'}),
-            'address': forms.TextInput(attrs={'placeholder': "Enter Company's Address", }),
-            'logo': forms.FileInput,
-            'number': forms.TextInput(attrs={'placeholder': "Enter Company's Number"}),
-            'year_founded': forms.NumberInput(attrs={'value': '1900'}),
-            'email': forms.TextInput(attrs={'placeholder': "Enter Company's Email"}),
-            'cac': forms.TextInput(attrs={'placeholder': "Enter Company's CAC"}),
+            'name': forms.TextInput(attrs={'placeholder': "Enter Company Name",  'class': 'form-control'}),
+            'website': forms.URLInput(attrs={'placeholder': 'https://www.example.com',  'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'placeholder': "Enter Company's Address",  'class': 'form-control'}),
+            'logo': forms.FileInput(attrs={'class': 'form-control'}),
+            'number': forms.TextInput(attrs={'placeholder': "Enter Company's Number", 'class': 'form-control'}),
+            'year_founded': forms.NumberInput(attrs={'value': '1900', 'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'placeholder': "Enter Company's Email", 'class': 'form-control'}),
+            'cac': forms.TextInput(attrs={'placeholder': "Enter Company's CAC", 'class': 'form-control'}),
         }
 
         labels = {
