@@ -1,0 +1,105 @@
+{% extends "agents/A_dashboard.html" %}
+
+{% block details %}
+    <!-- Content -->
+    <!-- Location header -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            My Properties /
+            <a class="text-muted fw-light" href={% url "agent-properties" pk=request.user.profile %}>
+                Properties List
+            </a> / No. {{ house.house_number }}, {{ house.address.title }} / 
+        </span>
+        Apartment Profiles
+    </h4>
+    <!-- End Location header -->
+    
+    <!-- Apartment Profile -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- apartment Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-apartments" aria-controls="navs-pills-justified-apartments" aria-selected="true">
+                    <i class="tf-icons bi bi-house-fill"></i> Apartments
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ total_apartment }}</span>
+                </button>
+            </li>
+
+            <!-- Add an Apartment Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-house" aria-controls="navs-pills-justified-add-apartment" aria-selected="false">
+                    <i class="tf-icons bi bi-building-fill"></i> House Details
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Apartments Tabs Details -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-apartments" role="tabpanel">
+                {% if apartments %}
+                    <div class="card">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Apartment No.</th>
+                                        <th>Floor No.</th>
+                                        <th>Rooms</th>
+                                        <th>Status</th>
+                                        <th>Rent Price</th>
+                                        <th>Sale Price</th>
+                                        <th>Size (Sqft)</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    {% for apartment in apartments  %}
+                                    <tr onclick="#" style="cursor:pointer;">
+                                        <td><i class="fab fa-angular fa-lg text-danger me-1"></i> <strong>No {{ apartment.apartment_number }}</strong></td>
+                                        <td>{{ apartment.floor_number }}{% if apartment.floor_number == 1 %}st{% elif apartment.floor_number == 2 %}nd{% elif apartment.floor_number == 3 %}rd{% else %}th{% endif %} Floor</td>
+                                        <td>{{ apartment.number_of_rooms }}</td>
+                                        <td><span class="badge {% if apartment.is_occupied %}bg-label-primary{% else %}bg-label-danger{% endif %} me-1">{{ apartment.is_occupied }}</span></td>
+                                        <td>${{ apartment.rent_price }}</td>
+                                        <td>${{ apartment.sale_price }}</td>
+                                        <td>{{ apartment.size_in_sqft }} Sqft</td>
+                                        <td>{{ apartment.condition }}</td>
+                                    </tr>
+                                    </a>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot class="table-border-bottom-0">
+                                    <tr>
+                                        <th>Apartment</th>
+                                        <th>Floor No.</th>
+                                        <th>Rooms</th>
+                                        <th>Status</th>
+                                        <th>Rent Price</th>
+                                        <th>Sale Price</th>
+                                        <th>Size (Sqft)</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                {% else %}
+                    <h1>No Apartment Found</h1>
+                {% endif %}
+            </div>
+            <!-- End Apartments Tabs Details -->
+
+                <!-- Add an Apartment Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-house" role="tabpanel">
+                <h1>James</h1>
+            </div>
+            <!-- End of Add a Apartment Tabs Details -->
+        </div>
+        <!-- End Details -->
+    </div>
+    <!-- End Apartment Profile -->
+{% endblock details %}
