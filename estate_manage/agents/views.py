@@ -84,8 +84,8 @@ def view_connections(request, pk):
     return render(request, "agents/view_connections.html", context)
 
 @login_required(login_url='login')
-def my_properties(request, pk):
-    active_menu = "my-properties"
+def agent_properties(request, pk):
+    active_menu = "agent-properties"
     active_sub_menu = 'property-list'
     properties = request.user.profile.agents.houses.all()
 
@@ -94,4 +94,23 @@ def my_properties(request, pk):
         'properties': properties,
         'active_sub_menu': active_sub_menu,
     }
-    return render(request, "agents/my_properties.html", context)
+    return render(request, "agents/agent_properties.html", context)
+
+@login_required(login_url='login')
+def agent_house_apartments(request, pk, p_id):
+    active_menu = "agent-properties"
+    active_sub_menu = 'property-list'
+    house = request.user.profile.agents.houses.get(id=p_id)
+    apartments = house.apartments.all()
+    occupied_apartments = house.apartments.filter(is_occupied=True)
+    vacant_apartments = house.apartments.filter(is_occupied=False)
+    context = {
+        'active_menu': active_menu,
+        'apartments': apartments,
+        'active_sub_menu': active_sub_menu,
+        'house': house,
+        'occupied_apartments': occupied_apartments,
+        'vacant_apartments': vacant_apartments,
+        'type': 'A',
+    }
+    return render(request, "agents/agent_house_apartments.html", context)
