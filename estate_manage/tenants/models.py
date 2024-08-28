@@ -3,33 +3,9 @@ from users.models import Profile
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from django.core.validators import RegexValidator
-from django.core.exceptions import ValidationError
 from apartments.models import Apartment
+from houses.models import House
 from building_owners.models import BuildingOwner
-
-
-def validate_image_size(value):
-    """
-    Validates the size of an uploaded image.
-
-    Args:
-        value (File): The uploaded image file.
-
-    Raises:
-        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
-
-    Example:
-        >>> from django.core.files.uploadedfile import UploadedFile
-        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
-        >>> validate_image_size(file)
-        ValidationError: Maximum file size allowed is 1.0 MB
-    """
-    filesize = value.size
-
-    limit = 500 * 1024
-    
-    if filesize > limit:
-        raise ValidationError(f"Maximum file size allowed is {limit / (1024)} KB")
     
 
 class Tenant(models.Model):
@@ -55,7 +31,9 @@ class Tenant(models.Model):
                                 related_name='tenant')
     building_owner = models.ForeignKey(BuildingOwner, on_delete=models.SET_NULL, blank=True, null=True, 
                                        default=None, related_name='tenants')
-    apartment = models.OneToOneField(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenant') 
+    house = models.ForeignKey(House, on_delete=models.SET_NULL, blank=True, null=True, default= None,
+                              related_name='tenant_house')
+    apartment = models.OneToOneField(Apartment, on_delete=models.SET_NULL, blank=True, null=True, related_name='tenant_apartment') 
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)
@@ -67,7 +45,7 @@ class Tenant(models.Model):
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='tenant', null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
     profile_picture = models.ImageField(blank=True, null=True, upload_to='tenants-profile-pics/', 
-                             validators=[validate_image_size], default='tenants-profile-pics/dp.jpg')
+                                        default='tenants-profile-pics/dp.jpg')
     move_in_date = models.DateField(null=True, blank=True)
     lease_start_date = models.DateField(null=True, blank=True)
     lease_end_date = models.DateField(null=True, blank=True)
