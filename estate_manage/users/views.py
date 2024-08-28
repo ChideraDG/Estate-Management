@@ -1,3 +1,6 @@
+import random
+import string
+from django.utils.text import slugify
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -314,3 +317,58 @@ def contact_us(request):
         'next_url': next_url,
     }
     return render(request, 'users/contact-us.html', context)
+
+
+def generate_username(first_name, last_name):
+    """
+    Generates a unique username by combining the first name, last name,
+    and a random number. The username is slugified to ensure it's URL-friendly.
+
+    :param first_name: The first name of the client
+    :param last_name: The last name of the client
+    :return: A unique username string
+    """
+    # Slugify the names to make them URL-friendly
+    base_username = slugify(f"{first_name}{last_name}")
+
+    # Generate a random 4-digit number
+    random_number = ''.join(random.choices(string.digits, k=2))
+
+    # Combine the base username with the random number
+    username = f"{base_username}{random_number}"
+
+    while User.objects.filter(username=username).exists():
+        random_number = ''.join(random.choices(string.digits, k=2))
+        username = f"{base_username}{random_number}"
+
+    return username
+
+
+def generate_password(length=10):
+    """
+    Generates a random secure password using a combination of letters, digits, and special characters.
+
+    :param length: The length of the password (default is 12 characters)
+    :return: A random secure password string
+    """
+    # Define the character sets to use in the password
+    letters = string.ascii_letters  # Includes both lowercase and uppercase letters
+    digits = '123456789'  # Includes digits 1-9
+
+    # Combine all character sets
+    all_characters = letters + digits
+
+    # Ensure the password includes at least one of each character type
+    password = [
+        random.choice(letters),
+        random.choice(digits),
+    ]
+
+    # Fill the rest of the password length with random choices from all characters
+    password += random.choices(all_characters, k=length - 3)
+
+    # Shuffle the password list to randomize the order of characters
+    random.shuffle(password)
+
+    # Convert the list to a string
+    return ''.join(password)
