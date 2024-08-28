@@ -55,8 +55,8 @@ class Tenant(models.Model):
                                              validators=[MinValueValidator(0)])
     lease_term = models.CharField(max_length=50, choices=LEASETERM, null=True, blank=True)
     payment_status = models.CharField(max_length=50, choices=PAYMENTSTAT, null=True, blank=True)
-    emergency_contact_name = models.CharField(max_length=50, null=True, blank=True)
-    emergency_contact_number = models.CharField(max_length=50, null=True, blank=True, unique=True,
+    emergency_contact_name = models.CharField(max_length=50, null=True, blank=True, default=None)
+    emergency_contact_number = models.CharField(max_length=50, null=True, blank=True, default=None,
                                                 validators=[RegexValidator(
                                                     r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                                     message="Phone number must be entered in the format: '08012345678' or "
