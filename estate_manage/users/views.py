@@ -140,11 +140,13 @@ def user_profile(request, type, pk):
         'building_owner': "building_owners/BO_dashboard.html",
         'tenant': "tenants/T_dashboard.html",
         'agent': "agents/A_dashboard.html",
+        'company': "companies/C_dashboard.html",
     }
     connection_route = {
         'building_owner': "bo-view-connections",
         'tenant': "t-view-connections",
         'agent': "a-view-connections",
+        'company': "c-view-connections",
     }
 
     context = {
