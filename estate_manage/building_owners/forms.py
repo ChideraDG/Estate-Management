@@ -170,8 +170,8 @@ class AddTenantForm(forms.ModelForm):
             'move_in_date': forms.DateInput(attrs={'placeholder': 'Move-in Date', 'type': 'date'}),
             'lease_start_date': forms.DateInput(attrs={'placeholder': 'Lease Start Date', 'type': 'date'}),
             'lease_end_date': forms.DateInput(attrs={'placeholder': 'Lease End Date', 'type': 'date'}),
-            'monthly_rent': forms.NumberInput(attrs={'placeholder': 'Monthly Rent'}),
-            'deposit_amount': forms.NumberInput(attrs={'placeholder': 'Deposit Amount'}),
+            'monthly_rent': forms.NumberInput(attrs={'placeholder': 'Monthly Rent', 'min': '0.00'}),
+            'deposit_amount': forms.NumberInput(attrs={'placeholder': 'Deposit Amount', 'min': '0.00'}),
             'emergency_contact_name': forms.TextInput(attrs={'placeholder': 'Emergency Contact Name'}),
             'emergency_contact_number': forms.TextInput(attrs={'placeholder': 'Emergency Contact Number'}),
             'occupation': forms.TextInput(attrs={'placeholder': 'Occupation'}),
@@ -185,8 +185,16 @@ class AddTenantForm(forms.ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
 
+        # Make all fields required
+        for field in self.fields.values():
+            if field.label == 'Emergency contact name' or field.label == 'Emergency contact number':
+                field.required = False
+            else:
+                field.required = True
+
         # Filter the queryset based on the building_owner
         if building_owner:
             self.fields['_house'].queryset = House.objects.filter(building_owner=building_owner)
         else:
             self.fields['_house'].queryset = House.objects.none()
+            
