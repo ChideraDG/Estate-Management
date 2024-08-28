@@ -28,8 +28,7 @@ class ApartmentForm(forms.ModelForm):
             'rent_price', 
             'sale_price', 
             'security_deposit', 
-            'maintenance_fee', 
-            'is_occupied',
+            'maintenance_fee',
             'last_renovation_year', 
             'condition', 
             'notes',
@@ -57,7 +56,6 @@ class ApartmentForm(forms.ModelForm):
             'sale_price': forms.NumberInput(attrs={'placeholder': 'Enter sale price (if applicable)'}),
             'security_deposit': forms.NumberInput(attrs={'placeholder': 'Enter security deposit amount'}),
             'maintenance_fee': forms.NumberInput(attrs={'placeholder': 'Enter maintenance fee (if applicable)'}),
-            'is_occupied': forms.NullBooleanSelect,
             'last_renovation_year': forms.NumberInput(attrs={
                 'placeholder': 'Enter last renovation year',
                 'value': 1900,
