@@ -9,7 +9,7 @@ from django.contrib import messages
 
 @login_required(login_url='login')
 def tenant_profile(request, pk):
-    profile = request.user.profile.tenants
+    profile = request.user.profile.tenant
     countries = Country.objects.all()
     
 
