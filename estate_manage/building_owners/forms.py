@@ -1,9 +1,10 @@
-import re
 from django.forms import ModelForm
 from django import forms
 from django.contrib import messages
-from .models import BuildingOwner
 from django.core.exceptions import ValidationError
+from .models import BuildingOwner
+from tenants.models import Tenant
+from houses.models import House
 
 
 class BuildingOwnerForm(ModelForm):
@@ -143,3 +144,49 @@ class BuildingOwnerForm(ModelForm):
             raise ValidationError("Owner name is Required")
         
         return building_owner_name
+
+
+class AddTenantForm(forms.ModelForm):
+    _house = forms.ModelChoiceField(queryset=House.objects.none(), 
+                                    empty_label="Select a House",
+                                    widget=forms.Select(attrs={'id': 'house_id'}))
+    class Meta:
+        model = Tenant
+        fields = [ 
+            '_house', 'apartment', 'first_name', 'last_name', 'email', 'phone_number', 
+            'city', 'move_in_date', 'lease_start_date', 
+            'lease_end_date', 'monthly_rent', 'deposit_amount', 
+            'lease_term', 'payment_status', 'emergency_contact_name', 
+            'emergency_contact_number', 'employment_status', 'occupation'
+        ]
+
+        # Optional: Add widgets or custom attributes for the form fields
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email Address'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': 'Phone Number'}),
+            'city': forms.TextInput(attrs={'placeholder': 'City'}),
+            'move_in_date': forms.DateInput(attrs={'placeholder': 'Move-in Date', 'type': 'date'}),
+            'lease_start_date': forms.DateInput(attrs={'placeholder': 'Lease Start Date', 'type': 'date'}),
+            'lease_end_date': forms.DateInput(attrs={'placeholder': 'Lease End Date', 'type': 'date'}),
+            'monthly_rent': forms.NumberInput(attrs={'placeholder': 'Monthly Rent'}),
+            'deposit_amount': forms.NumberInput(attrs={'placeholder': 'Deposit Amount'}),
+            'emergency_contact_name': forms.TextInput(attrs={'placeholder': 'Emergency Contact Name'}),
+            'emergency_contact_number': forms.TextInput(attrs={'placeholder': 'Emergency Contact Number'}),
+            'occupation': forms.TextInput(attrs={'placeholder': 'Occupation'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        building_owner = kwargs.pop('building_owner', None)
+        super(AddTenantForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+        # Filter the queryset based on the building_owner
+        if building_owner:
+            self.fields['_house'].queryset = House.objects.filter(building_owner=building_owner)
+        else:
+            self.fields['_house'].queryset = House.objects.none()
