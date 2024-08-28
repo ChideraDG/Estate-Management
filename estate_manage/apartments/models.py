@@ -44,7 +44,7 @@ class Apartment(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='apartments', null=True, blank=True)
     floor_number = models.IntegerField(default=1)
     number_of_rooms = models.IntegerField(default=1)
-    size_in_sqft = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    size_in_sqft = models.DecimalField(max_digits=7, decimal_places=2, default=0.0)
     balcony = models.BooleanField(default=False)
     parking_space = models.BooleanField(default=False)
 

@@ -1,0 +1,71 @@
+{% extends "building_owners/BO_dashboard.html" %}
+
+{% block details %}
+    <!-- Content -->
+
+    <!-- Location -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            Tenant Management /
+        </span> 
+        Tenant Profiles
+    </h4>
+    <!-- End Location -->
+
+    <!-- Tenant Details -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Tenant Profile Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-tenants" aria-controls="navs-pills-justified-tenants" aria-selected="true">
+                    <i class="tf-icons bi bi-person-fill"></i> Tenants
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenants.count }}</span>
+                </button>
+            </li>
+
+            <!-- Add a Tenant Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-add-tenant" aria-controls="navs-pills-justified-add-tenant" aria-selected="false">
+                    <i class="tf-icons bi bi-cloud-plus-fill"></i> Add Tenant
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Tenants Details Tab -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-tenants" role="tabpanel">
+                <h1>James</h1>
+            </div>
+            <!-- End Tenants Details Tab -->
+
+            <!-- Add a Tenant Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-add-tenant" role="tabpanel">
+                {% if houses.count > 0 %}
+                <form method="POST" enctype="multipart/form-data" action="">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary me-2">Add Tenant</button>
+                    </div>
+                </form>
+                {% else %}
+                <h3>Add a House before you can add a Tenant</h3>
+                {% endif %}
+            </div>
+        </div>
+        <!-- End Details -->
+    </div>
+    <!-- End House Details -->
+{% endblock details %}

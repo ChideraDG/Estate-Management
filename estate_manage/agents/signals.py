@@ -35,6 +35,32 @@ def createAgentProfile(sender, instance, created, **kwargs):
 
 @receiver(pre_delete, sender=Agent)
 def deleteAgentProfile(sender, instance, **kwargs):
+    """
+    Disconnects the Agent from associated Houses before deleting the Agent.
+
+    This function listens to the `pre_delete` signal for the `Agent` model. 
+    Before an `Agent` instance is deleted, it loops through all associated `House` instances 
+    and sets their `agent` field to `None`, effectively removing the association with the agent.
+
+    Parameters
+    ----------
+    sender : Model
+        The model class that sent the signal (Agent).
+    instance : Model instance
+        The instance of the model that is about to be deleted.
+    **kwargs : dict
+        Additional keyword arguments passed by the signal.
+
+    Notes
+    -----
+    This function should be connected to the `pre_delete` signal in the Django app's ready function 
+    or directly within the model's signals setup to ensure that it operates correctly.
+
+    Example
+    -------
+    If an `Agent` with associated `Houses` is deleted, this function will ensure that
+    the `agent` field for each `House` is set to `None` before the `Agent` instance is deleted.
+    """
     houses = instance.houses.all()
     for house in houses:
         house.agent = None

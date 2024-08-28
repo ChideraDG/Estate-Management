@@ -1,0 +1,315 @@
+{% extends "agents/A_dashboard.html" %}
+{% load static %}
+
+{% block details %}
+    <!-- Content -->
+    <!-- Location header -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            My Properties /
+            <a class="text-muted fw-light" href={% url "agent-properties" pk=request.user.profile %}>
+                Properties List
+            </a> / No. {{ house.house_number }}, {{ house.address.title }} / 
+        </span>
+        Apartment Profiles
+    </h4>
+    <!-- End Location header -->
+    
+    <!-- Apartment Profile -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- apartment Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-apartments" aria-controls="navs-pills-justified-apartments" aria-selected="true">
+                    <i class="tf-icons bi bi-house-fill"></i> Apartments
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ apartments.count }}</span>
+                </button>
+            </li>
+
+            <!-- Add an Apartment Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-house" aria-controls="navs-pills-justified-add-apartment" aria-selected="false">
+                    <i class="tf-icons bi bi-building-fill"></i> House Details
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Apartments Tabs Details -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-apartments" role="tabpanel">
+                {% if apartments %}
+                    <div class="card">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-hover table-dark">
+                                <thead>
+                                    <tr>
+                                        <th>Apartment No.</th>
+                                        <th>Floor No.</th>
+                                        <th>Rooms</th>
+                                        <th>Occupied</th>
+                                        <th>Rent Price</th>
+                                        <th>Sale Price</th>
+                                        <th>Size (Sqft)</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    {% for apartment in apartments  %}
+                                    <tr onclick="window.location.href='{% url "agent-house-apartment-details" pk=request.user.profile house_id=house.id apartment_no=apartment.apartment_number %}'" style="cursor:pointer;">
+                                        <td><i class="fab fa-angular fa-lg text-danger me-1"></i> <strong>No {{ apartment.apartment_number }}</strong></td>
+                                        <td>{{ apartment.floor_number }}{% if apartment.floor_number == 1 %}st{% elif apartment.floor_number == 2 %}nd{% elif apartment.floor_number == 3 %}rd{% else %}th{% endif %} Floor</td>
+                                        <td>{{ apartment.number_of_rooms }}</td>
+                                        <td><span class="badge {% if apartment.is_occupied %}bg-label-primary{% else %}bg-label-danger{% endif %} me-1">{{ apartment.is_occupied }}</span></td>
+                                        <td>${{ apartment.rent_price }}</td>
+                                        <td>${{ apartment.sale_price }}</td>
+                                        <td>{{ apartment.size_in_sqft }} Sqft</td>
+                                        <td>{{ apartment.condition }}</td>
+                                    </tr>
+                                    </a>
+                                    {% endfor %}
+                                </tbody>
+                                {% if apartments.count > 5 %}
+                                <tfoot class="table-border-bottom-0">
+                                    <tr>
+                                        <th>Apartment</th>
+                                        <th>Floor No.</th>
+                                        <th>Rooms</th>
+                                        <th>Occupied</th>
+                                        <th>Rent Price</th>
+                                        <th>Sale Price</th>
+                                        <th>Size (Sqft)</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </tfoot>
+                                {% endif %}
+                            </table>
+                        </div>
+                    </div>
+                {% else %}
+                    <h1>No Apartment Found</h1>
+                {% endif %}
+            </div>
+            <!-- End Apartments Tabs Details -->
+
+                <!-- Add an Apartment Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-house" role="tabpanel">
+                {% if house.images.exists %}
+                <div class="d-flex">
+                    <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel" style="max-width: 70%;">
+                        <ol class="carousel-indicators">
+                        {% for image in house.images.all %}
+                            <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                        {% endfor %}
+                        </ol>
+                        <div class="carousel-inner">
+                        {% for image in house.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" style="width: 500px; height: 621px; border-radius: 7px;" alt="...">
+                            </div>
+                        {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="javascript:void(0);" role="button" data-bs-slide="prev">
+                        <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="javascript:void(0);" role="button" data-bs-slide="next">
+                        <span class="visually-hidden">Next</span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-xl-4 ms-3">
+                        <div class="card shadow-none bg-transparent border border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">House Number</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.house_number }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">House Address</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.address.upper }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Occupancy Status</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.occupancy_status.upper }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Country</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.country.name.upper }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">State</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.state.name.upper }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                    <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel" style="max-width: 70%;">
+                        <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src={% static "images/house_photos/NoImage.jpg" %} class="d-block w-100" style="width: 500px; height: 621px; border-radius: 7px;" alt="...">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 ms-3">
+                        <div class="card shadow-none bg-transparent border border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">House Number</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.house_number }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">House Address</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.address.upper }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Occupancy Status</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.occupancy_status.upper }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Country</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.country.name.upper }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="card shadow-none bg-transparent border border-primary mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">State</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.state.name.upper }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Agent</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.agent.name }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">City</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.city.upper }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Sale Price</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.sale_price }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Rent Price</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.rent_price }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">House Size</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.house_size }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Number of Apartments</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.number_of_apartments }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Number of Floors</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.number_of_floors }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Garage Space</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.garage_space }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Yard Size</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.yard_size }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Renovation Year</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.renovation_year }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Condition</span></h5>
+                                <p class="card-text ms-2"><strong>{{ house.condition.upper }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Utilities</span></h5>
+                                {% for utility in house.utilities.all %}
+                                    <p class="card-text ms-2"><strong>{{ utility }}</strong></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-none bg-transparent border border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge bg-primary">Features</span></h5>
+                                {% for feature in house.features.all %}
+                                    <p class="card-text ms-2"><strong>{{ feature }}</strong></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>   
+                </div> 
+            </div>
+            <!-- End of Add a Apartment Tabs Details -->
+        </div>
+        <!-- End Details -->
+    </div>
+    <!-- End Apartment Profile -->
+{% endblock details %}

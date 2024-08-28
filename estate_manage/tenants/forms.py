@@ -22,7 +22,7 @@ class TenantForm(ModelForm):
         fields = [
             'first_name', 'last_name', 'email', 'phone_number','country', 'state', 'city', 'profile_picture', 'move_in_date', 'lease_start_date',
             'lease_end_date', 'monthly_rent', 'deposit_amount', 'lease_term', 'payment_status', 'emergency_contact_name',
-            'emergency_contact_number', 'employment_status', 'occupation', 'notes'
+            'emergency_contact_number', 'employment_status', 'occupation'
         ]
 
         labels = {

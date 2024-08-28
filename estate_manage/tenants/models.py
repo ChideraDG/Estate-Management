@@ -2,9 +2,10 @@ from django.db import models
 from users.models import Profile
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
-from apartments.models import Apartment
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from apartments.models import Apartment
+from building_owners.models import BuildingOwner
 
 
 def validate_image_size(value):
@@ -50,8 +51,11 @@ class Tenant(models.Model):
         ('student', 'Student'),
     ]
 
-    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
-                                related_name='tenants')
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default=None,
+                                related_name='tenant')
+    building_owner = models.ForeignKey(BuildingOwner, on_delete=models.SET_NULL, blank=True, null=True, 
+                                       default=None, related_name='tenants')
+    apartment = models.OneToOneField(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenant') 
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)
@@ -64,7 +68,6 @@ class Tenant(models.Model):
     city = models.CharField(max_length=200, null=True, blank=True)
     profile_picture = models.ImageField(blank=True, null=True, upload_to='tenants-profile-pics/', 
                              validators=[validate_image_size], default='tenants-profile-pics/dp.jpg')
-    apartment = models.OneToOneField(Apartment, on_delete=models.CASCADE, blank=True, null=True, related_name='tenant') 
     move_in_date = models.DateField(null=True, blank=True)
     lease_start_date = models.DateField(null=True, blank=True)
     lease_end_date = models.DateField(null=True, blank=True)
@@ -82,7 +85,6 @@ class Tenant(models.Model):
                                                             "'+2348012345678'. Up to 15 digits allowed.")])  
     employment_status = models.CharField(max_length=50, choices=EMPLOYMENTSTAT, null=True,blank=True)
     occupation = models.CharField(max_length=50, null=True, blank=True)
-    notes = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

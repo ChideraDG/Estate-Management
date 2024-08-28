@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
 from .models import BuildingOwner
-from .forms import BuildingOwnerForm
+from .forms import BuildingOwnerForm, AddTenantForm
 from locations.models import Country, State
+from tenants.models import Tenant
 
 
 @login_required(login_url='login')
@@ -85,3 +86,29 @@ def view_connections(request, pk):
         'type': labels.get(user_type)
     }
     return render(request, "building_owners/view_connections.html", context)
+
+@login_required(login_url='login')
+def tenant_profiles(request, pk):
+    active_menu = 'tenants-management'
+    active_sub_menu = 'tenant-profiles'
+    profile = request.user.profile.building_owners
+    houses = profile.houses.all()
+    tenants = profile.tenants.all()
+
+    if request.method == 'POST':
+        form = AddTenantForm(request.POST, building_owner=profile)
+        
+        if form.is_valid():
+            form.save()
+    else:
+        form = AddTenantForm(building_owner=profile)
+
+    context = {
+        'active_sub_menu': active_sub_menu,
+        'active_menu': active_menu,
+        'tenants': tenants,
+        'form': form,
+        'houses': houses,
+    }
+    return render(request, "building_owners/bo_tenant_profiles.html", context)
+

@@ -5,14 +5,15 @@
 
     <!-- Location header -->
     <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">My Properties / </span>Properties List
+        <span class="text-muted fw-light">My Properties / </span>Properties List ({{ houses.count }})
     </h4>
     <!-- End Location header -->
 
-    {% if properties %}
+    {% if houses %}
     <div class="card">
+        <h5 class="card-header">Houses with related Apartments</h5>
         <div class="table-responsive text-nowrap">
-            <table class="table table-hover">
+            <table class="table table-hover table-dark">
                 <thead>
                     <tr>
                         <th>House Address</th>
@@ -26,20 +27,21 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    {% for property in properties  %}
-                    <tr onclick="window.location.href='{% url 'home' %}';" style="cursor:pointer;">
-                        <td><i class="fab fa-angular fa-lg text-danger me-1"></i> <strong>No {{ property }}</strong></td>
-                        <td>{{ property.number_of_apartments }}</td>
-                        <td>{{ property.number_of_floors }}</td>
-                        <td><span class="badge {% if property.occupancy_status == 'occupied' %}bg-label-primary{% elif property.occupancy_status == 'vacant' %}bg-label-danger{% else %}bg-label-dark{% endif %} me-1">{{ property.occupancy_status }}</span></td>
-                        <td>${{ property.rent_price }}</td>
-                        <td>${{ property.sale_price }}</td>
-                        <td>{{ property.building_owner.building_owner_name }}</td>
-                        <td>{{ property.updated }}</td>
+                    {% for house in houses  %}
+                    <tr onclick="window.location.href='{% url 'agent-house-apartments' pk=request.user.profile house_id=house.id %}';" style="cursor:pointer;">
+                        <td><i class="fab fa-angular fa-lg text-danger me-1"></i> <strong>No {{ house }}</strong></td>
+                        <td>{{ house.number_of_apartments }}</td>
+                        <td>{{ house.number_of_floors }}</td>
+                        <td><span class="badge {% if house.occupancy_status == 'occupied' %}bg-label-primary{% elif house.occupancy_status == 'vacant' %}bg-label-danger{% else %}bg-label-dark{% endif %} me-1">{{ house.occupancy_status }}</span></td>
+                        <td>${{ house.rent_price }}</td>
+                        <td>${{ house.sale_price }}</td>
+                        <td>{{ house.building_owner.building_owner_name }}</td>
+                        <td>{{ house.updated }}</td>
                     </tr>
                     </a>
                     {% endfor %}
                 </tbody>
+                {% if houses.count > 6 %}
                 <tfoot class="table-border-bottom-0">
                     <tr>
                         <th>House Address</th>
@@ -52,11 +54,12 @@
                         <th>Last Updated</th>
                     </tr>
                 </tfoot>
+                {% endif %}
             </table>
         </div>
     </div>
     {% else %}
-        <h1>No Property Found</h1>
+        <h1>No house Found</h1>
     {% endif %}
     
 {% endblock details %}
