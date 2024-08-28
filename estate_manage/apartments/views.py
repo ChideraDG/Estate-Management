@@ -51,7 +51,7 @@ def house_apartments(request, pk, type):
     active_menu = 'apartments-management'
     active_sub_menu = 'apartment-profiles'
     if type == "bo":
-        houses = request.user.profile.building_owners.houses.all()
+        houses = request.user.profile.building_owner.houses.all()
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
