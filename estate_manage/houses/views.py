@@ -49,7 +49,7 @@ def houses(request, pk, type):
     
     if type == 'bo':
         # Get the building owner's profile from the current user's profile.
-        profile = request.user.profile.building_owners
+        profile = request.user.profile.building_owner
     elif type == 'C':
         profile = request.user.profile.companies
 
@@ -194,7 +194,7 @@ def filterHouses(request):
     
     if request.user.profile.designation == 'building_owner':
         # Get all houses related to the current user's profile
-        houses = request.user.profile.building_owners.houses.all()  
+        houses = request.user.profile.building_owner.houses.all()  
     elif request.user.profile.designation == 'company':
         # Needs fixing
         houses = request.user.profile.companies.estate.all()
