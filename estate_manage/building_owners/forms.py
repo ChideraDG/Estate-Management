@@ -1,10 +1,13 @@
+from typing import Any
 from django.forms import ModelForm
 from django import forms
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 from .models import BuildingOwner
 from tenants.models import Tenant
 from houses.models import House
+from apartments.models import Apartment
 
 
 class BuildingOwnerForm(ModelForm):
@@ -150,12 +153,13 @@ class AddTenantForm(forms.ModelForm):
     _house = forms.ModelChoiceField(queryset=House.objects.none(), 
                                     empty_label="Select a House",
                                     widget=forms.Select(attrs={'id': 'house_id'}))
+    _apartment = forms.CharField(widget=forms.Select(attrs={'id': 'apartment_id'}))
     class Meta:
         model = Tenant
         fields = [ 
-            '_house', 'apartment', 'first_name', 'last_name', 'email', 'phone_number', 
-            'city', 'move_in_date', 'lease_start_date', 
-            'lease_end_date', 'monthly_rent', 'deposit_amount', 
+            '_house', '_apartment', 'first_name', 'last_name', 'email', 
+            'phone_number', 'lease_start_date', 'lease_end_date', 
+            'move_in_date', 'monthly_rent', 'deposit_amount', 
             'lease_term', 'payment_status', 'emergency_contact_name', 
             'emergency_contact_number', 'employment_status', 'occupation'
         ]
@@ -197,4 +201,33 @@ class AddTenantForm(forms.ModelForm):
             self.fields['_house'].queryset = House.objects.filter(building_owner=building_owner)
         else:
             self.fields['_house'].queryset = House.objects.none()
+
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        if User.objects.filter(email=email).exists():
+            messages.error(self.request, "Email address already exists")
+            raise forms.ValidationError('Email address already exists')
+        
+        return email
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        lease_start_date = cleaned_data.get("lease_start_date")
+        lease_end_date = cleaned_data.get("lease_end_date")
+        move_in_date = cleaned_data.get("move_in_date")
+
+        # Check if lease start date is after lease end date
+        if lease_start_date and lease_end_date and lease_start_date > lease_end_date:
+            messages.error(self.request, "Lease start date cannot be after lease end date.")
+            raise ValidationError("Lease start date cannot be after lease end date.")
+
+        if move_in_date:
+            if lease_end_date and move_in_date > lease_end_date:
+                messages.error(self.request,"Move-in date cannot be after the lease end date.")
+                raise ValidationError("Move-in date cannot be after the lease end date.")
+
+        return cleaned_data
             
