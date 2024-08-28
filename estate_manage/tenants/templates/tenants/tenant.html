@@ -29,12 +29,14 @@
                         width="100"
                         id="uploadedAvatar"
                         />
+                        {% if not profile.building_owner %}
                         <div class="button-wrapper">
                             <button type="button" class="btn btn-primary me-3 mb-4 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exLargeModal">
                                 <span class="d-none d-sm-block me-2">Update Profile</span>
                                 <i class="bi bi-pencil-square"></i>
                             </button>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -66,6 +68,27 @@
                             <label class="form-label">Phone Number</label>
                             <div class="form-control" style="background-color: #e9ecef;">
                                 {{ profile.phone_number }}
+                            </div>
+                        </div>{% endif %}
+                        {% if profile.building_owner %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Building Owner</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                {{ profile.building_owner.building_owner_name }}
+                            </div>
+                        </div>{% endif %}
+                        {% if profile.house %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">House</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                No {{ profile.house.house_number }}, {{ profile.house.address }}
+                            </div>
+                        </div>{% endif %}
+                        {% if profile.apartment %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Apartment</label>
+                            <div class="form-control" style="background-color: #e9ecef;">
+                                Apartment {{ profile.apartment.apartment_number }} - Floor {{ profile.apartment.floor_number }}
                             </div>
                         </div>{% endif %}
                         {% if profile.country %}
