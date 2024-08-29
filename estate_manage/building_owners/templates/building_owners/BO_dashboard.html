@@ -67,7 +67,7 @@
         </a>
         <ul class="menu-sub">
             <li class="menu-item  {% if active_sub_menu == 'tenant-profiles' %}active{% endif %}">
-            <a href={% url "bo-tenant-profiles" pk=request.user.profile %} class="menu-link">
+            <a href={% url "tenants-profiles" pk=request.user.profile type="bo" %} class="menu-link">
                 <div data-i18n="tenant-profiles">Tenant Profiles</div>
             </a>
             </li>
