@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 from apartments.models import Apartment
 from houses.models import House
 from building_owners.models import BuildingOwner
+from estates.models import Estate
     
 
 class Tenant(models.Model):
@@ -31,6 +32,8 @@ class Tenant(models.Model):
                                 related_name='tenant')
     building_owner = models.ForeignKey(BuildingOwner, on_delete=models.SET_NULL, blank=True, null=True, 
                                        default=None, related_name='tenants')
+    estate = models.ForeignKey(Estate, on_delete=models.SET_NULL, blank=True, null=True, 
+                               default=None, related_name='tenants')
     house = models.ForeignKey(House, on_delete=models.SET_NULL, blank=True, null=True, default= None,
                               related_name='tenant_house')
     apartment = models.OneToOneField(Apartment, on_delete=models.SET_NULL, blank=True, null=True, related_name='tenant_apartment') 
