@@ -109,9 +109,13 @@ def view_connections(request, pk):
 def tenant_profiles(request, pk):
     active_menu = 'tenants-management'
     active_sub_menu = 'tenant-profiles'
+    menu = request.GET.get('menu', 'all')
     profile = request.user.profile.building_owner
     houses = profile.houses.all()
     tenants = profile.tenants.all()
+    yearly_tenants = profile.tenants.filter(lease_term="yearly")
+    six_monthly_tenants = profile.tenants.filter(lease_term="six_monthly")
+    month_to_month_tenants = profile.tenants.filter(lease_term="month_to_month")
 
     if request.method == 'POST':
         form = AddTenantForm(request.POST, building_owner=profile, request=request)
@@ -189,6 +193,10 @@ The EstateManage Team
         'tenants': tenants,
         'form': form,
         'houses': houses,
+        'menu': menu,
+        'yearly_tenants': yearly_tenants,
+        'six_monthly_tenants': six_monthly_tenants,
+        'month_to_month_tenants': month_to_month_tenants,
     }
     return render(request, "building_owners/bo_tenant_profiles.html", context)
 
