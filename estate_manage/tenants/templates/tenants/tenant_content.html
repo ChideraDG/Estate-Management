@@ -1,0 +1,36 @@
+{% load static %}
+
+<div class="row mb-5">
+    {% for tenant in tenants %}
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100">
+        {% if tenant.profile_picture %}
+        <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ tenant.profile_picture.url }}" class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="images/NoImage.jpg">
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src={% static "images/NoImage.jpg" %} class="d-block w-100" style="width: 400px; height: 400px; border-top-left-radius: 7px; border-top-right-radius: 7px;" alt="...">
+            </div>
+          </div>
+        </div>
+        {% endif %}
+  
+        <div class="card-body">
+          <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">{{ tenant.first_name }} {{ tenant.last_name }}</span></h4>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Lease Start Date: {{ tenant.lease_start_date }}</span></p>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Lease End Date: {{ tenant.lease_end_date }}</span></p>
+          <p class="card-text"><span class="badge rounded-pill bg-label-danger">Monthly Rent: {{ tenant.monthly_rent }}</span></p>
+          {% comment %} <a href={% url "tenant-details" pk=profile tenant_id=tenant.id type=type %} class="btn btn-outline-primary">Details</a> {% endcomment %}
+          {% comment %} <a href={% url "view-apartments" type=type pk=request.user.profile tenant_id=tenant.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-tenant-fill'></i> Apartments</a> {% endcomment %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
