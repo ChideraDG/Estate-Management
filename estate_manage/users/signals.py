@@ -8,6 +8,7 @@ from django.utils import timezone
 from .models import Profile
 from building_owners.models import BuildingOwner
 from agents.models import Agent
+from tenants.models import Tenant
 
 
 @receiver(post_save, sender=User)
@@ -140,6 +141,19 @@ def update_profile(sender, instance, created, **kwargs):
                 agent.phone_number = instance.phone_number
                 agent.profile_picture = instance.profile_image
                 agent.save()
+        
+        if instance.designation == 'tenant':
+            tenant = Tenant.objects.filter(user=instance).first()
+            if tenant:
+                if " " in instance.name:
+                    tenant.first_name = instance.name.split(" ")[0]
+                    tenant.last_name = instance.name.split(" ")[1]
+                else:
+                    tenant.first_name = instance.name
+                tenant.email = instance.email
+                tenant.phone_number = instance.phone_number
+                tenant.profile_picture = instance.profile_image
+                tenant.save()
                 
         instance.user.save()
 
