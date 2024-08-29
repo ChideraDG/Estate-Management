@@ -2,12 +2,25 @@ from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.http import JsonResponse
 from django.contrib import messages
 from houses.models import House
 from .utils import paginateApartments
 from .models import Apartment, Photo
 from .forms import ApartmentForm, ApartmentFilterForm
 
+
+@login_required(login_url='login')
+def get_apartments(request):
+    house_id = request.GET.get('house_id')
+    apartments = Apartment.objects.filter(house=house_id)
+    apartments_list = [{
+        'id': apartment.id,
+        'apartment_number': apartment.apartment_number, 
+        'floor_number': apartment.floor_number
+        } for apartment in apartments if not apartment.is_occupied
+    ]
+    return JsonResponse(apartments_list, safe=False)
 
 def createApartment(request):
     # countries = Country.objects.all()
