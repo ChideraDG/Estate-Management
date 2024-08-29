@@ -39,7 +39,103 @@
         <div class="tab-content">
             <!-- Tenants Details Tab -->
             <div class="tab-pane fade show active" id="navs-pills-justified-tenants" role="tabpanel">
-                {{ tenants }}
+                <!-- Tenants Tab Details Box -->
+                <div class="nav-align-top">
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                                All
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'yearly' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-yearly" aria-controls="navs-pills-top-yearly" aria-selected="false">
+                                Yearly Lease
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'six_monthly' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-six_monthly" aria-controls="navs-pills-top-six_monthly" aria-selected="false">
+                                Six-Monthly Lease
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if menu == 'month_to_month' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-month_to_month" aria-controls="navs-pills-top-month_to_month" aria-selected="false">
+                                Month-to-Month Lease
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                                Filter Tenants
+                            </button>
+                        </li>
+                        {% if reset_filter == "filtering" %}
+                            <li>
+                                <button type="button" class="btn btn-outline-secondary d-grid w-100 ms-2" id="reset-filter">Reset Filter</button>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Tenant Tab Details Inner -->
+                    <div class="tab-content" style="background-color: #f5f5f9;">
+                        <!-- All Tenant Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                           {% if tenants.exists %}
+                                {% include "tenants/tenant_content.html" with tenants=tenants %}
+                           {% else %}
+                                <h1>No Tenant Found</h1>
+                           {% endif %}
+                        </div>  
+                        <!-- End All Tenant Tab Details -->
+
+                        <!-- Yearly Lease Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'yearly' %}show active{% endif %}" id="navs-pills-top-yearly" role="tabpanel">
+                            {% if yearly_tenants.exists %}
+                                {% include "tenants/tenant_content.html" with tenants=yearly_tenants %}
+                            {% else %}
+                                <h3>No Yearly Tenant Found</h3>
+                            {% endif %}
+                        </div>
+                        <!-- End Yearly Lease Tab Details -->
+
+                        <!-- Six-Monthly Lease Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'six_monthly' %}show active{% endif %}" id="navs-pills-top-six_monthly" role="tabpanel">
+                            {% if six_monthly_tenants.exists %}
+                                {% include "tenants/tenant_content.html" with tenants=six_monthly_tenants %}
+                            {% else %}
+                                <h3>No Six Monthly Tenant Found</h3>
+                            {% endif %}
+                        </div>
+                        <!-- End Six-Monthly Lease Tab Details -->
+
+                        <!-- Month-to-Month Lease Tab Details -->
+                        <div class="tab-pane fade {% if menu == 'month_to_month' %}show active{% endif %}" id="navs-pills-top-month_to_month" role="tabpanel">
+                            {% if month_to_month_tenants.exists %}
+                                {% include "tenants/tenant_content.html" with tenants=month_to_month_tenants %}
+                            {% else %}
+                                <h3>No Month to Month Tenant Found</h3>
+                            {% endif %}
+                        </div>
+                        <!-- End Month-to-Month Lease Tab Details -->
+
+                        <!-- Filter Backdrop -->
+                        <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasBothLabel" class="offcanvas-title">Filter Houses</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                                <form id="filterForm" action="#" method="GET">
+                                {{ form.as_p }}
+                                <input type='text' value="filtering" name="reset_filter" hidden/>
+                                <button type="submit" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
+                                <button type="button" class="btn btn-outline-secondary d-grid w-100" id="reset-button">Reset</button>
+                                </form>
+                            </div>
+                        </div>  
+                        <!-- End Filter Backdrop -->                        
+                    </div>
+                    <!-- Tenant Tab Details Inner -->
+                </div>
+                <!-- End Tenants Tab Details Box -->
             </div>
             <!-- End Tenants Details Tab -->
 
@@ -96,5 +192,20 @@
             }
           });
         });        
+    </script>
+    <script>
+        document.getElementById('reset-button').addEventListener('click', function() {
+            // Select the form
+            var form = this.closest('form');
+            
+            // Clear all input fields in the form
+            form.reset();
+            window.location.href = window.location.pathname;
+        });
+    </script>
+    <script>
+        document.getElementById('reset-filter').addEventListener('click', function() {
+            window.location.href = window.location.pathname;
+        });
     </script>
 {% endblock details %}
