@@ -80,6 +80,7 @@ class House(models.Model):
     
     class Meta:
         ordering = ['-created']  # to order the houses from latest to oldest.
+        unique_together = ('house_number', 'address')
 
 
 class Utility(models.Model):
