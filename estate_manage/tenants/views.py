@@ -230,7 +230,7 @@ The EstateManage Team
 
     # Define the template route based on the user designation
     template_route = {
-        'building_owner': "building_owners/BO_dashboard.html"
+        'building_owner': "building_owners/BO_dashboard.html",
     }
     
     # Prepare the context to be passed to the template
