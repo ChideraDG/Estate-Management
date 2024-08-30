@@ -109,7 +109,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="fw-bold py-3 mb-1"><span class="text-muted fw-light">User Management / Building Owner Profile /</span>  Update</h4>
+                    <h4 class="fw-bold py-3 mb-1"><span class="text-muted fw-light">User Management / Company /</span>  Update</h4>
                     <button
                         type="button"
                         class="btn-close"
@@ -118,7 +118,7 @@
                     ></button>
                 </div>
                 <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" action='{% url "view-building-owner" pk=request.user.profile %}'>
+                    <form method="POST" enctype="multipart/form-data" action='{% url "view-company" pk=request.user.profile %}'>
                         {% csrf_token %}
                         <div class="row">
                             {% for field in form %}
