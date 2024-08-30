@@ -126,7 +126,7 @@ def houses(request, pk, type):
                 )
             
             # Redirect to the same view after successful form submission.
-            return redirect('houses', pk=profile)
+            return redirect('houses', pk=request.user.profile)
 
     # If the request method is GET, instantiate an empty HouseForm.
     else:
