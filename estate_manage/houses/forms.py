@@ -109,20 +109,19 @@ class HouseForm(ModelForm):
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
 
+country_choice = [('', 'Select a Country')]
+for country in House.objects.values_list('country_id__name', flat=True):
+    choice = (country, country)
+    if choice not in country_choice and choice != (None, None):
+        country_choice.append(choice)
+
+state_choice = [('', 'Select a State')]
+for state in House.objects.values_list('state_id__name', flat=True):
+    choice = (state, state)
+    if choice not in state_choice and choice != (None, None):
+        state_choice.append(choice)
     
 class HouseFilterForm(forms.ModelForm):
-    country_choice = [('', 'Select a Country')]
-    for country in House.objects.values_list('country_id__name', flat=True):
-        choice = (country, country)
-        if choice not in country_choice and choice != (None, None):
-            country_choice.append(choice)
-
-    state_choice = [('', 'Select a State')]
-    for state in House.objects.values_list('state_id__name', flat=True):
-        choice = (state, state)
-        if choice not in state_choice and choice != (None, None):
-            state_choice.append(choice)
-
     house_no = forms.IntegerField(required=False, label="House number")
     house_address = forms.CharField(required=False)
     house_size_min = forms.DecimalField(required=False)
