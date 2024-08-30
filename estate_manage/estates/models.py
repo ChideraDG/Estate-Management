@@ -76,12 +76,10 @@ class Estate(models.Model):
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
     year_built = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(1900)])
     number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
-    number_of_apartments = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     total_area_covered = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                              validators=[MinValueValidator(0)])
     land_area = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                     validators=[MinValueValidator(0)])
-    total_floor_number = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     estate_parking_spaces = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     amenities = models.ManyToManyField('Amenity', default='', blank=True)
     construction_type = models.CharField(max_length=50, choices=CONSTRUCTION_TYPES, null=True, blank=True, )
@@ -89,9 +87,6 @@ class Estate(models.Model):
                                            validators=[MinValueValidator(0)], default=0.00)
     security_features = models.ManyToManyField('SecurityFeatures', default='', blank=True)
     utilities = models.ManyToManyField('Utility', default='', blank=True)
-    current_occupancy = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
-    vacancy_rate = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
-                                       validators=[MinValueValidator(0)])
     estate_description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
