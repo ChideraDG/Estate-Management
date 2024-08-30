@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from locations.models import Country, State
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import House, Photo
 from.forms import HouseForm, HouseFilterForm
 from .utils import paginateHouses
@@ -127,6 +128,11 @@ def houses(request, pk, type):
             
             # Redirect to the same view after successful form submission.
             return redirect('houses', pk=request.user.profile, type=type )
+        else:
+            non_field_errors = form.non_field_errors()
+            if non_field_errors:
+                for error in non_field_errors:
+                    messages.error(request, error)
 
     # If the request method is GET, instantiate an empty HouseForm.
     else:
