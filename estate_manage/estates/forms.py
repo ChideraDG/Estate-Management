@@ -20,17 +20,16 @@ class ProfileForm(ModelForm):
 
     class Meta:
         model = Estate
-        fields = ['estate_name', 'estate_location', 'estate_type', 'year_built', 'number_of_houses',
-                  'number_of_apartments', 'total_area_covered', 'land_area', 'total_floor_number',
+        fields = ['name', 'address', 'estate_type', 'year_built', 'number_of_houses', 'total_area_covered', 'land_area',
                   'estate_parking_spaces', 'amenities', 'construction_type', 'maintenance_cost', 'security_features',
-                  'utilities', 'current_occupancy', 'vacancy_rate', 'estate_description', 'country', 'state', 'city']
+                  'utilities', 'description', 'country', 'state', 'city']
         widgets = {
             'year_built': forms.NumberInput(attrs={'value': 1900}),
             'amenities': forms.CheckboxSelectMultiple(),
             'security_features': forms.CheckboxSelectMultiple(),
             'utilities': forms.CheckboxSelectMultiple(),
-            'estate_location': forms.Textarea(attrs={'rows': 3}),
-            'estate_description': forms.Textarea(attrs={'rows': 5}),
+            'address': forms.Textarea(attrs={'rows': 3}),
+            'description': forms.Textarea(attrs={'rows': 5}),
             'estate_type': forms.Select(choices=Estate.DESIGNATION),
             'construction_type': forms.Select(choices=Estate.CONSTRUCTION_TYPES)
         }
@@ -38,3 +37,4 @@ class ProfileForm(ModelForm):
             'total_area_covered': 'Total Area Covered (acres)',
             'land_area': 'Land Area (square metres)',
         }
+        
