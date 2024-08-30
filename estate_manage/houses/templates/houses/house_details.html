@@ -7,7 +7,7 @@
     <!-- Location header -->
     <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">House Management / 
-            <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile.building_owners type=type %}>House Profiles</a> /
+            <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile.building_owner type=type %}>House Profiles</a> /
         </span> No. {{ house.house_number }}, {{ house.address.title }}
     </h4>
     <!-- End Location header -->
