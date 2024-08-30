@@ -68,8 +68,8 @@ class Estate(models.Model):
     ]
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='estates')
-    estate_name = models.CharField(max_length=100, blank=False, null=False)
-    estate_location = models.TextField(null=False, blank=False)
+    name = models.CharField(max_length=100, blank=False, null=False)
+    address = models.TextField(null=False, blank=False)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
@@ -87,12 +87,12 @@ class Estate(models.Model):
                                            validators=[MinValueValidator(0)], default=0.00)
     security_features = models.ManyToManyField('SecurityFeatures', default='', blank=True)
     utilities = models.ManyToManyField('Utility', default='', blank=True)
-    estate_description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.estate_name
+        return f'{self.estate_name} - {self.address}'
 
 
 class Amenity(models.Model):
