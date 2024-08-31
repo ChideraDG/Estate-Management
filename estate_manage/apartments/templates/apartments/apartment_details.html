@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block details %}
-  <!-- Content -->
+    <link href={% static "assets/css/style.css" %} rel="stylesheet">
+    <!-- Content -->
 
     <!-- Location header -->
     <h4 class="fw-bold py-3 mb-4">
@@ -28,7 +29,7 @@
             <!--Houses Tabs Button -->
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
-                data-bs-target="#navs-pills-justified-apartment-details" aria-controls="navs-pills-justified-houses-details" aria-selected="true">
+                data-bs-target="#navs-pills-justified-apartment-details" aria-controls="navs-pills-justified-apartment-details" aria-selected="true">
                     <i class="tf-icons bi bi-house-fill"></i> Apartment Details
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{houses.count}}</span>
                 </button>
@@ -47,7 +48,7 @@
         <!-- Details -->
         <div class="tab-content">
             <!-- Apartment Details Tab -->
-            <div class="tab-pane fade show active" id="navs-pills-justified-apartment-details" role="tabpanel">
+            {% comment %} <div class="tab-pane fade show active" id="navs-pills-justified-apartment-details" role="tabpanel">
                 {% if apartment.images.exists %}
                 <div class="d-flex">
                     <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel" style="max-width: 70%;">
@@ -308,6 +309,251 @@
                         </div>
                     </div>  
                 </div>                  
+            </div> {% endcomment %}
+            <div class="tab-pane fade show active" id="navs-pills-justified-apartment-details" role="tabpanel">
+                <section class="property-single nav-arrow-b">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div id="property-single-carousel" class="swiper">
+                                    <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                        {% for image in apartment.images.all %}
+                                            <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                                        {% endfor %}
+                                        </ol>
+                                        <div class="carousel-inner">
+                                        {% for image in apartment.images.all %}
+                                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                <img src="{{ image.image.url }}" class="d-block w-100" style="width: 500px; height: 621px; border-radius: 7px;" alt="...">
+                                            </div>
+                                        {% endfor %}
+                                        </div>
+                                        <a class="carousel-control-prev" href="javascript:void(0);" role="button" data-bs-slide="prev">
+                                        <span class="visually-hidden">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="javascript:void(0);" role="button" data-bs-slide="next">
+                                        <span class="visually-hidden">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="property-single-carousel-pagination carousel-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-5 col-lg-4">
+                                        <div class="property-price d-flex justify-content-center foo">
+                                            <div class="card-header-c d-flex">
+                                                <div class="card-box-ico">
+                                                    <span class="bi bi-cash">$</span>
+                                                </div>
+                                                <div class="card-title-c align-self-center">
+                                                    <h5 class="title-c mt-3">{{ apartment.sale_price }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="property-summary">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="title-box-d section-t4">
+                                                        <h3 class="title-d">Quick Summary</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="summary-list">
+                                                <ul class="list">
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Floor Number:</strong>
+                                                        <span>{{ apartment.floor_number }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Number of Rooms:</strong>
+                                                        <span>{{ apartment.number_of_rooms }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Size:</strong>
+                                                        <span>{{ apartment.size_in_sqft }}sq.ft.</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Balcony:</strong>
+                                                        <span>{{ apartment.balcony|yesno:"Yes,No" }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Parking Space:</strong>
+                                                        <span>{{ apartment.parking_space|yesno:"Yes,No" }}</span>
+                                                    </li>
+                                                    
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Rent Price:</strong>
+                                                        <span>${{ apartment.rent_price }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Sale Price:</strong>
+                                                        <span>${{ apartment.sale_price }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Security Deposit:</strong>
+                                                        <span>${{ apartment.security_deposit }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Maintenance Fee:</strong>
+                                                        <span>${{ apartment.maintenance_fee }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Occupied:</strong>
+                                                        <span>{{ apartment.is_occupied|yesno:"Yes,No" }}</span>
+                                                    </li>
+                                                    {% if apartment.last_renovation_year > 1900 %}
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Last Renovation Year:</strong>
+                                                        <span>{{ apartment.last_renovation_year }}</span>
+                                                    </li>
+                                                    {% endif %}
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Condition:</strong>
+                                                        <span>{{ apartment.condition }}</span>
+                                                    </li>
+                                                </ul>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 col-lg-7 section-md-t3">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="title-box-d">
+                                                    <h3 class="title-d">Property Description</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="property-description">
+                                            {% if apartment.notes %}
+                                            <p class="description color-text-a">
+                                                {{ apartment.notes }}
+                                            </p>
+                                            <p class="description color-text-a no-margin"></p>
+                                            {% else %}
+                                            <p class="description color-text-a">
+                                                <h3>No Description</h3>
+                                            </p>
+                                            <p class="description color-text-a no-margin"></p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="row section-t3">
+                                            <div class="col-sm-12">
+                                                <div class="title-box-d">
+                                                    <h3 class="title-d">Features</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-list">
+                                            <ul class="list" style="width: 60%;">
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Furnished:</strong>
+                                                    <span>{{ apartment.is_furnished|yesno:"Yes,No" }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Number of Bathrooms:</strong>
+                                                    <span>{{ apartment.number_of_bathrooms }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Number of Bedrooms:</strong>
+                                                    <span>{{ apartment.number_of_bedrooms }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Kitchen Type:</strong>
+                                                    <span>{{ apartment.kitchen_type }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Flooring Type:</strong>
+                                                    <span>{{ apartment.flooring_type }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Heating System:</strong>
+                                                    <span>{{ apartment.heating_system }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Air Conditioning:</strong>
+                                                    <span>{{ apartment.air_conditioning|yesno:"Yes,No" }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="row section-t3">
+                                            <div class="col-sm-12">
+                                                <div class="title-box-d">
+                                                    <h3 class="title-d">Utilities</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-list">
+                                            <ul class="list" style="width: 60%;">
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Water Supply:</strong>
+                                                    <span>{{ apartment.water_supply }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Electricity Supply:</strong>
+                                                    <span>{{ apartment.electricity_supply }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Internet Ready:</strong>
+                                                    <span>{{ apartment.internet_ready|yesno:"Yes,No" }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Cable TV Ready:</strong>
+                                                    <span>{{ apartment.cable_tv_ready|yesno:"Yes,No" }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if apartment.agent %}
+                            <div class="col-md-12">
+                                <div class="row section-t3">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d">
+                                        <h3 class="title-d">apartment Agent</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <img src={{ apartment.agent.profile_picture.url }} alt="" class="img-fluid">
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="property-agent">
+                                            <h4 class="title-agent">{{ apartment.agent.name.title }}</h4>
+                                            <p class="color-text-a">
+                                                {{ apartment.bio }}
+                                            </p>
+                                            <ul class="list-unstyled">
+                                                <li class="d-flex justify-content-between">
+                                                <strong>Phone:</strong>
+                                                <span class="color-text-a">{{ apartment.agent.phone_number }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                <strong>Email:</strong>
+                                                <span class="color-text-a">{{ apartment.agent.email }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                <strong>Rating:</strong>
+                                                <span class="color-text-a">{{ apartment.agent.rating }}%</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Date of Hire:</strong>
+                                                    <span class="color-text-a">{{ apartment.agent.date_of_hire }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
             </div>
             <!-- End Apartment Details Tab -->
 
