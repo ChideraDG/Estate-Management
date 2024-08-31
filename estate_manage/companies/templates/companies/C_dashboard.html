@@ -39,6 +39,77 @@
         </ul>
     </li>
 
+    <!-- House Management -->
+    <li class="menu-item {% if active_menu == 'house-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+            <div data-i18n="House Management">House Management</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'estate-profile' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="house-profile">House Profile</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="house-report">House Report</div>
+                </a>
+            </li>
+           
+        </ul>
+    </li>
+
+       <!-- Apartment Management -->
+       <li class="menu-item {% if active_menu == 'apartment-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+            <div data-i18n="Apartment Management">Apartment Management</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'apartment-profile' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="estate-profile">Apartment Profile</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="lease-management">Lease Management</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="communication">Communication</div>
+                </a>
+            </li>
+           
+        </ul>
+    </li>
+
+    <!-- tenant Management -->
+    <li class="menu-item {% if active_menu == 'tenant-management' %}active{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+            <div data-i18n="Tenant Management">Tenant Management</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item {% if active_sub_menu == 'tenant-profile' %}active{% endif %}">
+                <a href="#" class="menu-link">
+                    <div data-i18n="tenant-profile">Tenant Profile</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <div data-i18n="tenant-report">House Report</div>
+                </a>
+            </li>
+           
+        </ul>
+    </li>
+
 
     <!-- Services -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
