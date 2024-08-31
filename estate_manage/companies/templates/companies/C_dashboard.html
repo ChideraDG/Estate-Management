@@ -7,7 +7,7 @@
 {% block company %}
     <!-- Dashboard -->
     <li class="menu-item {% if active_menu == 'company-dashboard' %}active{% endif %}">
-        <a href='{% url "dashboard-T" pk=request.user.profile %}' class="menu-link">
+        <a href='{% url "dashboard-C" pk=request.user.profile %}' class="menu-link">
             <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
             <div data-i18n="Analytics">Dashboard</div>
         </a>
@@ -62,16 +62,16 @@
     </li>
 
        <!-- Apartment Management -->
-       <li class="menu-item {% if active_menu == 'apartment-management' %}active{% endif %}">
+       <li class="menu-item {% if active_menu == 'apartment-control' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
-            <div data-i18n="Apartment Management">Apartment Control</div>
+            <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
+            <div data-i18n="Apartment Control">Apartment Control</div>
         </a>
 
         <ul class="menu-sub">
             <li class="menu-item {% if active_sub_menu == 'apartment-profile' %}active{% endif %}">
                 <a href="#" class="menu-link">
-                    <div data-i18n="estate-profile">Apartment Profile</div>
+                    <div data-i18n="apartment-profile">Apartment Profile</div>
                 </a>
             </li>
             <li class="menu-item">
@@ -103,7 +103,7 @@
             </li>
             <li class="menu-item">
                 <a href="#" class="menu-link">
-                    <div data-i18n="tenant-report">House Report</div>
+                    <div data-i18n="house-report">House Report</div>
                 </a>
             </li>
            
