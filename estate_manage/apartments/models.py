@@ -50,8 +50,8 @@ class Apartment(models.Model):
 
     # Apartment Features
     is_furnished = models.BooleanField(default=False)
-    number_of_bathrooms = models.IntegerField(null=True, blank=True)
-    number_of_bedrooms = models.IntegerField(null=True, blank=True)
+    number_of_bathrooms = models.IntegerField(null=True, blank=True, default=0)
+    number_of_bedrooms = models.IntegerField(null=True, blank=True, default=0)
     kitchen_type = models.CharField(max_length=50, choices=[('Open', 'Open'), ('Closed', 'Closed')], null=True, blank=True)
     flooring_type = models.CharField(max_length=50, choices=[('Tile', 'Tile'), ('Wood', 'Wood'), ('Carpet', 'Carpet')], null=True, blank=True)
     heating_system = models.CharField(max_length=50, choices=[('Central', 'Central'), ('Electric', 'Electric'), ('Gas', 'Gas')], null=True, blank=True)
@@ -66,8 +66,8 @@ class Apartment(models.Model):
     # Financial Information
     rent_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     sale_price = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True,  default=0.00)
-    security_deposit = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    maintenance_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    security_deposit = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.00)
+    maintenance_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0.00)
 
     # Occupancy Details
     is_occupied = models.BooleanField(default=False)
