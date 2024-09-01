@@ -335,3 +335,20 @@ def filterTenants(request):
         query_string = ""
 
     return tenants, query_string
+
+def tenant_detail(request, type, pk, tenant_id):
+    # Set active menu and submenu for the navigation bar
+    active_menu = 'tenants-management'
+    active_sub_menu = 'tenant-profiles'
+    
+    # Define the template route based on the user designation
+    template_route = {
+        'building_owner': "building_owners/BO_dashboard.html",
+    }
+    context = {
+        'active_menu': active_menu,
+        'active_sub_menu': active_sub_menu,
+        'template_route': template_route.get(request.user.profile.designation),
+        'type': type,
+    }
+    return render(request, 'tenants/tenant_detail.html', context)
