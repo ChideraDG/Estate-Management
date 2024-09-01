@@ -79,7 +79,7 @@
                         <!-- All Tenant Tab Details -->
                         <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
                            {% if exist.0 %}
-                                {% include "tenants/tenant_content.html" with tenants=tenants %}
+                                {% include "tenants/tenant_content.html" with tenants=tenants type=type %}
                            {% else %}
                                 <h1>No Tenant Found</h1>
                            {% endif %}
@@ -92,7 +92,7 @@
                         <!-- Yearly Lease Tab Details -->
                         <div class="tab-pane fade {% if menu == 'yearly' %}show active{% endif %}" id="navs-pills-top-yearly" role="tabpanel">
                             {% if exist.1 %}
-                                {% include "tenants/tenant_content.html" with tenants=yearly_tenants %}
+                                {% include "tenants/tenant_content.html" with tenants=yearly_tenants type=type %}
                             {% else %}
                                 <h3>No Yearly Tenant Found</h3>
                             {% endif %}
@@ -105,7 +105,7 @@
                         <!-- Six-Monthly Lease Tab Details -->
                         <div class="tab-pane fade {% if menu == 'six_monthly' %}show active{% endif %}" id="navs-pills-top-six_monthly" role="tabpanel">
                             {% if exist.2 %}
-                                {% include "tenants/tenant_content.html" with tenants=six_monthly_tenants %}
+                                {% include "tenants/tenant_content.html" with tenants=six_monthly_tenants type=type %}
                             {% else %}
                                 <h3>No Six Monthly Tenant Found</h3>
                             {% endif %}
@@ -118,7 +118,7 @@
                         <!-- Month-to-Month Lease Tab Details -->
                         <div class="tab-pane fade {% if menu == 'month_to_month' %}show active{% endif %}" id="navs-pills-top-month_to_month" role="tabpanel">
                             {% if exist.3 %}
-                                {% include "tenants/tenant_content.html" with tenants=month_to_month_tenants %}
+                                {% include "tenants/tenant_content.html" with tenants=month_to_month_tenants type=type %}
                             {% else %}
                                 <h3>No Month to Month Tenant Found</h3>
                             {% endif %}
