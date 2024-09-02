@@ -8,7 +8,7 @@
     <!-- Location header -->
     <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">House Management / 
-            <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile.building_owner type=type %}>House Profiles</a> /
+            <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile type=type %}>House Profiles</a> /
         </span> No. {{ house.house_number }}, {{ house.address.title }}
     </h4>
     <!-- End Location header -->
@@ -17,16 +17,16 @@
     <div class="nav-align-top mb-4">
         <!-- Tabs -->
         <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-            <!--Houses Tabs Button -->
+            <!-- House Tabs Button -->
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
-                data-bs-target="#navs-pills-justified-houses-details" aria-controls="navs-pills-justified-houses-details" aria-selected="true">
-                    <i class="tf-icons bi bi-cloud-haze2-fill"></i> Houses Details
+                data-bs-target="#navs-pills-justified-house-details" aria-controls="navs-pills-justified-house-details" aria-selected="true">
+                    <i class="tf-icons bi bi-cloud-haze2-fill"></i> House Details
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{houses.count}}</span>
                 </button>
             </li>
 
-            <!-- Add a House Tabs Button -->
+            <!-- Update a House Tabs Button -->
             <li class="nav-item">
                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
                 data-bs-target="#navs-pills-justified-update-house" aria-controls="navs-pills-justified-update-house" aria-selected="false">
@@ -39,7 +39,7 @@
         <!-- Details -->
         <div class="tab-content">
             <!-- Houses Details Tab -->
-            <div class="tab-pane fade show active" id="navs-pills-justified-houses-details" role="tabpanel">
+            <div class="tab-pane fade show active" id="navs-pills-justified-house-details" role="tabpanel">
                 <section class="property-single nav-arrow-b">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -291,7 +291,7 @@
             </div>
             <!-- End Houses Details Tab -->
 
-            <!-- Add a House Tabs Details -->
+            <!-- Update a House Tabs Details -->
             <div class="tab-pane fade" id="navs-pills-justified-update-house" role="tabpanel">
                 <form method="POST" enctype="multipart/form-data" action="">
                     {% csrf_token %}
