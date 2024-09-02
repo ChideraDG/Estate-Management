@@ -340,6 +340,32 @@ def tenant_detail(request, type, pk, tenant_id):
     # Set active menu and submenu for the navigation bar
     active_menu = 'tenants-management'
     active_sub_menu = 'tenant-profiles'
+    # Determine the profile based on user designation (either building owner or company)
+    if request.user.profile.designation == "building_owner":
+        profile = request.user.profile.building_owner
+    elif request.user.profile.designation == "company":
+        profile = None  # Handle company case later (if needed)
+    tenant = Tenant.objects.get(id=tenant_id)
+
+    if request.method == 'POST':
+        form = AddTenantForm(request.POST, building_owner=profile, request=request, instance=tenant)
+        
+        tenant.move_in_date = request.POST['move_in_date']
+        tenant.lease_start_date = request.POST['lease_start_date']
+        tenant.lease_end_date = request.POST['lease_end_date']
+        tenant.monthly_rent = request.POST['monthly_rent']
+        tenant.deposit_amount = request.POST['deposit_amount']
+        tenant.lease_term = request.POST['lease_term']
+        tenant.payment_status = request.POST['payment_status']
+        tenant.emergency_contact_name = request.POST['emergency_contact_name']
+        tenant.emergency_contact_number = request.POST['emergency_contact_number']
+        tenant.employment_status = request.POST['employment_status']
+        tenant.occupation = request.POST['occupation']
+        tenant.save()
+
+        return redirect("tenant-detail", pk=pk, type=type, tenant_id=tenant_id)
+    else:
+        form = AddTenantForm(building_owner=profile, request=request, instance=tenant)
     
     # Define the template route based on the user designation
     template_route = {
@@ -350,5 +376,7 @@ def tenant_detail(request, type, pk, tenant_id):
         'active_sub_menu': active_sub_menu,
         'template_route': template_route.get(request.user.profile.designation),
         'type': type,
+        'tenant': tenant,
+        'form': form,
     }
     return render(request, 'tenants/tenant_detail.html', context)
