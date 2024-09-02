@@ -101,8 +101,8 @@ class TenantForm(ModelForm):
 class AddTenantForm(forms.ModelForm):
     _house = forms.ModelChoiceField(queryset=House.objects.none(), 
                                     empty_label="Select a House",
-                                    widget=forms.Select(attrs={'id': 'house_id'}))
-    _apartment = forms.CharField(widget=forms.Select(attrs={'id': 'apartment_id'}))
+                                    widget=forms.Select(attrs={'id': 'house_id'}), label='house')
+    _apartment = forms.CharField(widget=forms.Select(attrs={'id': 'apartment_id'}), label='apartment')
     class Meta:
         model = Tenant
         fields = [ 
