@@ -1,5 +1,279 @@
 {% extends template_route %}
+{% load static %}
 
 {% block details %}
-<h1>James</h1>
+    <link href={% static "assets/css/style.css" %} rel="stylesheet">
+    <!-- Content -->
+
+    <!-- Location header -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Tenant Management / 
+            <a class="text-muted fw-light" href={% url "tenants-profiles" pk=request.user.profile type=type %}>Tenant Profiles</a> /
+        </span> {{ tenant }}
+    </h4>
+    <!-- End Location header -->
+
+    <!-- Tenant Details -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Tenant Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-tenant-details" aria-controls="navs-pills-justified-tenant-details" aria-selected="true">
+                    <i class="tf-icons bi bi-person-fill"></i> Tenant Details
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{houses.count}}</span>
+                </button>
+            </li>
+
+            <!-- Update a Tenant Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-update-tenant" aria-controls="navs-pills-justified-update-tenant" aria-selected="false">
+                    <i class="tf-icons bi bi-cloud-plus-fill"></i> Update Tenant Details
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Tenant Details Tab -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-tenant-details" role="tabpanel">
+                <section class="property-single nav-arrow-b">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div id="property-single-carousel" class="swiper">
+                                    <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active d-flex justify-content-center">
+                                                <img src="{{ tenant.profile_picture.url }}" class="d-block" style="width:621px; height: 621px; border-radius: 7px;" alt="...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-sm-12">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-5 col-lg-4">
+                                        <div class="property-price d-flex justify-content-center foo">
+                                            <div class="card-header-c d-flex">
+                                                <div class="card-box-ico">
+                                                    <span class="bi bi-cash">$</span>
+                                                </div>
+                                                <div class="card-title-c align-self-center">
+                                                    <h5 class="title-c mt-3">{{ tenant.monthly_rent }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="property-summary">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="title-box-d section-t4">
+                                                        <h3 class="title-d">Business Summary</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="summary-list">
+                                                <ul class="list">
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Move In Date:</strong>
+                                                        <span>{{ tenant.move_in_date }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Lease Start Date:</strong>
+                                                        <span>{{ tenant.lease_start_date }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Lease End Date:</strong>
+                                                        <span>{{ tenant.lease_end_date }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Deposit Amount:</strong>
+                                                        <span>${{ tenant.deposit_amount }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Lease Term:</strong>
+                                                        <span>{{ tenant.lease_term.title }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Payment Status:</strong>
+                                                        <span>{{ tenant.payment_status.title }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Emergency Contact Name:</strong>
+                                                        <span>{{ tenant.emergency_contact_name.title }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Emergency Contact Number:</strong>
+                                                        <span>{{ tenant.emergency_contact_number }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Employment Status:</strong>
+                                                        <span>{{ tenant.employment_status.title }}</span>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>Occupation:</strong>
+                                                        <span>{{ tenant.occupation.title }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 col-lg-7 section-md-t3">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="title-box-d">
+                                                    <h3 class="title-d">Personal Details</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-list">
+                                            <ul class="list" style="width: 60%;">
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>First Name:</strong>
+                                                    <span>{{ tenant.first_name.title }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Last Name</strong>
+                                                    <span>{{ tenant.last_name.title }}</span>
+                                                </li>
+                                                {% if tenant.country.name %}
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>World Location:</strong>
+                                                        <span>{{ tenant.city.title }} {{ tenant.state.name.title }} {{ tenant.country.name.title }}</span>
+                                                    </li>
+                                                {% endif %}
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>House Address:</strong>
+                                                    <span>{{ tenant.house.house_number }}, {{ tenant.house.address.title }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Apartment:</strong>
+                                                    <span>Apartment {{ tenant.apartment.apartment_number }} - Floor {{ tenant.apartment.floor_number }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Email:</strong>
+                                                    <span>{{ tenant.email.lower }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Phone Number:</strong>
+                                                    <span>{{ tenant.phone_number }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if house.agent %}
+                            <div class="col-md-12">
+                                <div class="row section-t3">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d">
+                                        <h3 class="title-d">House Agent</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <img src={{ house.agent.profile_picture.url }} alt="" class="img-fluid">
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="property-agent">
+                                            <h4 class="title-agent">{{ house.agent.name.title }}</h4>
+                                            <p class="color-text-a">
+                                                {{ house.bio }}
+                                            </p>
+                                            <ul class="list-unstyled">
+                                                <li class="d-flex justify-content-between">
+                                                <strong>Phone:</strong>
+                                                <span class="color-text-a">{{ house.agent.phone_number }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                <strong>Email:</strong>
+                                                <span class="color-text-a">{{ house.agent.email }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                <strong>Rating:</strong>
+                                                <span class="color-text-a">{{ house.agent.rating }}%</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Date of Hire:</strong>
+                                                    <span class="color-text-a">{{ house.agent.date_of_hire }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-4">
+                                        <div class="property-contact">
+                                            <form class="form-a">
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="card-body">
+                                                        <div class="form-floating mb-4">
+                                                            <input type="text" class="form-control" id="floatingInput" placeholder="Rent Extension" aria-describedby="floatingInputHelp" required/>
+                                                            <label for="floatingInput">Title</label>
+                                                            <div id="floatingInputHelp" class="form-text">
+                                                            * Title of your Message
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-floating">
+                                                            <textarea class="form-control" id="floatingInput" placeholder="Send Message" aria-describedby="floatingInputHelp" required style="height: 150px;"></textarea>
+                                                            <label for="floatingInput">Message</label>
+                                                            <div id="floatingInputHelp" class="form-text">
+                                                                * Body of your Message
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Tenant Details Tab -->
+
+            <!-- Update a Tenant Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-update-tenant" role="tabpanel">
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            {% if field.label != "First name" and field.label != "Last name" and field.label != "Email" and field.label != "Phone number" and field.label != "house" and field.label != "apartment" %}
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                    
+                                    {% if field.label != "Emergency contact name" and field.label != "Emergency contact number" %}
+                                        <div id="floatingInputHelp" class="form-text">
+                                            This field is compulsory
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary me-2">Update Tenant</button>
+                    </div>
+                </form>
+            </div>
+            <!-- End Update a Tenant Tabs Details -->
+        </div>
+        <!-- End Details -->
+    </div>
+    <!-- End Tenant Details -->
+
 {% endblock details %}
