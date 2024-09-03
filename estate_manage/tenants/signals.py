@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 from users.models import Profile
 from .models import Tenant
@@ -31,3 +31,30 @@ def createBuyerProfile(sender, instance, created, **kwargs):
                 first_name=user.name,
                 email=user.email,
             )
+
+@receiver(post_delete, sender=Tenant)
+def delete_tenant(sender, instance, **kwargs):
+    """
+    Deletes the associated Profile instance when a Tenant instance is deleted.
+    """
+    instance.user.delete()  # Delete the associated Profile instance
+
+
+@receiver(post_save, sender=Tenant)
+def save_tenant(sender, instance, created, **kwargs):
+    if not created:
+        if instance.apartment:
+            apartment = instance.apartment
+            apartment.is_occupied = True
+            apartment.save()
+            
+
+@receiver(pre_delete, sender=Tenant)
+def delete_tenant_apartment(sender, instance, **kwargs):
+    """
+    Deletes the associated Apartment instance when a Tenant instance is deleted.
+    """
+    if instance.apartment:
+        apartment = instance.apartment
+        apartment.is_occupied = False  # Delete the associated Apartment instance
+        apartment.save()
