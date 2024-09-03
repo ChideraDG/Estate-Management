@@ -30,7 +30,7 @@ class Tenant(models.Model):
 
     user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default=None,
                                 related_name='tenant')
-    building_owner = models.ForeignKey(BuildingOwner, on_delete=models.SET_NULL, blank=True, null=True, 
+    building_owner = models.ForeignKey(BuildingOwner, on_delete=models.CASCADE, blank=True, null=True, 
                                        default=None, related_name='tenants')
     estate = models.ForeignKey(Estate, on_delete=models.SET_NULL, blank=True, null=True, 
                                default=None, related_name='tenants')
@@ -71,3 +71,6 @@ class Tenant(models.Model):
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
+    
+    class Meta:
+        ordering = ["-created"]
