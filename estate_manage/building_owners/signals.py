@@ -32,13 +32,4 @@ def create_building_owner_profile(sender, instance, created, **kwargs):
                 building_owner_name=user.name,
                 contact_email=user.email,
             )
-
-
-@receiver(post_save, sender=Tenant)
-def save_tenant(sender, instance, created, **kwargs):
-    if not created:
-        if instance.apartment:
-            apartment = instance.apartment
-            apartment.is_occupied = True
-            apartment.save()
             
