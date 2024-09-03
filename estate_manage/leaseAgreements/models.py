@@ -42,7 +42,6 @@ class LeaseAgreement(models.Model):
         ('quarterly', 'Quarterly'),
         ('annually', 'Annually'),
     ])
-    agreement_document = models.FileField(upload_to='agreements/', null=True, blank=True)
     terms_and_conditions = models.TextField()
     agreement_signed = models.BooleanField(default=False)
     date_signed = models.DateTimeField(default=timezone.now)
