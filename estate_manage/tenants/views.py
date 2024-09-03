@@ -6,10 +6,12 @@ from django.utils.http import urlencode
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
+from django.urls import reverse
 from locations.models import Country, State
 from houses.models import House
 from apartments.models import Apartment
 from users.views import generate_username, generate_password
+from leaseAgreements.models import LeaseAgreement
 from .models import Tenant
 from .forms import TenantForm, TenantFilterForm, AddTenantForm
 from .utils import paginateTenants
@@ -217,8 +219,17 @@ The EstateManage Team
             tenant.occupation = request.POST['occupation']
             tenant.save()
 
-            # Clear the form by redirecting to the same page
-            return redirect('tenants-profiles', pk=pk, type=type)
+            LeaseAgreement.objects.create(
+                tenant=tenant,
+                apartment=tenant.apartment,
+                start_date=tenant.lease_start_date,
+                end_date=tenant.lease_end_date,
+                rent_amount=tenant.monthly_rent,
+                deposit_amount=tenant.deposit_amount,
+            )
+
+            url = reverse('agreements', kwargs={'pk':pk, 'type':type}) + f'?lease_update=True&tenant_id={tenant.id}&active_menu=tenants-management&active_sub_menu=tenant-agreements'
+            return redirect(url)
         else:
             # Print form errors for debugging purposes
             for field, errors in form.errors.items():
@@ -380,3 +391,15 @@ def tenant_detail(request, type, pk, tenant_id):
         'form': form,
     }
     return render(request, 'tenants/tenant_detail.html', context)
+
+def delete_tenant(request, pk):
+    # Determine the profile based on user designation (either building owner or company)
+    if request.user.profile.designation == "building_owner":
+        profile = request.user.profile.building_owner
+    elif request.user.profile.designation == "company":
+        profile = None  # Handle company case later (if needed)
+
+    tenant = Tenant.objects.get(id=pk)
+    tenant.delete()
+
+    return redirect("tenants-profiles", type="bo" if request.user.profile.designation == "building_owner" else None, pk=profile)
