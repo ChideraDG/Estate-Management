@@ -1,12 +1,116 @@
 {% extends template_routes %}
 
 {% block details %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>{{ agreements }}</h1>
+    <!-- Content -->
+
+    <!-- Location -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            Tenant Management /
+        </span> 
+        Lease Management
+    </h4>
+    <!-- End Location -->
+
+    <!-- Lease Agreements -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Lease Agreements Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-lease-agreements" aria-controls="navs-pills-justified-lease-agreements" aria-selected="true">
+                    <i class="tf-icons bi bi-file-earmark-check-fill"></i> Lease Agreements
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ apartments.count }}</span>
+                </button>
+            </li>
+
+            {% if tenants %}
+            <!-- Create Lease Agreement Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-create-lease-agreement" aria-controls="navs-pills-justified-add-create-lease-agreement" aria-selected="false">
+                    <i class="tf-icons bi bi-pencil-square"></i> Create Lease Agreement
+                </button>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Lease Agreements Tabs Details -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-lease-agreements" role="tabpanel">
+                <div class="card">
+                    {% if agreements %}
+                    <h5 class="card-header">Tenant Lease Agreements</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tenant</th>
+                                    <th>Apartment</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Rent Amount</th>
+                                    <th>Deposit Amount</th>
+                                    <th>Schedule</th>
+                                    <th>Signed</th>
+                                    <th>Date Signed</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                {% for agreement in agreements %}
+                                    <tr>
+                                        <td>
+                                            <h1>Text</h1>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot class="table-border-bottom-0">
+                                <tr>
+                                    <th>Tenant</th>
+                                    <th>Apartment</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Rent Amount</th>
+                                    <th>Deposit Amount</th>
+                                    <th>Schedule</th>
+                                    <th>Signed</th>
+                                    <th>Date Signed</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    {% else %}
+                        <h3>No Lease Agreement Found</h3>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- End Lease Agreements Tabs Details -->
+
+            <!-- Create Lease Agreement Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-create-lease-agreement" role="tabpanel">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary me-2">Create Agreement</button>
+                </div>
+                </form>
+            </div>
+            <!-- Create Lease Agreement Tabs Details -->
         </div>
+        <!-- End Details -->
     </div>
-</div>
+    <!-- End Content -->
 
 {% endblock details %}
