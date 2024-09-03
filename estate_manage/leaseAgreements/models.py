@@ -47,6 +47,9 @@ class LeaseAgreement(models.Model):
     agreement_signed = models.BooleanField(default=False)
     date_signed = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        ordering = ['-date_signed']
+        
     def __str__(self):
         """
         Returns a string representation of the Lease Agreement.
