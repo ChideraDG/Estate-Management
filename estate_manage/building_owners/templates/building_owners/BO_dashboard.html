@@ -71,13 +71,13 @@
                 <div data-i18n="tenant-profiles">Tenant Profiles</div>
             </a>
             </li>
-            <li class="menu-item">
-            <a href="pages-account-settings-notifications.html" class="menu-link">
+            <li class="menu-item {% if active_sub_menu == 'tenant-agreements' %}active{% endif %}">
+            <a href={% url "agreements" type="bo" pk=request.user.profile %}?active_menu=tenants-management&active_sub_menu=tenant-agreements class="menu-link">
                 <div data-i18n="lease-management">Lease Management</div>
             </a>
             </li>
             <li class="menu-item">
-            <a href="pages-account-settings-connections.html" class="menu-link">
+            <a href="#" class="menu-link">
                 <div data-i18n="communication-tools">Communication Tools</div>
             </a>
             </li>
