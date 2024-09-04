@@ -47,17 +47,17 @@
                 <div class="nav-align-top">
                     <ul class="nav nav-pills mb-3" role="tablist">
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                            <button type="button" class="nav-link {% if i_menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
                                 All
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
+                            <button type="button" class="nav-link {% if i_menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
                                 Occupied Apartments
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
+                            <button type="button" class="nav-link {% if i_menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
                                 Vacant Apartments
                             </button>
                         </li>
@@ -76,7 +76,7 @@
                     <!-- House Tab Details Inner -->
                     <div class="tab-content" style="background-color: #f5f5f9;">
                         <!-- All Houses Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
                             {% if exist.0 %}
                                 {% include "apartments/apartment_content.html" with apartments=apartments type=type %}
                                 <!--Paginator for All Houses-->
@@ -89,7 +89,7 @@
                         <!-- End All Houses Tab Details -->
 
                         <!-- Occupied Houses Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
                         {% if exist.1 %}
                             {% include "apartments/apartment_content.html" with apartments=occupied_apartments type=type %}
                             <!--Paginator for All Houses-->
@@ -102,7 +102,7 @@
                         <!-- End Occupied Houses Tab Details -->
 
                         <!-- Vacant Houses Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
                         {% if exist.2 %}
                             {% include "apartments/apartment_content.html" with apartments=vacant_apartments type=type %}
                             <!--Paginator for All Houses-->
