@@ -58,7 +58,7 @@ class LeaseAgreement(models.Model):
         str
             A string indicating the house and tenant associated with the lease agreement.
         """
-        return f'Lease Agreement for {self.house} by {self.tenant}'
+        return f'Lease Agreement for {self.apartment} by {self.tenant}'
 
     def is_active(self):
         """
