@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
+from locations.models import Country, State
+from users.views import greet_client
 from .models import BuildingOwner
 from .forms import BuildingOwnerForm
-from locations.models import Country, State
 
 
 @login_required(login_url='login')
@@ -58,10 +59,14 @@ def get_states(request):
 @login_required(login_url='login')
 def building_owner_dashboard(request, pk):
     menu = 'building-owner-dashboard'
+    greeting = greet_client() 
+    no_of_houses = request.user.profile.building_owner.houses.all().count()
 
     context = {
         'username': pk,
         'menu': menu,
+        'greeting': greeting,
+        'no_of_houses': no_of_houses,
     }
     return render(request, "building_owners/BO_dashboard.html", context)
 
