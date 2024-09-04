@@ -136,8 +136,8 @@ def user_profile(request, type, pk):
     else:
         form = ProfileForm(instance=profile)
 
-    active_menu = 'user-management'
-    active_sub_menu = 'personal-profile'
+    menu = 'user-management'
+    s_menu = 'personal-profile'
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
@@ -154,8 +154,8 @@ def user_profile(request, type, pk):
 
     context = {
         "user": profile,
-        "active_menu": active_menu,
-        "active_sub_menu": active_sub_menu,
+        " menu": menu,
+        " s_menu": s_menu,
         'form': form,
         'template_routes': template_routes.get(profile.designation),
         'connection_route': connection_route.get(profile.designation)
