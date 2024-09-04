@@ -1,255 +1,265 @@
-{% extends "dashboard/main.html" %}
-
-{% block title %}
+{% extends "dashboard/main.html" %} {% block title %}
 <title>{{request.user.profile.username.title}}-Company</title>
-{% endblock title %}
+{% endblock title %} {% block company %}
+<!-- Dashboard -->
+<li class="menu-item {% if menu == 'company-dashboard' %}active{% endif %}">
+  <a href='{% url "dashboard-C" pk=request.user.profile %}' class="menu-link">
+    <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
+    <div data-i18n="Analytics">Dashboard</div>
+  </a>
+</li>
 
-{% block company %}
-    <!-- Dashboard -->
-    <li class="menu-item {% if active_menu == 'company-dashboard' %}active{% endif %}">
-        <a href='{% url "dashboard-C" pk=request.user.profile %}' class="menu-link">
-            <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
-            <div data-i18n="Analytics">Dashboard</div>
-        </a>
+<li class="menu-header small text-uppercase">
+  <span class="menu-header-text">Properties</span>
+</li>
+
+<!-- Estate Management -->
+<li class="menu-item {% if menu == 'estate-management' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+    <div data-i18n="Estate Management">Estate Management</div>
+  </a>
+
+  <ul class="menu-sub">
+    <li class="menu-item {% if s_menu == 'estate-profile' %}active{% endif %}">
+      <a href="#" class="menu-link">
+        <div data-i18n="estate-profile">Estate Profile</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" class="menu-link">
+        <div data-i18n="estate-report">Estate Report</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- House Management -->
+<li class="menu-item {% if menu == 'house-management' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+    <div data-i18n="House Management">House Management</div>
+  </a>
+
+  <ul class="menu-sub">
+    <li class="menu-item {% if s_menu == 'estate-profile' %}active{% endif %}">
+      <a href="#" class="menu-link">
+        <div data-i18n="house-profile">House Profile</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" class="menu-link">
+        <div data-i18n="house-report">House Report</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- Apartment Management -->
+<li class="menu-item {% if menu == 'apartment-control' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
+    <div data-i18n="Apartment Control">Apartment Control</div>
+  </a>
+
+  <ul class="menu-sub">
+    <li
+      class="menu-item {% if s_menu == 'apartment-profile' %}active{% endif %}"
+    >
+      <a href="#" class="menu-link">
+        <div data-i18n="apartment-profile">Apartment Profile</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" class="menu-link">
+        <div data-i18n="lease-management">Lease Management</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- tenant Management -->
+<li class="menu-item {% if menu == 'tm' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
+    <div data-i18n="Tenant Management">Tenant Management</div>
+  </a>
+
+  <ul class="menu-sub">
+    <li class="menu-item {% if s_menu == 'tenant-profile' %}active{% endif %}">
+      <a href="#" class="menu-link">
+        <div data-i18n="tenant-profile">Tenant Profile</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" class="menu-link">
+        <div data-i18n="house-report">House Report</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" class="menu-link">
+        <div data-i18n="communication">Communication</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- Services -->
+<li class="menu-header small text-uppercase">
+  <span class="menu-header-text">Services</span>
+</li>
+<!-- Financial Management-->
+<li class="menu-item {% if menu == 'finance' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
+    <div data-i18n="Finance">Finance</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item">
+      <a href="pages-account-settings-account.html" class="menu-link">
+        <div data-i18n="rent-collection">Rent Collection</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="pages-account-settings-notifications.html" class="menu-link">
+        <div data-i18n="expense-tracking">Expense Tracking</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="pages-account-settings-connections.html" class="menu-link">
+        <div data-i18n="financial-reporting">Financial Reporting</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- Maintenance Management-->
+<li class="menu-item {% if menu == 'maintenance' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
+    <div data-i18n="Maintenance">Maintenance</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item">
+      <a href="pages-account-settings-account.html" class="menu-link">
+        <div data-i18n="work-orders">Work Orders</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="pages-account-settings-notifications.html" class="menu-link">
+        <div data-i18n="maintenance-schedule">Maintenance Schedule</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="pages-account-settings-connections.html" class="menu-link">
+        <div data-i18n="service-providers">Service Providers</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- Documents -->
+<li class="menu-item {% if menu == 'document' %}active{% endif %}">
+  <a href="javascript:void(0)" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-folder-fill tiny-icon"></i>
+    <div data-i18n="Extended UI">Documents</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item">
+      <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+        <div data-i18n="document-storage">Document Storage</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="extended-ui-text-divider.html" class="menu-link">
+        <div data-i18n="document-sharing">Document Sharing</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- Forecasting -->
+<li class="menu-header small text-uppercase">
+  <span class="menu-header-text">Forecasting</span>
+</li>
+
+<!-- Analytics -->
+<li class="menu-item {% if menu == 'analytics' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-graph-up tiny-icon"></i>
+    <div data-i18n="analytics">Analytics</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item">
+      <a href="forms-basic-inputs.html" class="menu-link">
+        <div data-i18n="real-time-analytics">Real-time Analytics</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="forms-input-groups.html" class="menu-link">
+        <div data-i18n="forecasting-tools">Forecasting Tools</div>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- Reporting -->
+<li class="menu-item {% if menu == 'reporting' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i
+      class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"
+    ></i>
+    <div data-i18n="reports">Reports</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item">
+      <a href="form-layouts-vertical.html" class="menu-link">
+        <div data-i18n="custom-reports">Custom Reports</div>
+      </a>
     </li>
 
-    <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Properties</span>
+    <li class="menu-item">
+      <a
+        href="auth-forgot-password-basic.html"
+        class="menu-link"
+        target="_blank"
+      >
+        <div data-i18n="feedback-surveys">Feedback and Surveys</div>
+      </a>
     </li>
+  </ul>
+</li>
 
-    <!-- Estate Management -->
-    <li class="menu-item {% if active_menu == 'estate-management' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
-            <div data-i18n="Estate Management">Estate Management</div>
-        </a>
+<!-- Profiles -->
+<li class="menu-header small text-uppercase">
+  <span class="menu-header-text">Profiles</span>
+</li>
 
-        <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'estate-profile' %}active{% endif %}">
-                <a href="#" class="menu-link">
-                    <div data-i18n="estate-profile">Estate Profile</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <div data-i18n="estate-report">Estate Report</div>
-                </a>
-            </li>
-           
-        </ul>
+<!-- User Management -->
+<li class="menu-item {% if menu == 'user-management' %}active{% endif %}">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
+    <div data-i18n="User Management">User Management</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item {% if s_menu == 'c-profile' %}active{% endif %}">
+      <a
+        href='{% url "view-company" pk=request.user.profile %}'
+        class="menu-link"
+      >
+        <div data-i18n="c-profile">Company Profile</div>
+      </a>
     </li>
-
-    <!-- House Management -->
-    <li class="menu-item {% if active_menu == 'house-management' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
-            <div data-i18n="House Management">House Management</div>
-        </a>
-
-        <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'estate-profile' %}active{% endif %}">
-                <a href="#" class="menu-link">
-                    <div data-i18n="house-profile">House Profile</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <div data-i18n="house-report">House Report</div>
-                </a>
-            </li>
-           
-        </ul>
+    <li
+      class="menu-item {% if s_menu == 'personal-profile' %}active{% endif %}"
+    >
+      <a
+        href='{% url "view-user-profile" pk=request.user.profile type="c" %}'
+        class="menu-link"
+      >
+        <div data-i18n="personal-profile">Personal Profile</div>
+      </a>
     </li>
-
-       <!-- Apartment Management -->
-       <li class="menu-item {% if active_menu == 'apartment-control' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
-            <div data-i18n="Apartment Control">Apartment Control</div>
-        </a>
-
-        <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'apartment-profile' %}active{% endif %}">
-                <a href="#" class="menu-link">
-                    <div data-i18n="apartment-profile">Apartment Profile</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <div data-i18n="lease-management">Lease Management</div>
-                </a>
-            </li>
-           
-           
-        </ul>
-    </li>
-
-    <!-- tenant Management -->
-    <li class="menu-item {% if active_menu == 'tenant-management' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
-            <div data-i18n="Tenant Management">Tenant Management</div>
-        </a>
-
-        <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'tenant-profile' %}active{% endif %}">
-                <a href="#" class="menu-link">
-                    <div data-i18n="tenant-profile">Tenant Profile</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <div data-i18n="house-report">House Report</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <div data-i18n="communication">Communication</div>
-                </a>
-            </li>
-           
-        </ul>
-    </li>
-
-
-    <!-- Services -->
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
-     <!-- Financial Management-->
-     <li class="menu-item {% if active_menu == 'finance' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
-            <div data-i18n="Finance">Finance</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-            <a href="pages-account-settings-account.html" class="menu-link">
-                <div data-i18n="rent-collection">Rent Collection</div>
-            </a>
-            </li>
-            <li class="menu-item">
-            <a href="pages-account-settings-notifications.html" class="menu-link">
-                <div data-i18n="expense-tracking">Expense Tracking</div>
-            </a>
-            </li>
-            <li class="menu-item">
-            <a href="pages-account-settings-connections.html" class="menu-link">
-                <div data-i18n="financial-reporting">Financial Reporting</div>
-            </a>
-            </li>
-        </ul>
-    </li>
-
-     <!-- Maintenance Management-->
-     <li class="menu-item {% if active_menu == 'maintenance' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-tools  tiny-icon"></i>
-            <div data-i18n="Maintenance">Maintenance</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-            <a href="pages-account-settings-account.html" class="menu-link">
-                <div data-i18n="work-orders">Work Orders</div>
-            </a>
-            </li>
-            <li class="menu-item">
-            <a href="pages-account-settings-notifications.html" class="menu-link">
-                <div data-i18n="maintenance-schedule">Maintenance Schedule</div>
-            </a>
-            </li>
-            <li class="menu-item">
-            <a href="pages-account-settings-connections.html" class="menu-link">
-                <div data-i18n="service-providers">Service Providers</div>
-            </a>
-            </li>
-        </ul>
-    </li>
-
-   
-
-    <!-- Documents -->
-    <li class="menu-item {% if active_menu == 'document' %}active{% endif %}">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-folder-fill tiny-icon"></i>
-            <div data-i18n="Extended UI">Documents</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-                    <div data-i18n="document-storage">Document Storage</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="extended-ui-text-divider.html" class="menu-link">
-                    <div data-i18n="document-sharing">Document Sharing</div>
-                </a>
-            </li>
-        </ul>
-    </li>
-
-    
-
-    <!-- Forecasting -->
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Forecasting</span></li>
-    
-    <!-- Analytics -->
-    <li class="menu-item {% if active_menu == 'analytics' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-graph-up tiny-icon"></i>
-            <div data-i18n="analytics">Analytics</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="forms-basic-inputs.html" class="menu-link">
-                    <div data-i18n="real-time-analytics">Real-time Analytics</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="forms-input-groups.html" class="menu-link">
-                    <div data-i18n="forecasting-tools">Forecasting Tools</div>
-                </a>
-            </li>
-        </ul>
-    </li>
-
-    <!-- Reporting -->
-    <li class="menu-item {% if active_menu == 'reporting' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"></i>
-            <div data-i18n="reports">Reports</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-            <a href="form-layouts-vertical.html" class="menu-link">
-                <div data-i18n="custom-reports">Custom Reports</div>
-            </a>
-            <li class="menu-item">
-                <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="feedback-surveys">Feedback and Surveys</div>
-                </a>
-                </li>
-        </ul>
-    </li>
-
-    <!-- Profiles -->
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
-                    
-    <!-- User Management -->
-    <li class="menu-item {% if active_menu == 'user-management' %}active{% endif %}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
-            <div data-i18n="User Management">User Management</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'c-profile' %}active{% endif %}">
-                <a href='{% url "view-company" pk=request.user.profile %}'  class="menu-link">
-                    <div data-i18n="c-profile">Company Profile</div>
-                </a>
-            </li>
-            <li class="menu-item {% if active_sub_menu == 'personal-profile' %}active{% endif %}">
-                <a href='{% url "view-user-profile" pk=request.user.profile type="c" %}' class="menu-link">
-                    <div data-i18n="personal-profile">Personal Profile</div>
-                </a>
-            </li>
-        </ul>
-    </li>
+  </ul>
+</li>
 {% endblock company %}
