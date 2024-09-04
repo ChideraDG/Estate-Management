@@ -1,0 +1,14 @@
+{% extends template_routes %}
+
+{% block details %}
+    <!-- Content -->
+
+    <!-- Location -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            Tenant Management / 
+            <a class="text-muted fw-light" href={% url "agreements" type=type pk=request.user.profile %}?menu=tm&s_menu=ta>Lease Management</a> /
+        </span> 
+        {{ agreement.tenant }}
+    </h4>
+{% endblock %}
