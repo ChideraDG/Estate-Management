@@ -43,22 +43,22 @@
                 <div class="nav-align-top">
                     <ul class="nav nav-pills mb-3" role="tablist">
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                            <button type="button" class="nav-link {% if i_menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
                                 All
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'yearly' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-yearly" aria-controls="navs-pills-top-yearly" aria-selected="false">
+                            <button type="button" class="nav-link {% if i_menu == 'yearly' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-yearly" aria-controls="navs-pills-top-yearly" aria-selected="false">
                                 Yearly Lease
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'six_monthly' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-six_monthly" aria-controls="navs-pills-top-six_monthly" aria-selected="false">
+                            <button type="button" class="nav-link {% if i_menu == 'six_monthly' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-six_monthly" aria-controls="navs-pills-top-six_monthly" aria-selected="false">
                                 Six-Monthly Lease
                             </button>
                         </li>
                         <li class="nav-item">
-                            <button type="button" class="nav-link {% if menu == 'month_to_month' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-month_to_month" aria-controls="navs-pills-top-month_to_month" aria-selected="false">
+                            <button type="button" class="nav-link {% if i_menu == 'month_to_month' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-month_to_month" aria-controls="navs-pills-top-month_to_month" aria-selected="false">
                                 Month-to-Month Lease
                             </button>
                         </li>
@@ -77,7 +77,7 @@
                     <!-- Tenant Tab Details Inner -->
                     <div class="tab-content" style="background-color: #f5f5f9;">
                         <!-- All Tenant Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
                            {% if exist.0 %}
                                 {% include "tenants/tenant_content.html" with tenants=tenants type=type %}
                            {% else %}
@@ -90,7 +90,7 @@
                         <!-- End All Tenant Tab Details -->
 
                         <!-- Yearly Lease Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'yearly' %}show active{% endif %}" id="navs-pills-top-yearly" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'yearly' %}show active{% endif %}" id="navs-pills-top-yearly" role="tabpanel">
                             {% if exist.1 %}
                                 {% include "tenants/tenant_content.html" with tenants=yearly_tenants type=type %}
                             {% else %}
@@ -103,7 +103,7 @@
                         <!-- End Yearly Lease Tab Details -->
 
                         <!-- Six-Monthly Lease Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'six_monthly' %}show active{% endif %}" id="navs-pills-top-six_monthly" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'six_monthly' %}show active{% endif %}" id="navs-pills-top-six_monthly" role="tabpanel">
                             {% if exist.2 %}
                                 {% include "tenants/tenant_content.html" with tenants=six_monthly_tenants type=type %}
                             {% else %}
@@ -116,7 +116,7 @@
                         <!-- End Six-Monthly Lease Tab Details -->
 
                         <!-- Month-to-Month Lease Tab Details -->
-                        <div class="tab-pane fade {% if menu == 'month_to_month' %}show active{% endif %}" id="navs-pills-top-month_to_month" role="tabpanel">
+                        <div class="tab-pane fade {% if i_menu == 'month_to_month' %}show active{% endif %}" id="navs-pills-top-month_to_month" role="tabpanel">
                             {% if exist.3 %}
                                 {% include "tenants/tenant_content.html" with tenants=month_to_month_tenants type=type %}
                             {% else %}
