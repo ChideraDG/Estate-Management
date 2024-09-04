@@ -1,34 +1,52 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from documents.models import Document
 from .models import LeaseAgreement
 from .forms import LeaseAgreementForm
 
 def lease_agreements(request, type, pk):
-    active_menu = request.GET.get("active_menu", "")
-    active_sub_menu = request.GET.get("active_sub_menu", "")
-    lease_update = request.GET.get("lease_update", False)
-    tenant = request.GET.get("tenant_id", "")
-    lease_agreement = LeaseAgreement.objects.filter(tenant=tenant).first()
+    menu = request.GET.get("menu", "")
+    s_menu = request.GET.get("s_menu", "")
     profile = request.user.profile
     tenants = None
     if profile.designation == "building_owner":
         tenants = profile.building_owner.tenants.all()
         agreements = LeaseAgreement.objects.filter(tenant__in=tenants)
 
-    if request.method == "POST":
-        form = LeaseAgreementForm(request.POST, request.FILES, instance=lease_agreement)
-        if form.is_valid():
-            agreement = form.save()
+    lease_update = request.GET.get("lease_update", False)
+    if lease_update:
+        tenant = request.GET.get("tenant_id", "")
+        lease_agreement = LeaseAgreement.objects.filter(tenant=tenant).first()
+        if request.method == "POST":
+            form = LeaseAgreementForm(request.POST, request.FILES, instance=lease_agreement)
+            files = request.FILES.getlist('docs')
+
+            if form.is_valid():
+                agreement = form.save()
+
+                for file in files:
+                    Document.objects.create(
+                        title=f"{tenant}",
+                        file=file,
+                        document_type='lease_agreement',
+                        uploaded_by=request.user,
+                        related_apartment=agreement.apartment,
+                        related_lease=agreement
+                    )
+
+                return redirect('agreements', pk=pk, type=type)
+            else:
+                pass
         else:
-            pass
+            form = LeaseAgreementForm(instance=lease_agreement)
     else:
-        form = LeaseAgreementForm(instance=lease_agreement)
+        form = ""
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
     }
     context = {
-        "active_menu": active_menu,
-        "active_sub_menu": active_sub_menu,
+        "menu": menu,
+        "s_menu": s_menu,
         "template_routes": template_routes.get(profile.designation),
         "agreements": agreements,
         "tenants": tenants,
