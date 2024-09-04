@@ -1,4 +1,6 @@
-{% extends template_routes %} {% block details %}
+{% extends template_routes %} 
+
+{% block details %}
 <!-- Content -->
 <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">User Management /</span> Personal Profile
@@ -13,15 +15,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          href="{%"
-          url
-          connection_route
-          pk="user"
-          %}?
-          s_menu="personal-profile"
-        >
+        <a class="nav-link" href={% url connection_route pk=request.user%}?s_menu=personal-profile>
           <i class="bi bi-link"></i> Connections
         </a>
       </li>
