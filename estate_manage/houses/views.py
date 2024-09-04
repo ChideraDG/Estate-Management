@@ -59,7 +59,7 @@ def houses(request, pk, type):
     total_houses = houses.count
 
     # Get the current menu or default to 'all' if not provided.
-    _menu = request.GET.get('i_menu', 'all')
+    i_menu = request.GET.get('i_menu', 'all')
 
     # Get the reset filter URL or default to '/' if not provided.
     reset_filter = request.GET.get('reset_filter', '/')
@@ -155,7 +155,7 @@ def houses(request, pk, type):
         'custom_range': custom_range,
         'oh_custom_range': oh_custom_range,
         'vh_custom_range': vh_custom_range,
-        'i_menu': _menu,
+        'i_menu': i_menu,
         'filter_form': HouseFilterForm(),
         'exist': exist,
         'reset_filter': reset_filter,
