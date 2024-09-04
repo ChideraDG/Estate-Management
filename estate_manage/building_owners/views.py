@@ -36,12 +36,12 @@ def building_owner_profile(request, pk):
     else:
         form = BuildingOwnerForm(instance=profile)
 
-    active_menu = 'user-management'
-    active_sub_menu = 'bo-profile'
+    menu = 'user-management'
+    s_menu = 'bo-profile'
     
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'profile': profile,
         'form': form, 
         'countries': countries, 
@@ -57,18 +57,18 @@ def get_states(request):
 
 @login_required(login_url='login')
 def building_owner_dashboard(request, pk):
-    active_menu = 'building-owner-dashboard'
+    menu = 'building-owner-dashboard'
 
     context = {
         'username': pk,
-        'active_menu': active_menu,
+        'menu': menu,
     }
     return render(request, "building_owners/BO_dashboard.html", context)
 
 @login_required(login_url='login')
 def view_connections(request, pk):
-    active_menu = 'user-management'
-    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
+    menu = 'user-management'
+    s_menu = request.GET.get('s_menu', 'personal-profile')
     user_type = request.user.profile.designation
     labels = {
         "building_owner": 'BO',
@@ -79,8 +79,8 @@ def view_connections(request, pk):
     }
 
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'type': labels.get(user_type)
     }
     return render(request, "building_owners/view_connections.html", context)
