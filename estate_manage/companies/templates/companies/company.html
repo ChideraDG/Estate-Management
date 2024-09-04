@@ -1,173 +1,206 @@
-{% extends "companies/C_dashboard.html" %}
+{% extends "companies/C_dashboard.html" %} {% block details %}
+<!-- Content -->
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">User Management /</span> Company Profile
+</h4>
 
-{% block details %}
-    <!-- Content -->
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">User Management /</span> Company Profile</h4>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills flex-column flex-md-row mb-3">
+      <li class="nav-item">
+        <a class="nav-link active" href="javascript:void(0);">
+          <i class="bi bi-person-fill me-1"></i> Company Profile
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href='{% url "c-view-connections" pk=request.user.profile %}? s_menu=c-profile'
+        >
+          <i class="bi bi-link"></i> Connections
+        </a>
+      </li>
+    </ul>
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                <li class="nav-item">
-                    <a class="nav-link active" href="javascript:void(0);">
-                        <i class="bi bi-person-fill me-1"></i> Company Profile
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href='{% url "c-view-connections" pk=request.user.profile %}?active_sub_menu=c-profile'>
-                        <i class="bi bi-link"></i> Connections
-                    </a>
-                </li>
-            </ul>
-            
-            <div class="card mb-4">
-                <h5 class="card-header">Company Profile Details</h5>
-                <!-- Account -->
-                <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="{{ profile.logo.url }}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar"/>
-                        <div class="button-wrapper">
-                            <button type="button" class="btn btn-primary me-3 mb-4 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exLargeModal">
-                                <span class="d-none d-sm-block me-2">Update Profile</span>
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="my-0" />
-
-                <div class="card-body">
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Company Name</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.name }}
-                            </div>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Email</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.email }}
-                            </div>
-                        </div>
-                        {% if profile.number %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Company Mobile Number</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.number }}
-                            </div>
-                        </div>{% endif %}
-                        {% if profile.address %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Address</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.address }}
-                            </div>
-                        </div>{% endif %}
-                        {% if profile.website %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Company Website</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.website }}
-                            </div>
-                        </div>{% endif %}
-                        {% if profile.cac %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Company CAC</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.cac }}
-                            </div>
-                        </div>{% endif %}
-                        {% if profile.year_founded %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Company's Year founded</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.year_founded }}
-                            </div>
-                        </div>{% endif %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Created</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.created }}
-                            </div>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Updated</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ profile.updated }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Account -->
-            </div>
+    <div class="card mb-4">
+      <h5 class="card-header">Company Profile Details</h5>
+      <!-- Account -->
+      <div class="card-body">
+        <div class="d-flex align-items-start align-items-sm-center gap-4">
+          <img
+            src="{{ profile.logo.url }}"
+            alt="user-avatar"
+            class="d-block rounded"
+            height="100"
+            width="100"
+            id="uploadedAvatar"
+          />
+          <div class="button-wrapper">
+            <button
+              type="button"
+              class="btn btn-primary me-3 mb-4 d-flex align-items-center"
+              data-bs-toggle="modal"
+              data-bs-target="#exLargeModal"
+            >
+              <span class="d-none d-sm-block me-2">Update Profile</span>
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Update Building Owner Modal -->
-    <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="fw-bold py-3 mb-1"><span class="text-muted fw-light">User Management / Company /</span>  Update</h4>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" action='{% url "view-company" pk=request.user.profile %}'>
-                        {% csrf_token %}
-                        <div class="row">
-                            {% for field in form %}
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">{{ field.label }}</label>
-                                    {{ field }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                            </button>
-                            <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                        </div>
-                    </form>
-                </div>
+      <hr class="my-0" />
+
+      <div class="card-body">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Company Name</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.name }}
             </div>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Email</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.email }}
+            </div>
+          </div>
+          {% if profile.number %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Company Mobile Number</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.number }}
+            </div>
+          </div>
+          {% endif %} {% if profile.address %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Address</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.address }}
+            </div>
+          </div>
+          {% endif %} {% if profile.website %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Company Website</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.website }}
+            </div>
+          </div>
+          {% endif %} {% if profile.cac %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Company CAC</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.cac }}
+            </div>
+          </div>
+          {% endif %} {% if profile.year_founded %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Company's Year founded</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.year_founded }}
+            </div>
+          </div>
+          {% endif %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Created</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.created }}
+            </div>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Updated</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ profile.updated }}
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- /Account -->
     </div>
+  </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Listen for the modal to be shown
-            var modalElement = document.getElementById('exLargeModal');
-            modalElement.addEventListener('shown.bs.modal', function() {
-                // Attach a change event listener to the country dropdown
-                var countrySelect = document.getElementById('id_country');
-                countrySelect.addEventListener('change', function() {
-                    var countryId = this.value;
-                    if (countryId) {
-                        fetch("{% url 'get-states' %}?country_id=" + countryId)
-                            .then(response => response.json())
-                            .then(data => {
-                                var options = '<option value="">Select a state</option>';
-                                data.forEach(function(state) {
-                                    options += '<option value="' + state.id + '">' + state.name + '</option>';
-                                });
-                                document.getElementById('id_state').innerHTML = options;
-                            })
-                            .catch(error => console.error("Error fetching states:", error));
-                    } else {
-                        document.getElementById('id_state').innerHTML = '';
-                    }
-                });
-            });
-        });        
-    </script>
-    <!-- / Content -->
+<!-- Update Building Owner Modal -->
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="fw-bold py-3 mb-1">
+          <span class="text-muted fw-light">User Management / Company /</span>
+          Update
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="card-body">
+        <form
+          method="POST"
+          enctype="multipart/form-data"
+          action='{% url "view-company" pk=request.user.profile %}'
+        >
+          {% csrf_token %}
+          <div class="row">
+            {% for field in form %}
+            <div class="mb-3 col-md-6">
+              <label class="form-label">{{ field.label }}</label>
+              {{ field }}
+            </div>
+            {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary me-2">
+              Save changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Listen for the modal to be shown
+    var modalElement = document.getElementById("exLargeModal");
+    modalElement.addEventListener("shown.bs.modal", function () {
+      // Attach a change event listener to the country dropdown
+      var countrySelect = document.getElementById("id_country");
+      countrySelect.addEventListener("change", function () {
+        var countryId = this.value;
+        if (countryId) {
+          fetch("{% url 'get-states' %}?country_id=" + countryId)
+            .then((response) => response.json())
+            .then((data) => {
+              var options = '<option value="">Select a state</option>';
+              data.forEach(function (state) {
+                options +=
+                  '<option value="' +
+                  state.id +
+                  '">' +
+                  state.name +
+                  "</option>";
+              });
+              document.getElementById("id_state").innerHTML = options;
+            })
+            .catch((error) => console.error("Error fetching states:", error));
+        } else {
+          document.getElementById("id_state").innerHTML = "";
+        }
+      });
+    });
+  });
+</script>
+<!-- / Content -->
 
 {% endblock details %}
