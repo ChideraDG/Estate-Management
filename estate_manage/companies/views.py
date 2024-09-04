@@ -7,11 +7,11 @@ from django.contrib import messages
 
 @login_required(login_url='login')
 def companyDashboard(request, pk):
-    active_menu = 'company-dashboard'
+    menu = 'company-dashboard'
 
     context = {
         'username': pk, 
-        'active_menu': active_menu,
+        'menu': menu,
         }
     return render(request, "companies/C_dashboard.html", context)
 
@@ -47,12 +47,12 @@ def companyProfile(request, pk):
     else:
         form = CompanyForm(instance=profile)
 
-    active_menu = 'user-management'
-    active_sub_menu = 'c-profile'
+    menu = 'user-management'
+    s_menu = 'c-profile'
         
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'profile': profile,
         'form': form, 
         }
@@ -60,11 +60,11 @@ def companyProfile(request, pk):
 
 @login_required(login_url='login')
 def view_connections(request, pk):
-    active_menu = 'user-management'
-    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
+    menu = 'user-management'
+    s_menu = request.GET.get('s_menu', 'personal-profile')
 
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
     }
     return render(request, 'companies/viewConnections.html', context)
