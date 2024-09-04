@@ -1,4 +1,6 @@
-{% extends "building_owners/BO_dashboard.html" %} {% block details %}
+{% extends "building_owners/BO_dashboard.html" %} 
+
+{% block details %}
 <!-- Content -->
 <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light"> User Management / </span>
@@ -16,7 +18,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          href='{% url "bo-view-connections" pk=request.user.profile %}? s_menu=bo-profile'
+          href='{% url "bo-view-connections" pk=request.user.profile %}?s_menu=bo-profile'
         >
           <i class="bi bi-link"></i> Connections
         </a>
