@@ -40,7 +40,7 @@
           <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Apartments: {{ house.number_of_apartments }}</span></p>
           <p class="card-text"><span class="badge rounded-pill bg-label-dark">Occupancy Status: {{ house.occupancy_status.title }}</span></p>
           <a href={% url "house-details" pk=profile house_id=house.id type=type %} class="btn btn-outline-primary">Details</a>
-          <a href={% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-house-fill'></i> Apartments</a>
+          <a href={% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?menu=apartments-management&s_menu=apartment-profiles class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-house-fill'></i> Apartments</a>
         </div>
       </div>
     </div>
