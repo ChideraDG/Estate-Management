@@ -1,228 +1,252 @@
-{% extends template_routes %}
+{% extends template_routes %} {% block details %}
+<!-- Content -->
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">User Management /</span> Personal Profile
+</h4>
 
-{% block details %}
-    <!-- Content -->
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">User Management /</span> Personal Profile</h4>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills flex-column flex-md-row mb-3">
+      <li class="nav-item">
+        <a class="nav-link active" href="javascript:void(0);">
+          <i class="bi bi-person-fill me-1"></i> Personal Profile
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{%"
+          url
+          connection_route
+          pk="user"
+          %}?
+          s_menu="personal-profile"
+        >
+          <i class="bi bi-link"></i> Connections
+        </a>
+      </li>
+    </ul>
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                <li class="nav-item">
-                    <a class="nav-link active" href="javascript:void(0);">
-                        <i class="bi bi-person-fill me-1"></i> Personal Profile
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href={% url connection_route pk=user %}?active_sub_menu=personal-profile>
-                        <i class="bi bi-link"></i> Connections
-                    </a>
-                </li>
-            </ul>
-            
-            <div class="card mb-4">
-                <h5 class="card-header">Personal Profile Details</h5>
-                <!-- Account -->
-                <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="{{ user.profile_image.url }}" alt="user-avatar" class="d-block rounded"
-                        height="100"
-                        width="100"
-                        id="uploadedAvatar"
-                        />
-                        <div class="button-wrapper">
-                            <button type="button" class="btn btn-primary me-3 mb-4 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exLargeModal">
-                                <span class="d-none d-sm-block me-2">Update Profile</span>
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="my-0" />
-
-                <div class="card-body">
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Name</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.name }}
-                            </div>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Username</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user }}
-                            </div>
-                        </div>
-                        {% if user.gender %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Gender</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.gender.title }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.date_of_birth %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Date of Birth</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.date_of_birth }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.email %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Email</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.email }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.phone_number %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Phone Number</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.phone_number }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.designation %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Designation</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.designation.title }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.bio %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Bio</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.bio }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.state_of_residence %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">State of Residence</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.state_of_residence }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.address_1 %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Address 1</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.address_1 }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.address_2 %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Address 2</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.address_2 }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.created %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Profile Created</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.created }}
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if user.updated %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Last Updated</label>
-                            <div class="form-control" style="background-color: #e9ecef;">
-                                {{ user.updated }}
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <!-- /Account -->
-            </div>
+    <div class="card mb-4">
+      <h5 class="card-header">Personal Profile Details</h5>
+      <!-- Account -->
+      <div class="card-body">
+        <div class="d-flex align-items-start align-items-sm-center gap-4">
+          <img
+            src="{{ user.profile_image.url }}"
+            alt="user-avatar"
+            class="d-block rounded"
+            height="100"
+            width="100"
+            id="uploadedAvatar"
+          />
+          <div class="button-wrapper">
+            <button
+              type="button"
+              class="btn btn-primary me-3 mb-4 d-flex align-items-center"
+              data-bs-toggle="modal"
+              data-bs-target="#exLargeModal"
+            >
+              <span class="d-none d-sm-block me-2">Update Profile</span>
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </div>
         </div>
-    </div>
-    <div class="card">
-        <h5 class="card-header">Delete Account</h5>
-        <div class="card-body">
-            <div class="mb-3 col-12 mb-0">
-                <div class="alert alert-warning">
-                    <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
-                    <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
-                </div>
-            </div>
-            <form id="formAccountDeactivation" action='{% url "delete-user" %}'>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation"/>
-                    <label class="form-check-label" for="accountActivation">
-                        I confirm my account deactivation
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-danger deactivate-account" id="deactivateButton" disabled>Deactivate Account</button>
-            </form>
-        </div>
-    </div>
+      </div>
 
-    <!-- Update Profile Modal -->
-    <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="fw-bold py-3 mb-1"><span class="text-muted fw-light">User Management / Personal Profile /</span>  Update</h4>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" action=''>
-                        {% csrf_token %}
-                        <div class="row">
-                            {% for field in form %}
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label">{{field.label}}</label>
-                                {{ field }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                            </button>
-                            <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+      <hr class="my-0" />
 
-    <script>
-        const checkbox = document.getElementById('accountActivation');
-        const button = document.getElementById('deactivateButton');
-    
-        checkbox.addEventListener('change', function() {
-            button.disabled = !this.checked;
-        });
-    </script>
-    <!-- / Content -->
+      <div class="card-body">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Name</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.name }}
+            </div>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Username</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user }}
+            </div>
+          </div>
+          {% if user.gender %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Gender</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.gender.title }}
+            </div>
+          </div>
+          {% endif %} {% if user.date_of_birth %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Date of Birth</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.date_of_birth }}
+            </div>
+          </div>
+          {% endif %} {% if user.email %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Email</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.email }}
+            </div>
+          </div>
+          {% endif %} {% if user.phone_number %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Phone Number</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.phone_number }}
+            </div>
+          </div>
+          {% endif %} {% if user.designation %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Designation</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.designation.title }}
+            </div>
+          </div>
+          {% endif %} {% if user.bio %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Bio</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.bio }}
+            </div>
+          </div>
+          {% endif %} {% if user.state_of_residence %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">State of Residence</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.state_of_residence }}
+            </div>
+          </div>
+          {% endif %} {% if user.address_1 %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Address 1</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.address_1 }}
+            </div>
+          </div>
+          {% endif %} {% if user.address_2 %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Address 2</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.address_2 }}
+            </div>
+          </div>
+          {% endif %} {% if user.created %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Profile Created</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.created }}
+            </div>
+          </div>
+          {% endif %} {% if user.updated %}
+          <div class="mb-3 col-md-6">
+            <label class="form-label">Last Updated</label>
+            <div class="form-control" style="background-color: #e9ecef">
+              {{ user.updated }}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <!-- /Account -->
+    </div>
+  </div>
+</div>
+<div class="card">
+  <h5 class="card-header">Delete Account</h5>
+  <div class="card-body">
+    <div class="mb-3 col-12 mb-0">
+      <div class="alert alert-warning">
+        <h6 class="alert-heading fw-bold mb-1">
+          Are you sure you want to delete your account?
+        </h6>
+        <p class="mb-0">
+          Once you delete your account, there is no going back. Please be
+          certain.
+        </p>
+      </div>
+    </div>
+    <form id="formAccountDeactivation" action='{% url "delete-user" %}'>
+      <div class="form-check mb-3">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="accountActivation"
+          id="accountActivation"
+        />
+        <label class="form-check-label" for="accountActivation">
+          I confirm my account deactivation
+        </label>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-danger deactivate-account"
+        id="deactivateButton"
+        disabled
+      >
+        Deactivate Account
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Update Profile Modal -->
+<div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="fw-bold py-3 mb-1">
+          <span class="text-muted fw-light"
+            >User Management / Personal Profile /</span
+          >
+          Update
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" action="">
+          {% csrf_token %}
+          <div class="row">
+            {% for field in form %}
+            <div class="mb-3 col-md-6">
+              <label class="form-label">{{field.label}}</label>
+              {{ field }}
+            </div>
+            {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary me-2">
+              Save changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const checkbox = document.getElementById("accountActivation");
+  const button = document.getElementById("deactivateButton");
+
+  checkbox.addEventListener("change", function () {
+    button.disabled = !this.checked;
+  });
+</script>
+<!-- / Content -->
 
 {% endblock details %}
