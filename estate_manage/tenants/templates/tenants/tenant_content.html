@@ -29,7 +29,7 @@
           <p class="card-text"><span class="badge rounded-pill bg-label-danger">{{ tenant.lease_term }} Rent: N {{ tenant.monthly_rent }}</span></p>
           <a href={% url "tenant-detail" type=type pk=request.user.profile tenant_id=tenant.id %} class="btn btn-outline-primary">Details</a>
           <a href="#" class="btn btn-outline-primary ms-2">Send Message</a>
-          {% comment %} <a href={% url "view-apartments" type=type pk=request.user.profile tenant_id=tenant.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-tenant-fill'></i> Apartments</a> {% endcomment %}
+          {% comment %} <a href={% url "view-apartments" type=type pk=request.user.profile tenant_id=tenant.id %}?menu=apartments-management&s_menu=apartment-profiles class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-tenant-fill'></i> Apartments</a> {% endcomment %}
         </div>
       </div>
     </div>
