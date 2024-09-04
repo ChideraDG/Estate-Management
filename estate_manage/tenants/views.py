@@ -117,7 +117,7 @@ def tenants_profiles(request, pk, type):
     s_menu = 'tp'
     
     # Retrieve query parameters
-    _menu = request.GET.get('i_menu', 'all')
+    i_menu = request.GET.get('i_menu', 'all')
     reset_filter = request.GET.get('reset_filter', '/')
     
     # Determine the profile based on user designation (either building owner or company)
@@ -252,7 +252,7 @@ The EstateManage Team
         'form': form,
         'houses': houses,
         'type': type,
-        'i_menu': _menu,
+        'i_menu': i_menu,
         'yearly_tenants': yearly_tenants,
         'six_monthly_tenants': six_monthly_tenants,
         'month_to_month_tenants': month_to_month_tenants,
