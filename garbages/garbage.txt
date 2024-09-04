@@ -170,7 +170,7 @@ old Building Owner frontend========================================
     
             <h6>Tenant Management</h6>
             <ul class="mylist">
-                <li><a href="#" data-content="tenant-profiles">Tenant Profiles</a></li>
+                <li><a href="#" data-content="tp">Tenant Profiles</a></li>
                 <li><a href="#" data-content="lease-management">Lease Management</a></li>
                 <li><a href="#" data-content="communication-tools">Communication Tools</a></li>
             </ul>
