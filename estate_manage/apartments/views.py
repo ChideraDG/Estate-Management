@@ -61,8 +61,8 @@ def deleteApartment(request, pk):
 
 @login_required(login_url='login')
 def house_apartments(request, pk, type):
-    active_menu = 'apartments-management'
-    active_sub_menu = 'apartment-profiles'
+    menu = 'apartments-management'
+    s_menu = 'apartment-profiles'
     if type == "bo":
         houses = request.user.profile.building_owner.houses.all()
 
@@ -71,8 +71,8 @@ def house_apartments(request, pk, type):
         'tenant': "tenants/T_dashboard.html"
     }
     context = {
-        'active_menu': active_menu,
-        'active_sub_menu': active_sub_menu,
+        'menu': menu,
+        's_menu': s_menu,
         'houses': houses,
         'type': type,
         'template_routes': template_routes.get(request.user.profile.designation),
@@ -81,9 +81,9 @@ def house_apartments(request, pk, type):
 
 @login_required(login_url='login')
 def view_apartments(request, type, pk, house_id):
-    active_menu = request.GET.get('active_menu', '/')
-    active_sub_menu = request.GET.get('active_sub_menu', '/')
-    menu = request.GET.get('menu', 'all')
+    menu = request.GET.get('menu', '/')
+    s_menu = request.GET.get('s_menu', '/')
+    _menu = request.GET.get('i_menu', 'all')
     reset_filter = request.GET.get('reset_filter', '/')
     house = House.objects.get(id=house_id)
     apartments, query_string = filterApartments(request, house)
@@ -126,13 +126,13 @@ def view_apartments(request, type, pk, house_id):
     }
     context = {
         'template_routes': template_routes.get(request.user.profile.designation),
-        'active_menu': active_menu,
-        'active_sub_menu': active_sub_menu,
+        'menu': menu,
+        's_menu': s_menu,
         'house': house,
         'apartments': apartments,
         'type': type,
         'form': form,
-        'menu': menu,
+        'i_menu': _menu,
         'occupied_apartments': occupied_apartments,
         'vacant_apartments': vacant_apartments,
         'exist': exist,
@@ -199,8 +199,8 @@ def filterApartments(request, house):
 def apartment_details(request, type, pk, house_id, apartment_number):
     house = House.objects.get(id=house_id)
     apartment = house.apartments.get(apartment_number=apartment_number)
-    active_menu = request.GET.get('active_menu', '/')
-    active_sub_menu = request.GET.get('active_sub_menu', '/')
+    menu = request.GET.get('menu', '/')
+    s_menu = request.GET.get('s_menu', '/')
 
     if request.method == "POST":
         form = ApartmentForm(request.POST, instance=apartment, request=request)
@@ -233,8 +233,8 @@ def apartment_details(request, type, pk, house_id, apartment_number):
         'house_id': house_id,
         'type': type,
         'apartment': apartment,
-        'active_menu': active_menu,
-        'active_sub_menu': active_sub_menu,
+        'menu': menu,
+        's_menu': s_menu,
         'template_routes': template_routes.get(request.user.profile.designation),
         'form': form,
     }
