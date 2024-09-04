@@ -228,7 +228,7 @@
                 <h5 class="card-title text-primary">{{ greeting.title }} {{ request.user.profile.name }}! 🥇</h5>
                 {% if no_of_houses > 0 %}
                 <p class="mb-4">
-                    Impressive progress! <span class="fw-bold">{{ no_of_houses }} houses</span> added so far. Keep pushing forward, and your goals will be within reach.
+                    Impressive progress! <span class="fw-bold">{{ no_of_houses }} house{{ no_of_houses|pluralize }}</span> added so far. Keep up the momentum and continue expanding your portfolio.
                 </p>
                 <a href={% url "houses" pk=request.user.profile type="bo" %}?menu=all&page=1 class="btn btn-sm btn-outline-primary">View Houses</a>
                 {% else %}
