@@ -225,13 +225,20 @@
         <div class="d-flex align-items-end row">
             <div class="col-sm-7">
             <div class="card-body">
-                <h5 class="card-title text-primary">{{ greeting.title }} {{ request.user.profile.name }}! 🎉</h5>
+                <h5 class="card-title text-primary">{{ greeting.title }} {{ request.user.profile.name }}! 🥇</h5>
+                {% if no_of_houses > 0 %}
                 <p class="mb-4">
-                    Welcome back! You've added <span class="fw-bold">{{ no_of_houses }} houses</span> 
-                    so far. Keep up the great work and watch your portfolio grow!
+                    Impressive progress! <span class="fw-bold">{{ no_of_houses }} houses</span> added so far. Keep pushing forward, and your goals will be within reach.
                 </p>
-
                 <a href={% url "houses" pk=request.user.profile type="bo" %}?menu=all&page=1 class="btn btn-sm btn-outline-primary">View Houses</a>
+                {% else %}
+                <p class="mb-4">
+                    Every journey begins with a single step. Add your first property and take the first step toward reaching your real estate goals.
+                </p>
+                <a href={% url "houses" pk=request.user.profile type="bo" %}?menu=all&page=1&add=true class="btn btn-sm btn-outline-primary">Add Houses</a>
+                {% endif %}
+
+                
             </div>
             </div>
             <div class="col-sm-5 text-center text-sm-left">

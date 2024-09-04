@@ -14,9 +14,9 @@
   <div class="nav-align-top mb-4">
       <!-- Tabs -->
       <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-          <!--Houses Tabs Button -->
+          <!--Houses Tabs Button NB: THE add parameter is only for houses menu-->
           <li class="nav-item">
-              <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+              <button type="button" class="nav-link {% if not add == 'true' %}active{% endif %}" role="tab" data-bs-toggle="tab" 
               data-bs-target="#navs-pills-justified-houses" aria-controls="navs-pills-justified-houses" aria-selected="true">
                   <i class="tf-icons bi bi-building-fill"></i> Houses
                   <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ total_houses }}</span>
@@ -25,7 +25,7 @@
 
           <!-- Add a House Tabs Button -->
           <li class="nav-item">
-              <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+              <button type="button" class="nav-link {% if add == 'true' %}active{% endif %}" role="tab" data-bs-toggle="tab" 
               data-bs-target="#navs-pills-justified-add-house" aria-controls="navs-pills-justified-add-house" aria-selected="false">
                   <i class="tf-icons bi bi-plus-circle-fill"></i> Add a House
               </button>
@@ -36,7 +36,7 @@
       <!-- Details -->
       <div class="tab-content">
           <!-- Houses Tabs Details -->
-          <div class="tab-pane fade show active" id="navs-pills-justified-houses" role="tabpanel">
+          <div class="tab-pane fade {% if not add == 'true' %}show active{% endif %}" id="navs-pills-justified-houses" role="tabpanel">
               <!-- House Tab Details Box -->
               <div class="nav-align-top">
                   <ul class="nav nav-pills mb-3" role="tablist">
@@ -132,8 +132,8 @@
           </div>
           <!-- End of Houses Tabs Details -->
 
-          <!-- Add a House Tabs Details -->
-          <div class="tab-pane fade" id="navs-pills-justified-add-house" role="tabpanel">
+          <!-- Add a House Tabs Details NB: THE add parameter is only for this houses-->
+          <div class="tab-pane fade {% if add == 'true' %}show active{% endif %}" id="navs-pills-justified-add-house" role="tabpanel">
               <form method="POST" enctype="multipart/form-data" action={% url "houses" pk=profile type=type %}?menu=all&page=1>
                   {% csrf_token %}
                   <div class="row">

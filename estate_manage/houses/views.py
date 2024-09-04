@@ -60,6 +60,7 @@ def houses(request, pk, type):
 
     # Get the current menu or default to 'all' if not provided.
     i_menu = request.GET.get('i_menu', 'all')
+    add = request.GET.get('add', 'all')
 
     # Get the reset filter URL or default to '/' if not provided.
     reset_filter = request.GET.get('reset_filter', '/')
@@ -162,7 +163,8 @@ def houses(request, pk, type):
         'query_string': query_string,
         'type': type,
         'template_routes': template_routes.get(request.user.profile.designation),
-        'total_houses': total_houses
+        'total_houses': total_houses,
+        'add': add,
     }
 
     # Render the 'BO_houses.html' template with the prepared context.
