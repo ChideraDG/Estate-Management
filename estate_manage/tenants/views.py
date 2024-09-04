@@ -49,12 +49,12 @@ def tenant_profile(request, pk):
     else:
         form = TenantForm(instance=profile)
 
-    active_menu = 'user-management'
-    active_sub_menu = 't-profile'
+    menu = 'user-management'
+    s_menu = 't-profile'
         
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'profile': profile,
         'form': form, 
         'countries': countries
@@ -63,12 +63,12 @@ def tenant_profile(request, pk):
 
 @login_required(login_url='login')
 def view_connections(request, pk):
-    active_menu = 'user-management'
-    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
+    menu = 'user-management'
+    s_menu = request.GET.get('s_menu', 'personal-profile')
 
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
     }
     return render(request, "tenants/view_connections.html", context)
 
@@ -81,11 +81,11 @@ def get_states(request):
     
 @login_required(login_url='login')
 def tenantDashboard(request, pk):
-    active_menu = 'tenant-dashboard'
+    menu = 'tenant-dashboard'
 
     context = {
         'username': pk, 
-        'active_menu': active_menu,
+        'menu': menu,
         }
     return render(request, "tenants/T_dashboard.html", context)
 
@@ -113,11 +113,11 @@ def tenants_profiles(request, pk, type):
         A rendered HTML page displaying the tenant profiles and a form to add tenants.
     """
     # Set active menu and submenu for the navigation bar
-    active_menu = 'tenants-management'
-    active_sub_menu = 'tenant-profiles'
+    menu = 'tm'
+    s_menu = 'tp'
     
     # Retrieve query parameters
-    menu = request.GET.get('menu', 'all')
+    _menu = request.GET.get('i_menu', 'all')
     reset_filter = request.GET.get('reset_filter', '/')
     
     # Determine the profile based on user designation (either building owner or company)
@@ -171,7 +171,7 @@ def tenants_profiles(request, pk, type):
             messages.success(request, "Tenant Successfully Created. \nTenant's details sent to your Inbox")
 
             email = profile.contact_email
-            subject = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']} Profile Created"
+            subject = f"{form.cleaned_data['first_name'].title()} {form.cleaned_data['last_name'].title()} Profile Created"
             message = f'''
 Welcome to EstateManage!
 
@@ -228,7 +228,7 @@ The EstateManage Team
                 deposit_amount=tenant.deposit_amount,
             )
 
-            url = reverse('agreements', kwargs={'pk':pk, 'type':type}) + f'?lease_update=True&tenant_id={tenant.id}&active_menu=tenants-management&active_sub_menu=tenant-agreements'
+            url = reverse('agreements', kwargs={'pk':pk, 'type':type}) + f'?lease_update=True&tenant_id={tenant.id}&menu=tm&s_menu=ta'
             return redirect(url)
         else:
             # Print form errors for debugging purposes
@@ -246,13 +246,13 @@ The EstateManage Team
     
     # Prepare the context to be passed to the template
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'tenants': tenants,
         'form': form,
         'houses': houses,
         'type': type,
-        'menu': menu,
+        'i_menu': _menu,
         'yearly_tenants': yearly_tenants,
         'six_monthly_tenants': six_monthly_tenants,
         'month_to_month_tenants': month_to_month_tenants,
@@ -348,8 +348,8 @@ def filterTenants(request):
     return tenants, query_string
 
 def tenant_detail(request, type, pk, tenant_id):
-    active_menu = 'tenants-management'
-    active_sub_menu = 'tenant-profiles'
+    menu = 'tm'
+    s_menu = 'tp'
     
     profile = None
     if request.user.profile.designation == "building_owner":
@@ -383,8 +383,8 @@ def tenant_detail(request, type, pk, tenant_id):
         'building_owner': "building_owners/BO_dashboard.html",
     }
     context = {
-        'active_menu': active_menu,
-        'active_sub_menu': active_sub_menu,
+        'menu': menu,
+        's_menu': s_menu,
         'template_route': template_route.get(request.user.profile.designation),
         'type': type,
         'tenant': tenant,
