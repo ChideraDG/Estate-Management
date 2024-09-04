@@ -83,7 +83,7 @@ def house_apartments(request, pk, type):
 def view_apartments(request, type, pk, house_id):
     menu = request.GET.get('menu', '/')
     s_menu = request.GET.get('s_menu', '/')
-    _menu = request.GET.get('i_menu', 'all')
+    i_menu = request.GET.get('i_menu', 'all')
     reset_filter = request.GET.get('reset_filter', '/')
     house = House.objects.get(id=house_id)
     apartments, query_string = filterApartments(request, house)
@@ -132,7 +132,7 @@ def view_apartments(request, type, pk, house_id):
         'apartments': apartments,
         'type': type,
         'form': form,
-        'i_menu': _menu,
+        'i_menu': i_menu,
         'occupied_apartments': occupied_apartments,
         'vacant_apartments': vacant_apartments,
         'exist': exist,
