@@ -1,5 +1,6 @@
 import random
 import string
+from datetime import datetime
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -372,3 +373,18 @@ def generate_password(length=10):
 
     # Convert the list to a string
     return ''.join(password)
+
+
+def greet_client():
+    current_hour = datetime.now().hour
+
+    if 5 <= current_hour < 12:
+        greeting = "Good morning"
+    elif 12 <= current_hour < 17:
+        greeting = "Good afternoon"
+    elif 17 <= current_hour < 21:
+        greeting = "Good evening"
+    else:
+        greeting = "Good night"
+    
+    return greeting
