@@ -54,7 +54,6 @@ class Agent(models.Model):
     EMPLOYMENT_STATUS_CHOICES = [
         ('active', 'Active'),
         ('inactive', 'Inactive'),
-        
     ]
 
     user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default='',
