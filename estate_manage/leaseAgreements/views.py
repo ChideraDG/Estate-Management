@@ -4,8 +4,8 @@ from .models import LeaseAgreement
 from .forms import LeaseAgreementForm
 
 def lease_agreements(request, type, pk):
-    menu = request.GET.get("menu", "")
-    s_menu = request.GET.get("s_menu", "")
+    menu = request.GET.get("menu", "/")
+    s_menu = request.GET.get("s_menu", "/")
     profile = request.user.profile
     tenants = None
     if profile.designation == "building_owner":
@@ -25,7 +25,7 @@ def lease_agreements(request, type, pk):
 
                 for file in files:
                     Document.objects.create(
-                        title=f"{tenant}",
+                        title=agreement.payment_schedule,
                         file=file,
                         document_type='lease_agreement',
                         uploaded_by=request.user,
