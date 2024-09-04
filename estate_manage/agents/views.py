@@ -35,12 +35,12 @@ def agent_profile(request, pk):
     else:
         form = AgentForm(instance=profile)
 
-    active_menu = 'user-management'
-    active_sub_menu = 'a-profile'
+    menu = 'user-management'
+    s_menu = 'a-profile'
     
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'profile': profile,
         'form': form, 
         'countries': countries, 
@@ -56,17 +56,17 @@ def get_states(request):
 
 @login_required(login_url='login')
 def agentsDashboard(request, pk):
-    active_menu = "agent-dashboard"
+    menu = "agent-dashboard"
     context = {
         'username': pk,
-        'active_menu': active_menu,
+        'menu': menu,
     }
     return render(request, "agents/A_dashboard.html", context)
 
 @login_required(login_url='login')
 def view_connections(request, pk):
-    active_menu = 'user-management'
-    active_sub_menu = request.GET.get('active_sub_menu', 'personal-profile')
+    menu = 'user-management'
+    s_menu = request.GET.get('s_menu', 'personal-profile')
     user_type = request.user.profile.designation
     labels = {
         "building_owner": 'BO',
@@ -78,16 +78,16 @@ def view_connections(request, pk):
 
 
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'type': labels.get(user_type)
     }
     return render(request, "agents/view_connections.html", context)
 
 @login_required(login_url='login')
 def agent_properties(request, pk):
-    active_menu = "agent-properties"
-    active_sub_menu = 'property-list'
+    menu = "agent-properties"
+    s_menu = 'property-list'
     search_query = request.GET.get('search_query', '')
     if not search_query.isdigit() and search_query:
         houses = request.user.profile.agents.houses.filter(Q(address__icontains=search_query) |
@@ -99,17 +99,17 @@ def agent_properties(request, pk):
         houses = request.user.profile.agents.houses.all()
 
     context = {
-        'active_menu': active_menu,
+        'menu': menu,
         'houses': houses,
-        'active_sub_menu': active_sub_menu,
+        's_menu': s_menu,
         'search_query': search_query,
     }
     return render(request, "agents/agent_properties.html", context)
 
 @login_required(login_url='login')
 def agent_house_apartments(request, pk, house_id):
-    active_menu = "agent-properties"
-    active_sub_menu = 'property-list'
+    menu = "agent-properties"
+    s_menu = 'property-list'
     search_query = request.GET.get('search_query', '')
     house = request.user.profile.agents.houses.get(id=house_id)
     if not search_query.isdigit() and search_query:
@@ -122,9 +122,9 @@ def agent_house_apartments(request, pk, house_id):
     else:
         apartments = house.apartments.all()
     context = {
-        'active_menu': active_menu,
+        'menu': menu,
         'apartments': apartments,
-        'active_sub_menu': active_sub_menu,
+        's_menu': s_menu,
         'house': house,
         'type': 'A',
         'search_query': search_query,
@@ -133,15 +133,15 @@ def agent_house_apartments(request, pk, house_id):
 
 @login_required(login_url='login')
 def agent_house_apartment_details(request, pk, house_id, apartment_no):
-    active_menu = "agent-properties"
-    active_sub_menu = 'property-list'
+    menu = "agent-properties"
+    s_menu = 'property-list'
     house = request.user.profile.agents.houses.get(id=house_id)
     apartment = house.apartments.filter(apartment_number=apartment_no).first()
     
     context = {
-        'active_menu': active_menu,
+        'menu': menu,
         'apartment': apartment,
-        'active_sub_menu': active_sub_menu,
+        's_menu': s_menu,
         'house': house,
         'type': 'A',
     }
