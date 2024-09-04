@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block details %}
-    {% if active_sub_menu == "c-profile" %}
+    {% if s_menu == "c-profile" %}
         <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">User Management / Company Profile /</span> Connections
         </h4>
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                {% if active_sub_menu == "t-profile" %}
+                {% if s_menu == "t-profile" %}
                     <li class="nav-item">
                         <a class="nav-link" href='{% url "view-company" pk=request.user.profile %}'>
                             <i class="bi bi-building-fill me-1"></i></i> Company Profile
