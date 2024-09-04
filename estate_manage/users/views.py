@@ -155,8 +155,8 @@ def user_profile(request, type, pk):
 
     context = {
         "user": profile,
-        " menu": menu,
-        " s_menu": s_menu,
+        "menu": menu,
+        "s_menu": s_menu,
         'form': form,
         'template_routes': template_routes.get(profile.designation),
         'connection_route': connection_route.get(profile.designation)
