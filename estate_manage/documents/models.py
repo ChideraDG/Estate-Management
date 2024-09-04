@@ -44,6 +44,7 @@ class Document(models.Model):
     related_lease = models.ForeignKey(LeaseAgreement, on_delete=models.SET_NULL, null=True, blank=True, related_name='documents')
     upload_date = models.DateTimeField(auto_now_add=True)
     shared_with = models.ManyToManyField(User, blank=True, related_name='shared_documents')
+    is_archived = models.BooleanField(default=False)
     
     def __str__(self):
         return f"Document: {self.title} - {self.document_type}"
