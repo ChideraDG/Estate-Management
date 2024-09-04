@@ -22,7 +22,6 @@ class LeaseAgreementForm(forms.ModelForm):
             'payment_schedule': forms.Select(attrs={'placeholder': 'Select Payment Schedule'}),
             'terms_and_conditions': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter Terms and Conditions'}),
             'agreement_signed': forms.NullBooleanSelect,
-            'date_signed': forms.DateTimeInput(attrs={'type': 'datetime-local', 'placeholder': 'Date Signed'}),
         }
 
     def __init__(self, *args, **kwargs):
