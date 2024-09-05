@@ -6,7 +6,7 @@
 
 {% block agent %}
     <!-- Dashboard -->
-    <li class="menu-item {% if active_menu == 'agent-dashboard' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'agent-dashboard' %}active{% endif %}">
         <a href='{% url "dashboard-A" pk=request.user.profile %}' class="menu-link">
             <i class="menu-icon tf-icons bi bi-bar-chart-fill tiny-icon"></i>
             <div data-i18n="Analytics">Dashboard</div>
@@ -18,14 +18,14 @@
     </li>
 
     <!-- Property Management -->
-    <li class="menu-item {% if active_menu == 'agent-properties' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'agent-properties' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-house-door tiny-icon"></i>
             <div data-i18n="Property Management">My Properties</div>
         </a>
 
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'property-list' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'property-list' %}active{% endif %}">
                 <a href={% url "agent-properties" pk=request.user.profile %} class="menu-link">
                     <div data-i18n="property-listings">Property Listings</div>
                 </a>
@@ -39,16 +39,16 @@
     </li>
 
     <!-- Tenant Management -->
-    <li class="menu-item {% if active_menu == 'tenant-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'tm' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-people tiny-icon"></i>
             <div data-i18n="Tenant Management">My tenants</div>
         </a>
 
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'tenant-profiles' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'tp' %}active{% endif %}">
                 <a href="#" class="menu-link">
-                    <div data-i18n="tenant-profiles">Tenant Profiles</div>
+                    <div data-i18n="tp">Tenant Profiles</div>
                 </a>
             </li>
             <li class="menu-item">
@@ -69,24 +69,24 @@
     </li>
 
     <!-- Financial Management -->
-    <li class="menu-item {% if active_menu == 'financial-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'financial-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-cash-stack tiny-icon"></i>
             <div data-i18n="Financial Management">My Finances</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'rent-collection' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'rent-collection' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="rent-collection">Rent Collection</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'expense-tracking' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'expense-tracking' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="expense-tracking">Expense Tracking</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'financial-reporting' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'financial-reporting' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="financial-reporting">Financial Reporting</div>
                 </a>
@@ -95,24 +95,24 @@
     </li>
 
     <!-- Analytics Management -->
-    <li class="menu-item {% if active_menu == 'analytics-reporting' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'analytics-reporting' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-speedometer2 tiny-icon"></i>
             <div data-i18n="Analytics and Reporting">Analytics</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'real-time-analytics' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'real-time-analytics' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="real-time-analytics">Real-time Analytics</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'custom-reports' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'custom-reports' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="custom-reports">Custom Reports</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'forecasting-tools' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'forecasting-tools' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="forecasting-tools">Forecasting Tools</div>
                 </a>
@@ -125,24 +125,24 @@
     </li>
     
     <!-- Maintenance Management -->
-    <li class="menu-item {% if active_menu == 'maintenance-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'maintenance-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-wrench tiny-icon"></i>
             <div data-i18n="Maintenance Management">Work Maintenance</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'work-orders' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'work-orders' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="work-orders">Work Orders</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'maintenance-schedule' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'maintenance-schedule' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="maintenance-schedule">Schedules</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'service-providers' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'service-providers' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="service-providers">Service Providers</div>
                 </a>
@@ -151,19 +151,19 @@
     </li>
 
     <!-- Document Management -->
-    <li class="menu-item {% if active_menu == 'document-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'document-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-folder tiny-icon"></i>
             <div data-i18n="Document Management">My Documents</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'document-storage' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'document-storage' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="document-storage">Document Storage</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'document-sharing' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'document-sharing' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="document-sharing">Document Sharing</div>
                 </a>
@@ -176,24 +176,24 @@
     </li>
 
     <!-- Marketing Tools -->
-    <li class="menu-item {% if active_menu == 'marketing-tools' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'marketing-tools' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-megaphone tiny-icon"></i>
             <div data-i18n="Marketing Tools">Marketing Tools</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'property-listings-management' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'property-listings-management' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="property-listings-management">Property Listings</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'lead-management' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'lead-management' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="lead-management">Lead Management</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'advertising-tools' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'advertising-tools' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="advertising-tools">Advertising Tools</div>
                 </a>
@@ -202,19 +202,19 @@
     </li>
     
      <!-- Users Tools -->
-     <li class="menu-item {% if active_menu == 'activity-control' %}active{% endif %}">
+     <li class="menu-item {% if menu == 'activity-control' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-lock tiny-icon"></i>
             <div data-i18n="Activity Control">Activities Control</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'access-control' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'access-control' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="access-control">Access Control</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'user-activity-logs' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'user-activity-logs' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="user-activity-logs">User Activity Logs</div>
                 </a>
@@ -223,19 +223,19 @@
     </li>
            
     <!-- Community Features -->
-    <li class="menu-item {% if active_menu == 'community-features' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'community-features' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-broadcast tiny-icon"></i>
             <div data-i18n="Community Features">Community Features</div>
         </a>
     
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'community-announcements' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'community-announcements' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="community-announcements">Announcements</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'feedback-surveys' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'feedback-surveys' %}active{% endif %}">
                 <a href="#" class="menu-link">
                     <div data-i18n="feedback-surveys">Feedback and Surveys</div>
                 </a>
@@ -247,18 +247,18 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
                     
     <!-- User Management -->
-    <li class="menu-item {% if active_menu == 'user-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'user-management' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
             <div data-i18n="User Management">User Management</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item {% if active_sub_menu == 'a-profile' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'a-profile' %}active{% endif %}">
                 <a href='{% url "view-agent" pk=request.user.profile %}'  class="menu-link">
                     <div data-i18n="bo-profile">Agent Profile</div>
                 </a>
             </li>
-            <li class="menu-item {% if active_sub_menu == 'personal-profile' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'personal-profile' %}active{% endif %}">
                 <a href='{% url "view-user-profile" pk=request.user.profile type="A" %}' class="menu-link">
                     <div data-i18n="personal-profile">Personal Profile</div>
                 </a>

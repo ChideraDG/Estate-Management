@@ -14,7 +14,7 @@
             <a class="text-muted fw-light" href={% url "house-details" pk=request.user.profile house_id=house.id type=type %}> 
                 No. {{ house.house_number }}, {{ house.address.title }}
             </a> / 
-            <a class="text-muted fw-light" href={% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?active_menu=apartments-management&active_sub_menu=apartment-profiles>
+            <a class="text-muted fw-light" href={% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?menu=apartments-management&s_menu=apartment-profiles>
             Apartment Profiles
             </a> / 
         </span>

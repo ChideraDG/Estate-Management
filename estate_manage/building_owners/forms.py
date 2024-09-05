@@ -117,10 +117,11 @@ class BuildingOwnerForm(ModelForm):
     def clean_contact_phone(self):
         contact_phone = self.cleaned_data.get('contact_phone')
 
-        # Example: Ensure the phone number is numeric and has 10 digits
-        if not contact_phone.replace("+", "").isdigit() or len(contact_phone) <=10:
-            messages.error(self.request, "Enter a valid Phone Number.")
-            raise ValidationError('Enter a valid Phone number.')
+        if contact_phone:
+            # Example: Ensure the phone number is numeric and has 10 digits
+            if len(contact_phone) <= 10:
+                messages.error(self.request, "Enter a valid Phone Number.")
+                raise ValidationError('Enter a valid Phone number.')
         
         return contact_phone
     

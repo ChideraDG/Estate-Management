@@ -4,7 +4,7 @@
 {% block details %}
     <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">User Management / 
-    {% if active_sub_menu == "a-profile" %}
+    {% if s_menu == "a-profile" %}
         Agent Profile
     {% else %}
         Personal Profile
@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
                 <li class="nav-item">
-                {% if active_sub_menu == "a-profile" %}
+                {% if s_menu == "a-profile" %}
                     <a class="nav-link" href={% url "view-agent" pk=request.user.profile %}>
                         <i class="bi bi-person-fill me-1"></i></i> Agent Profile
                 {% else %}

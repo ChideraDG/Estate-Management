@@ -17,6 +17,7 @@
         <!-- Tabs -->
         <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
             <!-- Lease Agreements Tabs Button -->
+            {% if not lease_update %}
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
                 data-bs-target="#navs-pills-justified-lease-agreements" aria-controls="navs-pills-justified-lease-agreements" aria-selected="true">
@@ -24,6 +25,7 @@
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ apartments.count }}</span>
                 </button>
             </li>
+            {% endif %}
 
             {% if lease_update %}
             <!-- Create Lease Agreement Tabs Button -->
@@ -40,6 +42,7 @@
         <!-- Details -->
         <div class="tab-content">
             <!-- Lease Agreements Tabs Details -->
+            {% if not lease_update %}
             <div class="tab-pane fade show active" id="navs-pills-justified-lease-agreements" role="tabpanel">
                 <div class="card">
                     {% if agreements %}
@@ -49,6 +52,7 @@
                             <thead>
                                 <tr>
                                     <th>Tenant</th>
+                                    <th>House</th>
                                     <th>Apartment</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
@@ -61,16 +65,24 @@
                             </thead>
                             <tbody class="table-border-bottom-0">
                                 {% for agreement in agreements %}
-                                    <tr>
-                                        <td>
-                                            <h1>Text</h1>
-                                        </td>
+                                    <tr onclick="window.location.href='{% url 'agreement-detail' pk=request.user.profile type=type agreement_id=agreement.id %}?menu=tm&s_menu=ta'" style="cursor:pointer;">
+                                        <td>{{ agreement.tenant }}</td>
+                                        <td>{{ agreement.apartment.house }}</td>
+                                        <td>{{ agreement.apartment }}</td>
+                                        <td>{{ agreement.start_date }}</td>
+                                        <td>{{ agreement.end_date }}</td>
+                                        <td>$ {{ agreement.rent_amount }}</td>
+                                        <td>$ {{ agreement.deposit_amount }}</td>
+                                        <td>{{ agreement.payment_schedule.title }}</td>
+                                        <td><span class="badge {% if agreement.agreement_signed %}bg-label-primary{% else %}bg-label-danger{% endif %} me-1">{{ agreement.agreement_signed }}</span></td>
+                                        <td>{{ agreement.date_signed }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                             <tfoot class="table-border-bottom-0">
                                 <tr>
                                     <th>Tenant</th>
+                                    <th>House</th>
                                     <th>Apartment</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
@@ -89,9 +101,11 @@
                 </div>
             </div>
             <!-- End Lease Agreements Tabs Details -->
+            {% endif %}
 
+            {% if lease_update %}
             <!-- Create Lease Agreement Tabs Details -->
-            <div class="tab-pane fade" id="navs-pills-justified-update-lease-agreement" role="tabpanel">
+            <div class="tab-pane fade show active" id="navs-pills-justified-update-lease-agreement" role="tabpanel">
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
@@ -103,7 +117,7 @@
                         {% endfor %}
                         <div class="mb-3">
                             <label for="formFileMultiple" class="form-label">Agreement Documents</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple />
+                            <input class="form-control" type="file" name='docs' id="formFileMultiple" multiple />
                         </div>
                     </div>
                 <div class="modal-footer">
@@ -112,6 +126,7 @@
                 </form>
             </div>
             <!-- Create Lease Agreement Tabs Details -->
+            {% endif %}
         </div>
         <!-- End Details -->
     </div>

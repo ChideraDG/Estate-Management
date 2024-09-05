@@ -59,14 +59,15 @@ def houses(request, pk, type):
     total_houses = houses.count
 
     # Get the current menu or default to 'all' if not provided.
-    menu = request.GET.get('menu', 'all')
+    i_menu = request.GET.get('i_menu', 'all')
+    add = request.GET.get('add', 'all')
 
     # Get the reset filter URL or default to '/' if not provided.
     reset_filter = request.GET.get('reset_filter', '/')
 
     # Set the active menu and sub-menu for UI highlighting.
-    active_menu = 'houses-management'
-    active_sub_menu = 'house-profiles'
+    menu = 'houses-management'
+    s_menu = 'house-profiles'
 
     # Retrieve all countries (presumably for filtering options).
     countries = Country.objects.all()
@@ -144,8 +145,8 @@ def houses(request, pk, type):
     }
     # Prepare the context to be passed to the template.
     context = {
-        'active_sub_menu': active_sub_menu,
-        'active_menu': active_menu,
+        's_menu': s_menu,
+        'menu': menu,
         'profile': profile,
         'houses': houses,
         'countries': countries,
@@ -155,14 +156,15 @@ def houses(request, pk, type):
         'custom_range': custom_range,
         'oh_custom_range': oh_custom_range,
         'vh_custom_range': vh_custom_range,
-        'menu': menu,
+        'i_menu': i_menu,
         'filter_form': HouseFilterForm(),
         'exist': exist,
         'reset_filter': reset_filter,
         'query_string': query_string,
         'type': type,
         'template_routes': template_routes.get(request.user.profile.designation),
-        'total_houses': total_houses
+        'total_houses': total_houses,
+        'add': add,
     }
 
     # Render the 'BO_houses.html' template with the prepared context.
@@ -266,8 +268,8 @@ def filterHouses(request):
 def house_details(request, pk, house_id, type):
     house = House.objects.get(id=house_id)
 
-    active_menu = 'houses-management'
-    active_sub_menu = 'house-profiles'
+    menu = 'houses-management'
+    s_menu = 'house-profiles'
 
     if request.method == "POST":
         form = HouseForm(request.POST, instance=house)
@@ -311,8 +313,8 @@ def house_details(request, pk, house_id, type):
     context = {
         'house': house,
         'form': form,
-        'active_menu': active_menu,
-        'active_sub_menu': active_sub_menu,
+        'menu': menu,
+        's_menu': s_menu,
         'type': type,
         'template_routes': template_routes.get(request.user.profile.designation),
     }

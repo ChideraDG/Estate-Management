@@ -26,9 +26,17 @@ def createBuyerProfile(sender, instance, created, **kwargs):
     if created:
         user = instance
         if user.designation == 'tenant':
+            name = user.name
+            if " " in name:
+                first_name, last_name = name.split(" ", 1)
+            else:
+                first_name = name
+                last_name = ""  # Set last_name to an empty string if there's no space in the name
+
             Tenant.objects.create(
                 user=user,
-                first_name=user.name,
+                first_name=first_name,
+                last_name=last_name,
                 email=user.email,
             )
 

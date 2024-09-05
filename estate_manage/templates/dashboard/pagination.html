@@ -3,19 +3,19 @@
         <ul class="pagination">
             {% if query_set.has_previous %}
                 <li class="page-item prev">
-                    <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}menu={{ query_menu }}&page={{ query_set.previous_page_number }}">
+                    <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}i_menu={{ query_menu }}&page={{ query_set.previous_page_number }}">
                         <i class="tf-icon bi bi-chevron-left"></i> Prev
                     </a>
                 </li>
             {% endif %}
             {% for page in custom_range %}
                 <li class="page-item{% if page == query_set.number %} active{% endif %}">
-                    <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}menu={{ query_menu }}&page={{ page }}">{{ page }}</a>
+                    <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}i_menu={{ query_menu }}&page={{ page }}">{{ page }}</a>
                 </li>
             {% endfor %}
             {% if query_set.has_next %}
                 <li class="page-item next">
-                    <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}menu={{ query_menu }}&page={{ query_set.next_page_number }}">
+                    <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}i_menu={{ query_menu }}&page={{ query_set.next_page_number }}">
                         Next <i class="tf-icon bi bi-chevron-right"></i>
                     </a>
                 </li>
