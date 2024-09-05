@@ -1,5 +1,6 @@
 import random
 import string
+import socket
 from datetime import datetime
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
@@ -31,6 +32,9 @@ def user_register(request):
         return redirect('home')
 
     if request.method == 'POST' and form.is_valid():
+        if not check_network_connection():
+            return JsonResponse({"error": "No network connection. Please check your internet."}, status=500)
+    
         user = User.objects.create_user(
             username=form.cleaned_data['username'],
             email=form.cleaned_data['email'].lower(),
@@ -214,18 +218,21 @@ def property_single(request):
     form = ContactAgentForm(request.POST if request.method == 'POST' else None)
 
     if request.method == 'POST' and form.is_valid():
-            name = form.cleaned_data.get('name')
-            email = form.cleaned_data.get('email')
-            subject = 'Estate Manage Agent'
-            message = form.cleaned_data.get('message')
+        if not check_network_connection():
+            return JsonResponse({"error": "No network connection. Please check your internet."}, status=500)
+        
+        name = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        subject = 'Estate Manage Agent'
+        message = form.cleaned_data.get('message')
 
-            send_mail(from_email=settings.EMAIL_HOST_USER,
-                      recipient_list=['chrischidera6@gmail.com'],
-                      subject=subject,
-                      message=f"Sender's Name: {name.title()} \n\nSender's Email: {email.lower()} \n\n" + message,
-                      fail_silently=False)
+        send_mail(from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=['chrischidera6@gmail.com'],
+                    subject=subject,
+                    message=f"Sender's Name: {name.title()} \n\nSender's Email: {email.lower()} \n\n" + message,
+                    fail_silently=False)
 
-            return JsonResponse({'success': True})
+        return JsonResponse({'success': True})
     elif request.method == 'POST':
         return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
@@ -296,18 +303,21 @@ def contact_us(request):
     form = ContactForm(request.POST if request.method == 'POST' else None)
 
     if request.method == 'POST' and form.is_valid():
-            name = form.cleaned_data.get('name')
-            email = form.cleaned_data.get('email')
-            subject = form.cleaned_data.get('subject')
-            message = form.cleaned_data.get('message')
+        if not check_network_connection():
+            return JsonResponse({"error": "No network connection. Please check your internet."}, status=500)
+        
+        name = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        subject = form.cleaned_data.get('subject')
+        message = form.cleaned_data.get('message')
 
-            send_mail(from_email=settings.EMAIL_HOST_USER,
-                      recipient_list=['chrischidera6@gmail.com'],
-                      subject=subject,
-                      message=f"Sender's Name: {name.title()} \n\nSender's Email: {email.lower()} \n\n" + message,
-                      fail_silently=False)
+        send_mail(from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=['chrischidera6@gmail.com'],
+                    subject=subject,
+                    message=f"Sender's Name: {name.title()} \n\nSender's Email: {email.lower()} \n\n" + message,
+                    fail_silently=False)
 
-            return JsonResponse({'success': True})
+        return JsonResponse({'success': True})
     elif request.method == 'POST':
         return JsonResponse({'success': False, 'error': 'Invalid form submission.'})
 
@@ -388,3 +398,18 @@ def greet_client():
         greeting = "Good night"
     
     return greeting
+
+def check_network_connection():
+    try:
+        socket.create_connection(("8.8.8.8", 53), timeout=5)
+        return True
+    except socket.timeout:
+        print("Network connection timed out.")
+        return False
+    except socket.gaierror:
+        print("DNS resolution failed.")
+        return False
+    except OSError as e:
+        print(f"Network error: {e}")
+        return False
+    
