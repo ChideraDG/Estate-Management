@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+import socket
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -10,7 +11,7 @@ from django.urls import reverse
 from locations.models import Country, State
 from houses.models import House
 from apartments.models import Apartment
-from users.views import generate_username, generate_password
+from users.views import generate_username, generate_password, check_network_connection
 from leaseAgreements.models import LeaseAgreement
 from .models import Tenant
 from .forms import TenantForm, TenantFilterForm, AddTenantForm
@@ -155,7 +156,10 @@ def tenants_profiles(request, pk, type):
             # Generate a username and password for the new tenant
             username = generate_username(form.cleaned_data['first_name'], form.cleaned_data['last_name'])
             password = generate_password()
-
+            
+            if not check_network_connection():
+                return JsonResponse({"error": "No network connection. Please check your internet."}, status=500)
+        
             # Create a new user with the generated credentials
             user = User.objects.create_user(
                 username=username,
@@ -192,7 +196,7 @@ The EstateManage Team
                 message=message,
                 fail_silently=False
             )
-
+            
             # Update tenant details and associate the tenant with the house and apartment
             tenant = Tenant.objects.filter(user__username=username).first()
             if request.user.profile.designation == "building_owner":
