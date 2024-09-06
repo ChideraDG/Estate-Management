@@ -1,0 +1,103 @@
+{% extends "tenants/T_dashboard.html" %} 
+  
+{% block details %}
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Tenant Overview /</span> Lease Information
+    </h4>
+
+    <div class="card mb-4">
+  
+        <div class="card-body">
+            <div class="row">
+                <!-- Tenant -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Tenant</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.tenant }}
+                    </div>
+                </div>
+            
+                <!-- Apartment -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Apartment</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.apartment }} <!-- Assuming Apartment has a 'number' field -->
+                    </div>
+                </div>
+            
+                <!-- Start Date -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Start Date</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.start_date|date:"Y-m-d" }}
+                    </div>
+                </div>
+            
+                <!-- End Date -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">End Date</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.end_date|date:"Y-m-d" }}
+                    </div>
+                </div>
+            
+                <!-- Rent Amount -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Rent Amount</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        ${{ agreement.rent_amount }}
+                    </div>
+                </div>
+            
+                <!-- Deposit Amount -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Deposit Amount</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        ${{ agreement.deposit_amount }}
+                    </div>
+                </div>
+            
+                <!-- Payment Schedule -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Payment Schedule</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.get_payment_schedule_display }}
+                    </div>
+                </div>
+            
+                <!-- Terms and Conditions -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Terms and Conditions</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.terms_and_conditions|slice:":100" }}
+                    </div>
+                </div>
+            
+                <!-- Agreement Signed -->
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Agreement Signed</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {% if agreement.agreement_signed %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </div>
+                </div>
+            
+                <!-- Date Signed -->
+                {% if agreement.agreement_signed %}
+                <div class="mb-3 col-md-6">
+                    <label class="form-label">Date Signed</label>
+                    <div class="form-control" style="background-color: #e9ecef">
+                        {{ agreement.date_signed|date:"Y-m-d H:i:s" }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+        <!-- /Account -->
+    </div>
+{% endblock details %}
