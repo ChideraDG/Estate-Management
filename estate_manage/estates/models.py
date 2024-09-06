@@ -53,27 +53,13 @@ class Estate(models.Model):
         ('wood_frame', 'Wood Frame'),
     ]
 
-    AMENITIES = [
-        ('parking', 'Parking'),
-        ('gym', 'Gym'),
-        ('swimming_pool', 'Swimming pool'),
-        ('cafeteria', 'Cafeteria'),
-        ('spa', 'Spa'),
-        ('playground', 'Playground'),
-        ('terraces', 'Terraces'),
-        ('helipads', 'Helipads'),
-        ('package_locker', 'Package locker'),
-        ('pet_friendly_amenities', 'Pet-Friendly Amenities'),
-        ('laundry_facilities', 'Laundry facilities'),
-    ]
-
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='estates')
     name = models.CharField(max_length=100, blank=False, null=False)
     address = models.TextField(null=False, blank=False)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
-    estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False)
+    estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False, default='residential')
     year_built = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(1900)])
     number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     total_area_covered = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
@@ -82,7 +68,7 @@ class Estate(models.Model):
                                     validators=[MinValueValidator(0)])
     estate_parking_spaces = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
     amenities = models.ManyToManyField('Amenity', default='', blank=True)
-    construction_type = models.CharField(max_length=50, choices=CONSTRUCTION_TYPES, null=True, blank=True, )
+    construction_type = models.CharField(max_length=50, choices=CONSTRUCTION_TYPES, null=True, blank=True, default='ordinary')
     maintenance_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True,
                                            validators=[MinValueValidator(0)], default=0.00)
     security_features = models.ManyToManyField('SecurityFeatures', default='', blank=True)
@@ -93,6 +79,10 @@ class Estate(models.Model):
 
     def __str__(self):
         return f'{self.estate_name} - {self.address}'
+
+    class Meta:
+        ordering = ['-created']  # to order the houses from latest to oldest.
+        unique_together = ('name', 'address')
 
 
 class Amenity(models.Model):

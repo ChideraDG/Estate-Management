@@ -5,7 +5,7 @@ from .models import Estate
 from django.contrib import messages
 
 
-class ProfileForm(ModelForm):
+class EstateForm(ModelForm):
     """
     A form for creating or editing an Estate profile.
 
@@ -39,4 +39,36 @@ class ProfileForm(ModelForm):
             'total_area_covered': 'Total Area Covered (acres)',
             'land_area': 'Land Area (square metres)',
         }
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(EstateForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+            # Set the 'min' attribute to 0 for all decimal and integer fields
+            if isinstance(field, (forms.DecimalField, forms.IntegerField)):
+                field.widget.attrs.update({'min': '0'})
+
+# country_choice = [('', 'Select a Country')]
+# for country in Estate.objects.values_list('country_id__name', flat=True):
+#     choice = (country, country)
+#     if choice not in country_choice and choice != (None, None):
+#         country_choice.append(choice)
+
+# state_choice = [('', 'Select a State')]
+# for state in Estate.objects.values_list('state_id__name', flat=True):
+#     choice = (state, state)
+#     if choice not in state_choice and choice != (None, None):
+#         state_choice.append(choice)
+
+class EstateFilterForm(forms.ModelForm):
+    pass
+    # name = forms.CharField(required=False)
+    # address = forms.CharField(required=False)
+    # estate_type = forms.CharField(required=False)
+    # construction_type = forms.CharField(required=False)
+    # _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
+    # _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
         

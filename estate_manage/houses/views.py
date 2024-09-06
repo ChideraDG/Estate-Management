@@ -141,7 +141,8 @@ def houses(request, pk, type):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
-        'tenant': "tenants/T_dashboard.html"
+        'tenant': "tenants/T_dashboard.html",
+        'company': "companies/C_dashboard.html",
     }
     # Prepare the context to be passed to the template.
     context = {
