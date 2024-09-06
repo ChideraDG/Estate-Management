@@ -11,7 +11,7 @@ from django.urls import reverse
 from locations.models import Country, State
 from houses.models import House
 from apartments.models import Apartment
-from users.views import generate_username, generate_password, check_network_connection
+from users.views import generate_username, generate_password, check_network_connection, greet_client
 from leaseAgreements.models import LeaseAgreement
 from .models import Tenant
 from .forms import TenantForm, TenantFilterForm, AddTenantForm
@@ -83,11 +83,13 @@ def get_states(request):
 @login_required(login_url='login')
 def tenantDashboard(request, pk):
     menu = 'tenant-dashboard'
+    greeting = greet_client()
 
     context = {
         'username': pk, 
         'menu': menu,
-        }
+        'greeting': greeting,
+    }
     return render(request, "tenants/T_dashboard.html", context)
 
 
@@ -407,3 +409,17 @@ def delete_tenant(request, pk):
     tenant.delete()
 
     return redirect("tenants-profiles", type="bo" if request.user.profile.designation == "building_owner" else None, pk=profile)
+
+def tenant_lease_info(request, pk):
+    menu = 'to'
+    s_menu = 'tli'
+    tenant = request.user.profile.tenant
+    agreement = LeaseAgreement.objects.get(tenant=tenant)
+
+    context = {
+        'menu': menu,
+        's_menu': s_menu,
+        'tenant': tenant,
+        'agreement': agreement,
+    }
+    return render(request, "tenants/lease_info.html", context)
