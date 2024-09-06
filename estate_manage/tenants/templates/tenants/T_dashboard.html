@@ -6,9 +6,10 @@
 {% endblock title %} 
 
 {% block tenant %}
+
   <!-- Dashboard -->
   <li class="menu-item {% if menu == 'tenant-dashboard' %}active{% endif %}">
-    <a href='{% url "dashboard-T" pk=request.user.profile %}' class="menu-link">
+    <a href={% url "dashboard-T" pk=request.user.profile %} class="menu-link">
       <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
       <div data-i18n="Analytics">Dashboard</div>
     </a>
@@ -264,34 +265,258 @@
 {% endblock tenant %}
 
 {% block details %}
-    <div class="col-lg-8 mb-4 order-0">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+      <div class="col-lg-8 mb-4 order-0">
         <div class="card">
-        <div class="d-flex align-items-end row">
-            <div class="col-sm-7">
-            <div class="card-body">
-                <h5 class="card-title text-primary">{{ greeting.title }} {{ request.user.profile.name }}! 🥇</h5>
-                <p class="mb-4">
-                  Your home is not just a place – it’s a feeling. Let this space be where you find comfort, inspiration, 
-                  and strength. Remember, no matter how busy life gets, there’s always room to grow, laugh, and enjoy the journey.    
-                </p>
-                <a href="#" class="btn btn-sm btn-outline-primary">View Messages</a>
-
-                
-            </div>
-            </div>
-            <div class="col-sm-5 text-center text-sm-left">
-            <div class="card-body pb-0 px-0 px-md-4">
-                <img
-                src={% static "img/illustrations/man-with-laptop-light.png" %}
-                height="140"
-                alt="View Badge User"
-                data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                data-app-light-img="illustrations/man-with-laptop-light.png"
-                />
-            </div>
-            </div>
+          <div class="d-flex align-items-end row">
+              <div class="col-sm-7">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ greeting.title }} {{ request.user.profile.name }}! 🥇</h5>
+                    <p class="mb-4">
+                      Your home is not just a place – it’s a feeling. Let this space be where you find comfort, inspiration, 
+                      and strength. Remember, no matter how busy life gets, there’s always room to grow, laugh, and enjoy the journey.    
+                    </p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View Messages</a>
+                </div>
+              </div>
+              <div class="col-sm-5 text-center text-sm-left">
+                <div class="card-body pb-0 px-0 px-md-4">
+                    <img
+                    src={% static "img/illustrations/man-with-laptop-light.png" %}
+                    height="140"
+                    alt="View Badge User"
+                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                    data-app-light-img="illustrations/man-with-laptop-light.png"
+                    />
+                </div>
+              </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-</div>
+    <div class="row">
+      <!-- Order Statistics -->
+      <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+        <div class="card h-100">
+          <div class="card-header d-flex align-items-center justify-content-between pb-0">
+            <div class="card-title mb-0">
+              <h5 class="m-0 me-2">Lease Information</h5>
+            </div>
+            <div class="dropdown">
+              <button
+                class="btn p-0"
+                type="button"
+                id="orederStatistics"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                <a class="dropdown-item" href={% url "dashboard-T" pk=request.user.profile %}>Refresh</a>
+              </div>
+            </div>
+          </div>
+          {% if agreement %}
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="d-flex flex-column align-items-center gap-1">
+                <h2 class="mb-2">{{ days_left }}</h2>
+                <span>Days Left</span>
+              </div>
+              <div id="daysLeftChart"></div>
+            </div>
+            <ul class="p-0 m-0">
+              {% if agreement.apartment %}
+              <li class="d-flex mb-4 pb-1">
+                <div class="avatar flex-shrink-0 me-3">
+                  <span class="avatar-initial rounded bg-label-primary">
+                    <i class="bi bi-house"></i
+                  ></span>
+                </div>
+                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">Apartment</h6>
+                    <small class="text-muted">{{ agreement.apartment.house }}</small>
+                  </div>
+                  <div class="user-progress">
+                    <small class="fw-semibold">{{ agreement.apartment }}</small>
+                  </div>
+                </div>
+              </li>
+              {% endif %}
+              <li class="d-flex mb-4 pb-1">
+                <div class="avatar flex-shrink-0 me-3">
+                  <span class="avatar-initial rounded bg-label-success"
+                    ><i class="bi bi-calendar"></i
+                  ></span>
+                </div>
+                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">Start Date</h6>
+                    <small class="text-muted">{{ agreement.apartment.house }}</small>
+                  </div>
+                  <div class="user-progress">
+                    <small class="fw-semibold">{{ agreement.start_date }}</small>
+                  </div>
+                </div>
+              </li>
+              <li class="d-flex mb-4 pb-1">
+                <div class="avatar flex-shrink-0 me-3">
+                  <span class="avatar-initial rounded bg-label-danger"
+                    ><i class="bi bi-calendar-check"></i
+                  ></span>
+                </div>
+                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">End Date</h6>
+                    <small class="text-muted">{{ agreement.apartment.house }}</small>
+                  </div>
+                  <div class="user-progress">
+                    <small class="fw-semibold">{{ agreement.end_date }}</small>
+                  </div>
+                </div>
+              </li>
+              <li class="d-flex mb-4 pb-1">
+                <div class="avatar flex-shrink-0 me-3">
+                  <span class="avatar-initial rounded bg-label-info"
+                    ><i class="bi bi-cash"></i
+                  ></span>
+                </div>
+                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">Rent Amount</h6>
+                    <small class="text-muted">{{ agreement.apartment.house }}</small>
+                  </div>
+                  <div class="user-progress">
+                    <small class="fw-semibold">$ {{ agreement.rent_amount }}</small>
+                  </div>
+                </div>
+              </li>
+              <li class="d-flex mb-4 pb-1">
+                <div class="avatar flex-shrink-0 me-3">
+                  <span class="avatar-initial rounded bg-label-dark"
+                    ><i class="bi bi-credit-card"></i
+                  ></span>
+                </div>
+                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">Deposit Amount</h6>
+                    <small class="text-muted">{{ agreement.apartment.house }}</small>
+                  </div>
+                  <div class="user-progress">
+                    <small class="fw-semibold">$ {{ agreement.deposit_amount }}</small>
+                  </div>
+                </div>
+              </li>
+              <li class="d-flex mb-4 pb-1">
+                <div class="avatar flex-shrink-0 me-3">
+                  <span class="avatar-initial rounded bg-label-warning"
+                    ><i class="bi bi-calendar-month"></i
+                  ></span>
+                </div>
+                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">Payment Schedule</h6>
+                    <small class="text-muted">{{ agreement.apartment.house }}</small>
+                  </div>
+                  <div class="user-progress">
+                    <small class="fw-semibold">{{ agreement.get_payment_schedule_display }}</small>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <div class="card-body">
+            <h5 class="card-title mt-3">Add Lease to get a Dynamic View</h5>
+            <a href={% url "tenant-lease" pk=request.user.profile %} class="btn btn-outline-primary mt-2">Add Lease</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <!--/ Order Statistics -->
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script>
+    // Sample data for days left and days elapsed
+    const daysLeft = {{ days_left }}; // Replace this with the actual days left data
+    const daysElapsed = {{ total_days  }} - daysLeft; // Replace this with the actual days elapsed data
+    const totalDays = daysLeft + daysElapsed;
+
+    // Create a donut chart using ApexCharts
+    const chartOrderStatistics = document.querySelector('#daysLeftChart');
+
+    const orderChartConfig = {
+        chart: {
+            height: 200,
+            width: 250,
+            type: 'donut'
+        },
+        labels: ['Days Left', 'Days Elapsed'],
+        series: [daysLeft, daysElapsed],
+        colors: ['#36A2EB', '#FF6384'], // Customize colors as needed
+        stroke: {
+            width: 5,
+            colors: '#ffffff' // Adjust stroke color as needed
+        },
+        dataLabels: {
+            enabled: false,
+            formatter: function (val) {
+                return parseInt(val) + '%';
+            }
+        },
+        legend: {
+            show: false
+        },
+        grid: {
+            padding: {
+                top: 0,
+                bottom: 0,
+                right: 15
+            }
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '75%',
+                    labels: {
+                        show: true,
+                        value: {
+                            fontSize: '1.5rem',
+                            fontFamily: 'Public Sans',
+                            color: '#000', // Set your preferred font color
+                            offsetY: -15,
+                            formatter: function (val) {
+                                return (val / totalDays * 100).toFixed(1) + '%';
+                            }
+                        },
+                        name: {
+                            offsetY: 20,
+                            fontFamily: 'Public Sans'
+                        },
+                        total: {
+                            show: true,
+                            fontSize: '0.8125rem',
+                            color: '#999', // Set your preferred font color
+                            label: 'Total',
+                            formatter: function () {
+                                return ((daysLeft / totalDays) * 100).toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    if (typeof chartOrderStatistics !== undefined && chartOrderStatistics !== null) {
+        const statisticsChart = new ApexCharts(chartOrderStatistics, orderChartConfig);
+        statisticsChart.render();
+    }
+  </script>
 {% endblock details %}
