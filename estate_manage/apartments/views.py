@@ -61,8 +61,8 @@ def deleteApartment(request, pk):
 
 @login_required(login_url='login')
 def house_apartments(request, pk, type):
-    menu = 'apartments-management'
-    s_menu = 'apartment-profiles'
+    menu = 'a-m'
+    s_menu = 'a-p'
     if type == "bo":
         houses = request.user.profile.building_owner.houses.all()
 
