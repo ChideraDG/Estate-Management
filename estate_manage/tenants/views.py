@@ -11,7 +11,9 @@ from django.urls import reverse
 from locations.models import Country, State
 from houses.models import House
 from apartments.models import Apartment
+from documents.models import Document
 from users.views import generate_username, generate_password, check_network_connection, greet_client
+from leaseAgreements.forms import LeaseAgreementForm
 from leaseAgreements.models import LeaseAgreement
 from .models import Tenant
 from .forms import TenantForm, TenantFilterForm, AddTenantForm
@@ -84,11 +86,22 @@ def get_states(request):
 def tenantDashboard(request, pk):
     menu = 'tenant-dashboard'
     greeting = greet_client()
+    agreement = LeaseAgreement.objects.filter(tenant=request.user.profile.tenant).first()
+
+    if agreement:
+        days_left = agreement.days_remaining()
+        total_days = (agreement.end_date - agreement.start_date).days
+    else:
+        days_left = 0
+        total_days = 0
 
     context = {
         'username': pk, 
         'menu': menu,
         'greeting': greeting,
+        'days_left': days_left,
+        'total_days': total_days,
+        'agreement': agreement,
     }
     return render(request, "tenants/T_dashboard.html", context)
 
@@ -167,9 +180,10 @@ def tenants_profiles(request, pk, type):
                 username=username,
                 email=form.cleaned_data['email'].lower(),
                 password=password,
-                first_name=form.cleaned_data['first_name'].title(),
+                first_name=form.cleaned_data['first_name'].title() + " " + form.cleaned_data['last_name'].title(),
                 last_name='tenant' if type == "bo" else 'company'
             )
+            user.first_name = form.cleaned_data['first_name'].title()
             user.last_name = form.cleaned_data['last_name'].title()
             user.save()
 
@@ -414,12 +428,42 @@ def tenant_lease_info(request, pk):
     menu = 'to'
     s_menu = 'tli'
     tenant = request.user.profile.tenant
-    agreement = LeaseAgreement.objects.get(tenant=tenant)
+    agreement = LeaseAgreement.objects.filter(tenant=tenant).first()
+
+    if request.method == "POST":
+        form = LeaseAgreementForm(request.POST, request.FILES)
+        files = request.FILES.getlist('docs')
+
+        lease = LeaseAgreement.objects.create(
+            tenant=tenant,
+            start_date = request.POST['start_date'],
+            end_date = request.POST['end_date'],
+            rent_amount = request.POST['rent_amount'],
+            deposit_amount = request.POST['deposit_amount'],
+            payment_schedule = request.POST['payment_schedule'],
+            terms_and_conditions = request.POST['terms_and_conditions'],
+            agreement_signed = True if request.POST['agreement_signed'].lower() == 'true' else False,
+            date_signed = request.POST['date_signed']
+        )
+
+        for file in files:
+            Document.objects.create(
+                title=agreement.payment_schedule,
+                file=file,
+                document_type='lease_agreement',
+                uploaded_by=request.user,
+                related_lease=lease
+            )
+
+        return redirect('tenant-lease', pk=request.user.profile)
+    else:
+        form = LeaseAgreementForm()
 
     context = {
         'menu': menu,
         's_menu': s_menu,
         'tenant': tenant,
         'agreement': agreement,
+        'form': form,
     }
     return render(request, "tenants/lease_info.html", context)
