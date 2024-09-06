@@ -29,7 +29,7 @@
             </thead>
             <tbody class="table-border-bottom-0">
               {% for house in houses %}
-              <tr onclick="window.location.href='{% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?menu=apartments-management&s_menu=apartment-profiles&i_menu=all'" style="cursor:pointer;">
+              <tr onclick="window.location.href='{% url "view-apartments" type=type pk=request.user.profile house_id=house.id %}?menu=a-m&s_menu=a-p&i_menu=all'" style="cursor:pointer;">
                 <td>
                     <i class="fab fa-angular fa-lg text-danger me-1"></i>
                     <h6 class="fw-bold">No. {{house.house_number}}, {{ house.address.title }}</h6>
