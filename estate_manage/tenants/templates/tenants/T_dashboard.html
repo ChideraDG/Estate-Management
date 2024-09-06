@@ -1,259 +1,297 @@
-{% extends "dashboard/main.html" %} {% block title %}
-<title>{{request.user.profile.username.title}}-Tenant</title>
-{% endblock title %} {% block tenant %}
-<!-- Dashboard -->
-<li class="menu-item {% if menu == 'tenant-dashboard' %}active{% endif %}">
-  <a href='{% url "dashboard-T" pk=request.user.profile %}' class="menu-link">
-    <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
-    <div data-i18n="Analytics">Dashboard</div>
-  </a>
-</li>
+{% extends "dashboard/main.html" %} 
+{% load static %}
 
-<li class="menu-header small text-uppercase">
-  <span class="menu-header-text">Properties</span>
-</li>
+{% block title %}
+  <title>{{request.user.profile.username.title}}-Tenant</title>
+{% endblock title %} 
 
-<!-- Tenant Overview -->
-<li class="menu-item {% if menu == 'to' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-person-fill tiny-icon"></i>
-    <div data-i18n="Tenant Overview">Tenant Overview</div>
-  </a>
+{% block tenant %}
+  <!-- Dashboard -->
+  <li class="menu-item {% if menu == 'tenant-dashboard' %}active{% endif %}">
+    <a href='{% url "dashboard-T" pk=request.user.profile %}' class="menu-link">
+      <i class="menu-icon tf-icons bi bi-clipboard-data-fill tiny-icon"></i>
+      <div data-i18n="Analytics">Dashboard</div>
+    </a>
+  </li>
 
-  <ul class="menu-sub">
-    <li class="menu-item {% if s_menu == 'tli' %}active{% endif %}">
-      <a href="#" class="menu-link">
-        <div data-i18n="lease-info">Lease Information</div>
-      </a>
-    </li>
-    <li class="menu-item {% if s_menu == 'tph' %}active{% endif %}">
-      <a href="#" class="menu-link">
-        <div data-i18n="payment-history">Payment History</div>
-      </a>
-    </li>
-  </ul>
-</li>
+  <li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Properties</span>
+  </li>
 
-<!-- Billings -->
-<li class="menu-item {% if menu == 'tb' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-receipt tiny-icon"></i>
-    <div data-i18n="Bilings">Billings</div>
-  </a>
+  <!-- Tenant Overview -->
+  <li class="menu-item {% if menu == 'to' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-person-fill tiny-icon"></i>
+      <div data-i18n="Tenant Overview">Tenant Overview</div>
+    </a>
 
-  <ul class="menu-sub">
-    <li class="menu-item {% if s_menu == 'trpm' %}active{% endif %}">
-      <a href="#" class="menu-link">
-        <div data-i18n="rent-payment-portal">Rent Payment Portal</div>
-      </a>
-    </li>
-    <li class="menu-item {% if s_menu == 'tpr' %}active{% endif %}">
-      <a href="layouts-without-navbar.html" class="menu-link">
-        <div data-i18n="payment-reminders">Payment Reminders</div>
-      </a>
-    </li>
-    <li class="menu-item {% if s_menu == 'trc' %}active{% endif %}">
-      <a href="layouts-without-navbar.html" class="menu-link">
-        <div data-i18n="receipt-generation">Receipt Generation</div>
-      </a>
-    </li>
-  </ul>
-</li>
+    <ul class="menu-sub">
+      <li class="menu-item {% if s_menu == 'tli' %}active{% endif %}">
+        <a href={% url "tenant-lease" pk=request.user.profile %} class="menu-link">
+          <div data-i18n="lease-info">Lease Information</div>
+        </a>
+      </li>
+      <li class="menu-item {% if s_menu == 'tph' %}active{% endif %}">
+        <a href="#" class="menu-link">
+          <div data-i18n="payment-history">Payment History</div>
+        </a>
+      </li>
+    </ul>
+  </li>
 
-<!-- Workorder -->
-<li class="menu-item {% if menu == 'workorder' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
-    <div data-i18n="Workorder">Workorder</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="pages-account-settings-account.html" class="menu-link">
-        <div data-i18n="request-submission">Request Submission</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="pages-account-settings-notifications.html" class="menu-link">
-        <div data-i18n="tracking-updates">Tracking and Updates</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="pages-account-settings-connections.html" class="menu-link">
-        <div data-i18n="service-info">Service Provider Information</div>
-      </a>
-    </li>
-  </ul>
-</li>
+  <!-- Billings -->
+  <li class="menu-item {% if menu == 'tb' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-receipt tiny-icon"></i>
+      <div data-i18n="Bilings">Billings</div>
+    </a>
 
-<!-- Services -->
-<li class="menu-header small text-uppercase">
-  <span class="menu-header-text">Services</span>
-</li>
+    <ul class="menu-sub">
+      <li class="menu-item {% if s_menu == 'trpm' %}active{% endif %}">
+        <a href="#" class="menu-link">
+          <div data-i18n="rent-payment-portal">Rent Payment Portal</div>
+        </a>
+      </li>
+      <li class="menu-item {% if s_menu == 'tpr' %}active{% endif %}">
+        <a href="layouts-without-navbar.html" class="menu-link">
+          <div data-i18n="payment-reminders">Payment Reminders</div>
+        </a>
+      </li>
+      <li class="menu-item {% if s_menu == 'trc' %}active{% endif %}">
+        <a href="layouts-without-navbar.html" class="menu-link">
+          <div data-i18n="receipt-generation">Receipt Generation</div>
+        </a>
+      </li>
+    </ul>
+  </li>
 
-<!-- Media -->
-<li class="menu-item {% if menu == 'media' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-telephone-fill tiny-icon"></i>
-    <div data-i18n="media">Media</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="auth-login-basic.html" class="menu-link" target="_blank">
-        <div data-i18n="in-app-messaging">In-App Messaging</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="auth-register-basic.html" class="menu-link" target="_blank">
-        <div data-i18n="announcements">Announcements</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a
-        href="auth-forgot-password-basic.html"
-        class="menu-link"
-        target="_blank"
+  <!-- Workorder -->
+  <li class="menu-item {% if menu == 'workorder' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
+      <div data-i18n="Workorder">Workorder</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="pages-account-settings-account.html" class="menu-link">
+          <div data-i18n="request-submission">Request Submission</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="pages-account-settings-notifications.html" class="menu-link">
+          <div data-i18n="tracking-updates">Tracking and Updates</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="pages-account-settings-connections.html" class="menu-link">
+          <div data-i18n="service-info">Service Provider Information</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Services -->
+  <li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Services</span>
+  </li>
+
+  <!-- Media -->
+  <li class="menu-item {% if menu == 'media' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-telephone-fill tiny-icon"></i>
+      <div data-i18n="media">Media</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="auth-login-basic.html" class="menu-link" target="_blank">
+          <div data-i18n="in-app-messaging">In-App Messaging</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="auth-register-basic.html" class="menu-link" target="_blank">
+          <div data-i18n="announcements">Announcements</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a
+          href="auth-forgot-password-basic.html"
+          class="menu-link"
+          target="_blank"
+        >
+          <div data-i18n="feedback-surveys">Feedback and Surveys</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Facilities -->
+  <li class="menu-item {% if menu == 'facilities' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
+      <div data-i18n="facilities">Facilities</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="pages-misc-error.html" class="menu-link">
+          <div data-i18n="utility-tracking">Utility Tracking</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="pages-misc-under-maintenance.html" class="menu-link">
+          <div data-i18n="service-requests">Service Requests</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Archiving -->
+  <li class="menu-item {% if menu == 'archiving' %}active{% endif %}">
+    <a href="javascript:void(0)" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-archive-fill tiny-icon"></i>
+      <div data-i18n="Extended UI">Archiving</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+          <div data-i18n="lease-agreements">Lease and Agreements</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="extended-ui-text-divider.html" class="menu-link">
+          <div data-i18n="receipts-invoices">Receipts and Invoices</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Community -->
+  <li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Community</span>
+  </li>
+
+  <!-- Community Features -->
+  <li class="menu-item {% if menu == 'community-features' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
+      <div data-i18n="community-features">Community Features</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="forms-basic-inputs.html" class="menu-link">
+          <div data-i18n="bulletin-board">Community Bulletin Board</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="forms-input-groups.html" class="menu-link">
+          <div data-i18n="neighbor-directory">Neighbor Directory</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Security Features -->
+  <li class="menu-item {% if menu == 'security-features' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-shield-lock-fill tiny-icon"></i>
+      <div data-i18n="security-features">Security Features</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="form-layouts-vertical.html" class="menu-link">
+          <div data-i18n="visitor-management">Visitor Management</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="forms-input-groups.html" class="menu-link">
+          <div data-i18n="emergency-contacts">Emergency Contacts</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Relocation -->
+  <li class="menu-item {% if menu == 'relocation' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-truck tiny-icon"></i>
+      <div data-i18n="relocation">Relocation</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item">
+        <a href="form-layouts-vertical.html" class="menu-link">
+          <div data-i18n="checklists">Checklists</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="forms-input-groups.html" class="menu-link">
+          <div data-i18n="documentation">Documentation</div>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Profiles -->
+  <li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Profiles</span>
+  </li>
+
+  <!-- User Management -->
+  <li class="menu-item {% if menu == 'user-management' %}active{% endif %}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
+      <div data-i18n="User Management">User Management</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item {% if s_menu == 't-profile' %}active{% endif %}">
+        <a
+          href='{% url "view-tenant" pk=request.user.profile %}'
+          class="menu-link"
+        >
+          <div data-i18n="t-profile">Tenant Profile</div>
+        </a>
+      </li>
+      <li
+        class="menu-item {% if s_menu == 'personal-profile' %}active{% endif %}"
       >
-        <div data-i18n="feedback-surveys">Feedback and Surveys</div>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<!-- Facilities -->
-<li class="menu-item {% if menu == 'facilities' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
-    <div data-i18n="facilities">Facilities</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="pages-misc-error.html" class="menu-link">
-        <div data-i18n="utility-tracking">Utility Tracking</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="pages-misc-under-maintenance.html" class="menu-link">
-        <div data-i18n="service-requests">Service Requests</div>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<!-- Archiving -->
-<li class="menu-item {% if menu == 'archiving' %}active{% endif %}">
-  <a href="javascript:void(0)" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-archive-fill tiny-icon"></i>
-    <div data-i18n="Extended UI">Archiving</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-        <div data-i18n="lease-agreements">Lease and Agreements</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="extended-ui-text-divider.html" class="menu-link">
-        <div data-i18n="receipts-invoices">Receipts and Invoices</div>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<!-- Community -->
-<li class="menu-header small text-uppercase">
-  <span class="menu-header-text">Community</span>
-</li>
-
-<!-- Community Features -->
-<li class="menu-item {% if menu == 'community-features' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
-    <div data-i18n="community-features">Community Features</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="forms-basic-inputs.html" class="menu-link">
-        <div data-i18n="bulletin-board">Community Bulletin Board</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="forms-input-groups.html" class="menu-link">
-        <div data-i18n="neighbor-directory">Neighbor Directory</div>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<!-- Security Features -->
-<li class="menu-item {% if menu == 'security-features' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-shield-lock-fill tiny-icon"></i>
-    <div data-i18n="security-features">Security Features</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="form-layouts-vertical.html" class="menu-link">
-        <div data-i18n="visitor-management">Visitor Management</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="forms-input-groups.html" class="menu-link">
-        <div data-i18n="emergency-contacts">Emergency Contacts</div>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<!-- Relocation -->
-<li class="menu-item {% if menu == 'relocation' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-truck tiny-icon"></i>
-    <div data-i18n="relocation">Relocation</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item">
-      <a href="form-layouts-vertical.html" class="menu-link">
-        <div data-i18n="checklists">Checklists</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="forms-input-groups.html" class="menu-link">
-        <div data-i18n="documentation">Documentation</div>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<!-- Profiles -->
-<li class="menu-header small text-uppercase">
-  <span class="menu-header-text">Profiles</span>
-</li>
-
-<!-- User Management -->
-<li class="menu-item {% if menu == 'user-management' %}active{% endif %}">
-  <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
-    <div data-i18n="User Management">User Management</div>
-  </a>
-  <ul class="menu-sub">
-    <li class="menu-item {% if s_menu == 't-profile' %}active{% endif %}">
-      <a
-        href='{% url "view-tenant" pk=request.user.profile %}'
-        class="menu-link"
-      >
-        <div data-i18n="t-profile">Tenant Profile</div>
-      </a>
-    </li>
-    <li
-      class="menu-item {% if s_menu == 'personal-profile' %}active{% endif %}"
-    >
-      <a
-        href='{% url "view-user-profile" pk=request.user.profile type="t" %}'
-        class="menu-link"
-      >
-        <div data-i18n="personal-profile">Personal Profile</div>
-      </a>
-    </li>
-  </ul>
-</li>
+        <a
+          href='{% url "view-user-profile" pk=request.user.profile type="t" %}'
+          class="menu-link"
+        >
+          <div data-i18n="personal-profile">Personal Profile</div>
+        </a>
+      </li>
+    </ul>
+  </li>
 {% endblock tenant %}
+
+{% block details %}
+    <div class="col-lg-8 mb-4 order-0">
+        <div class="card">
+        <div class="d-flex align-items-end row">
+            <div class="col-sm-7">
+            <div class="card-body">
+                <h5 class="card-title text-primary">{{ greeting.title }} {{ request.user.profile.name }}! 🥇</h5>
+                <p class="mb-4">
+                  Your home is not just a place – it’s a feeling. Let this space be where you find comfort, inspiration, 
+                  and strength. Remember, no matter how busy life gets, there’s always room to grow, laugh, and enjoy the journey.    
+                </p>
+                <a href="#" class="btn btn-sm btn-outline-primary">View Messages</a>
+
+                
+            </div>
+            </div>
+            <div class="col-sm-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+                <img
+                src={% static "img/illustrations/man-with-laptop-light.png" %}
+                height="140"
+                alt="View Badge User"
+                data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                data-app-light-img="illustrations/man-with-laptop-light.png"
+                />
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock details %}
