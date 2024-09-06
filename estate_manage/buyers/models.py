@@ -34,7 +34,7 @@ class Buyer(models.Model):
                                 related_name='buyers')
     full_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False,
+    phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True,
                                      validators=[RegexValidator(
                                          r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                          message="Phone number must be entered in the format: '08012345678' or "

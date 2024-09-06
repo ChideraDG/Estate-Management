@@ -66,6 +66,7 @@ def agreements_details(request, type, pk, agreement_id):
         'building_owner': "building_owners/BO_dashboard.html",
     }
     context = {
+        'user': request.user.profile,
         'menu': menu,
         's_menu': s_menu,
         'agreement': agreement,

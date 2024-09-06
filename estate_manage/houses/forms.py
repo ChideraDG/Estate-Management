@@ -153,6 +153,9 @@ class HouseFilterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(HouseFilterForm, self).__init__(*args, **kwargs)
+        self.fields['number_of_apartments'].initial = ""
+        self.fields['number_of_floors'].initial = ""
+        self.fields['garage_space'].initial = ""
 
         # Define placeholders for each field
         placeholders = {

@@ -32,7 +32,7 @@ class LeaseAgreement(models.Model):
     """
 
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE, related_name='lease_agreements')
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='lease_agreements')
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='lease_agreements', blank=True, null=True)
     start_date = models.DateField()
     end_date = models.DateField()
     rent_amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -71,6 +71,21 @@ class LeaseAgreement(models.Model):
         """
         today = timezone.now().date()
         return self.start_date <= today <= self.end_date
+
+    def days_remaining(self):
+        """
+        Calculate the number of days remaining until the end of the lease agreement.
+
+        Returns
+        -------
+        int
+            The number of days remaining until the lease ends. If the lease has ended, returns 0.
+        """
+        today = timezone.now().date()
+        if today > self.end_date:
+            return 0
+        remaining_days = (self.end_date - today).days
+        return remaining_days
     
 
 class Reminder(models.Model):
