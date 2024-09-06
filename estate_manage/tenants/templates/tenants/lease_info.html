@@ -7,97 +7,161 @@
     </h4>
 
     <div class="card mb-4">
-  
+        {% if agreement %}
         <div class="card-body">
             <div class="row">
-                <!-- Tenant -->
-                <div class="mb-3 col-md-6">
-                    <label class="form-label">Tenant</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.tenant }}
-                    </div>
-                </div>
-            
                 <!-- Apartment -->
-                <div class="mb-3 col-md-6">
+                {% if agreement.apartment %}
+                <div class="mb-3">
                     <label class="form-label">Apartment</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.apartment }} <!-- Assuming Apartment has a 'number' field -->
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span id="basic-icon-default-fullname2" class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-house"></i>
+                        </span>
+                        <span id="basic-icon-default-company" class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.apartment }}
+                        </span> <!-- Assuming Apartment has a 'number' field -->
                     </div>
                 </div>
+                {% endif %}
             
                 <!-- Start Date -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Start Date</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.start_date|date:"Y-m-d" }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-calendar"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.start_date|date:"Y-m-d" }}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- End Date -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">End Date</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.end_date|date:"Y-m-d" }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-calendar-check"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.end_date|date:"Y-m-d" }}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- Rent Amount -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Rent Amount</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        ${{ agreement.rent_amount }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-cash"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            $ {{ agreement.rent_amount }}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- Deposit Amount -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Deposit Amount</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        ${{ agreement.deposit_amount }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-credit-card"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            $ {{ agreement.deposit_amount }}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- Payment Schedule -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Payment Schedule</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.get_payment_schedule_display }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-calendar-month"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.get_payment_schedule_display }}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- Terms and Conditions -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Terms and Conditions</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.terms_and_conditions|slice:":100" }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-file-text"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.terms_and_conditions|slice:":100" }}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- Agreement Signed -->
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Agreement Signed</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {% if agreement.agreement_signed %}
-                            Yes
-                        {% else %}
-                            No
-                        {% endif %}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-check-circle"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            {% if agreement.agreement_signed %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
-            
+
                 <!-- Date Signed -->
                 {% if agreement.agreement_signed %}
-                <div class="mb-3 col-md-6">
+                <div class="mb-3">
                     <label class="form-label">Date Signed</label>
-                    <div class="form-control" style="background-color: #e9ecef">
-                        {{ agreement.date_signed|date:"Y-m-d H:i:s" }}
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-calendar2-check"></i>
+                        </span>
+                        <span class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.date_signed|date:"Y-m-d H:i:s" }}
+                        </span>
                     </div>
                 </div>
                 {% endif %}
             </div>
-            
+            {% if not agreement.tenant.building_owner %}
+                <a href="#" class="btn btn-outline-primary mt-4">Update Lease</a>
+            {% endif %}
         </div>
-        <!-- /Account -->
+        {% else %}
+            <div class="card-body" role="tabpanel">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            {% if field.label != "Tenant" and field.label != "Apartment" %}
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">Agreement Documents</label>
+                            <input class="form-control" type="file" name='docs' id="formFileMultiple" multiple />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary mt-2">Modify Agreement</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </div>
 {% endblock details %}
