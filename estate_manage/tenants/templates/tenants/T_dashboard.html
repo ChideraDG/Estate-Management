@@ -14,19 +14,19 @@
 </li>
 
 <!-- Tenant Overview -->
-<li class="menu-item {% if menu == 'tenants-overview' %}active{% endif %}">
+<li class="menu-item {% if menu == 'to' %}active{% endif %}">
   <a href="javascript:void(0);" class="menu-link menu-toggle">
     <i class="menu-icon tf-icons bi bi-person-fill tiny-icon"></i>
     <div data-i18n="Tenant Overview">Tenant Overview</div>
   </a>
 
   <ul class="menu-sub">
-    <li class="menu-item {% if s_menu == 'lease-info' %}active{% endif %}">
+    <li class="menu-item {% if s_menu == 'tli' %}active{% endif %}">
       <a href="#" class="menu-link">
         <div data-i18n="lease-info">Lease Information</div>
       </a>
     </li>
-    <li class="menu-item">
+    <li class="menu-item {% if s_menu == 'tph' %}active{% endif %}">
       <a href="#" class="menu-link">
         <div data-i18n="payment-history">Payment History</div>
       </a>
@@ -35,26 +35,24 @@
 </li>
 
 <!-- Billings -->
-<li class="menu-item {% if menu == 'billings' %}active{% endif %}">
+<li class="menu-item {% if menu == 'tb' %}active{% endif %}">
   <a href="javascript:void(0);" class="menu-link menu-toggle">
     <i class="menu-icon tf-icons bi bi-receipt tiny-icon"></i>
     <div data-i18n="Bilings">Billings</div>
   </a>
 
   <ul class="menu-sub">
-    <li
-      class="menu-item {% if s_menu == 'rent-payment-portal' %}active{% endif %}"
-    >
+    <li class="menu-item {% if s_menu == 'trpm' %}active{% endif %}">
       <a href="#" class="menu-link">
         <div data-i18n="rent-payment-portal">Rent Payment Portal</div>
       </a>
     </li>
-    <li class="menu-item">
+    <li class="menu-item {% if s_menu == 'tpr' %}active{% endif %}">
       <a href="layouts-without-navbar.html" class="menu-link">
         <div data-i18n="payment-reminders">Payment Reminders</div>
       </a>
     </li>
-    <li class="menu-item">
+    <li class="menu-item {% if s_menu == 'trc' %}active{% endif %}">
       <a href="layouts-without-navbar.html" class="menu-link">
         <div data-i18n="receipt-generation">Receipt Generation</div>
       </a>
