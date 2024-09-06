@@ -40,16 +40,16 @@
     </li>
 
     <!-- Apartments Management -->
-    <li class="menu-item {% if menu == 'apartments-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'a-m' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
             <div data-i18n="Apartment Management">Apartment Control</div>
         </a>
 
         <ul class="menu-sub">
-            <li class="menu-item {% if s_menu == 'apartment-profiles' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'a-p' %}active{% endif %}">
                 <a href={% url "house-apartments" pk=request.user.profile type="bo" %} class="menu-link">
-                    <div data-i18n="apartment-profiles">Apartment Profiles</div>
+                    <div data-i18n="a-p">Apartment Profiles</div>
                 </a>
             </li>
             <li class="menu-item">
