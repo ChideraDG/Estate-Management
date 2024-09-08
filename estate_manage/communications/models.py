@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 from apartments.models import Apartment
 from tenants.models import Tenant
 
+class Conversation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='conversations')
+    latest_message = models.TextField(blank=True, null=True)
+    latest_message_timestamp = models.DateTimeField(null=True, blank=True)
+    unread_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"Conversation with {self.client.username}"
+    
 class Message(models.Model):
     """
     Represents individual messages sent between tenants and property management.
@@ -29,10 +38,22 @@ class Message(models.Model):
     body = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, related_name='messages', null=True, blank=True)
     
+    class Meta:
+        ordering = ["-timestamp"]
+
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient} - {self.subject}"
-
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Update the conversation with the latest message details
+        self.conversation.user = self.sender
+        self.conversation.latest_message = self.message
+        self.conversation.latest_message_timestamp = self.timestamp
+        self.conversation.unread_count += 1
+        self.conversation.save()
 
 class Announcement(models.Model):
     """

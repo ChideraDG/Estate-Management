@@ -1,0 +1,197 @@
+{% extends "building_owners/BO_dashboard.html" %} 
+
+{% block details %}
+    <style>
+        .send-message .btn-send-message {
+            position: fixed;
+            right: 3rem;
+            bottom: 3rem;
+            box-shadow: 0 1px 20px 1px #ff3e1d;
+            z-index: 9999;
+        }
+        .send-message .btn-send-message:hover {
+            box-shadow: none;
+        }
+    </style>
+
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Tenant Management / </span>
+    Communications
+    </h4>
+
+    <!-- Communication Profile -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Messages Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" id="send-comms"
+                data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="true">
+                    <i class="tf-icons bi bi-chat-dots-fill"></i> Messages
+                </button>
+            </li>
+
+            <!-- Announcement Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" id="send-comms"
+                data-bs-target="#navs-pills-justified-announcement" aria-controls="navs-pills-justified-announcement" aria-selected="false">
+                    <i class="tf-icons bi bi-megaphone-fill"></i> Announcements
+                </button>
+            </li>
+
+            <!-- Feedback Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" id="send-comms"
+                data-bs-target="#navs-pills-justified-feedback" aria-controls="navs-pills-justified-feedback" aria-selected="false">
+                    <i class="tf-icons bi bi-pencil"></i> Feedbacks
+                </button>
+            </li>
+
+            <!-- Survey Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" id="send-comms"
+                data-bs-target="#navs-pills-justified-survey" aria-controls="navs-pills-justified-survey" aria-selected="false">
+                    <i class="tf-icons bi bi-check-circle"></i> Surveys
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Messages Tabs Details -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-messages" role="tabpanel">
+                <!-- Messages Tab Details Box -->
+                <div class="nav-align-top">
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                                All
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ unread_messages.count }}</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-unread" aria-controls="navs-pills-top-unread" aria-selected="false">
+                                Unread
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-read" aria-controls="navs-pills-top-read" aria-selected="false">
+                                Read
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Messages Tab Details Inner -->
+                    <div class="tab-content" style="background-color: #f5f5f9;">
+                        <!-- All Messages Tab Details -->
+                        <div class="tab-pane fade show active" id="navs-pills-top-all" role="tabpanel">
+                            <div class="container">
+                                <!-- Search Bar -->
+                                <form action="" method='GET' class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="message">
+                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                </form>
+                            
+                                <!-- Chat List -->
+                                <div class="list-group">
+                                    {% for conversation in conversations %}
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ conversation.user.profile.avatar.url }}" alt="{{ conversation.user.username }}" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                                            <div>
+                                                <h5 class="mb-1">{{ conversation.user.profile.name }}</h5>
+                                                <p class="mb-0 text-muted">{{ conversation.latest_message|truncatewords:10 }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <small class="text-muted">{{ conversation.latest_message_timestamp|date:"M d, Y H:i" }}</small>
+                                            {% if conversation.unread_count > 0 %}
+                                            <span class="badge badge-danger badge-pill">{{ conversation.unread_count }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <!-- All Unread Tab Details -->
+                        <div class="tab-pane fade" id="navs-pills-top-unread" role="tabpanel">
+                            {{ unread_messages }}
+                        </div>
+
+                        <!-- All Read Tab Details -->
+                        <div class="tab-pane fade" id="navs-pills-top-read" role="tabpanel">
+                            {{ read_messages }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcement Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-announcement" role="tabpanel">
+                <h1 class="">Announcement Here ...</h1>
+            </div>
+
+            <!-- Feedback Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-feedback" role="tabpanel">
+                <h1>Feedback Here ...</h1>
+            </div>
+
+            <!-- Survey Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-survey" role="tabpanel">
+                <h1>Survey Here ...</h1>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update the button text and href
+        function updateButton(newText, newHref) {
+            const button = document.querySelector('#comms-btn .btn-send-message');
+            button.textContent = newText;
+            button.setAttribute('href', newHref);
+        }
+
+        // Event listener for Bootstrap tab shown event, targeting only elements with id="send-comms"
+        document.querySelectorAll('button#send-comms').forEach(tabButton => {
+            tabButton.addEventListener('shown.bs.tab', function (event) {
+                // Get the text of the active tab
+                let activeTabText = 'New ' + event.target.textContent.trim();
+
+                // Remove the trailing "s" if present
+                /*if (activeTabText.endsWith("s")) {
+                    activeTabText = activeTabText.slice(0, -1);
+                }*/
+
+                // Define the corresponding href based on the active tab
+                let newHref = '#';  // Default href
+                if (activeTabText.includes('Message')) {
+                    newHref = '#'; // Update this with the actual URL for Messages
+                } else if (activeTabText.includes('Announcement')) {
+                    newHref = '#'; // Update this with the actual URL for Announcements
+                } else if (activeTabText.includes('Feedback')) {
+                    newHref = '#'; // Update this with the actual URL for Feedback
+                } else if (activeTabText.includes('Survey')) {
+                    newHref = '#'; // Update this with the actual URL for Surveys
+                }
+
+                // Update the button text and href
+                updateButton(activeTabText, newHref);
+            });
+        });
+    </script>          
+     
+        
+{% endblock details %}
+
+{% block floater %}
+    <div class="send-message" id="comms-btn" style="cursor: pointer;">
+        <a href="" class="btn btn-danger btn-send-message">
+            New Messages
+        </a>
+    </div>
+{% endblock floater %}

@@ -1,0 +1,45 @@
+{% extends template_routes %}
+
+{% block details %}
+    <!-- Content -->
+
+    <!-- Location -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            Tenant Management / 
+            <a class="text-muted fw-light" href={% url "agreements" type=type pk=request.user.profile %}?menu=tm&s_menu=ta>
+                Lease Management
+            </a> / 
+            <a class="text-muted fw-light" href={% url "agreement-detail" type=type pk=request.user.profile agreement_id=agreement.id %}?menu=tm&s_menu=ta>
+                {{ agreement.tenant }}
+            </a> /
+        </span> 
+        Update Agreement
+    </h4>
+
+    <div class="card">
+        <div class="card-body" role="tabpanel">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    {% for field in form %}
+                        {% if field.label != "Tenant" and field.label != "Apartment"%}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Agreement Documents</label>
+                        <input class="form-control" type="file" name='docs' id="formFileMultiple" multiple />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary mt-2">Modify Agreement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock details %}

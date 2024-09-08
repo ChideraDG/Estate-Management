@@ -37,6 +37,19 @@
                         </span> <!-- Assuming Apartment has a 'number' field -->
                     </div>
                 </div>
+
+                <!-- House -->
+                <div class="mb-3">
+                    <label class="form-label">House</label>
+                    <div class="input-group input-group-merge" style="background-color: #e9ecef">
+                        <span id="basic-icon-default-fullname2" class="input-group-text" style="background-color: #e9ecef">
+                            <i class="bi bi-geo"></i>
+                        </span>
+                        <span id="basic-icon-default-company" class="form-control" style="background-color: #e9ecef">
+                            {{ agreement.apartment.house }}
+                        </span> <!-- Assuming Apartment has a 'number' field -->
+                    </div>
+                </div>
             
                 <!-- Apartment -->
                 <div class="mb-3">
@@ -152,7 +165,7 @@
                     <label class="form-label">Date Signed</label>
                     <div class="input-group input-group-merge" style="background-color: #e9ecef">
                         <span class="input-group-text" style="background-color: #e9ecef">
-                            <i class="bi bi-calendar-check2"></i>
+                            <i class="bi bi-calendar2-check"></i>
                         </span>
                         <span class="form-control" style="background-color: #e9ecef">
                             {{ agreement.date_signed|date:"Y-m-d H:i:s" }}
@@ -161,7 +174,7 @@
                 </div>
                 {% endif %}
             </div>
-            <a href="#" class="btn btn-outline-primary mt-4">Update Lease</a>
+            <a href={% url "update-agreement" pk=request.user.profile type=type agreement_id=agreement.id %}?menu=tm&s_menu=ta class="btn btn-outline-primary mt-4">Update Lease</a>
         </div>
         <!-- /Account -->
     </div>
