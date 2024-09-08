@@ -8,42 +8,16 @@ from locations.models import Country, State
 from django.http import JsonResponse
 from urllib.parse import urlencode
 from .utils import paginateEstates
+from django.db import IntegrityError
 
 @login_required(login_url='login')
 def estates(request, pk, type):
-    if type == 'C':
+    if type == 'c':
         profile = request.user.profile.companies
 
-    estates, query_string = FilterEstates(request)
-    total_estates = estates.count
+    estates =  Estate.objects.all()
 
-    # Get the current menu or default to 'all' if not provided.
-    i_menu = request.GET.get('i_menu', 'all')
-    add = request.GET.get('add', 'all')
-
-    # Get the reset filter URL or default to '/' if not provided.
-    reset_filter = request.GET.get('reset_filter', '/')
-
-    # Set the active menu and sub-menu for UI highlighting.
-    menu = 'estates-management'
-    s_menu = 'estate-profiles'
-
-    # Retrieve all countries (presumably for filtering options).
-    countries = Country.objects.all()
-
-    # Filter estates by their types
-    residential_estate = estates.filter(estate_type="residential")
-    commercial_estate = estates.filter(estate_type="commercial")
-    mixed_use_estate = estates.filter(estate_type="mixed_use ")
-
-    # Check if exists
-    exist = [estates.exists(), residential_estate.exists(), commercial_estate.exists(), mixed_use_estate.exists()] 
-
-     # Paginate the estaes showing 6 estates per page.
-    custom_range, estates = paginateHouses(request, estates, 6)
-    re_custom_range, residential_estate = paginateHouses(request, residential_estate, 6)
-    co_custom_range, commercial_estate = paginateHouses(request, commercial_estate, 6)
-    mu_custom_range, mixed_use_estate = paginateHouses(request, mixed_use_estate, 6)
+    exist = [estates.exists()]
 
     # If the request method is POST, process the form for adding a new estate.
     if request.method == "POST":
@@ -60,25 +34,27 @@ def estates(request, pk, type):
             if request.user.profile.designation == 'company':
                 instance.name = profile
 
+            # try:
+
             # Save the house instance to the database.
             instance.save()
 
             # Access the Many-to-Many Table for utilities and save selected utilities.
             EstateUtilities = Estate.utilities.through
             for utility in request.POST.getlist('utilities'):
-               EstateUtilities.objects.create(estate_id=instance.id, utility_id=utility)
+                EstateUtilities.objects.create(estate_id=instance.id, utility_id=utility)
 
-             # Access the Many-to-Many Table for amenities and save selected amenities.
+            # Access the Many-to-Many Table for amenities and save selected amenities.
             EstateAmenities = Estate.amenities.through
             for amenity in request.POST.getlist('amenities'):
                 EstateAmenities.objects.create(estate_id=instance.id, amenity_id=amenity)
 
-             # Access the Many-to-Many Table for utilities and save selected security features.
+            # Access the Many-to-Many Table for utilities and save selected security features.
             EstateSecurityFeatures = Estate.security_features.through
             for security_feature in request.POST.getlist('security_features'):
-               EstateSecurityFeatures.objects.create(estate_id=instance.id, security_feature_id=security_feature)
+                EstateSecurityFeatures.objects.create(estate_id=instance.id, securityfeatures_id=security_feature)
 
-             # Save each uploaded image to the Photo model with the associated house.
+            # Save each uploaded image to the Photo model with the associated house.
             for image in images:
                 Photo.objects.create(
                     image=image,
@@ -88,6 +64,10 @@ def estates(request, pk, type):
             
             # Redirect to the same view after successful form submission.
             return redirect('estates', pk=request.user.profile, type=type )
+
+            # except IntegrityError:
+                # Handle the error
+                # messages.error(request, 'An estate with this name and address already exists.')
         else:
             non_field_errors = form.non_field_errors()
             if non_field_errors:
@@ -98,33 +78,14 @@ def estates(request, pk, type):
     else:
         form = EstateForm()
 
-    # Prepare the context to be passed to the template.
-    context = {
-        's_menu': s_menu,
-        'menu': menu,
+
+    context ={
         'profile': profile,
         'estates': estates,
-        'countries': countries,
         'form': form,
-        'exist': exist,
-        'reset_filter': reset_filter,
-        'query_string': query_string,
         'type': type,
-        'residential_estate': residential_estate,
-        'commercial_estate': commercial_estate,
-        'mixed_use_estate': mixed_use_estate,
-        'custom_range': custom_range,
-        're_custom_range': re_custom_range,
-        'co_custom_range': co_custom_range,
-        'mu_custom_range': mu_custom_range,
-        'i_menu': i_menu,
-        'filter_form': EstateFilterForm(),
-        'total_estates': total_estates,
-        'add': add,
-        }
-
-
-
+        'exist': exist,
+    }
     return render(request, 'estates/estates.html', context)
 
 @login_required(login_url='login')

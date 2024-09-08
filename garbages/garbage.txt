@@ -588,3 +588,114 @@ old update building_owner=======================================================
 for increasing Git postBuffer size===================================
     git config http.postBuffer 524288000
 =====================================================================
+
+old estate view =============================================
+    estates, query_string = FilterEstates(request)
+    total_estates = estates.count
+
+    # Get the current menu or default to 'all' if not provided.
+    i_menu = request.GET.get('i_menu', 'all')
+    add = request.GET.get('add', 'all')
+
+    # Get the reset filter URL or default to '/' if not provided.
+    reset_filter = request.GET.get('reset_filter', '/')
+
+    # Set the active menu and sub-menu for UI highlighting.
+    menu = 'estates-management'
+    s_menu = 'estate-profiles'
+
+    # Retrieve all countries (presumably for filtering options).
+    countries = Country.objects.all()
+
+    # Filter estates by their types
+    residential_estates = estates.filter(estate_type="residential")
+    commercial_estates = estates.filter(estate_type="commercial")
+    mixed_use_estates = estates.filter(estate_type="mixed_use ")
+
+    # Check if exists
+    exist = [estates.exists(), residential_estates.exists(), commercial_estates.exists(), mixed_use_estates.exists()] 
+
+     # Paginate the estaes showing 6 estates per page.
+    custom_range, estates = paginateEstates(request, estates, 6)
+    re_custom_range, residential_estates = paginateEstates(request, residential_estates, 6)
+    co_custom_range, commercial_estates = paginateEstates(request, commercial_estates, 6)
+    mu_custom_range, mixed_use_estates = paginateEstates(request, mixed_use_estates, 6)
+
+    # If the request method is POST, process the form for adding a new estate.
+    if request.method == "POST":
+        form = EstateForm(request.POST)
+
+         # Get the list of images uploaded with the form.
+        images = request.FILES.getlist('images')
+
+        # Check if the form is valid.
+        if form.is_valid():
+            # Create a model instance from the form but don't save it yet.
+            instance = form.save(commit=False)
+
+            if request.user.profile.designation == 'company':
+                instance.name = profile
+
+            # Save the house instance to the database.
+            instance.save()
+
+            # Access the Many-to-Many Table for utilities and save selected utilities.
+            EstateUtilities = Estate.utilities.through
+            for utility in request.POST.getlist('utilities'):
+               EstateUtilities.objects.create(estate_id=instance.id, utility_id=utility)
+
+             # Access the Many-to-Many Table for amenities and save selected amenities.
+            EstateAmenities = Estate.amenities.through
+            for amenity in request.POST.getlist('amenities'):
+                EstateAmenities.objects.create(estate_id=instance.id, amenity_id=amenity)
+
+             # Access the Many-to-Many Table for utilities and save selected security features.
+            EstateSecurityFeatures = Estate.security_features.through
+            for security_feature in request.POST.getlist('security_features'):
+               EstateSecurityFeatures.objects.create(estate_id=instance.id, security_feature_id=security_feature)
+
+             # Save each uploaded image to the Photo model with the associated house.
+            for image in images:
+                Photo.objects.create(
+                    image=image,
+                    estate=instance,
+                    description=f'{instance}'
+                )
+            
+            # Redirect to the same view after successful form submission.
+            return redirect('estates', pk=request.user.profile, type=type )
+        else:
+            non_field_errors = form.non_field_errors()
+            if non_field_errors:
+                for error in non_field_errors:
+                    messages.error(request, error)
+
+    # If the request method is GET, instantiate an empty HouseForm.
+    else:
+        form = EstateForm()
+
+    # Prepare the context to be passed to the template.
+    context = {
+        's_menu': s_menu,
+        'menu': menu,
+        'profile': profile,
+        'estates': estates,
+        'countries': countries,
+        'form': form,
+        'exist': exist,
+        'reset_filter': reset_filter,
+        'query_string': query_string,
+        'type': type,
+        'residential_estates': residential_estates,
+        'commercial_estates': commercial_estates,
+        'mixed_use_estates': mixed_use_estates,
+        'custom_range': custom_range,
+        're_custom_range': re_custom_range,
+        'co_custom_range': co_custom_range,
+        'mu_custom_range': mu_custom_range,
+        'i_menu': i_menu,
+        'filter_form': EstateFilterForm(),
+        'total_estates': total_estates,
+        'add': add,
+        }
+=================================================
