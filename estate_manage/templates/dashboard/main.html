@@ -272,12 +272,16 @@
                             <li class="nav-item lh-1 me-3">
                                 <a href="#" class="notification-icon" style="margin-right: 16px;">
                                     <i class="bi bi-bell-fill" style="font-size: 20px"></i>
-                                    <span class="badge bg-success badge-number">3</span>
+                                    <span class="badge bg-success badge-number"></span>
                                 </a>
                                 
                                 <a href="#" class="notification-icon">
                                     <i class="bi bi-envelope-fill" style="font-size: 20px"></i>
-                                    <span class="badge bg-success badge-number">4</span>
+                                    {% if request.user.received_messages.count > 0 %}
+                                        <span class="badge bg-success badge-number">
+                                            {{ request.user.received_messages.count }}
+                                        </span>
+                                    {% endif %}
                                 </a>
                             </li>
 
