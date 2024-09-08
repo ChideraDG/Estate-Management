@@ -91,14 +91,16 @@ def update_agreement(request, type, pk, agreement_id):
         files = request.FILES.getlist('docs')
         
         lease = LeaseAgreement.objects.filter(id=agreement_id)
-        lease.update(start_date=request.POST['start_date'])
-        lease.update(end_date=request.POST['end_date'])
-        lease.update(rent_amount=request.POST['rent_amount'])
-        lease.update(deposit_amount=request.POST['deposit_amount'])
-        lease.update(payment_schedule=request.POST['payment_schedule'])
-        lease.update(terms_and_conditions=request.POST['terms_and_conditions'])
-        lease.update(date_signed=request.POST['date_signed'])
-        lease.update(agreement_signed=True if request.POST['agreement_signed'].lower() == 'true' else False)
+        lease.update(
+            start_date=request.POST['start_date'],
+            end_date=request.POST['end_date'],
+            rent_amount=request.POST['rent_amount'],
+            deposit_amount=request.POST['deposit_amount'],
+            payment_schedule=request.POST['payment_schedule'],
+            terms_and_conditions=request.POST['terms_and_conditions'],
+            agreement_signed=True if request.POST['agreement_signed'].lower() == 'true' else False,
+            date_signed=request.POST['date_signed'],
+        )
 
         for file in files:
             Document.objects.create(
