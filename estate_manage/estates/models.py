@@ -54,7 +54,7 @@ class Estate(models.Model):
     ]
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='estates')
-    name = models.CharField(max_length=100, blank=False, null=False)
+    estate_name = models.CharField(max_length=100, blank=False, null=False)
     address = models.TextField(null=False, blank=False)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='estates', null=True, blank=True)
@@ -82,7 +82,7 @@ class Estate(models.Model):
 
     class Meta:
         ordering = ['-created']  # to order the houses from latest to oldest.
-        unique_together = ('name', 'address')
+        unique_together = ('estate_name', 'address')
 
 
 class Amenity(models.Model):
@@ -177,7 +177,7 @@ class Photo(models.Model):
         >>> print(photo)
         Photo of Estate Name
     """
-    estate = models.ForeignKey(Estate, on_delete=models.CASCADE)
+    estate = models.ForeignKey(Estate, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to='estate_photos/', default='estate_photos/default.jpg')
     description = models.CharField(max_length=255, blank=True)
 

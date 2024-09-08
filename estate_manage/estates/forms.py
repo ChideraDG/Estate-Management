@@ -22,14 +22,14 @@ class EstateForm(ModelForm):
 
     class Meta:
         model = Estate
-        fields = ['name', 'address', 'estate_type', 'year_built', 'number_of_houses', 'total_area_covered', 'land_area',
-                  'estate_parking_spaces', 'amenities', 'construction_type', 'maintenance_cost', 'security_features',
-                  'utilities', 'description', 'country', 'state', 'city']
+        fields = ['estate_name', 'address' , 'country', 'state', 'city', 'estate_type', 'year_built', 'number_of_houses', 'total_area_covered', 'land_area',
+                  'estate_parking_spaces', 'construction_type','amenities', 'security_features', 'maintenance_cost',
+                  'utilities', 'description',]
         widgets = {
             'year_built': forms.NumberInput(attrs={'value': 1900}),
-            'amenities': forms.CheckboxSelectMultiple(),
-            'security_features': forms.CheckboxSelectMultiple(),
-            'utilities': forms.CheckboxSelectMultiple(),
+            'amenities': forms.SelectMultiple,
+            'security_features':forms.SelectMultiple,
+            'utilities': forms.SelectMultiple,
             'address': forms.Textarea(attrs={'rows': 3}),
             'description': forms.Textarea(attrs={'rows': 5}),
             'estate_type': forms.Select(choices=Estate.DESIGNATION),
@@ -51,24 +51,22 @@ class EstateForm(ModelForm):
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
 
-# country_choice = [('', 'Select a Country')]
-# for country in Estate.objects.values_list('country_id__name', flat=True):
-#     choice = (country, country)
-#     if choice not in country_choice and choice != (None, None):
-#         country_choice.append(choice)
+country_choice = [('', 'Select a Country')]
+for country in Estate.objects.values_list('country_id__name', flat=True):
+    choice = (country, country)
+    if choice not in country_choice and choice != (None, None):
+        country_choice.append(choice)
 
-# state_choice = [('', 'Select a State')]
-# for state in Estate.objects.values_list('state_id__name', flat=True):
-#     choice = (state, state)
-#     if choice not in state_choice and choice != (None, None):
-#         state_choice.append(choice)
+state_choice = [('', 'Select a State')]
+for state in Estate.objects.values_list('state_id__name', flat=True):
+    choice = (state, state)
+    if choice not in state_choice and choice != (None, None):
+        state_choice.append(choice)
 
 class EstateFilterForm(forms.ModelForm):
     pass
     # name = forms.CharField(required=False)
     # address = forms.CharField(required=False)
-    # estate_type = forms.CharField(required=False)
-    # construction_type = forms.CharField(required=False)
     # _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
     # _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
         
