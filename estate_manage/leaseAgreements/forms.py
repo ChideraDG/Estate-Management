@@ -25,7 +25,7 @@ class LeaseAgreementForm(forms.ModelForm):
             'terms_and_conditions': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter Terms and Conditions'}),
             'agreement_signed': forms.NullBooleanSelect,
             'date_signed': forms.DateTimeInput(attrs={
-                'type': 'datetime-local',  # Ensures the correct input type is rendered
+                'type': 'date',  # Ensures the correct input type is rendered
                 'autocomplete': 'off',  # Disables autocomplete
             })
         }
@@ -40,12 +40,12 @@ class LeaseAgreementForm(forms.ModelForm):
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
     
-    def clean_date_signed(self):
-        date_signed_str = (self.cleaned_data['date_signed']).strftime("%Y-%m-%d %H:%M:%S")
-        if date_signed_str:
-            try:
-                # Parse the date string from the datetime-local input format
-                return datetime.strptime(date_signed_str, "%Y-%m-%dT%H:%M")
-            except ValueError:
-                raise forms.ValidationError("Invalid date format. Please use the format YYYY-MM-DDTHH:MM.")
-        return timezone.now() 
+    # def clean_date_signed(self):
+    #     date_signed_str = (self.cleaned_data['date_signed']).strftime("%Y-%m-%d %H:%M:%S")
+    #     if date_signed_str:
+    #         try:
+    #             # Parse the date string from the datetime-local input format
+    #             return datetime.strptime(date_signed_str, "%Y-%m-%dT%H:%M")
+    #         except ValueError:
+    #             raise forms.ValidationError("Invalid date format. Please use the format YYYY-MM-DDTHH:MM.")
+    #     return timezone.now() 
