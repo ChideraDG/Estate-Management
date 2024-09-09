@@ -278,7 +278,7 @@
                                 <a href="#" class="notification-icon">
                                     <i class="bi bi-envelope-fill" style="font-size: 20px"></i>
                                     {% if request.user.received_messages.count > 0 %}
-                                        <span class="badge bg-success badge-number">
+                                        <span class="badge bg-success badge-number" style="background-color: #e7e8ff;">
                                             {{ request.user.received_messages.count }}
                                         </span>
                                     {% endif %}
