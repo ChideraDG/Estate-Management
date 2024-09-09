@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import bo_tenant_communications, search_clients, bo_chat
+from .bo_views import bo_tenant_communications, search_clients, bo_chat
 
 
 urlpatterns = [
