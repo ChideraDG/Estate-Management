@@ -44,10 +44,18 @@ class LeaseAgreement(models.Model):
     ])
     terms_and_conditions = models.TextField()
     agreement_signed = models.BooleanField(default=False)
-    date_signed = models.DateTimeField(default=timezone.now)
+    date_signed = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         ordering = ['-date_signed']
+        
+    def save(self, *args, **kwargs):
+        # Check if the agreement is signed and date_signed is not set
+        if self.agreement_signed and self.date_signed is None:
+            self.date_signed = timezone.now()  # Automatically set to current time
+        
+        # Call the parent class's save method
+        super(LeaseAgreement, self).save(*args, **kwargs)
         
     def __str__(self):
         """
