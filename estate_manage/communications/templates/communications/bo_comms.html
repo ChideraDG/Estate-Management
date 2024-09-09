@@ -95,17 +95,12 @@
                         <li class="nav-item">
                             <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
                                 All
-                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"></span>
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ unread_count }}</span>
                             </button>
                         </li>
                         <li class="nav-item">
                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-unread" aria-controls="navs-pills-top-unread" aria-selected="false">
                                 Unread
-                            </button>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-read" aria-controls="navs-pills-top-read" aria-selected="false">
-                                Read
                             </button>
                         </li>
                     </ul>
@@ -129,17 +124,21 @@
                                                 <div class="d-flex align-items-center">
                                                     <img src="{{ tenant.profile_picture.url }}" alt="{{ request.user.profile }}" class="rounded-circle mr-3 me-2" style="width: 50px; height: 50px;">
                                                     <div>
-                                                        <h5 class="mb-1">{{ tenant.name }}</h5>
+                                                        <h5 class="mb-1" style="color: #696cff;">{{ tenant.name }}</h5>
                                                         {% if tenant.read %}
-                                                            <p class="mb-0"><i class="bi bi-check2-all"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
+                                                            <p class="mb-0" style:"color: #808080;"><i class="bi bi-check2-all"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
                                                         {% else %}
-                                                            <p class="mb-0"><i class="bi bi-check2"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
+                                                            {% if tenant.unread > 0 %}
+                                                                <strong class="mb-0">{{ tenant.latest_message|truncatewords:10 }}</strong>
+                                                            {% else %}
+                                                                <p class="mb-0"><i class="bi bi-check2"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
+                                                            {% endif %}
                                                         {% endif %}
                                                     </div>
                                                 </div>
                                                 <div class="text-right">
                                                     <small class="">{{ tenant.timestamp|date:"M d, H:i" }}</small>
-                                                    {% if tenant.unread.all.count > 0 %}
+                                                    {% if tenant.unread > 0 %}
                                                         <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread.all.count }}</span>
                                                     {% endif %}
                                                 </div>
@@ -155,12 +154,34 @@
 
                         <!-- All Unread Tab Details -->
                         <div class="tab-pane fade" id="navs-pills-top-unread" role="tabpanel">
-                            {% comment %} {{ unread_messages }} {% endcomment %}
-                        </div>
-
-                        <!-- All Read Tab Details -->
-                        <div class="tab-pane fade" id="navs-pills-top-read" role="tabpanel">
-                            {% comment %} {{ read_messages }} {% endcomment %}
+                            {% if all_messages %}
+                                {% for tenant in all_messages %}
+                                    {% if tenant.unread.all.count > 0 %}
+                                        <a href={% url "bo-chat" pk=request.user.profile tenant_id=tenant.id %} class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background-color: #e7e8ff;">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ tenant.profile_picture.url }}" alt="{{ request.user.profile }}" class="rounded-circle mr-3 me-2" style="width: 50px; height: 50px;">
+                                                <div>
+                                                    <h5 class="mb-1">{{ tenant.name }}</h5>
+                                                    
+                                                        {% if tenant.read %}
+                                                            <p class="mb-0"><i class="bi bi-check2-all"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
+                                                        {% else %}
+                                                            <p class="mb-0"><i class="bi bi-check2"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
+                                                        {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <small class="">{{ tenant.timestamp|date:"M d, H:i" }}</small>
+                                                {% if tenant.unread.all.count > 0 %}
+                                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread.all.count }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <h4>Click New Messages to start a Conversation</h4>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
