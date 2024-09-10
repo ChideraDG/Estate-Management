@@ -67,6 +67,15 @@ class Profile(models.Model):
         ('female', 'Female'),
     ]
 
+    DESIGNATION = [
+        ('', 'Select a Designation'),
+        ('buyer', 'Buyer'),
+        ('company', 'Company'),
+        ('tenant', 'Tenant'),
+        ('building_owner', 'Building Owner'),
+        ('agent', 'Agent'),
+    ]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100, blank=False, null=False)
     username = models.CharField(max_length=100, blank=False, null=False)
@@ -75,7 +84,7 @@ class Profile(models.Model):
     email = models.EmailField(blank=False, null=False, unique=True)
     phone_number = models.CharField(max_length=15, validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$')],
                                     unique=True, null=True, blank=True)
-    designation = models.CharField(max_length=25, null=False, blank=False, default='agent')
+    designation = models.CharField(max_length=25, null=False, blank=False, default='buyer', choices=DESIGNATION)
     bio = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profile-pics/',
                                       default='profile-pics/dp.jpg',)
