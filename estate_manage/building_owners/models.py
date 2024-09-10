@@ -49,6 +49,7 @@ class BuildingOwner(models.Model):
         investment_strategy (str): The investment strategy of the building owner.
         tax_id (str): The tax ID of the building owner.
         notes (str): Any additional notes about the building owner.
+        unread_messages(int): The amountof unread messages a building owner have.
         created (datetime): The date and time when the building owner was created.
         updated (datetime): The date and time when the building owner was last updated.
 
@@ -99,6 +100,7 @@ class BuildingOwner(models.Model):
     tax_id = models.CharField(max_length=15, null=True, blank=True, unique=True)
     notes = models.TextField(blank=True, null=True)
     is_visible = models.BooleanField(default=False)
+    unread_messages = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
