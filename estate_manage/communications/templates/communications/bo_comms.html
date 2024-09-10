@@ -95,7 +95,7 @@
                         <li class="nav-item">
                             <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
                                 All
-                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ unread_count }}</span>
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ unread_total }}</span>
                             </button>
                         </li>
                         <li class="nav-item">
@@ -111,10 +111,9 @@
                         <div class="tab-pane fade show active" id="navs-pills-top-all" role="tabpanel">
                             <div class="container">
                                 <!-- Search Bar -->
-                                <form action="" method='GET' class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="message">
-                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                                </form>
+                                <div class="input-group mb-3">
+                                    <input type="text" id="searchChat" class="form-control" placeholder="Search chats..." aria-label="Search">
+                                </div>
                             
                                 <!-- Chat List -->
                                 <div id="chat-box" class="chat-box border rounded p-3" style="max-height: 600px; overflow-y: scroll; color: green;">
@@ -139,7 +138,7 @@
                                                 <div class="text-right">
                                                     <small class="">{{ tenant.timestamp|date:"M d, H:i" }}</small>
                                                     {% if tenant.unread > 0 %}
-                                                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread.all.count }}</span>
+                                                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread }}</span>
                                                     {% endif %}
                                                 </div>
                                             </a>
@@ -156,24 +155,19 @@
                         <div class="tab-pane fade" id="navs-pills-top-unread" role="tabpanel">
                             {% if all_messages %}
                                 {% for tenant in all_messages %}
-                                    {% if tenant.unread.all.count > 0 %}
+                                    {% if tenant.unread > 0 %}
                                         <a href={% url "bo-chat" pk=request.user.profile tenant_id=tenant.id %} class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background-color: #e7e8ff;">
                                             <div class="d-flex align-items-center">
                                                 <img src="{{ tenant.profile_picture.url }}" alt="{{ request.user.profile }}" class="rounded-circle mr-3 me-2" style="width: 50px; height: 50px;">
                                                 <div>
-                                                    <h5 class="mb-1">{{ tenant.name }}</h5>
-                                                    
-                                                        {% if tenant.read %}
-                                                            <p class="mb-0"><i class="bi bi-check2-all"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
-                                                        {% else %}
-                                                            <p class="mb-0"><i class="bi bi-check2"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
-                                                        {% endif %}
+                                                    <h5 class="mb-1" style="color: #696cff;">{{ tenant.name }}</h5>
+                                                    <strong class="mb-0">{{ tenant.latest_message|truncatewords:10 }}</strong>
                                                 </div>
                                             </div>
                                             <div class="text-right">
                                                 <small class="">{{ tenant.timestamp|date:"M d, H:i" }}</small>
-                                                {% if tenant.unread.all.count > 0 %}
-                                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread.all.count }}</span>
+                                                {% if tenant.unread > 0 %}
+                                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread }}</span>
                                                 {% endif %}
                                             </div>
                                         </a>
@@ -323,6 +317,100 @@
             });
         });
     </script>
+    
+    {% comment %} <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('searchChat').addEventListener('input', function() {
+                let query = this.value;
+                let url = "{% url 'search_chats' %}?query=" + encodeURIComponent(query);  // Adjust the URL name to match your chat search view
+    
+                // Fetch filtered chat list from the server
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear the existing chat list
+                        let chatBox = document.getElementById('chat-box');
+                        chatBox.innerHTML = '';
+    
+                        // Repopulate the chat list with the fetched data
+                        data.chats.forEach(chat => {
+                            let chatItem = `
+                                <a href="${chat.url}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background-color: #e7e8ff;">
+                                    <div class="d-flex align-items-center">
+                                        <img src="${chat.profile_picture}" alt="${chat.name}" class="rounded-circle me-2" style="width: 50px; height: 50px;">
+                                        <div>
+                                            <h5 class="mb-1" style="color: #696cff;">${chat.name}</h5>
+                                            <p class="mb-0" style="color: #808080;">
+                                                ${chat.latest_message}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <small class="">${chat.timestamp}</small>
+                                        ${chat.unread > 0 ? `<span class="badge rounded-pill bg-danger">${chat.unread}</span>` : ''}
+                                    </div>
+                                </a>
+                            `;
+                            chatBox.innerHTML += chatItem;
+                        });
+                    })
+                    .catch(error => console.error('Error fetching chat data:', error));
+            });
+        });
+    </script> {% endcomment %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('searchChat').addEventListener('input', function() {
+                let query = this.value;
+                let url = "{% url 'search_chats' %}?query=" + encodeURIComponent(query);
+    
+                // Fetch filtered chat list from the server
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear the existing chat list
+                        let chatBox = document.getElementById('chat-box');
+                        chatBox.innerHTML = '';
+    
+                        // Repopulate the chat list with the fetched data
+                        data.chats.forEach(chat => {
+                            // Prepare the conditional rendering for the latest message
+                            let latestMessageHTML = '';
+                            
+                            if (chat.read) {
+                                latestMessageHTML = `<p class="mb-0" style="color: #808080;"><i class="bi bi-check2-all"></i> ${chat.latest_message}</p>`;
+                            } else if (chat.unread > 0) {
+                                latestMessageHTML = `<strong class="mb-0">${chat.latest_message}</strong>`;
+                            } else {
+                                latestMessageHTML = `<p class="mb-0"><i class="bi bi-check2"></i> ${chat.latest_message}</p>`;
+                            }
+    
+                            // Construct the chat item with conditional content
+                            let chatItem = `
+                                <a href="${chat.url}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="background-color: #e7e8ff;">
+                                    <div class="d-flex align-items-center">
+                                        <img src="${chat.profile_picture}" alt="${chat.name}" class="rounded-circle me-2" style="width: 50px; height: 50px;">
+                                        <div>
+                                            <h5 class="mb-1" style="color: #696cff;">${chat.name}</h5>
+                                            ${latestMessageHTML}
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <small class="">${chat.timestamp}</small>
+                                        ${chat.unread > 0 ? `<span class="badge rounded-pill bg-danger">${chat.unread}</span>` : ''}
+                                    </div>
+                                </a>
+                            `;
+                            chatBox.innerHTML += chatItem;
+                        });
+                    })
+                    .catch(error => console.error('Error fetching chat data:', error));
+            });
+        });
+    </script>
+    
+    
     
 {% endblock details %}
 
