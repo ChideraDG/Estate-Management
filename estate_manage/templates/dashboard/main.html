@@ -275,11 +275,11 @@
                                     <span class="badge bg-success badge-number"></span>
                                 </a>
                                 
-                                <a href="#" class="notification-icon">
+                                <a href={% url "bo-comms" pk=request.user.profile %} class="notification-icon">
                                     <i class="bi bi-envelope-fill" style="font-size: 20px"></i>
-                                    {% if request.user.received_messages.count > 0 %}
+                                    {% if request.user.profile.building_owner.unread_messages > 0 %}
                                         <span class="badge bg-success badge-number" style="background-color: #e7e8ff;">
-                                            {{ request.user.received_messages.count }}
+                                                {{ request.user.profile.building_owner.unread_messages }}
                                         </span>
                                     {% endif %}
                                 </a>
@@ -305,7 +305,7 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block">{{request.user.profile.name}}</span>
-                                                    <small class="text-muted">{{request.user.profile.designation.title}}</small>
+                                                    <small class="text-muted">{{ request.user.profile.get_designation_display }}</small>
                                                 </div>
                                             </div>
                                         </a>
