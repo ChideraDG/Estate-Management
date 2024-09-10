@@ -1,8 +1,10 @@
 import datetime
+import time
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse
+from building_owners.models import BuildingOwner
 from .models import Message
 
 
@@ -38,10 +40,15 @@ def bo_tenant_communications(request, pk):
             # Append to the list
             messages.append(message_data)
 
-    unread = 0
-    for message in messages: 
-        if message['unread'] > 0:
-            unread += message['unread']
+    # Sort the list by timestamp (already sorted by queryset, but keeping this for extra safety)
+    messages = sorted(messages, key=lambda x: x['timestamp'], reverse=True)
+
+    # The total unread messages across all tenants
+    unread_total = get_unread(request)
+    BuildingOwner.objects.filter(id=request.user.profile.building_owner.id).update(unread_messages=unread_total)
+
+    # To count the unread messages for each tenant individually
+    unread = sum(message['unread'] for message in messages)
 
     context = {
         "menu": 'tm',
@@ -49,18 +56,19 @@ def bo_tenant_communications(request, pk):
         "tenants": tenants,
         "all_messages": messages,
         'unread_count': unread,
+        'unread_total': unread_total,
     }
     return render(request, 'communications/bo_comms.html', context)
 
 def search_clients(request):
-    query = request.GET.get('query', '')
+    query = request.GET.get('query', '').strip()
 
     if ' ' in query:
-        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query.split(" ")[0].strip()) | 
-                                                                     Q(last_name__icontains=query.split(" ")[1].strip()))
+        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query.split(" ")[0]) | 
+                                                                     Q(last_name__icontains=query.split(" ")[1]))
     elif query:
-        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query.strip()) | 
-                                                                     Q(last_name__icontains=query.strip()))
+        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query) | 
+                                                                     Q(last_name__icontains=query))
     else:
         tenants = request.user.profile.building_owner.tenants.all()
  
@@ -77,6 +85,42 @@ def search_clients(request):
         for tenant in tenants
     ]
     return JsonResponse({'clients': results}, safe=False)
+
+def search_chats(request):
+    query = request.GET.get('query', '').strip()
+    user_profile = request.user.profile
+
+    # Filter tenants based on the search query
+    if ' ' in query:
+        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query.split(" ")[0]) | 
+                                                                     Q(last_name__icontains=query.split(" ")[1]))
+    elif query:
+        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query) | 
+                                                                     Q(last_name__icontains=query))
+    else:
+        tenants = request.user.profile.building_owner.tenants.all()
+
+    # Prepare chat data to return in JSON format
+    chat_data = []
+    for tenant in tenants:
+        # Fetch the latest message between the user and tenant
+        latest_message = Message.objects.filter(
+            Q(sender=request.user, recipient=tenant.user.user) |
+            Q(sender=tenant.user.user, recipient=request.user)
+        ).last()
+
+        if latest_message:
+            chat_data.append({
+                'url': reverse('bo-chat', kwargs={'pk': request.user.profile, 'tenant_id': tenant.id}),
+                'profile_picture': tenant.profile_picture.url,
+                'name': f"{tenant.first_name} {tenant.last_name}",
+                'latest_message': latest_message.message[:30],  # Truncate message
+                'timestamp': latest_message.timestamp.strftime("%b %d, %H:%M"),
+                'unread': Message.objects.filter(recipient=request.user, sender=tenant.user.user, is_read=False).count(),
+            })
+
+    chat_data = sorted(chat_data, key=lambda x: x['timestamp'], reverse=True)
+    return JsonResponse({'chats': chat_data})
 
 def bo_chat(request, pk, tenant_id):
     tenant = request.user.profile.building_owner.tenants.get(id=tenant_id)
@@ -95,6 +139,8 @@ def bo_chat(request, pk, tenant_id):
         if messages.last().recipient == request.user:
             read = messages.filter(is_read=False)
             read.update(is_read=True)
+            
+    BuildingOwner.objects.filter(id=request.user.profile.building_owner.id).update(unread_messages=get_unread(request))
 
     if request.method == "POST":
         message_content = request.POST.get("message", "").strip()
@@ -116,3 +162,23 @@ def bo_chat(request, pk, tenant_id):
         'today_date': datetime.date.today(),
     }
     return render(request, "communications/bo_chat.html", context)
+
+def get_unread(request):
+    tenants = request.user.profile.building_owner.tenants.all()
+
+    # Prepare a list to hold the unread counts
+    unread_total = []
+
+    # Iterate over tenants
+    for tenant in tenants:
+        # Query for unread messages sent to the current user from each tenant
+        unread_count = Message.objects.filter(
+            sender=tenant.user.user, 
+            recipient=request.user, 
+            is_read=False
+        ).count()
+
+        if unread_count > 0:
+            unread_total.append(unread_count)
+
+    return len(unread_total)
