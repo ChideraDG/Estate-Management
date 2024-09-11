@@ -97,32 +97,11 @@
   </li>
 
   <!-- Media -->
-  <li class="menu-item {% if menu == 'media' %}active{% endif %}">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
-      <i class="menu-icon tf-icons bi bi-telephone-fill tiny-icon"></i>
-      <div data-i18n="media">Media</div>
+  <li class="menu-item {% if menu == 'comms' %}active{% endif %}">
+    <a href={% url "tenant-comms" pk=request.user.profile %} class="menu-link">
+      <i class="menu-icon tf-icons bi bi-chat-square-dots-fill tiny-icon"></i>
+      <div data-i18n="media">Communications</div>
     </a>
-    <ul class="menu-sub">
-      <li class="menu-item">
-        <a href="auth-login-basic.html" class="menu-link" target="_blank">
-          <div data-i18n="in-app-messaging">In-App Messaging</div>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a href="auth-register-basic.html" class="menu-link" target="_blank">
-          <div data-i18n="announcements">Announcements</div>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a
-          href="auth-forgot-password-basic.html"
-          class="menu-link"
-          target="_blank"
-        >
-          <div data-i18n="feedback-surveys">Feedback and Surveys</div>
-        </a>
-      </li>
-    </ul>
   </li>
 
   <!-- Facilities -->
