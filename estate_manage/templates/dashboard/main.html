@@ -275,11 +275,18 @@
                                     <span class="badge bg-success badge-number"></span>
                                 </a>
                                 
-                                <a href={% url "bo-comms" pk=request.user.profile %} class="notification-icon">
+                                <a 
+                                href=
+                                {% if request.user.profile.designation == "building_owner" %}
+                                    {% url "bo-comms" pk=request.user.profile %}
+                                {% else %}
+                                    {% url "tenant-comms" pk=request.user.profile %} 
+                                {% endif %}
+                                class="notification-icon">
                                     <i class="bi bi-envelope-fill" style="font-size: 20px"></i>
-                                    {% if request.user.profile.building_owner.unread_messages > 0 %}
+                                    {% if request.user.profile.unread_messages > 0 %}
                                         <span class="badge bg-success badge-number" style="background-color: #e7e8ff;">
-                                                {{ request.user.profile.building_owner.unread_messages }}
+                                                {{ request.user.profile.unread_messages }}
                                         </span>
                                     {% endif %}
                                 </a>
