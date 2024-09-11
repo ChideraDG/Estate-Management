@@ -102,6 +102,9 @@ def update_agreement(request, type, pk, agreement_id):
             agreement_signed=True if request.POST['agreement_signed'].lower() == 'true' else False,
         )
 
+        if request.POST['date_signed']:
+            if lease.first().agreement_signed:
+                lease.update(date_signed=request.POST['date_signed'])
         if lease.first().agreement_signed and lease.first().date_signed is None:
             lease.update(date_signed=timezone.now())
         if not lease.first().agreement_signed:
