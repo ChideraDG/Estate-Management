@@ -51,6 +51,7 @@ class Profile(models.Model):
         social_linkedin (str): The user's LinkedIn profile URL.
         social_youtube (str): The user's YouTube channel URL.
         social_website (str): The user's personal website URL.
+        unread_messages(int): The amountof unread messages a building owner have.
         created (datetime): The timestamp when the profile was created.
         updated (datetime): The timestamp when the profile was last updated.
 
@@ -96,6 +97,7 @@ class Profile(models.Model):
     social_linkedin = models.URLField(max_length=500, null=True, blank=True)
     social_youtube = models.URLField(max_length=500, null=True, blank=True)
     social_website = models.URLField(max_length=500, null=True, blank=True)
+    unread_messages = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
