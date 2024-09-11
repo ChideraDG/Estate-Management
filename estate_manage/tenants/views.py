@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-import socket
+from django.utils import timezone
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -431,7 +431,7 @@ def tenant_lease_info(request, pk):
     agreement = LeaseAgreement.objects.filter(tenant=tenant).first()
 
     if request.method == "POST":
-        form = LeaseAgreementForm(request.POST, request.FILES)
+        form = LeaseAgreementForm(request.POST)
         files = request.FILES.getlist('docs')
 
         lease = LeaseAgreement.objects.create(
@@ -467,3 +467,55 @@ def tenant_lease_info(request, pk):
         'form': form,
     }
     return render(request, "tenants/lease_info.html", context)
+
+def update_tenant_lease_info(request, pk, agreement_id):
+    menu = 'to'
+    s_menu = 'tli'
+    tenant = request.user.profile.tenant
+    agreement = LeaseAgreement.objects.get(id=agreement_id)
+
+    if request.method == "POST":
+        form = LeaseAgreementForm(request.POST, instance=agreement)
+        files = request.FILES.getlist('docs')
+        print(request.POST['date_signed'])
+
+        lease = LeaseAgreement.objects.filter(id=agreement_id)
+        lease.update(
+            start_date=request.POST['start_date'],
+            end_date=request.POST['end_date'],
+            rent_amount=request.POST['rent_amount'],
+            deposit_amount=request.POST['deposit_amount'],
+            payment_schedule=request.POST['payment_schedule'],
+            terms_and_conditions=request.POST['terms_and_conditions'],
+            agreement_signed=True if request.POST['agreement_signed'].lower() == 'true' else False,
+        )
+
+        if request.POST['date_signed']:
+            if lease.first().agreement_signed:
+                lease.update(date_signed=request.POST['date_signed'])
+        if lease.first().agreement_signed and lease.first().date_signed is None:
+            lease.update(date_signed=timezone.now())
+        if not lease.first().agreement_signed:
+            lease.update(date_signed=None)
+
+        for file in files:
+            Document.objects.create(
+                title=agreement.payment_schedule,
+                file=file,
+                document_type='lease_agreement',
+                uploaded_by=request.user,
+                related_lease=lease
+            )
+
+        return redirect('tenant-lease', pk=request.user.profile)
+    else:
+        form = LeaseAgreementForm(instance=agreement)
+
+    context = {
+        'menu': menu,
+        's_menu': s_menu,
+        'tenant': tenant,
+        'agreement': agreement,
+        'form': form,
+    }
+    return render(request, "tenants/update_lease.html", context)
