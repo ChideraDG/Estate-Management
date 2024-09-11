@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse
 from building_owners.models import BuildingOwner
+from users.models import Profile
 from .models import Message
 
 
@@ -44,8 +45,8 @@ def bo_tenant_communications(request, pk):
     messages = sorted(messages, key=lambda x: x['timestamp'], reverse=True)
 
     # The total unread messages across all tenants
-    unread_total = get_unread(request)
-    BuildingOwner.objects.filter(id=request.user.profile.building_owner.id).update(unread_messages=unread_total)
+    unread_total = bo_get_unread(request)
+    Profile.objects.filter(username=request.user).update(unread_messages=unread_total)
 
     # To count the unread messages for each tenant individually
     unread = sum(message['unread'] for message in messages)
@@ -140,7 +141,7 @@ def bo_chat(request, pk, tenant_id):
             read = messages.filter(is_read=False)
             read.update(is_read=True)
             
-    BuildingOwner.objects.filter(id=request.user.profile.building_owner.id).update(unread_messages=get_unread(request))
+    Profile.objects.filter(username=request.user).update(unread_messages=bo_get_unread(request))
 
     if request.method == "POST":
         message_content = request.POST.get("message", "").strip()
@@ -163,7 +164,7 @@ def bo_chat(request, pk, tenant_id):
     }
     return render(request, "communications/bo_chat.html", context)
 
-def get_unread(request):
+def bo_get_unread(request):
     tenants = request.user.profile.building_owner.tenants.all()
 
     # Prepare a list to hold the unread counts
