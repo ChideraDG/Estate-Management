@@ -367,6 +367,7 @@ def filterTenants(request):
 
     return tenants, query_string
 
+@login_required(login_url='login')
 def tenant_detail(request, type, pk, tenant_id):
     menu = 'tm'
     s_menu = 'tp'
@@ -412,6 +413,7 @@ def tenant_detail(request, type, pk, tenant_id):
     }
     return render(request, 'tenants/tenant_detail.html', context)
 
+@login_required(login_url='login')
 def delete_tenant(request, pk):
     # Determine the profile based on user designation (either building owner or company)
     if request.user.profile.designation == "building_owner":
@@ -424,6 +426,7 @@ def delete_tenant(request, pk):
 
     return redirect("tenants-profiles", type="bo" if request.user.profile.designation == "building_owner" else None, pk=profile)
 
+@login_required(login_url='login')
 def tenant_lease_info(request, pk):
     menu = 'to'
     s_menu = 'tli'
@@ -468,6 +471,7 @@ def tenant_lease_info(request, pk):
     }
     return render(request, "tenants/lease_info.html", context)
 
+@login_required(login_url='login')
 def update_tenant_lease_info(request, pk, agreement_id):
     menu = 'to'
     s_menu = 'tli'
