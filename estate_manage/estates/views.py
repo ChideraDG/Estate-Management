@@ -16,8 +16,18 @@ def estates(request, pk, type):
         profile = request.user.profile.companies
 
     estates =  Estate.objects.all()
+    total_estates = estates.count
 
-    exist = [estates.exists()]
+    # Retrieve all countries (presumably for filtering options).
+    countries = Country.objects.all()
+
+    # Filter estates by their types
+    residential_estates = estates.filter(estate_type="residential")
+    commercial_estates = estates.filter(estate_type="commercial")
+    mixed_use_estates = estates.filter(estate_type="mixed_use ")
+
+    # Check if exists
+    exist = [estates.exists(), residential_estates.exists(), commercial_estates.exists(), mixed_use_estates.exists()] 
 
     # If the request method is POST, process the form for adding a new estate.
     if request.method == "POST":
@@ -85,6 +95,10 @@ def estates(request, pk, type):
         'form': form,
         'type': type,
         'exist': exist,
+        'total_estates': total_estates,
+        'residential_estates': residential_estates,
+        'commercial_estates': commercial_estates,
+         'mixed_use_estates': mixed_use_estates,
     }
     return render(request, 'estates/estates.html', context)
 

@@ -329,6 +329,7 @@ def delete_house(request, pk):
 
     designation_type = {
         'building_owner': "bo",
-        'tenant': "T"
+        'tenant': "T",
+        'company': 'C'
     }
     return redirect('houses', pk=request.user.profile, type=designation_type.get(user))
