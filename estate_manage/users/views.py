@@ -2,13 +2,13 @@ import random
 import string
 import socket
 from datetime import datetime
+from urllib.parse import urlencode
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm
-from .models import Profile
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
@@ -16,12 +16,16 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
+from .forms import LoginForm
+from .models import Profile
 from .forms import (RegistrationForm, LoginForm, ContactForm, ContactAgentForm, 
-                    CustomSetPasswordForm, CustomPasswordResetForm, ProfileForm)
+                    CustomSetPasswordForm, CustomPasswordResetForm, ProfileForm, 
+                    CustomPasswordChangeForm)
 from .models import Profile
 
 
@@ -161,12 +165,70 @@ def user_profile(request, type, pk):
         "user": profile,
         "menu": menu,
         "s_menu": s_menu,
+        "type": type,
         'form': form,
         'template_routes': template_routes.get(profile.designation),
         'connection_route': connection_route.get(profile.designation)
     }
 
     return render(request, "users/user-profile.html", context)
+
+class CustomPasswordChangeView(PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    template_name = 'users/user-change-password.html'
+
+    def get_success_url(self) -> str:
+        return reverse('view-user-profile', kwargs={
+            'pk': self.kwargs['pk'],
+            'type': self.kwargs['type']
+        })
+    
+    menu = 'user-management'
+    s_menu = 'personal-profile'
+
+    template_routes = {
+        'building_owner': "building_owners/BO_dashboard.html",
+        'tenant': "tenants/T_dashboard.html",
+        'agent': "agents/A_dashboard.html",
+        'company': "companies/C_dashboard.html",
+    }
+
+    connection_route = {
+        'building_owner': "bo-view-connections",
+        'tenant': "t-view-connections",
+        'agent': "a-view-connections",
+        'company': "c-view-connections",
+    }
+
+    def get_context_data(self, **kwargs):
+        # Get the existing context
+        context = super().get_context_data(**kwargs)
+        
+        # Capture the URL parameters 'type' and 'pk'
+        context['type'] = self.kwargs['type']
+        context['pk'] = self.kwargs['pk']
+        context['connection_route'] = self.connection_route.get(self.request.user.profile.designation, None)
+        context['menu'] = self.menu
+        context['s_menu'] = self.s_menu
+        context['template_routes'] = self.template_routes.get(self.request.user.profile.designation, None)
+        
+        return context
+
+    def form_valid(self, form):
+        # Add the success message
+        messages.success(self.request, 'Your password has been successfully changed.')
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        print(form.errors)
+        if "old_password" in form.errors:
+            messages.error(self.request, "Your old password was entered incorrectly. Please enter it again.")
+        
+        error_message = form.get_error(self.request.POST['new_password1'], 
+                                       self.request.POST['new_password2']
+                                       )
+        messages.error(self.request, error_message)
+        return super().form_invalid(form)
 
 @login_required(login_url='login')
 def user_delete(request):
@@ -193,7 +255,6 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = CustomSetPasswordForm
 
     def form_invalid(self, form):
-        print(self.request.POST)
         error_message = form.get_error(self.request.POST['new_password1'], self.request.POST['new_password2'])
         messages.error(self.request, error_message)
         return super().form_invalid(form)
