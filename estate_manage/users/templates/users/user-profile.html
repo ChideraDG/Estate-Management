@@ -19,6 +19,11 @@
           <i class="bi bi-link"></i> Connections
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href={% url "user-change-password" pk=request.user type=type %}?s_menu=personal-profile>
+          <i class="bi bi-lock"></i> Change Password
+        </a>
+      </li>
     </ul>
 
     <div class="card mb-4">
@@ -96,7 +101,7 @@
           <div class="mb-3 col-md-6">
             <label class="form-label">Designation</label>
             <div class="form-control" style="background-color: #e9ecef">
-              {{ user.designation.title }}
+              {{ user.get_designation_display.title }}
             </div>
           </div>
           {% endif %} {% if user.bio %}
