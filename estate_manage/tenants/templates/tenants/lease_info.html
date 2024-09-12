@@ -136,7 +136,7 @@
                 {% endif %}
             </div>
             {% if not agreement.tenant.building_owner %}
-                <a href="#" class="btn btn-outline-primary mt-4">Update Lease</a>
+                <a href={% url "update-tenant-lease" pk=request.user.profile agreement_id=agreement.id %} class="btn btn-outline-primary mt-4">Update Lease</a>
             {% endif %}
         </div>
         {% else %}

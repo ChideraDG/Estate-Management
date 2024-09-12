@@ -51,6 +51,7 @@ class Profile(models.Model):
         social_linkedin (str): The user's LinkedIn profile URL.
         social_youtube (str): The user's YouTube channel URL.
         social_website (str): The user's personal website URL.
+        unread_messages(int): The amountof unread messages a building owner have.
         created (datetime): The timestamp when the profile was created.
         updated (datetime): The timestamp when the profile was last updated.
 
@@ -67,6 +68,15 @@ class Profile(models.Model):
         ('female', 'Female'),
     ]
 
+    DESIGNATION = [
+        ('', 'Select a Designation'),
+        ('buyer', 'Buyer'),
+        ('company', 'Company'),
+        ('tenant', 'Tenant'),
+        ('building_owner', 'Building Owner'),
+        ('agent', 'Agent'),
+    ]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100, blank=False, null=False)
     username = models.CharField(max_length=100, blank=False, null=False)
@@ -75,7 +85,7 @@ class Profile(models.Model):
     email = models.EmailField(blank=False, null=False, unique=True)
     phone_number = models.CharField(max_length=15, validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$')],
                                     unique=True, null=True, blank=True)
-    designation = models.CharField(max_length=25, null=False, blank=False, default='agent')
+    designation = models.CharField(max_length=25, null=False, blank=False, default='buyer', choices=DESIGNATION)
     bio = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profile-pics/',
                                       default='profile-pics/dp.jpg',)
@@ -87,6 +97,7 @@ class Profile(models.Model):
     social_linkedin = models.URLField(max_length=500, null=True, blank=True)
     social_youtube = models.URLField(max_length=500, null=True, blank=True)
     social_website = models.URLField(max_length=500, null=True, blank=True)
+    unread_messages = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

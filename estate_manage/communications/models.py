@@ -2,15 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from apartments.models import Apartment
 from tenants.models import Tenant
-
-class Conversation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='conversations')
-    latest_message = models.TextField(blank=True, null=True)
-    latest_message_timestamp = models.DateTimeField(null=True, blank=True)
-    unread_count = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f"Conversation with {self.client.username}"
     
 class Message(models.Model):
     """
@@ -32,28 +23,17 @@ class Message(models.Model):
         Indicates whether the message has been read, default is False.
     """
     
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages',)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
-    subject = models.CharField(max_length=200, null=True, blank=True)
-    body = models.TextField()
+    message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
-    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, related_name='messages', null=True, blank=True)
     
     class Meta:
-        ordering = ["-timestamp"]
+        ordering = ["timestamp"]
 
     def __str__(self):
-        return f"Message from {self.sender} to {self.recipient} - {self.subject}"
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        # Update the conversation with the latest message details
-        self.conversation.user = self.sender
-        self.conversation.latest_message = self.message
-        self.conversation.latest_message_timestamp = self.timestamp
-        self.conversation.unread_count += 1
-        self.conversation.save()
+        return f"Message from {self.sender} to {self.recipient}"
 
 class Announcement(models.Model):
     """

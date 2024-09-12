@@ -1,5 +1,6 @@
 import datetime
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from documents.models import Document
 from .models import LeaseAgreement
 from .forms import LeaseAgreementForm
@@ -58,8 +59,8 @@ def lease_agreements(request, type, pk):
     return render(request, 'leaseAgreements/agreements.html', context)
 
 def agreements_details(request, type, pk, agreement_id):
-    menu = request.GET.get("menu", "/")
-    s_menu = request.GET.get("s_menu", "/")
+    menu = request.GET.get("menu", "tm")
+    s_menu = request.GET.get("s_menu", "ta")
     profile = request.user.profile
     agreement = LeaseAgreement.objects.get(id=agreement_id)
 
@@ -77,8 +78,8 @@ def agreements_details(request, type, pk, agreement_id):
     return render(request, 'leaseAgreements/agreements_details.html', context)
 
 def update_agreement(request, type, pk, agreement_id):
-    menu = request.GET.get("menu", "/")
-    s_menu = request.GET.get("s_menu", "/")
+    menu = request.GET.get("menu", "tm")
+    s_menu = request.GET.get("s_menu", "ta")
     profile = request.user.profile
     agreement = LeaseAgreement.objects.get(id=agreement_id)
 
@@ -99,8 +100,15 @@ def update_agreement(request, type, pk, agreement_id):
             payment_schedule=request.POST['payment_schedule'],
             terms_and_conditions=request.POST['terms_and_conditions'],
             agreement_signed=True if request.POST['agreement_signed'].lower() == 'true' else False,
-            date_signed=request.POST['date_signed'],
         )
+
+        if request.POST['date_signed']:
+            if lease.first().agreement_signed:
+                lease.update(date_signed=request.POST['date_signed'])
+        if lease.first().agreement_signed and lease.first().date_signed is None:
+            lease.update(date_signed=timezone.now())
+        if not lease.first().agreement_signed:
+            lease.update(date_signed=None)
 
         for file in files:
             Document.objects.create(
