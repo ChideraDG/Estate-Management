@@ -1,10 +1,12 @@
 import datetime
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from documents.models import Document
 from .models import LeaseAgreement
 from .forms import LeaseAgreementForm
 
+@login_required(login_url='login')
 def lease_agreements(request, type, pk):
     menu = request.GET.get("menu", "/")
     s_menu = request.GET.get("s_menu", "/")
@@ -58,6 +60,7 @@ def lease_agreements(request, type, pk):
     }
     return render(request, 'leaseAgreements/agreements.html', context)
 
+@login_required(login_url='login')
 def agreements_details(request, type, pk, agreement_id):
     menu = request.GET.get("menu", "tm")
     s_menu = request.GET.get("s_menu", "ta")
@@ -77,6 +80,7 @@ def agreements_details(request, type, pk, agreement_id):
     }
     return render(request, 'leaseAgreements/agreements_details.html', context)
 
+@login_required(login_url='login')
 def update_agreement(request, type, pk, agreement_id):
     menu = request.GET.get("menu", "tm")
     s_menu = request.GET.get("s_menu", "ta")

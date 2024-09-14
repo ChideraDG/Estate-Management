@@ -1,10 +1,11 @@
 import datetime
+from django import forms
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import ValidationError
 from django.contrib import messages
-from django import forms
 from .models import Profile
 
 
@@ -114,6 +115,79 @@ class LoginForm(forms.Form):
 
     username_or_email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Username or Email'}))
     password = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label='Old Password',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter old password'
+        })
+    )
+    new_password1 = forms.CharField(
+        label='New Password',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter new password'
+        })
+    )
+    new_password2 = forms.CharField(
+        label='Confirm New Password',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm new password'
+        })
+    )
+
+    class Meta:
+        fields = ['old_password', 'new_password1', 'new_password2']
+
+    def get_error(self, password1, password2):
+        if len(password1) < 8:
+            return "The password must be at least 8 characters long."
+
+        if password1 and password2 and password1 != password2:
+            return "The two password fields didn't match."
+        
+        if not any(char.isdigit() for char in password1):
+            return "New password must contain at least one digit."
+        
+        if not any(char.isalpha() for char in password1):
+            return "New password must contain at least one letter."
+    
+    def clean_old_password(self):
+        """Custom validation for old password."""
+        old_password = self.cleaned_data.get('old_password')
+        
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError(
+                self.error_messages['password_incorrect'],
+                code='password_incorrect',
+            )
+        return old_password
+
+    def clean_new_password1(self):
+        """Custom validation for new password."""
+        new_password1 = self.cleaned_data.get('new_password1')
+        if len(new_password1) < 8:
+            raise ValidationError("New password must be at least 8 characters long.")
+        if not any(char.isdigit() for char in new_password1):
+            raise ValidationError("New password must contain at least one digit.")
+        if not any(char.isalpha() for char in new_password1):
+            raise ValidationError("New password must contain at least one letter.")
+        return new_password1
+
+    def clean(self):
+        """Custom validation to ensure new passwords match."""
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise ValidationError("The new passwords do not match.")
+
+        return cleaned_data
 
 
 class CustomPasswordResetForm(PasswordResetForm):

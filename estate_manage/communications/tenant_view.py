@@ -1,10 +1,12 @@
 import datetime
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from users.models import Profile
 from .models import Message
 
 
+@login_required(login_url='login')
 def tenant_communications(request, pk):
     menu = 'comms'
     profile = request.user.profile.tenant
@@ -43,6 +45,7 @@ def tenant_communications(request, pk):
     }
     return render(request, "communications/tenant_comms.html", context)
 
+@login_required(login_url='login')
 def tenant_chat(request, pk, bo_id):
     menu = 'comms'
     profile = request.user.profile.tenant

@@ -22,10 +22,12 @@ Examples:
 """
 
 from django.urls import path
+from django.contrib.auth.views import PasswordChangeView
 from .views import (home, user_register, user_login, user_logout,
                     dashboard, property_grid, property_single,
                     blog_single, agents_grid, agent_single, about,
-                    blog, contact_us, user_delete, user_profile)
+                    blog, contact_us, user_delete, user_profile,
+                    CustomPasswordChangeView)
 
 urlpatterns = [
     path("", home, name='home'),
@@ -43,4 +45,5 @@ urlpatterns = [
     path("blog/", blog, name='blog'),
     path("contact-us/", contact_us, name='contact-us'),
     path("<str:type>/<str:pk>/profile/", user_profile, name="view-user-profile"),
+    path("<str:type>/<str:pk>/profile/change-password/", CustomPasswordChangeView.as_view(), name="user-change-password"),
 ]

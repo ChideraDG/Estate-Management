@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                {% if s_menu == "t-profile" %}
+                {% if s_menu == "c-profile" %}
                     <li class="nav-item">
                         <a class="nav-link" href='{% url "view-company" pk=request.user.profile %}'>
                             <i class="bi bi-building-fill me-1"></i></i> Company Profile
@@ -33,6 +33,13 @@
                         <i class="bi bi-link me-1"></i> Connections
                     </a>
                 </li>
+                {% if not s_menu == "c-profile" %}
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "user-change-password" pk=request.user type="t" %}?s_menu=personal-profile>
+                      <i class="bi bi-lock"></i> Change Password
+                    </a>
+                </li>
+                {% endif %}
             </ul>
             <div class="row">
                 <div class="col-md-6 col-12">

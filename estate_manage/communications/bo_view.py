@@ -1,6 +1,6 @@
 import datetime
-import time
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse
@@ -9,6 +9,7 @@ from users.models import Profile
 from .models import Message
 
 
+@login_required(login_url='login')
 def bo_tenant_communications(request, pk):
     tenants = request.user.profile.building_owner.tenants.all()
 
@@ -61,6 +62,7 @@ def bo_tenant_communications(request, pk):
     }
     return render(request, 'communications/bo_comms.html', context)
 
+@login_required(login_url='login')
 def search_clients(request):
     query = request.GET.get('query', '').strip()
 
@@ -87,6 +89,7 @@ def search_clients(request):
     ]
     return JsonResponse({'clients': results}, safe=False)
 
+@login_required(login_url='login')
 def search_chats(request):
     query = request.GET.get('query', '').strip()
     user_profile = request.user.profile
@@ -123,6 +126,7 @@ def search_chats(request):
     chat_data = sorted(chat_data, key=lambda x: x['timestamp'], reverse=True)
     return JsonResponse({'chats': chat_data})
 
+@login_required(login_url='login')
 def bo_chat(request, pk, tenant_id):
     tenant = request.user.profile.building_owner.tenants.get(id=tenant_id)
     messages = Message.objects.filter(Q(sender=request.user, recipient=tenant.user.user) |
