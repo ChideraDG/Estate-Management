@@ -80,7 +80,7 @@
 
               <div class="tab-pane fade" id="navs-pills-top-residental" role="tabpanel">
                 {% if exist.1 %}
-                {% include "estates/estate_content.html" with profile=profile estates=estates type=type %}
+                {% include "estates/estate_content.html" with profile=profile estates=residential_estates type=type %}
                 <!--Paginator for Occupied Houses-->
                 <!-- {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' query_string=query_string %} -->
                 <!--End Paginator-->
@@ -91,7 +91,7 @@
 
               <div class="tab-pane fade" id="navs-pills-top-commercial" role="tabpanel">
                 {% if exist.2 %}
-                {% include "estates/estate_content.html" with profile=profile estates=estates type=type %}
+                {% include "estates/estate_content.html" with profile=profile estates=commercial_estates type=type %}
                   <!--Paginator for Vacant Houses-->
                   <!-- {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %} -->
                   <!-- End Paginator-->
@@ -102,7 +102,7 @@
 
               <div class="tab-pane fade" id="navs-pills-top-mixed" role="tabpanel">
                 {% if exist.3 %}
-                {% include "estates/estate_content.html" with profile=profile estates=estates type=type %}
+                {% include "estates/estate_content.html" with profile=profile estates=mixed_use_estates type=type %}
                 <!--Paginator for Vacant Houses-->
                 <!-- {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %} -->
                 <!-- End Paginator-->
@@ -110,13 +110,34 @@
               <h2>No Estate Found</h2>
               {% endif %}
               </div>
+
+               <!-- Filter Backdrop -->
+               <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasBothLabel" class="offcanvas-title">Filter Estates</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                    <form id="filterForm" action={% url "estates" pk=profile type=type %}?menu=all&page=1 method="GET">
+                      {{ filter_form.as_p }}
+                        
+                      <input type='text' value="filtering" name="reset_filter" hidden/>
+                      <button type="submit" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
+                      <button type="button" class="btn btn-outline-secondary d-grid w-100" id="reset-button">Reset</button>
+                    </form>
+                </div>
+            </div>  
+            <!-- End Filter Backdrop -->        
+
             </div>
+
           </div>
+          
         </div>
         
          <!-- Add a Estate Tabs Details NB: THE add parameter is only for this estates-->
         <div class="tab-pane fade" id="navs-pills-justified-add-estate" role="tabpanel">
-          <form method="POST" enctype="multipart/form-data"  action='' >
+          <form method="POST" enctype="multipart/form-data"  action={% url "estates" pk=profile type=type %}?menu=all&page=1 >
             {% csrf_token %}
             <div class="row">
                 {% for field in form %}
