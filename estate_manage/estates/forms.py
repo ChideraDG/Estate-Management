@@ -64,9 +64,57 @@ for state in Estate.objects.values_list('state_id__name', flat=True):
         state_choice.append(choice)
 
 class EstateFilterForm(forms.ModelForm):
-    pass
-    # name = forms.CharField(required=False)
-    # address = forms.CharField(required=False)
-    # _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
-    # _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
-        
+    estate_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    address = forms.CharField(required=False)
+    _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
+    _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
+
+    class Meta:
+        model = Estate
+        fields = ['estate_name', 'address', '_country', '_state', 'city',
+        'construction_type',  'number_of_houses','maintenance_cost', 'total_area_covered',
+        'utilities', 'security_features', 'amenities'
+        ]
+
+        widgets = {
+            'address': forms.Textarea(attrs={
+                'placeholder': 'Enter address',
+                'cols': 45,
+                'rows': 2,
+                'class': 'form-control'
+            }),
+        }
+
+        def __init__(self, *args, **kwargs):
+            self.request = kwargs.pop('request', None)
+            super(EstateFilterForm, self).__init__(*args, **kwargs)
+            self.fields['number_of_houses'].value = ""
+            self.fields['total_area_covered'].initial = ""
+            self.fields['maintenance_cost'].initial = ""
+
+            # Define placeholders for each field
+            placeholders = {
+                'estate_name': 'Enter Estate Name',
+                'address': 'Enter address',
+                '_country': 'Select country',
+                '_state': 'Select state',
+                'city': 'Enter city',
+                'construction_type': 'Select Contruction Type',
+                'number_of_houses': 'Enter Number of Houses',
+                'maintenance_cost': 'Enter maintenance cost',
+                'utilities': 'Select Utilities',
+                'amenities': 'Select Amenities',
+                'security_features': 'Select Security features',
+            }
+
+            # Apply 'form-control' class and placeholders to all fields
+            for name, field in self.fields.items():
+                field.widget.attrs.update({'class': 'form-control'})
+
+                if name in placeholders:
+                    field.widget.attrs.update({'placeholder': placeholders[name]})
+
+                # Set the 'min' attribute to 0 for all decimal and integer fields
+                if isinstance(field, (forms.DecimalField, forms.IntegerField)):
+                    field.widget.attrs.update({'min': '0'})
+            

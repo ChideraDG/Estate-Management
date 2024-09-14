@@ -98,7 +98,8 @@ def estates(request, pk, type):
         'total_estates': total_estates,
         'residential_estates': residential_estates,
         'commercial_estates': commercial_estates,
-         'mixed_use_estates': mixed_use_estates,
+        'mixed_use_estates': mixed_use_estates,
+        'filter_form': EstateFilterForm(),
     }
     return render(request, 'estates/estates.html', context)
 
