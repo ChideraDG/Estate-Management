@@ -21,7 +21,7 @@ class RentPayment(models.Model):
         An uploaded file representing the receipt for the payment.
     """
 
-    lease = models.ForeignKey(LeaseAgreement, on_delete=models.CASCADE, related_name='rent_payments')
+    lease = models.ForeignKey(LeaseAgreement, on_delete=models.CASCADE, related_name='rent_payments', null=True, blank=True)
     payment_date = models.DateField(auto_now_add=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=50, choices=[

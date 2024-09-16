@@ -95,7 +95,16 @@ class LeaseAgreement(models.Model):
         remaining_days = (self.end_date - today).days
         return remaining_days
     
+    def due_amount(self) -> float:
+        """
+        Calculate the remaining due amount after subtracting the deposit.
 
+        Returns:
+            float: The remaining due amount after subtracting the deposit.
+        """
+        return float(self.rent_amount - self.deposit_amount)
+
+    
 class Reminder(models.Model):
     """
     Represents a reminder associated with a lease agreement.

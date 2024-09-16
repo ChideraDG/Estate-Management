@@ -1,0 +1,126 @@
+{% extends "tenants/T_dashboard.html" %}
+
+{% block details %}
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Billings /</span> Rent Payment
+    </h4>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Click for Notice
+        </button>
+        <div class="dropdown-menu">
+            <div class="px-3 py-2">
+                <p>You are making payment to the current Lease Agreement</p>
+                <p class="mb-0">
+                    {% if leaseagreement.due_amount > 0.0  %}
+                        Your due amount is ${{ leaseagreement.due_amount }}
+                    {% else %}
+                        You don't have an outstanding debt. You can still pay for later.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Details -->
+    <div class="nav-align-top mb-4 mt-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Payment Profile Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-payment" aria-controls="navs-pills-justified-payment" aria-selected="true">
+                    <i class="tf-icons bi bi-cash-stack"></i> Make Payment
+                </button>
+            </li>
+        </ul>
+        <!-- End TABS -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Payment Details Tab -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-payment" role="tabpanel">
+                <div class="row">
+                    <!-- First Notice -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card bg-primary text-white mb-3">
+                            <div class="card-header">Agreement</div>
+                            <div class="card-body">
+                                <h5 class="card-title text-white">Lease Description</h5>
+                                <p class="card-text">{{ leaseagreement.apartment.house }} {{ leaseagreement.apartment }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Notice -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card bg-secondary text-white mb-3">
+                          <div class="card-header">Due Payment</div>
+                          <div class="card-body">
+                            <h5 class="card-title text-white">Outstanding Balance</h5>
+                            <p class="card-text">${{ leaseagreement.due_amount }}</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card bg-dark text-white mb-3">
+                          <div class="card-header">Remainder</div>
+                          <div class="card-body">
+                            <h5 class="card-title text-white">Days Left</h5>
+                            <p class="card-text">{{ leaseagreement.days_remaining }} Day{{ leaseagreement.days_remaining|pluralize:"s" }} left</p>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" action="#">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="pay" class="btn btn-primary me-2">Make Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const paymentMethodField = document.querySelector('#id_payment_method');
+            const receiptFieldContainer = document.querySelector('#id_receipt').closest('.mb-3');
+            const payLabel = document.querySelector('#pay');
+
+            function toggleReceiptField() {
+                const paymentMethod = paymentMethodField.value;
+                if (paymentMethod === 'cash' || paymentMethod === 'bank_transfer') {
+                    receiptFieldContainer.style.display = 'block';
+                    payLabel.textContent = "Record Payment";
+                    document.querySelector('#id_receipt').required = true;
+                } else {
+                    receiptFieldContainer.style.display = 'none';
+                    payLabel.textContent = "Make Payment";
+                    document.querySelector('#id_receipt').required = false;
+                }
+            }
+
+            // Initialize field visibility based on the current payment method
+            toggleReceiptField();
+
+            // Add event listener to toggle field when payment method changes
+            paymentMethodField.addEventListener('change', toggleReceiptField);
+        });
+    </script>
+    
+{% endblock details %}
+
+{% block floater %}{% endblock floater %}
