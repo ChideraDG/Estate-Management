@@ -32,7 +32,7 @@ class RentPayment(models.Model):
     receipt = models.FileField(upload_to='rent_receipts/', null=True, blank=True)
     
     def __str__(self):
-        return f"Rent Payment: {self.lease} - {self.amount} on {self.payment_date}"
+        return f"Rent Payment: {self.lease} - ${self.amount} on {self.payment_date}"
 
 
 class Expense(models.Model):

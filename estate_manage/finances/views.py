@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from leaseAgreements.models import LeaseAgreement
+from users.views import check_network_connection
 from .forms import RentPaymentForm
+from .models import Receipt
 
 
 def rent_payment_portal(request, pk):
@@ -12,16 +14,26 @@ def rent_payment_portal(request, pk):
         form = RentPaymentForm(request.POST, request.FILES, tenant=tenant)
         
         if form.is_valid():
-            payment = form.save(commit=False)
+            if check_network_connection():
+                payment = form.save(commit=False)
 
-            leaseagreement.deposit_amount = leaseagreement.deposit_amount + int(request.POST['amount'])
-            leaseagreement.save()
+                leaseagreement.deposit_amount = leaseagreement.deposit_amount + int(request.POST['amount'])
+                leaseagreement.save()
 
-            payment.lease = leaseagreement
-            payment.save()
+                payment.lease = leaseagreement
+                payment.save()
+                
+                Receipt.objects.create(
+                    receipt_type='rent',
+                    payment=payment,
+                    receipt_file=payment.receipt if payment.receipt else None,
+                )
 
-            messages.success(request, "Successfully processed your Rent Payment. Have a nice day!")
-            return redirect("dashboard-T", pk=request.user.profile)
+                messages.success(request, "Successfully processed your Rent Payment. Have a nice day!")
+                return redirect("dashboard-T", pk=request.user.profile)
+            else:
+                messages.error(request, "Network connection failed. Please try again.")
+                return redirect("rent-payment", pk=request.user)
         else:
             for errors in form.errors.items():
                 print(errors)

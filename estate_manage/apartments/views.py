@@ -22,43 +22,6 @@ def get_apartments(request):
     ]
     return JsonResponse(apartments_list, safe=False)
 
-def createApartment(request):
-    # countries = Country.objects.all()
-    form = ApartmentForm()
-
-    if request.method == "POST":
-        form = ApartmentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-
-            return redirect('apartment-home')
-
-    context = {'form': form,}
-    return render(request, 'apartments/apartmentReg.html', context)
-
-def updateApartment(request, pk):
-    profile = Apartment.objects.get(id=pk)
-    # countries = Country.objects.all()
-    form = ApartmentForm(instance=profile)
-
-    if request.method == "POST":
-        form = ApartmentForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-
-            return redirect('apartment-home')
-
-    context = {'form': form, 'profile': profile}
-    return render(request, 'apartments/apartmentReg.html', context)
-
-def deleteApartment(request, pk):
-    profile = Apartment.objects.get(id=pk)
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('apartment-home')
-    context = {'obj': profile}
-    return render(request, 'apartments/deleteApartment.html', context)
-
 @login_required(login_url='login')
 def house_apartments(request, pk, type):
     menu = 'a-m'
@@ -81,8 +44,8 @@ def house_apartments(request, pk, type):
 
 @login_required(login_url='login')
 def view_apartments(request, type, pk, house_id):
-    menu = request.GET.get('menu', '/')
-    s_menu = request.GET.get('s_menu', '/')
+    menu = request.GET.get('menu', 'a-m')
+    s_menu = request.GET.get('s_menu', 'a-p')
     i_menu = request.GET.get('i_menu', 'all')
     reset_filter = request.GET.get('reset_filter', '/')
     house = House.objects.get(id=house_id)
@@ -199,8 +162,8 @@ def filterApartments(request, house):
 def apartment_details(request, type, pk, house_id, apartment_number):
     house = House.objects.get(id=house_id)
     apartment = house.apartments.get(apartment_number=apartment_number)
-    menu = request.GET.get('menu', '/')
-    s_menu = request.GET.get('s_menu', '/')
+    menu = request.GET.get('menu', 'a-m')
+    s_menu = request.GET.get('s_menu', 'a-p')
 
     if request.method == "POST":
         form = ApartmentForm(request.POST, instance=apartment, request=request)

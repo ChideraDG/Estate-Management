@@ -8,8 +8,8 @@ from .forms import LeaseAgreementForm
 
 @login_required(login_url='login')
 def lease_agreements(request, type, pk):
-    menu = request.GET.get("menu", "/")
-    s_menu = request.GET.get("s_menu", "/")
+    menu = request.GET.get("menu", "tm")
+    s_menu = request.GET.get("s_menu", "ta")
     profile = request.user.profile
     tenants = None
     if profile.designation == "building_owner":
