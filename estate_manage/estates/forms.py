@@ -64,16 +64,93 @@ for state in Estate.objects.values_list('state_id__name', flat=True):
         state_choice.append(choice)
 
 class EstateFilterForm(forms.ModelForm):
-    estate_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    address = forms.CharField(required=False)
-    _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
-    _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
+    estate_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Estate Name'}))
+    address = forms.CharField(required=False, 
+            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Address'})
+            )
+    _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False,
+             widget=forms.Select(attrs={'class': 'form-control',})
+             )
+    _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False, 
+            widget=forms.Select(attrs={'class': 'form-control',})
+            )
+
+    # Filter by number of houses (min-max range)
+    min_number_of_houses = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Min Number of Houses',
+            'min': '0'
+        })
+    )
+    max_number_of_houses = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Max Number of Houses',
+            'min': '0'
+        })
+    )
+
+      # Filter by total area covered (min-max range)
+    min_total_area_covered = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Min Area Covered (sq. ft)',
+            'min': '0'
+        })
+    )
+    max_total_area_covered = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Max Area Covered (sq. ft)',
+            'min': '0'
+        })
+    )
+    
+    # Filter by land area (min-max range)
+    min_land_area = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Min Land Area (sq. ft)',
+            'min': '0'
+        })
+    )
+    max_land_area = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Max Land Area (sq. ft)',
+            'min': '0'
+        })
+    )
+    
+    # Filter by maintenance cost (min-max range)
+    min_maintenance_cost = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Min Maintenance Cost',
+            'min': '0'
+        })
+    )
+    max_maintenance_cost = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Max Maintenance Cost',
+            'min': '0'
+        })
+    )
 
     class Meta:
         model = Estate
         fields = ['estate_name', 'address', '_country', '_state', 'city',
-        'construction_type',  'number_of_houses','maintenance_cost', 'total_area_covered',
-        'utilities', 'security_features', 'amenities'
+        'construction_type',  'utilities', 'security_features', 'amenities'
         ]
 
         widgets = {
@@ -83,38 +160,44 @@ class EstateFilterForm(forms.ModelForm):
                 'rows': 2,
                 'class': 'form-control'
             }),
+        'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter City'}),
+        'construction_type': forms.Select(attrs={'class': 'form-control'}),
+        'utilities': forms.SelectMultiple(attrs={'class': 'form-control'}), 
+        'security_features': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        'amenities': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
-        def __init__(self, *args, **kwargs):
-            self.request = kwargs.pop('request', None)
-            super(EstateFilterForm, self).__init__(*args, **kwargs)
-            self.fields['number_of_houses'].value = ""
-            self.fields['total_area_covered'].initial = ""
-            self.fields['maintenance_cost'].initial = ""
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(EstateFilterForm, self).__init__(*args, **kwargs)
 
-            # Define placeholders for each field
-            placeholders = {
-                'estate_name': 'Enter Estate Name',
-                'address': 'Enter address',
-                '_country': 'Select country',
-                '_state': 'Select state',
-                'city': 'Enter city',
-                'construction_type': 'Select Contruction Type',
-                'number_of_houses': 'Enter Number of Houses',
-                'maintenance_cost': 'Enter maintenance cost',
-                'utilities': 'Select Utilities',
-                'amenities': 'Select Amenities',
-                'security_features': 'Select Security features',
-            }
+    def clean(self):
+        cleaned_data = super().clean()
 
-            # Apply 'form-control' class and placeholders to all fields
-            for name, field in self.fields.items():
-                field.widget.attrs.update({'class': 'form-control'})
+        # Retrieve form fields
+        min_number_of_houses = cleaned_data.get("min_number_of_houses")
+        max_number_of_houses = cleaned_data.get("max_number_of_houses")
+        min_total_area_covered = cleaned_data.get("min_total_area_covered")
+        max_total_area_covered = cleaned_data.get("max_total_area_covered")
+        min_land_area = cleaned_data.get("min_land_area")
+        max_land_area = cleaned_data.get("max_land_area")
+        min_maintenance_cost = cleaned_data.get("min_maintenance_cost")
+        max_maintenance_cost = cleaned_data.get("max_maintenance_cost")
 
-                if name in placeholders:
-                    field.widget.attrs.update({'placeholder': placeholders[name]})
+        # Validate that minimum values are not greater than maximum values
+        if min_number_of_houses is not None and max_number_of_houses is not None and min_number_of_houses > max_number_of_houses:
+            self.add_error("min_number_of_houses", "Min Number of Houses cannot be greater than Max Number of Houses.")
 
-                # Set the 'min' attribute to 0 for all decimal and integer fields
-                if isinstance(field, (forms.DecimalField, forms.IntegerField)):
-                    field.widget.attrs.update({'min': '0'})
+        if min_total_area_covered is not None and max_total_area_covered is not None and min_total_area_covered > max_total_area_covered:
+            self.add_error("min_total_area_covered", "Min Area Covered cannot be greater than Max Area Covered.")
+
+        if min_land_area is not None and max_land_area is not None and min_land_area > max_land_area:
+            self.add_error("min_land_area", "Min Land Area cannot be greater than Max Land Area.")
+
+        if min_maintenance_cost is not None and max_maintenance_cost is not None and min_maintenance_cost > max_maintenance_cost:
+            self.add_error("min_maintenance_cost", "Min Maintenance Cost cannot be greater than Max Maintenance Cost.")
+
+        return cleaned_data
+
+
             

@@ -15,8 +15,21 @@ def estates(request, pk, type):
     if type == 'c':
         profile = request.user.profile.companies
 
-    estates =  Estate.objects.all()
+    # estates =  Estate.objects.all()
+    estates, query_string = FilterEstates(request)
     total_estates = estates.count
+
+    # Get the current menu or default to 'all' if not provided.
+    i_menu = request.GET.get('i_menu', 'all')
+    add = request.GET.get('add', 'all')
+
+    # Get the reset filter URL or default to '/' if not provided.
+    reset_filter = request.GET.get('reset_filter', '/')
+
+    # Set the active menu and sub-menu for UI highlighting.
+    menu = 'estates-management'
+    s_menu = 'estate-profiles'
+
 
     # Retrieve all countries (presumably for filtering options).
     countries = Country.objects.all()
@@ -100,21 +113,92 @@ def estates(request, pk, type):
         'commercial_estates': commercial_estates,
         'mixed_use_estates': mixed_use_estates,
         'filter_form': EstateFilterForm(),
+        'i_menu': i_menu,
+        'reset_filter': reset_filter,
+        'query_string': query_string,
+        'add': add,
+        's_menu': s_menu,
+        'menu': menu,
+        'countries': countries,
+
     }
     return render(request, 'estates/estates.html', context)
 
-@login_required(login_url='login')
 def FilterEstates(request):
-    pass
+    if request.user.profile.designation == 'company':
+        # Needs fixing
+        print("User profile:", request.user.profile)
+        print("User companies:", request.user.profile.companies)
+        estates = request.user.profile.companies.estates.all()
+        print("Initial estates:", estates) 
+    
+    form = EstateFilterForm(request.GET, request=request)
+
+    if form.is_valid():
+        filters = {}
+
+        # Handle country and state separately since they require lookups
+        _country = form.cleaned_data.get('_country')
+        _state = form.cleaned_data.get('_state')
+        
+        if _country:
+            filters['country'] = Country.objects.filter(name=_country).first()
+        if _state:
+            filters['state'] = State.objects.filter(name=_state).first()
+
+         # Define the fields that need direct filtering
+        fields_to_filters = {
+            'estate_name': 'estate_name__icontains',  # Partial match for estate name
+            'address': 'address__icontains',          # Partial match for estate address
+            '_country': 'country',                    # Exact match for country (ForeignKey)
+            '_state': 'state',                        # Exact match for state (ForeignKey)
+            'min_number_of_houses': 'number_of_houses__gte',  # Greater than or equal to for minimum number of houses
+            'max_number_of_houses': 'number_of_houses__lte',  # Less than or equal to for maximum number of houses
+            'min_total_area_covered': 'total_area_covered__gte',  # Greater than or equal to for minimum total area covered
+            'max_total_area_covered': 'total_area_covered__lte',  # Less than or equal to for maximum total area covered
+            'min_land_area': 'land_area__gte',         # Greater than or equal to for minimum land area
+            'max_land_area': 'land_area__lte',         # Less than or equal to for maximum land area
+            'min_maintenance_cost': 'maintenance_cost__gte',  # Greater than or equal to for minimum maintenance cost
+            'max_maintenance_cost': 'maintenance_cost__lte',  # Less than or equal to for maximum maintenance cost
+            'city': 'city__icontains',                 # Partial match for city
+            'construction_type': 'construction_type',  # Exact match for construction type
+            'utilities': 'utilities__in',              # ManyToManyField for utilities (multiple options)
+            'security_features': 'security_features__in',  # ManyToManyField for security features
+            'amenities': 'amenities__in',              # ManyToManyField for amenities
+        }
+
+         # Loop through the fields and add non-empty filters
+        for field, filter_name in fields_to_filters.items():
+            value = form.cleaned_data.get(field)
+            if value:
+                filters[filter_name] = value
+
+        # Handle ManyToManyField or ForeignKey fields with __in lookup
+        if form.cleaned_data.get('security_features'):
+            filters['security_features__in'] = form.cleaned_data['security_features']
+        if form.cleaned_data.get('utilities'):
+            filters['utilities__in'] = form.cleaned_data['utilities']
+        if form.cleaned_data.get('amenities'):
+            filters['amenities__in'] = form.cleaned_data['amenities']
+
+        print("Filters applied:", filters) 
+
+         # Apply the filters to the queryset
+        estates = estates.filter(**filters)
+
+        # Generate the query string for the current GET parameters
+        cleaned_query_dict = {key: value for key, value in request.GET.items() if value}
+        query_string = urlencode(cleaned_query_dict)
+    else:
+        query_string = ""
+
+    return estates, query_string
+
+        
+
 
 def deleteEstate(request, pk):
-    profile = Estate.objects.get(id=pk)
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('home-estate')
-    context = {'obj': profile}
-    return render(request, 'estates/deleteEstate.html', context)
-
+    pass
 
 
 def get_states(request):

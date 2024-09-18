@@ -63,6 +63,11 @@
                     Filter Estates
                   </button>
                 </li>
+                {% if reset_filter == "filtering" %}
+                      <li>
+                        <button type="button" class="btn btn-outline-secondary d-grid w-100 ms-2" id="reset-filter">Reset Filter</button>
+                      </li>
+                      {% endif %}
             </ul>
 
             <div class="tab-content" style="background-color: #f5f5f9;">
