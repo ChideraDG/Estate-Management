@@ -57,6 +57,8 @@ def estates(request, pk, type):
             if request.user.profile.designation == 'company':
                 instance.company = profile
 
+            # try:
+
             # Save the house instance to the database.
             instance.save()
 
