@@ -145,6 +145,7 @@ def FilterEstates(request):
         
         if _country:
             filters['country'] = Country.objects.filter(name=_country).first()
+        print('Form: ',request.GET)
         if _state:
             filters['state'] = State.objects.filter(name=_state).first()
 
