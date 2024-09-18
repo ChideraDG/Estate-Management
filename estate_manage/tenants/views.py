@@ -15,6 +15,7 @@ from documents.models import Document
 from users.views import generate_username, generate_password, check_network_connection, greet_client
 from leaseAgreements.forms import LeaseAgreementForm
 from leaseAgreements.models import LeaseAgreement
+from finances.models import Receipt, RentPayment
 from .models import Tenant
 from .forms import TenantForm, TenantFilterForm, AddTenantForm
 from .utils import paginateTenants
@@ -239,13 +240,25 @@ The EstateManage Team
             tenant.occupation = request.POST['occupation']
             tenant.save()
 
-            LeaseAgreement.objects.create(
+            agreement = LeaseAgreement.objects.create(
                 tenant=tenant,
                 apartment=tenant.apartment,
                 start_date=tenant.lease_start_date,
                 end_date=tenant.lease_end_date,
                 rent_amount=tenant.monthly_rent,
                 deposit_amount=tenant.deposit_amount,
+            )
+            
+            payment = RentPayment.objects.create(
+                lease=agreement,
+                amount=agreement.deposit_amount,
+                payment_method='cash',
+            )
+
+            Receipt.objects.create(
+                receipt_type='rent',
+                payment=payment,
+                receipt_file=None,
             )
 
             url = reverse('agreements', kwargs={'pk':pk, 'type':type}) + f'?lease_update=True&tenant_id={tenant.id}&menu=tm&s_menu=ta'
@@ -523,3 +536,13 @@ def update_tenant_lease_info(request, pk, agreement_id):
         'form': form,
     }
     return render(request, "tenants/update_lease.html", context)
+
+def payment_history(request, pk):
+    tenant = request.user.profile.tenant
+    
+    context = {
+        "menu": "to",
+        "s_menu": "tph",
+        "tenant": tenant,
+    }
+    return render(request, "tenants/payment_history.html", context)

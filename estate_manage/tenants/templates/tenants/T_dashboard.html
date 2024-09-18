@@ -33,7 +33,7 @@
         </a>
       </li>
       <li class="menu-item {% if s_menu == 'tph' %}active{% endif %}">
-        <a href="#" class="menu-link">
+        <a href={% url "payment-history" pk=request.user.profile %} class="menu-link">
           <div data-i18n="payment-history">Payment History</div>
         </a>
       </li>
@@ -43,23 +43,23 @@
   <!-- Billings -->
   <li class="menu-item {% if menu == 'tb' %}active{% endif %}">
     <a href="javascript:void(0);" class="menu-link menu-toggle">
-      <i class="menu-icon tf-icons bi bi-receipt tiny-icon"></i>
+      <i class="menu-icon tf-icons bi bi-cash-coin tiny-icon"></i>
       <div data-i18n="Bilings">Billings</div>
     </a>
 
     <ul class="menu-sub">
       <li class="menu-item {% if s_menu == 'trpm' %}active{% endif %}">
-        <a href="#" class="menu-link">
+        <a href={% url "rent-payment" pk=request.user.profile %} class="menu-link">
           <div data-i18n="rent-payment-portal">Rent Payment Portal</div>
         </a>
       </li>
       <li class="menu-item {% if s_menu == 'tpr' %}active{% endif %}">
-        <a href="layouts-without-navbar.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="payment-reminders">Payment Reminders</div>
         </a>
       </li>
       <li class="menu-item {% if s_menu == 'trc' %}active{% endif %}">
-        <a href="layouts-without-navbar.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="receipt-generation">Receipt Generation</div>
         </a>
       </li>
@@ -74,17 +74,17 @@
     </a>
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="pages-account-settings-account.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="request-submission">Request Submission</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="pages-account-settings-notifications.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="tracking-updates">Tracking and Updates</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="pages-account-settings-connections.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="service-info">Service Provider Information</div>
         </a>
       </li>
@@ -112,12 +112,12 @@
     </a>
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="pages-misc-error.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="utility-tracking">Utility Tracking</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="pages-misc-under-maintenance.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="service-requests">Service Requests</div>
         </a>
       </li>
@@ -132,12 +132,12 @@
     </a>
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="lease-agreements">Lease and Agreements</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="extended-ui-text-divider.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="receipts-invoices">Receipts and Invoices</div>
         </a>
       </li>
@@ -157,12 +157,12 @@
     </a>
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="forms-basic-inputs.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="bulletin-board">Community Bulletin Board</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="forms-input-groups.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="neighbor-directory">Neighbor Directory</div>
         </a>
       </li>
@@ -177,12 +177,12 @@
     </a>
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="form-layouts-vertical.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="visitor-management">Visitor Management</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="forms-input-groups.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="emergency-contacts">Emergency Contacts</div>
         </a>
       </li>
@@ -197,12 +197,12 @@
     </a>
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="form-layouts-vertical.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="checklists">Checklists</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="forms-input-groups.html" class="menu-link">
+        <a href="#" class="menu-link">
           <div data-i18n="documentation">Documentation</div>
         </a>
       </li>
@@ -482,7 +482,7 @@
                             show: true,
                             fontSize: '0.8125rem',
                             color: '#999', // Set your preferred font color
-                            label: 'Total',
+                            label: 'Days Left',
                             formatter: function () {
                                 return ((daysLeft / totalDays) * 100).toFixed(1) + '%';
                             }
