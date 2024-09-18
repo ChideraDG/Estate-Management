@@ -76,7 +76,7 @@
                 {% if exist.0 %}
                           {% include "estates/estate_content.html" with profile=profile estates=estates type=type %}
                           <!--Paginator for All Houses-->
-                          <!-- {% include "dashboard/pagination.html" with query_set=houses custom_range=custom_range query_menu='all' query_string=query_string %} -->
+                          {% include "dashboard/pagination.html" with query_set=estates custom_range=custom_range query_menu='all' query_string=query_string %}
                           <!--End Paginator-->
                   {% else %}
                           <h2>No Estate Found</h2>

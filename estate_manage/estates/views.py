@@ -42,6 +42,11 @@ def estates(request, pk, type):
     # Check if exists
     exist = [estates.exists(), residential_estates.exists(), commercial_estates.exists(), mixed_use_estates.exists()] 
 
+    custom_range, estates = paginateEstates(request, estates, 6)
+    re_custom_range, residential_estates = paginateEstates(request, residential_estates, 6)
+    co_custom_range, commercial_estates = paginateEstates(request, commercial_estates, 6)
+    mu_custom_range, mixed_use_estates = paginateEstates(request, mixed_use_estates, 6)
+
     # If the request method is POST, process the form for adding a new estate.
     if request.method == "POST":
         form = EstateForm(request.POST)
@@ -120,7 +125,10 @@ def estates(request, pk, type):
         's_menu': s_menu,
         'menu': menu,
         'countries': countries,
-
+        'custom_range': custom_range,
+        're_custom_range': re_custom_range,
+        'co_custom_range': co_custom_range,
+        'mu_custom_range': mu_custom_range,
     }
     return render(request, 'estates/estates.html', context)
 
@@ -180,8 +188,6 @@ def FilterEstates(request):
             filters['utilities__in'] = form.cleaned_data['utilities']
         if form.cleaned_data.get('amenities'):
             filters['amenities__in'] = form.cleaned_data['amenities']
-
-        print("Filters applied:", filters) 
 
          # Apply the filters to the queryset
         estates = estates.filter(**filters)
