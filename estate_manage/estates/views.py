@@ -153,8 +153,8 @@ def FilterEstates(request):
         fields_to_filters = {
             'estate_name': 'estate_name__icontains',  # Partial match for estate name
             'address': 'address__icontains',          # Partial match for estate address
-            '_country': 'country',                    # Exact match for country (ForeignKey)
-            '_state': 'state',                        # Exact match for state (ForeignKey)
+            # '_country': 'country',                    # Exact match for country (ForeignKey)
+            # '_state': 'state',                        # Exact match for state (ForeignKey)
             'min_number_of_houses': 'number_of_houses__gte',  # Greater than or equal to for minimum number of houses
             'max_number_of_houses': 'number_of_houses__lte',  # Less than or equal to for maximum number of houses
             'min_total_area_covered': 'total_area_covered__gte',  # Greater than or equal to for minimum total area covered
@@ -184,7 +184,7 @@ def FilterEstates(request):
         if form.cleaned_data.get('amenities'):
             filters['amenities__in'] = form.cleaned_data['amenities']
 
-         # Apply the filters to the queryset
+        # Apply the filters to the queryset
         estates = estates.filter(**filters)
 
         # Generate the query string for the current GET parameters

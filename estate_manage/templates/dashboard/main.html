@@ -342,7 +342,15 @@
                                                 <span class="align-middle">My Profile</span>
                                             </span>
                                         </a>
+                                        {% elif request.user.profile.designation == "company" %}
+                                        <a class="dropdown-item" href='#'>
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="bi bi-person-badge-fill me-3"></i>
+                                                <span class="align-middle">My Profile</span>
+                                            </span>
+                                        </a>
                                         {% endif %}
+
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#">
