@@ -55,7 +55,7 @@ def estates(request, pk, type):
             instance = form.save(commit=False)
 
             if request.user.profile.designation == 'company':
-                instance.name = profile
+                instance.company = profile
 
             # try:
 
