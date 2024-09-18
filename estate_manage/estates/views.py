@@ -62,8 +62,6 @@ def estates(request, pk, type):
             if request.user.profile.designation == 'company':
                 instance.company = profile
 
-            # try:
-
             # Save the house instance to the database.
             instance.save()
 
@@ -92,10 +90,6 @@ def estates(request, pk, type):
             
             # Redirect to the same view after successful form submission.
             return redirect('estates', pk=request.user.profile, type=type )
-
-            # except IntegrityError:
-                # Handle the error
-                # messages.error(request, 'An estate with this name and address already exists.')
         else:
             non_field_errors = form.non_field_errors()
             if non_field_errors:
