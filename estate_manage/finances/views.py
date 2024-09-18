@@ -4,6 +4,7 @@ from leaseAgreements.models import LeaseAgreement
 from users.views import check_network_connection
 from .forms import RentPaymentForm
 from .models import Receipt
+from .utils import generate_rent_receipt_image
 
 
 def rent_payment_portal(request, pk):
@@ -48,3 +49,19 @@ def rent_payment_portal(request, pk):
         "form": form,
     }
     return render(request, 'finances/rent_payment_portal.html', context)
+
+def generate_rent_receipt(request, pk):
+    receipt = Receipt.objects.get(id=pk)
+
+    generate_rent_receipt_image(
+        receipt_number=receipt.receipt_number,
+        payment_method=receipt.payment.payment_method,
+        house=receipt.payment.lease.apartment.house,
+        apartment=receipt.payment.lease.apartment,
+        amount=receipt.payment.amount,
+        balance=receipt.payment.balance,
+        generated_on=receipt.payment.payment_date
+    )
+
+    messages.success(request, "Rent Receipt sent to your Inbox and Downloads.")
+    return redirect("payment-history", pk=request.user.profile)
