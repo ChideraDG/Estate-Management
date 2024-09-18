@@ -24,6 +24,7 @@ class RentPayment(models.Model):
     lease = models.ForeignKey(LeaseAgreement, on_delete=models.CASCADE, related_name='rent_payments', null=True, blank=True)
     payment_date = models.DateField(auto_now_add=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    balance = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=50, choices=[
         ('bank_transfer', 'Bank Transfer'), 
         ('cash', 'Cash'), 
@@ -33,6 +34,12 @@ class RentPayment(models.Model):
     
     def __str__(self):
         return f"Rent Payment: {self.lease} - ${self.amount} on {self.payment_date}"
+    
+    def save(self, *args, **kwargs):
+        if self.lease:
+            self.balance = self.lease.due_amount() - float(self.amount)
+
+        super(RentPayment, self).save(*args, **kwargs)
 
 
 class Expense(models.Model):

@@ -17,9 +17,6 @@ def rent_payment_portal(request, pk):
             if check_network_connection():
                 payment = form.save(commit=False)
 
-                leaseagreement.deposit_amount = leaseagreement.deposit_amount + int(request.POST['amount'])
-                leaseagreement.save()
-
                 payment.lease = leaseagreement
                 payment.save()
                 
@@ -29,8 +26,11 @@ def rent_payment_portal(request, pk):
                     receipt_file=payment.receipt if payment.receipt else None,
                 )
 
+                leaseagreement.deposit_amount = leaseagreement.deposit_amount + int(request.POST['amount'])
+                leaseagreement.save()
+
                 messages.success(request, "Successfully processed your Rent Payment. Have a nice day!")
-                return redirect("dashboard-T", pk=request.user.profile)
+                return redirect("payment-history", pk=request.user.profile)
             else:
                 messages.error(request, "Network connection failed. Please try again.")
                 return redirect("rent-payment", pk=request.user)

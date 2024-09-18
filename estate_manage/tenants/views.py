@@ -539,10 +539,12 @@ def update_tenant_lease_info(request, pk, agreement_id):
 
 def payment_history(request, pk):
     tenant = request.user.profile.tenant
+    payments = Receipt.objects.filter(payment__lease__tenant=tenant).order_by("-generated_on")
     
     context = {
         "menu": "to",
         "s_menu": "tph",
         "tenant": tenant,
+        "payments": payments,
     }
     return render(request, "tenants/payment_history.html", context)
