@@ -129,7 +129,7 @@ def FilterEstates(request):
         # Needs fixing
         print("User profile:", request.user.profile)
         print("User companies:", request.user.profile.companies)
-        estates = request.user.profile.companies.estates.all()
+        estates = Estate.objects.filter(company=request.user.profile.companies)
         print("Initial estates:", estates) 
     
     form = EstateFilterForm(request.GET, request=request)
