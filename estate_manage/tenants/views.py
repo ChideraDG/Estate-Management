@@ -537,6 +537,7 @@ def update_tenant_lease_info(request, pk, agreement_id):
     }
     return render(request, "tenants/update_lease.html", context)
 
+@login_required(login_url='login')
 def payment_history(request, pk):
     tenant = request.user.profile.tenant
     payments = Receipt.objects.filter(payment__lease__tenant=tenant).order_by("-generated_on")
