@@ -123,11 +123,15 @@ class AddTenantForm(forms.ModelForm):
             'move_in_date': forms.DateInput(attrs={'placeholder': 'Move-in Date', 'type': 'date'}),
             'lease_start_date': forms.DateInput(attrs={'placeholder': 'Lease Start Date', 'type': 'date'}),
             'lease_end_date': forms.DateInput(attrs={'placeholder': 'Lease End Date', 'type': 'date'}),
-            'monthly_rent': forms.NumberInput(attrs={'placeholder': 'Monthly Rent', 'min': '0.00'}),
+            'monthly_rent': forms.NumberInput(attrs={'placeholder': 'Rent', 'min': '0.00'}),
             'deposit_amount': forms.NumberInput(attrs={'placeholder': 'Deposit Amount', 'min': '0.00'}),
             'emergency_contact_name': forms.TextInput(attrs={'placeholder': 'Emergency Contact Name'}),
             'emergency_contact_number': forms.TextInput(attrs={'placeholder': 'Emergency Contact Number'}),
             'occupation': forms.TextInput(attrs={'placeholder': 'Occupation'}),
+        }
+
+        labels = {
+            'monthly_rent': "Apartment Rent"
         }
 
     def __init__(self, *args, **kwargs):
