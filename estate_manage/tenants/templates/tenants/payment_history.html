@@ -48,7 +48,7 @@
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href={% url "generate_rent_receipt" pk=payment.id %}>
+                                    <a class="dropdown-item" href={% url "generate_rent_receipt" pk=payment.id %}?redirect=payment-history>
                                         <i class="bi bi-receipt me-1"></i> Generate Receipt
                                     </a>
                                 </div>
