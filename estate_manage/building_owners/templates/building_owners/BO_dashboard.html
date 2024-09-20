@@ -89,26 +89,26 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
 
     <!-- Finances -->
-    <li class="menu-item {% if menu == 'finances' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'fns' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
             <div data-i18n="finances">Finances</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item">
-            <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                <div data-i18n="rent-collection">Rent Collection</div>
-            </a>
+            <li class="menu-item  {% if s_menu == 'rc' %}active{% endif %}">
+                <a href={% url "rent-payment-history" pk=request.user.profile %} class="menu-link">
+                    <div data-i18n="rent-collection">Rent Collection</div>
+                </a>
             </li>
             <li class="menu-item">
-            <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                <div data-i18n="expense-tracking">Expense Tracking</div>
-            </a>
+                <a href="#" class="menu-link" target="_blank">
+                    <div data-i18n="expense-tracking">Expense Tracking</div>
+                </a>
             </li>
             <li class="menu-item">
-            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                <div data-i18n="financial-reports">Financial Reports</div>
-            </a>
+                <a href="#" class="menu-link" target="_blank">
+                    <div data-i18n="financial-reports">Financial Reports</div>
+                </a>
             </li>
         </ul>
     </li>
