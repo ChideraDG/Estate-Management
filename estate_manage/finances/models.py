@@ -37,7 +37,7 @@ class RentPayment(models.Model):
     
     def save(self, *args, **kwargs):
         if self.lease:
-            self.balance = self.lease.due_amount() - float(self.amount)
+            self.balance = float(self.lease.due_amount()) - float(self.amount)
 
         super(RentPayment, self).save(*args, **kwargs)
 
