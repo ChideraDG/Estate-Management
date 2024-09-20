@@ -9,12 +9,12 @@ def generate_rent_receipt_image(receipt_number, payment_method, house, apartment
 
     # Optional: Load a font (you can use a built-in or custom TTF file)
     try:
-        font = ImageFont.truetype('georgia.ttf', 20)
+        font = ImageFont.truetype('arial.pil', 20)
     except IOError:
         font = ImageFont.load_default()
 
     # Header
-    d.text((10, 10), "EstateManage Payment", font=font, fill=(0, 0, 0))
+    d.text((10, 10), "EstateManage Payment", font=font, fill=(0, 0, 10))
     d.text((10, 60), f"House: {house}", font=font, fill=(0, 0, 0))
     d.text((10, 80), f"Apartment: {apartment}", font=font, fill=(0, 0, 0))
     d.text((10, 120), f"Receipt Number: #{receipt_number}", font=font, fill=(0, 0, 0))
