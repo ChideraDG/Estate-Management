@@ -1,0 +1,78 @@
+{% extends "building_owners/BO_dashboard.html" %} 
+
+{% block details %}
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light"> Finances / </span>
+        Rent Collection
+    </h4>
+
+    <div class="btn-group mb-4">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Click for Notice
+        </button>
+        <div class="dropdown-menu">
+            <div class="px-3 py-2">
+                <p>Generate Receipt at the options menu of each row.</p>
+                <p class="mb-0">
+                    Click the vertical dots under options and generate receipt.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">All Rent Payment Histories</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tenant</th>
+                        <th>Lease Apartment</th>
+                        <th>Apartment House</th>
+                        <th>Amount Paid</th>
+                        <th>Balance</th>
+                        <th>Date Paid</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.payment.lease.tenant }}</td>
+                            <td>{{ payment.payment.lease.apartment }}</td>
+                            <td>{{ payment.payment.lease.apartment.house }}</td>
+                            <td class="fw-bold">$ {{ payment.payment.amount }}</td>
+                            <td class="fw-bold">$ {{ payment.payment.balance }}</td>
+                            <td>{{ payment.payment.payment_date }}</td>
+                            <td>
+                                <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href={% url "generate_rent_receipt" pk=payment.id %}?redirect=rent-payment-history>
+                                        <i class="bi bi-receipt me-1"></i> Generate Receipt
+                                    </a>
+                                </div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="table-border-bottom-0">
+                    <tr>
+                        <th>Tenant</th>
+                        <th>Lease Apartment</th>
+                        <th>Apartment Address</th>
+                        <th>Amount Paid</th>
+                        <th>Balance</th>
+                        <th>Date Paid</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock %}
