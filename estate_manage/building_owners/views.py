@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from locations.models import Country, State
 from users.views import greet_client
+from finances.models import Receipt
 from .models import BuildingOwner
 from .forms import BuildingOwnerForm
 
@@ -89,3 +90,13 @@ def view_connections(request, pk):
         'type': labels.get(user_type)
     }
     return render(request, "building_owners/view_connections.html", context)
+
+@login_required(login_url='login')
+def rent_payment_history(request, pk):
+    payments = Receipt.objects.filter(payment__lease__tenant__building_owner=request.user.profile.building_owner).order_by("-generated_on")
+    context = {
+        "menu": "fns",
+        "s_menu": "rc",
+        "payments": payments,
+    }
+    return render(request, "building_owners/rent_payment_history.html", context)
