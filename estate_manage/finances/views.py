@@ -27,7 +27,7 @@ def rent_payment_portal(request, pk):
                     receipt_file=payment.receipt if payment.receipt else None,
                 )
 
-                leaseagreement.deposit_amount = leaseagreement.deposit_amount + int(request.POST['amount'])
+                leaseagreement.deposit_amount = float(leaseagreement.deposit_amount) + float(request.POST['amount'])
                 leaseagreement.save()
 
                 messages.success(request, "Successfully processed your Rent Payment. Have a nice day!")
@@ -51,7 +51,9 @@ def rent_payment_portal(request, pk):
     return render(request, 'finances/rent_payment_portal.html', context)
 
 def generate_rent_receipt(request, pk):
+    redirect_url = request.GET.get("redirect")
     receipt = Receipt.objects.get(id=pk)
+    designation = request.user.profile
 
     generate_rent_receipt_image(
         receipt_number=receipt.receipt_number,
@@ -60,8 +62,9 @@ def generate_rent_receipt(request, pk):
         apartment=receipt.payment.lease.apartment,
         amount=receipt.payment.amount,
         balance=receipt.payment.balance,
-        generated_on=receipt.payment.payment_date
+        generated_on=receipt.payment.payment_date,
+        tenant=None if designation.designation == "tenant"  else receipt.payment.lease.tenant
     )
 
     messages.success(request, "Rent Receipt sent to your Inbox and Downloads.")
-    return redirect("payment-history", pk=request.user.profile)
+    return redirect(f"{redirect_url}", pk=request.user.profile)
