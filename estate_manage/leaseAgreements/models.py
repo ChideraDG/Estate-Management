@@ -102,7 +102,7 @@ class LeaseAgreement(models.Model):
         Returns:
             float: The remaining due amount after subtracting the deposit.
         """
-        return float(float(self.rent_amount) - float(self.deposit_amount))
+        return self.rent_amount - self.deposit_amount
 
     
 class Reminder(models.Model):
