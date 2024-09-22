@@ -47,7 +47,7 @@ class LeaseAgreement(models.Model):
     date_signed = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        ordering = ['-date_signed']
+        ordering = ['-id']
         
     def save(self, *args, **kwargs):
         # Check if the agreement is signed and date_signed is not set
@@ -102,7 +102,7 @@ class LeaseAgreement(models.Model):
         Returns:
             float: The remaining due amount after subtracting the deposit.
         """
-        return self.rent_amount - self.deposit_amount
+        return float(self.rent_amount) - float(self.deposit_amount)
 
     
 class Reminder(models.Model):
