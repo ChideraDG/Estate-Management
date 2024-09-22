@@ -261,6 +261,8 @@ The EstateManage Team
                 receipt_file=None,
             )
 
+            RentPayment.objects.filter(id=payment.id).update(balance=float(payment.lease.rent_amount)-float(payment.amount))
+
             url = reverse('agreements', kwargs={'pk':pk, 'type':type}) + f'?lease_update=True&tenant_id={tenant.id}&menu=tm&s_menu=ta'
             return redirect(url)
         else:
