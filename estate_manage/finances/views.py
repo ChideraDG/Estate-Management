@@ -3,7 +3,7 @@ from django.contrib import messages
 from leaseAgreements.models import LeaseAgreement
 from users.views import check_network_connection
 from .forms import RentPaymentForm
-from .models import Receipt
+from .models import Receipt, RentPayment
 from .utils import generate_rent_receipt_image
 
 
@@ -20,6 +20,8 @@ def rent_payment_portal(request, pk):
 
                 payment.lease = leaseagreement
                 payment.save()
+
+                RentPayment.objects.filter(id=payment.id).update(balance=payment.lease.due_amount()-float(payment.amount))
                 
                 Receipt.objects.create(
                     receipt_type='rent',
