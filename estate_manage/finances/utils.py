@@ -46,7 +46,10 @@ def generate_rent_receipt_image(receipt_number, payment_method, house, apartment
     d.text((10, 360 if tenant else 330), "Thank you for your payment!", font=font, fill=(0, 0, 0))
 
     # Get the user's Downloads directory
-    downloads_path = os.path.expanduser(f"~/Downloads/#{receipt_number}_rent_receipt.jpg")
+    if tenant:
+        downloads_path = os.path.expanduser(f"~/Downloads/{receipt_number}_treceipt.jpg")
+    else:
+        downloads_path = os.path.expanduser(f"~/Downloads/{receipt_number}_receipt.jpg")
 
     # Save the image in the Downloads folder
     img.save(downloads_path)
