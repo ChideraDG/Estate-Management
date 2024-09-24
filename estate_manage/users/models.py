@@ -1,31 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
-from django.core.exceptions import ValidationError
-
-
-def validate_image_size(value):
-    """
-    Validates the size of an uploaded image.
-
-    Args:
-        value (File): The uploaded image file.
-
-    Raises:
-        ValidationError: If the file size exceeds the maximum allowed size (1 MB).
-
-    Example:
-        >>> from django.core.files.uploadedfile import UploadedFile
-        >>> file = UploadedFile(file='path/to/image.jpg', name='image.jpg', size=1024*1024*2)
-        >>> validate_image_size(file)
-        ValidationError: Maximum file size allowed is 1.0 MB
-    """
-    filesize = value.size
-
-    limit = 1 * 1024 * 1024
-    
-    if filesize > limit:
-        raise ValidationError(f"Maximum file size allowed is {limit / (1024 * 1024)} MB")
 
 
 class Profile(models.Model):
@@ -104,3 +79,94 @@ class Profile(models.Model):
     def __str__(self):
         return self.username
     
+
+class ActivityLog(models.Model):
+    """
+    A model to log user activities on the website.
+
+    Attributes
+    ----------
+    ACTION_CHOICES : list of tuple
+        A list of possible actions users can perform.
+    ENTITY_CHOICES : list of tuple
+        A list of different entities that can be associated with an activity.
+    user : ForeignKey
+        Reference to the User who performed the activity.
+    action_type : CharField
+        Type of action performed (e.g., 'LOGIN', 'CREATE').
+    entity_type : CharField
+        Type of entity involved in the activity (e.g., 'HOUSE', 'FINANCE').
+    entity_id : IntegerField
+        Optional ID of the specific entity record involved in the activity.
+    description : TextField
+        Detailed description of the activity.
+    timestamp : DateTimeField
+        Timestamp when the activity was recorded.
+
+    Methods
+    -------
+    __str__()
+        Returns a string representation of the activity log entry.
+
+    Meta:
+        Ordering and verbose name settings for the Django admin.
+    """
+    ACTION_CHOICES = [
+        ('LOGIN', 'Login'),
+        ('LOGOUT', 'Logout'),
+        ('CREATE', 'Create'),
+        ('UPDATE', 'Update'),
+        ('DELETE', 'Delete'),
+        ('VIEW', 'View'),
+        ('DOWNLOAD', 'Download'),
+        ('UPLOAD', 'Upload'),
+        ('PAYMENT', 'Payment'),
+        ('OTHER', 'Other'),
+    ]
+    
+    ENTITY_CHOICES = [
+        ('FINANCE', 'Finance'),
+        ('HOUSE', 'House'),
+        ('APARTMENT', 'Apartment'),
+        ('MAINTENANCE', 'Maintenance'),
+        ('LEASE', 'Lease Agreement'),
+        ('DOCUMENT', 'Document'),
+        ('COMMUNICATION', 'Communication'),
+        ('GENERAL', 'General'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activities')
+    action_type = models.CharField(max_length=20, choices=ACTION_CHOICES, blank=True, null=True)
+    entity_type = models.CharField(max_length=20, choices=ENTITY_CHOICES, default='GENERAL')
+    entity_id = models.IntegerField(null=True, blank=True)  # To associate the activity with a specific entity record
+    description = models.TextField()  # Detailed description of the activity
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """
+        Returns a string representation of the activity log entry.
+
+        Returns
+        -------
+        str
+            String representation of the activity log in the format 
+            'username action_type entity_type on timestamp'.
+        """
+        return f'{self.user.username} {self.action_type} {self.entity_type} on {self.timestamp}'
+
+    class Meta:
+        """
+        Meta options for the ActivityLog model.
+
+        Attributes
+        ----------
+        ordering : list
+            Orders the records by timestamp in descending order.
+        verbose_name : str
+            Human-readable name for the model in singular form.
+        verbose_name_plural : str
+            Human-readable name for the model in plural form.
+        """
+        ordering = ['-timestamp']
+        verbose_name = 'Activity Log'
+        verbose_name_plural = 'Activity Logs'
