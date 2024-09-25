@@ -131,13 +131,13 @@ class ActivityLog(models.Model):
         ('MAINTENANCE', 'Maintenance'),
         ('LEASE', 'Lease Agreement'),
         ('DOCUMENT', 'Document'),
-        ('COMMUNICATION', 'Communication'),
         ('GENERAL', 'General'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activities')
     action_type = models.CharField(max_length=20, choices=ACTION_CHOICES, blank=True, null=True)
-    entity_type = models.CharField(max_length=20, choices=ENTITY_CHOICES, default='GENERAL')
+    colour = models.CharField(max_length=20, blank=True, null=True)
+    entity_type = models.CharField(max_length=20, choices=ENTITY_CHOICES, blank=True, null=True)
     entity_id = models.IntegerField(null=True, blank=True)  # To associate the activity with a specific entity record
     description = models.TextField()  # Detailed description of the activity
     timestamp = models.DateTimeField(auto_now_add=True)
