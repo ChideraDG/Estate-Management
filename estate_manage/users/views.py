@@ -26,7 +26,7 @@ from .models import Profile
 from .forms import (RegistrationForm, LoginForm, ContactForm, ContactAgentForm, 
                     CustomSetPasswordForm, CustomPasswordResetForm, ProfileForm, 
                     CustomPasswordChangeForm)
-from .models import Profile
+from .models import Profile, ActivityLog
 
 
 def user_register(request):
