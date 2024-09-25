@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.http import JsonResponse
@@ -12,7 +13,8 @@ from locations.models import Country, State
 from houses.models import House
 from apartments.models import Apartment
 from documents.models import Document
-from users.views import generate_username, generate_password, check_network_connection, greet_client
+from users.models import ActivityLog
+from users.views import generate_username, generate_password, check_network_connection, greet_client, get_activity
 from leaseAgreements.forms import LeaseAgreementForm
 from leaseAgreements.models import LeaseAgreement
 from finances.models import Receipt, RentPayment
@@ -96,6 +98,8 @@ def tenantDashboard(request, pk):
         days_left = 0
         total_days = 0
 
+    activities, activities_time = get_activity(request)
+    
     context = {
         'username': pk, 
         'menu': menu,
@@ -103,6 +107,8 @@ def tenantDashboard(request, pk):
         'days_left': days_left,
         'total_days': total_days,
         'agreement': agreement,
+        'activities': activities,
+        'activities_time': activities_time,
     }
     return render(request, "tenants/T_dashboard.html", context)
 
