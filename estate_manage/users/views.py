@@ -2,6 +2,7 @@ import random
 import string
 import socket
 from datetime import datetime
+from django.utils import timezone
 from urllib.parse import urlencode
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
@@ -473,4 +474,29 @@ def check_network_connection():
     except OSError as e:
         print(f"Network error: {e}")
         return False
+    
+def get_activity(request):
+    activities = ActivityLog.objects.filter(user=request.user)    
+
+    activities_time = {}
+    for activity in activities:
+        activity_timestamp = activity.timestamp
+        current_time = timezone.now()
+
+        # Subtract the activity timestamp from the current time
+        time_difference = current_time - activity_timestamp
+        days = time_difference.days
+        hours, remainder = divmod(time_difference.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        
+        if days > 0:
+            activities_time[f"{activity.id}"] = [f"{days}", "days" if days > 1 else "day"]
+        elif hours > 0:
+            activities_time[f"{activity.id}"] = [f"{hours}", "hours" if hours > 1 else "hour"]
+        elif minutes > 0:
+            activities_time[f"{activity.id}"] = [f"{minutes}", "minutes" if minutes > 1 else "minute"]
+        else:
+            activities_time[f"{activity.id}"] = [f"{seconds}", "seconds" if seconds > 1 else "second"]
+
+    return activities, activities_time
     
