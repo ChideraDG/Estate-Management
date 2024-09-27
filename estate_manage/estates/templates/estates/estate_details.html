@@ -1,0 +1,73 @@
+{% extends "companies/C_dashboard.html" %} 
+{% load static %}
+
+{% block details %}
+<link href={% static "assets/css/style.css" %} rel="stylesheet">
+  <!-- Content -->
+
+   <!-- Location header -->
+   <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Estate Management / 
+        <a class="text-muted fw-light" href={% url "estates" pk=request.user.profile type=type %}>Estate Profiles</a> /
+    </span> {{ estate.estate_name }}, {{ estate.address.title }}
+</h4>
+<!-- End Location header -->
+
+ <!-- House Details -->
+ <div class="nav-align-top mb-4">
+    <!-- Tabs -->
+    <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+        <!-- House Tabs Button -->
+        <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+            data-bs-target="#navs-pills-justified-house-details" aria-controls="navs-pills-justified-house-details" aria-selected="true">
+                <i class="tf-icons bi bi-cloud-haze2-fill"></i> Estate Details
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{estates.count}}</span>
+            </button>
+        </li>
+
+        <!-- Update a House Tabs Button -->
+        <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+            data-bs-target="#navs-pills-justified-update-house" aria-controls="navs-pills-justified-update-house" aria-selected="false">
+                <i class="tf-icons bi bi-cloud-plus-fill"></i> Update Estate Details
+            </button>
+        </li>
+    </ul>
+    <!-- End Tabs -->
+
+     <!-- Details -->
+     <div class="tab-content">
+        <!-- Houses Details Tab -->
+        <div class="tab-pane fade show active" id="navs-pills-justified-house-details" role="tabpanel">
+            <section class="property-single nav-arrow-b">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div id="property-single-carousel" class="swiper">
+                                <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                    {% for image in estate.images.all %}
+                                        <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                                    {% endfor %}
+                                    </ol>
+                                    <div class="carousel-inner">
+                                    {% for image in estate.images.all %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <img src="{{ image.image.url }}" class="d-block w-100" style="width: 500px; height: 621px; border-radius: 7px;" alt="...">
+                                        </div>
+                                    {% endfor %}
+                                    </div>
+                                    <a class="carousel-control-prev" href="javascript:void(0);" role="button" data-bs-slide="prev">
+                                    <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="javascript:void(0);" role="button" data-bs-slide="next">
+                                    <span class="visually-hidden">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="property-single-carousel-pagination carousel-pagination"></div>
+                        </div>
+                    </div>
+
+  {% endblock details%}

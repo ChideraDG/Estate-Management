@@ -87,7 +87,7 @@
                 {% if exist.1 %}
                 {% include "estates/estate_content.html" with profile=profile estates=residential_estates type=type %}
                 <!--Paginator for Occupied Houses-->
-                <!-- {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' query_string=query_string %} -->
+                {% include "dashboard/pagination.html" with query_set=residential_estates custom_range=re_custom_range query_menu='residential' query_string=query_string %}
                 <!--End Paginator-->
               {% else %}
                 <h2>No Estate Found</h2>
@@ -98,7 +98,7 @@
                 {% if exist.2 %}
                 {% include "estates/estate_content.html" with profile=profile estates=commercial_estates type=type %}
                   <!--Paginator for Vacant Houses-->
-                  <!-- {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %} -->
+                  {% include "dashboard/pagination.html" with query_set=commercial_estates custom_range=co_custom_range query_menu='Commercial' query_string=query_string %}
                   <!-- End Paginator-->
                 {% else %}
                 <h2>No Estate Found</h2>
@@ -109,7 +109,7 @@
                 {% if exist.3 %}
                 {% include "estates/estate_content.html" with profile=profile estates=mixed_use_estates type=type %}
                 <!--Paginator for Vacant Houses-->
-                <!-- {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %} -->
+                {% include "dashboard/pagination.html" with query_set=mixed_use_estates custom_range=mu_custom_range query_menu='Mixed-Use' query_string=query_string %}
                 <!-- End Paginator-->
               {% else %}
               <h2>No Estate Found</h2>
@@ -214,5 +214,4 @@
       });
     </script>
   
-
 {% endblock details%}
