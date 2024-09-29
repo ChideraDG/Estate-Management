@@ -195,13 +195,73 @@ def FilterEstates(request):
 
     return estates, query_string
 
-        
+@login_required(login_url='login')
+def estate_details(request, pk, estate_id, type):
+    estates = Estate.objects.get(id=estate_id)
 
+    menu = 'estate-management'
+    s_menu = 'estate-profiles'
 
+    if request.method == "POST":
+        form = EstateForm(request.POST, instance=estate)
+        images = request.FILES.getlist('images')
+
+        if form.is_valid():
+            instance = form.save(commit=False)  
+
+            instance.save
+
+             # Access the Many-to-Many Table for utilities and save selected utilities.
+            EstateUtilities = Estate.utilities.through
+            instance.utilities.clear()
+            for utility in request.POST.getlist('utilities'):
+                EstateUtilities.objects.get_or_create(estate_id=instance.id, utility_id=utility)
+
+            # Access the Many-to-Many Table for amenities and save selected amenities.
+            EstateAmenities = Estate.amenities.through
+            instance.amenities.clear()
+            for amenity in request.POST.getlist('amenities'):
+                EstateAmenities.objects.get_or_create(estate_id=instance.id, amenity_id=amenity)
+
+            # Access the Many-to-Many Table for utilities and save selected security features.
+            EstateSecurityFeatures = Estate.security_features.through
+            instance.security_features.clear()
+            for security_feature in request.POST.getlist('security_features'):
+                EstateSecurityFeatures.objects.get_or_create(estate_id=instance.id, securityfeatures_id=security_feature)
+
+            # Save each uploaded image to the Photo model with the associated house.
+            for image in images:
+                Photo.objects.get_or_create(
+                    image=image,
+                    estate=instance,
+                    description=f'{instance}'
+                )
+            
+            # Redirect to the same view after successful form submission.
+            return redirect('estates-details', pk=estate.company, estate_id=estate_id, type=type)
+
+    else:
+        form = EstateForm(instance=estates)
+
+    context ={
+        'form': form,
+        'estate': estates,
+        'menu': menu,
+        's_menu': s_menu,
+        'type': type,
+    }
+
+    return render(request, 'estates/estate_details.html', context)
+
+@login_required(login_url='login')
 def deleteEstate(request, pk):
-    pass
+    user = request.user.profile.designation
+    estate = Estate.objects.get(id=pk)
+    estate.delete()
 
+    return redirect('estates', pk=request.user.profile.id)
 
+@login_required(login_url='login')
 def get_states(request):
     country_id = request.GET.get('country_id')
     states = State.objects.filter(country_id=country_id).order_by('name')
