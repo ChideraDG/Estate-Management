@@ -138,8 +138,9 @@ class ActivityLog(models.Model):
     action_type = models.CharField(max_length=20, choices=ACTION_CHOICES, blank=True, null=True)
     colour = models.CharField(max_length=20, blank=True, null=True)
     entity_type = models.CharField(max_length=20, choices=ENTITY_CHOICES, blank=True, null=True)
-    entity_id = models.IntegerField(null=True, blank=True)  # To associate the activity with a specific entity record
+    entity_id = models.CharField(max_length=100, null=True, blank=True)  # To associate the activity with a specific entity record
     description = models.TextField()  # Detailed description of the activity
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -170,3 +171,8 @@ class ActivityLog(models.Model):
         ordering = ['-timestamp']
         verbose_name = 'Activity Log'
         verbose_name_plural = 'Activity Logs'
+
+    @property
+    def entity_id_as_list(self):
+        # Return the field value as a list, split by commas
+        return self.entity_id.split(',')

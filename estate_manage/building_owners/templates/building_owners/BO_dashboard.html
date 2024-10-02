@@ -285,30 +285,44 @@
                 <div class="card-body">
                     <ul class="p-0 m-0">
                         {% for activity in activities|slice:":8" %}
-                        <li class="d-flex mb-4 pb-1">
-                            <div class="avatar flex-shrink-0 me-3">
-                                <span class="avatar-initial rounded bg-label-{{ activity.colour }}">
-                                    {% if activity.get_action_type_display == "Login" %}
-                                    <i class="bi bi-door-open-fill"></i>
-                                    {% elif activity.get_action_type_display == "Logout" %}
-                                    <i class="bi bi-door-closed-fill"></i>
-                                    {% elif activity.get_entity_type_display == "Finance" %}
-                                    <i class="bi bi-credit-card-fill"></i>
-                                    {% endif %}
-                                </span>
-                            </div>
-                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                <div class="me-2">
-                                    <small class="text-muted d-block mb-1">{% if activity.get_action_type_display %}{{ activity.get_action_type_display }}{% else %}{{ activity.get_entity_type_display }}{% endif %}</small>
-                                    <h6 class="mb-0">{{ activity.description }}</h6>
+
+                        <a href=
+                            {% if activity.ip_address == "house-details" %}
+                                {% url activity.ip_address pk=request.user.profile type="bo" house_id=activity.entity_id %}
+                            {% elif activity.ip_address == "rent-payment-history" %}
+                                {% url "rent-payment-history" pk=request.user.profile %}
+                            {% elif activity.ip_address == "apartment-details" %}
+                                {% url "apartment-details" pk=request.user.profile type="bo" house_id=activity.entity_id_as_list.1 apartment_number=activity.entity_id_as_list.0 %}
+                            {% else %}"#"{% endif %}>
+                                <li class="d-flex mb-4 pb-1">
+                                <div class="avatar flex-shrink-0 me-3">
+                                    <span class="avatar-initial rounded bg-label-{{ activity.colour }}">
+                                        {% if activity.get_action_type_display == "Login" %}
+                                        <i class="bi bi-door-open-fill"></i>
+                                        {% elif activity.get_action_type_display == "Logout" %}
+                                        <i class="bi bi-door-closed-fill"></i>
+                                        {% elif activity.get_entity_type_display == "Finance" %}
+                                        <i class="bi bi-credit-card-fill"></i>
+                                        {% elif activity.get_entity_type_display == "House" %}
+                                        <i class="bi bi-building"></i>
+                                        {% elif activity.get_entity_type_display == "Apartment" %}
+                                        <i class="bi bi-house"></i>
+                                        {% endif %}
+                                    </span>
                                 </div>
-                
-                                <div class="user-progress d-flex align-items-center gap-1">
-                                    <h6 class="mb-0">{{ activities_time|get_digit:activity.id }}</h6> <!-- Access time value -->
-                                    <span class="text-muted">{{ activities_time|get_duration:activity.id }}</span> <!-- Access unit (days, hours, etc.) -->
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <small class="text-muted d-block mb-1">{% if activity.get_action_type_display %}{{ activity.get_action_type_display }}{% else %}{{ activity.get_entity_type_display }}{% endif %}</small>
+                                        <h6 class="mb-0">{{ activity.description }}</h6>
+                                    </div>
+                    
+                                    <div class="user-progress d-flex align-items-center gap-1">
+                                        <h6 class="mb-0">{{ activities_time|get_digit:activity.id }}</h6> <!-- Access time value -->
+                                        <span class="text-muted">{{ activities_time|get_duration:activity.id }}</span> <!-- Access unit (days, hours, etc.) -->
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        </a>
                         {% endfor %}
                     </ul>
                 </div>
