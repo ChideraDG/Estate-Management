@@ -64,7 +64,7 @@ class Agent(models.Model):
                                     validators=[RegexValidator(r'^\+?[0-9]{3} ?[0-9-]{8,11}$',
                                         message="Phone number must be entered in the format: '08012345678' or "
                                                 "'+2348012345678'. Up to 15 digits allowed.")])
-    profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True, default='agents/dp.jpg')
+    profile_picture = models.ImageField(upload_to='agents/', null=True, blank=True, default='person_1.jpg')
     bio = models.TextField(null=True, blank=True)
     alternate_phone_number = models.CharField(max_length=20, null=True, blank=True)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='agents', null=True, blank=True)
