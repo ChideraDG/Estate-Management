@@ -48,7 +48,7 @@ class Tenant(models.Model):
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name='tenant', null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
     profile_picture = models.ImageField(blank=True, null=True, upload_to='tenants-profile-pics/', 
-                                        default='tenants-profile-pics/dp.jpg')
+                                        default='person_1.jpg')
     move_in_date = models.DateField(null=True, blank=True)
     lease_start_date = models.DateField(null=True, blank=True)
     lease_end_date = models.DateField(null=True, blank=True)
