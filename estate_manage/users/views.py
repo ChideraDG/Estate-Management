@@ -129,7 +129,7 @@ def user_profile(request, type, pk):
             instance.name = instance.name.strip().title()
             instance.email = instance.email.strip().lower()
             if not instance.profile_image:
-                instance.profile_image = 'profile-pics/dp.jpg'
+                instance.profile_image = 'person_1.jpg'
 
             # Track changes
             changes = []
