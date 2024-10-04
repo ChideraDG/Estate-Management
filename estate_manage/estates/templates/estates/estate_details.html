@@ -69,5 +69,157 @@
                             <div class="property-single-carousel-pagination carousel-pagination"></div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row justify-content-between">
+                                <div class="col-md-5 col-lg-4">
+                                    <div class="property-price d-flex justify-content-center foo">
+                                        <div class="card-header-c d-flex">
+                                            <div class="card-box-ico">
+                                                <span class="bi bi-cash">$</span>
+                                            </div>
+                                            <div class="card-title-c align-self-center">
+                                                <h5 class="title-c mt-3">{{ estate.maintenance_cost }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-summary">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="title-box-d section-t4">
+                                                    <h3 class="title-d">Quick Summary</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-list">
+                                            <ul class="list">
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Estate Name:</strong>
+                                                    <span>{{ estate.estate_name }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Address:</strong>
+                                                    <span>{{ estate.address.title }}</span>
+                                                </li>
+                                                {% if estate.country.name %}
+                                                    <li class="d-flex justify-content-between">
+                                                        <strong>World Location:</strong>
+                                                        <span>{{ estate.city.title }} {{ estate.state.name.title }} {{ estate.country.name.title }}</span>
+                                                    </li>
+                                                {% endif %}
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Estate Type:</strong>
+                                                    <span>{{ estate.estate_type.title }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between"></li>
+                                                    <strong>Year Built:</strong>
+                                                    <span>{{ estate.year_built }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Houses:</strong>
+                                                    <span>{{ estate.number_of_houses }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Total Area covered:</strong>
+                                                    <span>{{ estate.total_area_covered }}m
+                                                        <sup>2</sup>
+                                                    </span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Land Area:</strong>
+                                                    <span>{{ estate.land_area }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Estate Parking Spaces:</strong>
+                                                    <span>{{ estate.estate_parking_spaces }}</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <strong>Construction Type:</strong>
+                                                    <span>{{ estate.construction_type }}m
+                                                        <sup>2</sup>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-lg-7 section-md-t3">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="title-box-d">
+                                                <h3 class="title-d">Property Description</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-description">
+                                        {% if estate.description %}
+                                        <p class="description color-text-a">
+                                            {{ estate.description }}
+                                        </p>
+                                        <p class="description color-text-a no-margin"></p>
+                                        {% else %}
+                                        <p class="description color-text-a">
+                                            <h3>No Description</h3>
+                                        </p>
+                                        <p class="description color-text-a no-margin"></p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row section-t3">
+                                        <div class="col-sm-12">
+                                            <div class="title-box-d">
+                                                <h3 class="title-d">Utilities</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if estate.utilities.all %}
+                                        <div class="amenities-list color-text-a">
+                                            <ul class="list-a no-margin">
+                                                {% for utility in estate.utilities.all %}
+                                                    <li class="me-5">{{ utility }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% else %}
+                                        <h3>No Utilities</h3>
+                                    {% endif %}
+                                    <div class="row section-t3">
+                                        <div class="col-sm-12">
+                                            <div class="title-box-d">
+                                                <h3 class="title-d">Utilities</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if estate.amenities.all %}
+                                        <div class="amenities-list color-text-a">
+                                            <ul class="list-a no-margin">
+                                                {% for amenity in estate.amenities.all %}
+                                                    <li class="me-5">{{ amenity }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% else %}
+                                        <h3>No Amenities</h3>
+                                    {% endif %}
+                                    <div class="row section-t3">
+                                        <div class="col-sm-12">
+                                            <div class="title-box-d">
+                                                <h3 class="title-d">Security Features</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if estate.security_features.all %}
+                                        <div class="amenities-list color-text-a">
+                                            <ul class="list-a no-margin">
+                                                {% for feature in estate.security_features.all %}
+                                                    <li class="me-5">{{ feature }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% else %}
+                                        <h3>No Security Features</h3>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                       
   {% endblock details%}
