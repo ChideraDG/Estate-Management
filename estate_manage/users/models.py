@@ -63,7 +63,7 @@ class Profile(models.Model):
     designation = models.CharField(max_length=25, null=False, blank=False, default='buyer', choices=DESIGNATION)
     bio = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profile-pics/',
-                                      default='profile-pics/dp.jpg',)
+                                      default='person_1.jpg',)
     state_of_residence = models.CharField(max_length=50, null=True, blank=True)
     address_1 = models.CharField(max_length=200, null=True, blank=True)
     address_2 = models.CharField(max_length=200, null=True, blank=True)
