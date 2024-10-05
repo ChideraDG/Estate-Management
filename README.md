@@ -1,5 +1,5 @@
 # Estate-Management
-A Django joint-project that solves problem of various housing management process and issues.
+The Estate Management Application is a comprehensive platform designed to streamline property management for various stakeholders, including agents, building owners, tenants, buyers, and companies. The platform provides essential tools for managing properties, finances, leases, communication, and documentation. The application aims to simplify tasks like managing tenants, overseeing maintenance, tracking finances, and handling lease agreements, making the property management process more efficient.
 
 ### Defining Core Features
 
