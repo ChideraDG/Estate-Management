@@ -22,7 +22,7 @@ class EstateForm(ModelForm):
 
     class Meta:
         model = Estate
-        fields = ['estate_name', 'address' , 'country', 'state', 'city', 'estate_type', 'year_built', 'number_of_houses', 'total_area_covered', 'land_area',
+        fields = ['estate_name', 'address' , 'country', 'state', 'city', 'estate_type', 'year_built', 'total_area_covered', 'land_area',
                   'estate_parking_spaces', 'construction_type','amenities', 'security_features', 'maintenance_cost',
                   'utilities', 'description',]
         widgets = {

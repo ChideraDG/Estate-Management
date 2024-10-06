@@ -12,8 +12,8 @@ from django.db import IntegrityError
 
 @login_required(login_url='login')
 def estates(request, pk, type):
-    if type == 'c':
-        profile = request.user.profile.companies
+    # if type == 'c':
+    profile = request.user.profile.companies
 
     # estates =  Estate.objects.all()
     estates, query_string = FilterEstates(request)
@@ -197,7 +197,7 @@ def FilterEstates(request):
 
 @login_required(login_url='login')
 def estate_details(request, pk, estate_id, type):
-    estates = Estate.objects.get(id=estate_id)
+    estate = Estate.objects.get(id=estate_id)
 
     menu = 'estate-management'
     s_menu = 'estate-profiles'
@@ -209,7 +209,7 @@ def estate_details(request, pk, estate_id, type):
         if form.is_valid():
             instance = form.save(commit=False)  
 
-            instance.save
+            instance.save()
 
              # Access the Many-to-Many Table for utilities and save selected utilities.
             EstateUtilities = Estate.utilities.through
@@ -238,14 +238,14 @@ def estate_details(request, pk, estate_id, type):
                 )
             
             # Redirect to the same view after successful form submission.
-            return redirect('estates-details', pk=estate.company, estate_id=estate_id, type=type)
+            return redirect('estate-details', pk=estate.company, estate_id=estate_id, type=type)
 
     else:
-        form = EstateForm(instance=estates)
+        form = EstateForm(instance=estate)
 
     context ={
         'form': form,
-        'estate': estates,
+        'estate': estate,
         'menu': menu,
         's_menu': s_menu,
         'type': type,
@@ -259,7 +259,11 @@ def deleteEstate(request, pk):
     estate = Estate.objects.get(id=pk)
     estate.delete()
 
-    return redirect('estates', pk=request.user.profile.id)
+    designation_type = {
+        'company': 'C'
+    }
+
+    return redirect('estates', pk=request.user.profile.id, type=designation_type.get(user))
 
 @login_required(login_url='login')
 def get_states(request):

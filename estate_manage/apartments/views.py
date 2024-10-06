@@ -29,9 +29,13 @@ def house_apartments(request, pk, type):
     if type == "bo":
         houses = request.user.profile.building_owner.houses.all()
 
+    elif type == 'c':
+        houses = request.user.profile.companies.houses.all()
+
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
-        'tenant': "tenants/T_dashboard.html"
+        'tenant': "tenants/T_dashboard.html",
+        'company': 'companies/C_dashboard.html'
     }
     context = {
         'menu': menu,
