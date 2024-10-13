@@ -3,7 +3,6 @@ import string
 import socket
 from datetime import datetime
 from django.utils import timezone
-from urllib.parse import urlencode
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
 from django.urls import reverse
