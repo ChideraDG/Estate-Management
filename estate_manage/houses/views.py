@@ -206,7 +206,7 @@ def filterHouses(request):
         houses = request.user.profile.building_owner.houses.all()  
     elif request.user.profile.designation == 'company':
         # Needs fixing
-        houses = request.user.profile.companies.estate.all()
+        houses = request.user.profile.companies.estates.all()
     
     form = HouseFilterForm(request.GET, request=request)
 
