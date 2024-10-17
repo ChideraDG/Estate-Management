@@ -2,6 +2,7 @@ from django.db import models
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from estates.models import Estate
+from users.models import ActivityLog
 from building_owners.models import BuildingOwner
 from agents.models import Agent
 
@@ -82,6 +83,41 @@ class House(models.Model):
         ordering = ['-created']  # to order the houses from latest to oldest.
         unique_together = ('house_number', 'address')
 
+    def save(self, *args, **kwargs):
+        # Code to execute before saving the object
+        print("saving House Instance")
+        
+        super().save(*args, **kwargs)  # Call the actual save method
+        
+        ActivityLog.objects.create(
+            user=self.building_owner.user.user,
+            action_type="Create",
+            entity_type="House",
+            entity_id=self.id,
+            colour="dark",
+            description=f"Added a House",
+            ip_address="house-details"
+        )
+    
+    def delete(self, *args, **kwargs):
+        # Code to execute before deleting the object
+        print(f"Deleting House  Instance {self.id}")
+
+        del_instance = ActivityLog.objects.filter(entity_id=self.id, entity_type="House").last()
+        del_instance.ip_address = None
+        del_instance.save()
+
+        ActivityLog.objects.create(
+            user=self.building_owner.user.user,
+            action_type="Delete",
+            entity_type="House",
+            entity_id=self.id,
+            colour="dark",
+            description=f"Deleted a House",
+        )
+        
+        super().delete(*args, **kwargs)  # Call the actual delete method
+    
 
 class Utility(models.Model):
     """

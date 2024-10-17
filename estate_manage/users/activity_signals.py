@@ -46,18 +46,6 @@ def rent_payment(sender, instance, created, **kwargs):
         ip_address="rent-payment-history"
         )
 
-@receiver(post_save, sender=House)
-def add_house(sender, instance, created, **kwargs):
-    if created:
-        ActivityLog.objects.create(
-        user=instance.building_owner.user.user,
-        entity_type="House",
-        entity_id=instance.id,
-        colour="dark",
-        description=f"Added a House",
-        ip_address="house-details"
-        )
-
 @receiver(post_save, sender=Apartment)
 def add_apartment(sender, instance, created, **kwargs):
     if created:
