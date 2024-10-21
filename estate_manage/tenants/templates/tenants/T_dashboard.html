@@ -69,18 +69,18 @@
       <div data-i18n="Workorder">Workorder</div>
     </a>
     <ul class="menu-sub">
-      <li class="menu-item">
-        <a href="#" class="menu-link">
+      <li class="menu-item  {% if s_menu == 'rs' %}active{% endif %}">
+        <a href={% url "log_request" pk=request.user.profile %} class="menu-link">
           <div data-i18n="request-submission">Request Submission</div>
         </a>
       </li>
-      <li class="menu-item">
-        <a href="#" class="menu-link">
+      <li class="menu-item  {% if s_menu == 'tau' %}active{% endif %}">
+        <a href={% url "tracking" pk=request.user.profile %} class="menu-link">
           <div data-i18n="tracking-updates">Tracking and Updates</div>
         </a>
       </li>
-      <li class="menu-item">
-        <a href="#" class="menu-link">
+      <li class="menu-item  {% if s_menu == 'spi' %}active{% endif %}">
+        <a href={% url "service_provider" pk=request.user.profile %} class="menu-link">
           <div data-i18n="service-info">Service Provider Information</div>
         </a>
       </li>

@@ -19,6 +19,7 @@ urlpatterns = [
     path("", include('leaseAgreements.urls')),
     path("", include('communications.urls')),
     path("", include('finances.urls')),
+    path("", include('maintenances.urls')),
 
     path("reset_password/", CustomPasswordResetView.as_view(template_name='reset_password.html'),
          name='reset_password'),
