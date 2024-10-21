@@ -3,6 +3,54 @@
 {% block details %}
     <!-- Content -->
     <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light"></span> Log Request
+        <span class="text-muted fw-light">Work Order /</span> Log Request
     </h4>
+
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Work Order Request</h4>
+        <p>
+            Please submit your work order through the form below. Our team will respond to non-urgent requests within <strong>3-5 business days</strong>. For urgent repairs (such as structural damage or security issues), please call <strong>+234-703-3327-493</strong> immediately.
+        </p>
+        <hr>
+        <p class="mb-0">We appreciate your cooperation and will handle your request as quickly as possible.</p>
+    </div>
+    
+    <!-- Request Details -->
+    <div class="nav-align-top mb-4 mt-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Request Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-payment" aria-controls="navs-pills-justified-payment" aria-selected="true">
+                <i class="tf-icons bi bi-clipboard-plus"></i> Log Request
+                </button>
+            </li>
+        </ul>
+        <!-- End TABS -->
+
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Request Details Tab -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-payment" role="tabpanel">
+                <form method="POST" enctype="multipart/form-data" action="#">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="pay" class="btn btn-primary me-2">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+    
 {% endblock details %}

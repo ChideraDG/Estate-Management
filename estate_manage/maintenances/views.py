@@ -1,12 +1,22 @@
 from django.shortcuts import render
+from .forms import WorkOrderForm
 
 
 def request_submission(request, pk):
+    tenant = request.user.profile.tenant
+    form = WorkOrderForm(tenant=tenant)
+
+    if request.method == 'POST':
+        form = WorkOrderForm(request.POST, tenant=tenant)
+
+        if form.is_valid():
+            form.save()
+
     context = {
         'menu': 'workorder',
         's_menu': 'rs',
+        'form': form,
     }
-
     return render(request, 'tenant_work_order/request_submission.html', context)
 
 def tracking(request, pk):
