@@ -130,7 +130,8 @@ class ActivityLog(models.Model):
         ('APARTMENT', 'Apartment'),
         ('MAINTENANCE', 'Maintenance'),
         ('LEASE', 'Lease Agreement'),
-        ('DOCUMENT', 'Document')
+        ('DOCUMENT', 'Document'),
+        ('REQUEST', 'Request'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activities')
