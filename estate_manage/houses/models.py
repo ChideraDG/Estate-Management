@@ -2,6 +2,7 @@ from django.db import models
 from locations.models import Country, State
 from django.core.validators import MinValueValidator
 from estates.models import Estate
+from companies.models import Company
 from building_owners.models import BuildingOwner
 from agents.models import Agent
 
@@ -51,6 +52,7 @@ class House(models.Model):
         ('under_renovation', 'Under Renovation'),
     ]
 
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
     estate = models.ForeignKey(Estate, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
     building_owner = models.ForeignKey(BuildingOwner, on_delete=models.CASCADE, blank=True, null=True, related_name='houses')
     agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, related_name='houses', blank=True, null=True)

@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import House, Photo
 from .forms import HouseForm, HouseFilterForm
 from .utils import paginateHouses
+from estates.models import Estate
 
 
 @login_required(login_url='login')
@@ -47,12 +48,13 @@ def houses(request, pk, type):
       managing the many-to-many fields for utilities and features and saving 
       images related to the house.
     """
-    
+
     if type == 'bo':
         # Get the building owner's profile from the current user's profile.
         profile = request.user.profile.building_owner
-    elif type == 'C':
+    elif type == 'c':
         profile = request.user.profile.companies
+        estate = profile.estates
 
     # Filter houses using the filterHouses function and get the query string for filtering.
     houses, query_string = filterHouses(request)
@@ -72,6 +74,7 @@ def houses(request, pk, type):
     # Retrieve all countries (presumably for filtering options).
     countries = Country.objects.all()
 
+    # print(House.objects.filter(c))
     # Filter houses by their occupancy status.
     occupied_houses = houses.filter(occupancy_status="occupied")
     vacant_houses = houses.filter(occupancy_status="vacant")
@@ -206,7 +209,8 @@ def filterHouses(request):
         houses = request.user.profile.building_owner.houses.all()  
     elif request.user.profile.designation == 'company':
         # Needs fixing
-        houses = request.user.profile.companies.estates.all()
+        houses = House.objects.filter(company=request.user.profile.companies)
+        print(houses)
     
     form = HouseFilterForm(request.GET, request=request)
 

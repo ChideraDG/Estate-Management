@@ -36,8 +36,8 @@
     </ul>
     <!-- End Tabs -->
 
-     <!-- Details -->
-     <div class="tab-content">
+    <!-- Details -->
+    <div class="tab-content">
         <!-- Houses Details Tab -->
         <div class="tab-pane fade show active" id="navs-pills-justified-house-details" role="tabpanel">
             <section class="property-single nav-arrow-b">
@@ -47,12 +47,12 @@
                             <div id="property-single-carousel" class="swiper">
                                 <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                                     <ol class="carousel-indicators">
-                                    {% for image in estate.images.all %}
+                                        {% for image in estate.images.all %}
                                         <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
                                     {% endfor %}
                                     </ol>
                                     <div class="carousel-inner">
-                                    {% for image in estate.images.all %}
+                                        {% for image in estate.images.all %}
                                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
                                             <img src="{{ image.image.url }}" class="d-block w-100" style="width: 500px; height: 621px; border-radius: 7px;" alt="...">
                                         </div>
@@ -221,17 +221,22 @@
                                 </div>
                             </div>
                         </div>
-                       
-                        <!-- Update a House Tabs Details -->
-            <div class="tab-pane fade" id="navs-pills-justified-update-house" role="tabpanel">
-                <form method="POST" enctype="multipart/form-data" action="">
-                    {% csrf_token %}
-                    <div class="row">
-                        {% for field in form %}
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label">{{ field.label }}</label>
-                                {{ field }}
-                                {% if field.label == "Address" %}
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- End Houses Details Tab -->
+
+         <!-- Update a House Tabs Details -->
+         <div class="tab-pane fade" id="navs-pills-justified-update-house" role="tabpanel">
+            <form method="POST" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                <div class="row">
+                    {% for field in form %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.label == "Address" %}
                                     <div id="floatingInputHelp" class="form-text">
                                     Do not add your Estate name to the Address
                                     </div>
@@ -247,17 +252,17 @@
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Upload Images</label>
                             <input type="file" name='images' multiple class="form-control">
-                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary me-2">Update Estate</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary me-2">Update Estate</button>
+                </div>
+            </form>
         </div>
-        <!-- End Details -->
     </div>
-    <!-- End House Details -->
+    <!-- End Details -->
+</div>
+<!-- End House Details -->
 
     <div class="card">
         <h5 class="card-header">Delete Estate</h5>
@@ -290,4 +295,12 @@
         });
     </script>
 {% endblock details %}
+
+{% block floater %}
+    <div class="buy-now">
+    <a href={% url "view-houses" type=type pk=request.user.profile estate_id=estate.id %}?menu=a-m&s_menu=a-p class="btn btn-danger btn-buy-now">
+        Go to Houses
+    </a>
+    </div>
+{% endblock floater %}
 

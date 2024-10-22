@@ -9,6 +9,9 @@ from django.http import JsonResponse
 from urllib.parse import urlencode
 from .utils import paginateEstates
 from django.db import IntegrityError
+from houses.models import House, Photo
+from houses.forms import HouseForm, HouseFilterForm
+from houses.utils import paginateHouses
 
 @login_required(login_url='login')
 def estates(request, pk, type):
@@ -27,8 +30,8 @@ def estates(request, pk, type):
     reset_filter = request.GET.get('reset_filter', '/')
 
     # Set the active menu and sub-menu for UI highlighting.
-    menu = 'estates-management'
-    s_menu = 'estate-profiles'
+    menu = 'estate-management'
+    s_menu = 'estate-profile'
 
 
     # Retrieve all countries (presumably for filtering options).
@@ -99,7 +102,6 @@ def estates(request, pk, type):
     # If the request method is GET, instantiate an empty HouseForm.
     else:
         form = EstateForm()
-
 
     context ={
         'profile': profile,
@@ -264,6 +266,154 @@ def deleteEstate(request, pk):
     }
 
     return redirect('estates', pk=request.user.profile.id, type=designation_type.get(user))
+
+def filterHouses(request, estate):
+    houses = estate.houses.all()
+    form = HouseFilterForm(request.GET, request=request)
+
+    if form.is_valid():
+        filters = {}
+
+        # Handle country and state separately since they require lookups
+        _country = form.cleaned_data.get('_country')
+        _state = form.cleaned_data.get('_state')
+        
+        if _country:
+            filters['country'] = Country.objects.filter(name=_country).first()
+        if _state:
+            filters['state'] = State.objects.filter(name=_state).first()
+
+        # Define the fields that need direct filtering
+        fields_to_filters = {
+            'house_no': 'house_number',
+            'house_address': 'address__icontains',
+            'city': 'city__icontains',
+            'number_of_apartments': 'number_of_apartments',
+            'number_of_floors': 'number_of_floors',
+            'garage_space': 'garage_space',
+            'renovation_year': 'renovation_year',
+            'condition': 'condition__icontains',
+            'house_size_min': 'house_size__gte',
+            'house_size_max': 'house_size__lte',
+            'sale_price_min': 'sale_price__gte',
+            'sale_price_max': 'sale_price__lte',
+            'rent_price_min': 'rent_price__gte',
+            'rent_price_max': 'rent_price__lte',
+            'yard_size_min': 'yard_size__gte',
+            'yard_size_max': 'yard_size__lte',
+        }
+
+        # Loop through the fields and add non-empty filters
+        for field, filter_name in fields_to_filters.items():
+            value = form.cleaned_data.get(field)
+            if value:
+                filters[filter_name] = value
+
+        # Handle ManyToManyField or ForeignKey fields with __in lookup
+        if form.cleaned_data.get('features'):
+            filters['features__in'] = form.cleaned_data['features']
+        if form.cleaned_data.get('utilities'):
+            filters['utilities__in'] = form.cleaned_data['utilities']
+
+        # Apply the filters to the queryset
+        houses = houses.filter(**filters)
+
+        # Generate the query string for the current GET parameters
+        cleaned_query_dict = {key: value for key, value in request.GET.items() if value}
+        query_string = urlencode(cleaned_query_dict)
+    else:
+        query_string = ""
+
+    return houses, query_string
+
+
+@login_required(login_url='login')
+def view_estate_houses(request, type, pk, estate_id):
+    menu = request.GET.get('menu', 'hm')
+    s_menu = request.GET.get('s_menu', 'hp')
+    i_menu = request.GET.get('i_menu', 'all')
+    reset_filter = request.GET.get('reset_filter', '/')
+    estate = Estate.objects.get(id=estate_id)
+    houses = estate.houses.all()
+    houses, query_string = filterHouses(request, estate)
+    total_houses = houses.count
+    occupied_houses = houses.filter(occupancy_status="occupied")
+    vacant_houses = houses.filter(occupancy_status="vacant")
+    exist = [houses.exists(), occupied_houses.exists(), vacant_houses.exists()]
+    custom_range, houses = paginateHouses(request, houses, 6)
+    oh_custom_range, occupied_houses = paginateHouses(request, occupied_houses, 6)
+    vh_custom_range, vacant_houses = paginateHouses(request, vacant_houses, 6)
+    filter_form = HouseFilterForm()
+
+    # Calculate total number of houses in this estate
+    estate_total_houses = estate.houses.count()
+
+    if request.method == 'POST':
+        form = HouseForm(request.POST, request=request)
+        # Get the list of images uploaded with the form.
+        images = request.FILES.getlist('images')
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.estate = estate
+            instance.company = request.user.profile.companies
+        
+            try:
+                instance.save()
+            except IntegrityError:
+                messages.error(request, f"House {request.POST['house_number']} already exists in this estate.")
+
+            for image in images:
+                Photo.objects.create(
+                    image=image,
+                    house=instance,
+                    description=f'{instance}'
+                )
+
+            return redirect('view-houses', type=type, pk=pk, estate_id=estate_id)
+    
+    else:
+        form = HouseForm()
+
+    context = {
+        'menu': menu,
+        "profile": request.user.profile,
+        's_menu': s_menu,
+        'houses': houses,
+        'estate': estate,
+        'type': type,
+        'form': form,
+        'i_menu': i_menu,
+        'oh_custom_range': oh_custom_range,
+        ' vh_custom_range':  vh_custom_range,
+        'occupied_houses': occupied_houses,
+        'vacant_houses': vacant_houses,
+        'filter_form': filter_form,
+        'query_string': query_string,
+        'reset_filter': reset_filter,
+        'estate_id': estate_id,
+        'total_houses': total_houses,
+        'exist': exist,
+        'custom_range': custom_range,
+        'estate_total_houses':  estate_total_houses,
+    }
+    return render(request, 'estates/view_estate_house.html', context)
+
+@login_required(login_url='login')
+def estate_houses(request, pk, type):
+    menu = 'hm'
+    s_menu = 'hp'
+   
+    estates = request.user.profile.companies.estates.all()
+
+    context = {
+        'menu': menu,
+        's_menu': s_menu,
+        'estates': estates,
+        'type': type,
+    }
+    return render(request, 'estates/estate_houses.html', context)
+
 
 @login_required(login_url='login')
 def get_states(request):

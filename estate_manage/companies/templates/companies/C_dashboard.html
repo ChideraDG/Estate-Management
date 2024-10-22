@@ -35,15 +35,15 @@
 </li>
 
 <!-- House Management -->
-<li class="menu-item {% if menu == 'house-management' %}active{% endif %}">
+<li class="menu-item {% if menu == 'hm' %}active{% endif %}">
   <a href="javascript:void(0);" class="menu-link menu-toggle">
     <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
     <div data-i18n="House Management">House Management</div>
   </a>
 
   <ul class="menu-sub">
-    <li class="menu-item {% if s_menu == 'house-profiles' %}active{% endif %}">
-      <a href={% url "houses" pk=request.user.profile type="c" %}?menu=all&page=1 class="menu-link">
+    <li class="menu-item {% if s_menu == 'hp' %}active{% endif %}">
+      <a href={% url "estate-houses" pk=request.user.profile type="c" %}?i_menu=all&page=1 class="menu-link">
           <div data-i18n="house-profiles">House Profiles</div>
       </a>
   </li>

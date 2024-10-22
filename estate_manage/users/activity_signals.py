@@ -50,7 +50,7 @@ def rent_payment(sender, instance, created, **kwargs):
 def add_house(sender, instance, created, **kwargs):
     if created:
         ActivityLog.objects.create(
-        user=instance.building_owner.user.user,
+        user=instance.building_owner.user.user if instance.building_owner else instance.estate.company.user.user,
         entity_type="House",
         entity_id=instance.id,
         colour="dark",
@@ -62,7 +62,7 @@ def add_house(sender, instance, created, **kwargs):
 def add_apartment(sender, instance, created, **kwargs):
     if created:
         ActivityLog.objects.create(
-        user=instance.house.building_owner.user.user,
+        user=instance.house.building_owner.user.user if instance.building_owner else instance.estate.company.user.user,
         entity_type="Apartment",
         entity_id=f"{instance.apartment_number},{instance.house.id}",
         colour="dark",
