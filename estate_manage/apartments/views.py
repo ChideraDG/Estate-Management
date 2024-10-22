@@ -89,7 +89,8 @@ def view_apartments(request, type, pk, house_id):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
-        'tenant': "tenants/T_dashboard.html"
+        'tenant': "tenants/T_dashboard.html",
+        'company': "companies/C_dashboard.html"
     }
     context = {
         'template_routes': template_routes.get(request.user.profile.designation),
@@ -193,7 +194,8 @@ def apartment_details(request, type, pk, house_id, apartment_number):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
-        'tenant': "tenants/T_dashboard.html"
+        'tenant': "tenants/T_dashboard.html",
+        'company': "companies/C_dashboard.html"
     }
     context = {
         'house': house,
@@ -216,6 +218,7 @@ def delete_apartment(request, pk):
 
     designation_type = {
         'building_owner': "bo",
-        'tenant': "T"
+        'tenant': "T",
+        'company': "c"
     }
     return redirect('view-apartments', designation_type.get(user), request.user.profile, house.id)

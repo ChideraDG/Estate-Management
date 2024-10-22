@@ -92,7 +92,7 @@ class House(models.Model):
         super().save(*args, **kwargs)  # Call the actual save method
         
         ActivityLog.objects.create(
-            user=self.building_owner.user.user,
+            user=self.building_owner.user.user if self.building_owner else self.estate.company.user.user,
             action_type="Create",
             entity_type="House",
             entity_id=self.id,
@@ -110,7 +110,7 @@ class House(models.Model):
         del_instance.save()
 
         ActivityLog.objects.create(
-            user=self.building_owner.user.user,
+            user=self.building_owner.user.user if instance.building_owner else instance.estate.company.user.user,
             action_type="Delete",
             entity_type="House",
             entity_id=self.id,
