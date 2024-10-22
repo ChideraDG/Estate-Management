@@ -118,7 +118,7 @@ def search_chats(request):
                 'url': reverse('bo-chat', kwargs={'pk': request.user.profile, 'tenant_id': tenant.id}),
                 'profile_picture': tenant.profile_picture.url,
                 'name': f"{tenant.first_name} {tenant.last_name}",
-                'latest_message': latest_message.message[:30],  # Truncate message
+                'latest_message': latest_message.message[:30] + " ..." if len(latest_message.message) > 30 else latest_message.message,  # Truncate message
                 'timestamp': latest_message.timestamp,
                 'unread': Message.objects.filter(recipient=request.user, sender=tenant.user.user, is_read=False).count(),
             })
