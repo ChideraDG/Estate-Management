@@ -313,7 +313,8 @@ def house_details(request, pk, house_id, type):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
-        'tenant': "tenants/T_dashboard.html"
+        'tenant': "tenants/T_dashboard.html",
+        'companies': "companies/C_dashboard"
     }
     context = {
         'house': house,

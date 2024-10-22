@@ -233,7 +233,7 @@ def estate_details(request, pk, estate_id, type):
 
             # Save each uploaded image to the Photo model with the associated house.
             for image in images:
-                Photo.objects.get_or_create(
+                EstPhoto.objects.get_or_create(
                     image=image,
                     estate=instance,
                     description=f'{instance}'
