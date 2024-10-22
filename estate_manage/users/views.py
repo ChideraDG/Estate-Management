@@ -1,7 +1,7 @@
 import random
 import string
 import socket
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
@@ -475,7 +475,26 @@ def check_network_connection():
         return False
     
 def get_activity(request):
-    activities = ActivityLog.objects.filter(user=request.user)    
+    filter_option = request.GET.get('filter', 'all')
+    activities = ActivityLog.objects.all()
+
+    # Get the current date
+    today = timezone.now().date()
+
+    if filter_option == "all":
+        activities = activities.filter(user=request.user) 
+    elif filter_option == "28":
+        activities = activities.filter(user=request.user, timestamp__gte=timezone.now() - timedelta(days=28))
+    elif filter_option == 'last_month':
+        first_day_of_current_month = today.replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+        first_day_of_previous_month = last_day_of_previous_month.replace(day=1)
+        activities = activities.filter(user=request.user, timestamp__gte=first_day_of_previous_month, timestamp__lte=last_day_of_previous_month)
+    elif filter_option == 'last_year':
+        current_year = today.year
+        first_day_of_last_year = datetime(current_year - 1, 1, 1).date()
+        last_day_of_last_year = datetime(current_year - 1, 12, 31).date()
+        activities = activities.filter(user=request.user, timestamp__gte=first_day_of_last_year, timestamp__lte=last_day_of_last_year)
 
     activities_time = {}
     for activity in activities:

@@ -33,7 +33,7 @@ def tenant_communications(request, pk):
                 'read': latest_message.is_read,
                 'timestamp': latest_message.timestamp,
             }
-        messages = message_data
+            messages = message_data
     else:
         building_owner = None
     

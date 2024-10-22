@@ -1,10 +1,13 @@
 from django.db import models
+from users.models import ActivityLog
+from tenants.models import Tenant
 from apartments.models import Apartment
 
 
 class WorkOrder(models.Model):
     """
-    Represents individual maintenance requests or work orders.
+    Represents individual maintenance requests or issues reported by tenants. 
+    These are reactive maintenance tasks that happen after a tenant or property manager notices a problem (e.g., fixing a broken appliance).
 
     Attributes
     ----------
@@ -31,7 +34,7 @@ class WorkOrder(models.Model):
         ('closed', 'Closed'),
     ]
     
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='work_orders')
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='work_orders', null=True, blank=True)
     description = models.TextField()
     reported_date = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
@@ -42,10 +45,26 @@ class WorkOrder(models.Model):
     def __str__(self):
         return f"Work Order: {self.description[:20]} - {self.get_status_display()}"
 
+    def save(self, *args, **kwargs):
+        # Code to execute before saving the object
+        print("saving Work Order Instance")
+        
+        super().save(*args, **kwargs)  # Call the actual save method
+        
+        ActivityLog.objects.create(
+            user=Tenant.objects.get(apartment=self.apartment).user.user,
+            action_type="Work Order",
+            entity_type="Request",
+            entity_id=self.id,
+            colour="primary",
+            description=f"Logged a Request",
+            ip_address="tracking"
+        )
 
 class MaintenanceSchedule(models.Model):
     """
-    Tracks preventive maintenance schedules and logs.
+    Represents preventive or planned maintenance tasks.
+    These are proactive maintenance activities scheduled at regular intervals to ensure the property is kept in good condition (e.g., HVAC servicing).
 
     Attributes
     ----------

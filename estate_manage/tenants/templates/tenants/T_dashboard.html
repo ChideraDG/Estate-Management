@@ -69,18 +69,18 @@
       <div data-i18n="Workorder">Workorder</div>
     </a>
     <ul class="menu-sub">
-      <li class="menu-item">
-        <a href="#" class="menu-link">
+      <li class="menu-item  {% if s_menu == 'rs' %}active{% endif %}">
+        <a href={% url "log_request" pk=request.user.profile %} class="menu-link">
           <div data-i18n="request-submission">Request Submission</div>
         </a>
       </li>
-      <li class="menu-item">
-        <a href="#" class="menu-link">
+      <li class="menu-item  {% if s_menu == 'tau' %}active{% endif %}">
+        <a href={% url "tracking" pk=request.user.profile %} class="menu-link">
           <div data-i18n="tracking-updates">Tracking and Updates</div>
         </a>
       </li>
-      <li class="menu-item">
-        <a href="#" class="menu-link">
+      <li class="menu-item  {% if s_menu == 'spi' %}active{% endif %}">
+        <a href={% url "service_provider" pk=request.user.profile %} class="menu-link">
           <div data-i18n="service-info">Service Provider Information</div>
         </a>
       </li>
@@ -441,6 +441,10 @@
           <div class="card-body">
             <ul class="p-0 m-0">
                 {% for activity in activities|slice:":8" %}
+                <a href=
+                        {% if activity.ip_address == "tracking" %}
+                            {% url activity.ip_address pk=request.user.profile %}
+                        {% else %}"#"{% endif %}>
                 <li class="d-flex mb-4 pb-1">
                     <div class="avatar flex-shrink-0 me-3">
                         <span class="avatar-initial rounded bg-label-{{ activity.colour }}">
@@ -450,6 +454,8 @@
                               <i class="bi bi-door-closed-fill"></i>
                             {% elif activity.get_entity_type_display == "Finance" %}
                               <i class="bi bi-credit-card-fill"></i>
+                            {% elif activity.get_entity_type_display == "Request" %}
+                              <i class="bi bi-clipboard-plus"></i>
                             {% endif %}
                         </span>
                     </div>
@@ -465,7 +471,8 @@
                         </div>
                     </div>
                 </li>
-                {% endfor %}
+              </a>
+              {% endfor %}
             </ul>
           </div>
         </div>

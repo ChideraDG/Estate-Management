@@ -7,6 +7,14 @@
 {% endblock title %}
 
 {% block BO %}
+    <style>
+        .scrolling-content {
+            max-height: 500px; /* Adjust the height as needed */
+            overflow-y: auto; /* Enable manual vertical scrolling */
+            position: relative;
+        }      
+    </style>
+
     <!-- Dashboard -->
     <li class="menu-item {% if menu == 'building-owner-dashboard' %}active{% endif %}">
         <a href='{% url "dashboard-BO" pk=request.user.profile %}' class="menu-link">
@@ -265,27 +273,21 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="card-title m-0 me-2">Recent Activity</h5>
                     <div class="dropdown">
-                    <button
-                        class="btn p-0"
-                        type="button"
-                        id="transactionID"
-                        data-bs-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                        <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                        <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                    </div>
+                        <button class="btn p-0" type="button" id="transactionID" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
+                            <a class="dropdown-item" href="?option=activity&filter=28">Last 28 Days</a>
+                            <a class="dropdown-item" href="?option=activity&filter=last_month">Last Month</a>
+                            <a class="dropdown-item" href="?option=activity&filter=last_year">Last Year</a>
+                            <a class="dropdown-item" href="?option=activity&filter=all">All</a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
+            
+                <div class="card-body scrolling-content">
                     <ul class="p-0 m-0">
-                        {% for activity in activities|slice:":8" %}
-
+                        {% for activity in activities %}
                         <a href=
                             {% if activity.ip_address == "house-details" %}
                                 {% url activity.ip_address pk=request.user.profile type="bo" house_id=activity.entity_id %}
@@ -294,7 +296,7 @@
                             {% elif activity.ip_address == "apartment-details" %}
                                 {% url "apartment-details" pk=request.user.profile type="bo" house_id=activity.entity_id_as_list.1 apartment_number=activity.entity_id_as_list.0 %}
                             {% else %}"#"{% endif %}>
-                                <li class="d-flex mb-4 pb-1">
+                            <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
                                     <span class="avatar-initial rounded bg-label-{{ activity.colour }}">
                                         {% if activity.get_action_type_display == "Login" %}
@@ -315,7 +317,7 @@
                                         <small class="text-muted d-block mb-1">{% if activity.get_action_type_display %}{{ activity.get_action_type_display }}{% else %}{{ activity.get_entity_type_display }}{% endif %}</small>
                                         <h6 class="mb-0">{{ activity.description }}</h6>
                                     </div>
-                    
+            
                                     <div class="user-progress d-flex align-items-center gap-1">
                                         <h6 class="mb-0">{{ activities_time|get_digit:activity.id }}</h6> <!-- Access time value -->
                                         <span class="text-muted">{{ activities_time|get_duration:activity.id }}</span> <!-- Access unit (days, hours, etc.) -->
@@ -326,7 +328,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-            </div>
+            </div>                       
         </div>
         <!-- Recent Activity -->
     </div>

@@ -9,7 +9,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('users.urls')),
     path("estates/", include('estates.urls')),
-    path("company/dashboard/", include('companies.urls')),
+    path("", include('companies.urls')),
     path("", include('building_owners.urls')),
     path("", include('houses.urls')),
     path("", include('apartments.urls')),
@@ -19,6 +19,7 @@ urlpatterns = [
     path("", include('leaseAgreements.urls')),
     path("", include('communications.urls')),
     path("", include('finances.urls')),
+    path("", include('maintenances.urls')),
 
     path("reset_password/", CustomPasswordResetView.as_view(template_name='reset_password.html'),
          name='reset_password'),

@@ -328,6 +328,7 @@
     </div>
     <!-- End House Details -->
 
+    {% if house.occupancy_status.lower == "vacant" %}
     <div class="card">
         <h5 class="card-header">Delete House</h5>
         <div class="card-body">
@@ -348,6 +349,7 @@
             </form>
         </div>
     </div>
+    {% endif %}
     <!-- End Content-->
     
     <script>
