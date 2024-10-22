@@ -96,7 +96,7 @@ def search_chats(request):
 
     # Filter tenants based on the search query
     if ' ' in query:
-        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query.split(" ")[0]) | 
+        tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query.split(" ")[0]) & 
                                                                      Q(last_name__icontains=query.split(" ")[1]))
     elif query:
         tenants = request.user.profile.building_owner.tenants.filter(Q(first_name__icontains=query) | 
@@ -119,11 +119,16 @@ def search_chats(request):
                 'profile_picture': tenant.profile_picture.url,
                 'name': f"{tenant.first_name} {tenant.last_name}",
                 'latest_message': latest_message.message[:30],  # Truncate message
-                'timestamp': latest_message.timestamp.strftime("%b %d, %H:%M"),
+                'timestamp': latest_message.timestamp,
                 'unread': Message.objects.filter(recipient=request.user, sender=tenant.user.user, is_read=False).count(),
             })
 
     chat_data = sorted(chat_data, key=lambda x: x['timestamp'], reverse=True)
+
+    # Now, after sorting, you can format the timestamp
+    for chat in chat_data:
+        chat['timestamp'] = chat['timestamp'].strftime("%b %d, %H:%M")
+
     return JsonResponse({'chats': chat_data})
 
 @login_required(login_url='login')
