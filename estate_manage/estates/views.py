@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from urllib.parse import urlencode
 from .forms import EstateForm, EstateFilterForm
-from .models import Estate, Photo
+from .models import Estate, Photo as EstPhoto
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from locations.models import Country, State
@@ -83,9 +83,9 @@ def estates(request, pk, type):
             for security_feature in request.POST.getlist('security_features'):
                 EstateSecurityFeatures.objects.create(estate_id=instance.id, securityfeatures_id=security_feature)
 
-            # Save each uploaded image to the Photo model with the associated house.
+            # Save each uploaded image to the Photo model with the associated estate.
             for image in images:
-                Photo.objects.create(
+                EstPhoto.objects.create(
                     image=image,
                     estate=instance,
                     description=f'{instance}'
