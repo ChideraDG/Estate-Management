@@ -104,7 +104,7 @@
             <div data-i18n="finances">Finances</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item  {% if s_menu == 'rc' %}active{% endif %}">
+            <li class="menu-item {% if s_menu == 'rc' %}active{% endif %}">
                 <a href={% url "rent-payment-history" pk=request.user.profile %} class="menu-link">
                     <div data-i18n="rent-collection">Rent Collection</div>
                 </a>
@@ -123,24 +123,24 @@
     </li>
 
     <!-- Maintenance -->
-    <li class="menu-item {% if menu == 'maintenance' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'mt' %}active{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
             <div data-i18n="maintenance">Maintenance</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item">
-            <a href="pages-misc-error.html" class="menu-link">
-                <div data-i18n="maintenance-requests">Maintenance Requests</div>
-            </a>
+            <li class="menu-item {% if s_menu == 'm-r' %}active{% endif %}">
+                <a href={% url "requests" pk=request.user.profile %} class="menu-link">
+                    <div data-i18n="maintenance-requests">Requests</div>
+                </a>
             </li>
             <li class="menu-item">
-            <a href="pages-misc-under-maintenance.html" class="menu-link">
-                <div data-i18n="service-schedule">Service Schedule</div>
-            </a>
+                <a href="#" class="menu-link">
+                    <div data-i18n="service-schedule">Service Schedule</div>
+                </a>
             </li>
-            <li class="menu-item">
-                <a href="pages-misc-under-maintenance.html" class="menu-link">
+            <li class="menu-item {% if s_menu == 'm-s-p' %}active{% endif %}">
+                <a href={% url "requests" pk=request.user.profile %}?section=in-progress class="menu-link">
                     <div data-i18n="service-provider-management">Service Provider</div>
                 </a>
             </li>
@@ -155,12 +155,12 @@
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
-                <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+                <a href="#" class="menu-link">
                     <div data-i18n="document-storage">Document Storage</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="extended-ui-text-divider.html" class="menu-link">
+                <a href="#" class="menu-link">
                     <div data-i18n="document-sharing">Document Sharing</div>
                 </a>
             </li>
