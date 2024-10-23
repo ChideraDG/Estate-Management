@@ -36,10 +36,10 @@ class WorkOrder(models.Model):
     
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='work_orders', null=True, blank=True)
     description = models.TextField()
-    reported_date = models.DateField(auto_now_add=True)
+    reported_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     assigned_to = models.ForeignKey('ServiceProvider', on_delete=models.SET_NULL, null=True, blank=True, related_name='work_orders')
-    completion_date = models.DateField(null=True, blank=True)
+    completion_date = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     
     def __str__(self):
