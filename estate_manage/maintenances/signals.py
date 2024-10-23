@@ -5,10 +5,14 @@ from .models import WorkOrderLog, ServiceProvider, MaintenanceSchedule, WorkOrde
 
 @receiver(post_save, sender=WorkOrder)
 def log_work_order(sender, instance, created, **kwargs):
-    WorkOrderLog.objects.create(
-        work_order=instance,
-        status=instance.status,
-        notes=instance.notes
-    )
-
-    # ServiceProvider.objects.create()
+    if created:
+        WorkOrderLog.objects.create(
+            work_order=instance,
+            status=instance.status,
+            notes=instance.notes
+        )
+    else:
+        log = WorkOrderLog.objects.filter(id=instance.id).last()
+        log.status = instance.status
+        log.notes = log.notes
+        log.save()
