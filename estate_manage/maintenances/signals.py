@@ -12,7 +12,8 @@ def log_work_order(sender, instance, created, **kwargs):
             notes=instance.notes
         )
     else:
-        log = WorkOrderLog.objects.filter(id=instance.id).last()
+        log = WorkOrderLog.objects.filter(work_order=instance).last()
         log.status = instance.status
-        log.notes = log.notes
+        log.notes = instance.notes
+        log.update_date = instance.reported_date
         log.save()
