@@ -53,33 +53,12 @@
         <div class="tab-content">
             <!-- Open Requests Tabs Details -->
             <div class="tab-pane fade {% if not section == 'in-progress' %}show active{% endif %}" id="navs-pills-justified-open" role="tabpanel">
-                {% if open_count == 0 %}
+                {% if requests_count == 0 %}
                     <h3>No Request is Open</h3>
                 {% else %}
-                    {% for request in open %}
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class='d-flex mb-2'>
-                                    <div class="flex-shrink-0 me-2">
-                                        <div class="avatar">
-                                            <img src={{ request.apartment.tenant_apartment.user.profile_image.url }} alt class="w-px-40 rounded-circle" />
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h5 class="card-title">{{ request.apartment.tenant_apartment.user.name }}</h5>
-                                        <h6 class="card-subtitle text-muted">{{ request.apartment.house }} :: {{ request.apartment }}</h6>
-                                    </div>
-                                </div>
-                                <p class="card-text">
-                                    {{ request.description }}
-                                </p>
-                                <a href="javascript:void(0)" class="card-link">Assign Service Provider</a>
-                                <a href="javascript:void(0)" class="card-link">Cancel Request</a>
-                                <div class="card-subtitle text-muted mt-1">{{ request.reported_date }}</div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=open %}
+                    {% include "dashboard/pagination.html" with query_set=open custom_range=open_index query_menu='open' %}
+                {% endif %} 
             </div>
 
             <!-- In Progress Tabs Details -->
@@ -88,6 +67,9 @@
                     <h3>No Request is In-Progress :: No Active Service Provider</h3>
                 {% elif not section == 'in-progress' and in_progress_count == 0 %}
                     <h3>No Request is In-Progress</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=in_progress %}
+                    {% include "dashboard/pagination.html" with query_set=in_progress custom_range=in_progress_index query_menu='in_progress' %}
                 {% endif %}
             </div>
 
@@ -95,6 +77,9 @@
             <div class="tab-pane fade" id="navs-pills-justified-Completed" role="tabpanel">
                 {% if completed_count == 0 %}
                     <h3>No Request is Completed</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=completed %}
+                    {% include "dashboard/pagination.html" with query_set=completed custom_range=completed_index query_menu='completed' %}
                 {% endif %}
             </div>
 
@@ -102,6 +87,9 @@
             <div class="tab-pane fade" id="navs-pills-justified-Closed" role="tabpanel">
                 {% if closed_count == 0 %}
                     <h3>No Request is Closed</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=closed %}
+                    {% include "dashboard/pagination.html" with query_set=closed custom_range=closed_index query_menu='closed' %}
                 {% endif %}
             </div>
         </div>
