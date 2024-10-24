@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, pre_delete
 from finances.models import RentPayment
 from houses.models import House
 from apartments.models import Apartment
+from maintenances.models import WorkOrder
 from .models import ActivityLog
 
 
@@ -83,4 +84,31 @@ def add_apartment(sender, instance, created, **kwargs):
         colour="dark",
         description=f"Added an Apartment" if created else "Updated an Apartment",
         ip_address="apartment-details"
+    )
+
+@receiver(post_save, sender=WorkOrder)
+def workorder(sender, instance, created, **kwargs):
+    description = None
+    ip_address = None
+    if instance.status == 'open':
+        description = "Opened a Request"
+        ip_address = "open_request"
+    elif instance.status == 'in_progress':
+        description = "Assigned a Request"
+        ip_address = "in_progress_request"
+    elif instance.status == 'completed':
+        description = "Completed a Request"
+        ip_address = "completed_request"
+    elif instance.status == 'closed':
+        description = 'Cancelled a Request'
+        ip_address = "closed_request"
+    
+    ActivityLog.objects.create(
+        user=instance.apartment.tenant_apartment.user.user if created else instance.apartment.tenant_apartment.building_owner.user.user if instance.apartment.tenant_apartment.building_owner else instance.apartment.tenant_apartment.estate.company.user.user,
+        action_type="Create" if created else "Update",
+        entity_type="WorkOrder",
+        entity_id=instance.id,
+        colour="secondary",
+        description=f"Added a Request" if created else description,
+        ip_address=ip_address
     )
