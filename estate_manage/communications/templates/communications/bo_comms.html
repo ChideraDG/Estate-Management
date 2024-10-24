@@ -127,7 +127,7 @@
                                                         {% if tenant.read %}
                                                             <p class="mb-0" style:"color: #808080;"><i class="bi bi-check2-all"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
                                                         {% else %}
-                                                            {% if tenant.unread > 0 %}
+                                                            {% if tenant.unread %}
                                                                 <strong class="mb-0">{{ tenant.latest_message|truncatewords:10 }}</strong>
                                                             {% else %}
                                                                 <p class="mb-0"><i class="bi bi-check2"></i> {{ tenant.latest_message|truncatewords:10 }}</p>
@@ -137,7 +137,7 @@
                                                 </div>
                                                 <div class="text-right">
                                                     <small class="">{{ tenant.timestamp|date:"M d, H:i" }}</small>
-                                                    {% if tenant.unread > 0 %}
+                                                    {% if tenant.unread %}
                                                         <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ tenant.unread }}</span>
                                                     {% endif %}
                                                 </div>
