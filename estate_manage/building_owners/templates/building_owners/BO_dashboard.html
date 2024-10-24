@@ -140,7 +140,7 @@
                 </a>
             </li>
             <li class="menu-item {% if s_menu == 'm-s-p' %}active{% endif %}">
-                <a href={% url "requests" pk=request.user.profile %}?section=in-progress class="menu-link">
+                <a href={% url "requests" pk=request.user.profile %}?i_menu=in-progress class="menu-link">
                     <div data-i18n="service-provider-management">Service Provider</div>
                 </a>
             </li>
@@ -295,6 +295,14 @@
                                 {% url "rent-payment-history" pk=request.user.profile %}
                             {% elif activity.ip_address == "apartment-details" %}
                                 {% url "apartment-details" pk=request.user.profile type="bo" house_id=activity.entity_id_as_list.1 apartment_number=activity.entity_id_as_list.0 %}
+                            {% elif activity.ip_address == "cancel_request" %}
+                                {% url "requests" pk=request.user.profile %}?i_menu=closed
+                            {% elif activity.ip_address == "open_request" %}
+                                {% url "requests" pk=request.user.profile %}?i_menu=open
+                            {% elif activity.ip_address == "completed_request" %}
+                                {% url "requests" pk=request.user.profile %}?i_menu=completed
+                            {% elif activity.ip_address == "in_progress_request" %}
+                                {% url "requests" pk=request.user.profile %}?i_menu=in_progress
                             {% else %}"#"{% endif %}>
                             <li class="d-flex mb-4 pb-1">
                                 <div class="avatar flex-shrink-0 me-3">
@@ -309,6 +317,8 @@
                                         <i class="bi bi-building"></i>
                                         {% elif activity.get_entity_type_display == "Apartment" %}
                                         <i class="bi bi-house"></i>
+                                        {% elif activity.get_entity_type_display == "WorkOrder" %}
+                                        <i class="bi bi-clipboard"></i>
                                         {% endif %}
                                     </span>
                                 </div>
