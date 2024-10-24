@@ -1,24 +1,77 @@
-
-{% for request in requests %}
+{% for log_request in requests %}
     <div class="card mb-4">
         <div class="card-body">
             <div class='d-flex mb-2'>
                 <div class="flex-shrink-0 me-2">
                     <div class="avatar">
-                        <img src={{ request.apartment.tenant_apartment.user.profile_image.url }} alt class="w-px-40 rounded-circle" />
+                        <img src={{ log_request.apartment.tenant_apartment.user.profile_image.url }} alt class="w-px-40 rounded-circle" />
                     </div>
                 </div>
                 <div class="flex-grow-1">
-                    <h5 class="card-title">{{ request.apartment.tenant_apartment.user.name }}</h5>
-                    <h6 class="card-subtitle text-muted">{{ request.apartment.house }} :: {{ request.apartment }}</h6>
+                    <a href={% url "tenant-detail" type='bo' pk=request.user.profile tenant_id=log_request.apartment.tenant_apartment.user.tenant.id %}><h5 class="card-title">{{ log_request.apartment.tenant_apartment.user.name }}</h5></a>
+                    <h6 class="card-subtitle text-muted">{{ log_request.apartment.house }} :: {{ log_request.apartment }}</h6>
                 </div>
             </div>
-            <p class="card-text">
-                {{ request.description }}
+            <p class="card-text" style="color: #856404; padding:5px; border-left: 5px solid #ffeeba; margin-bottom: 15px;">
+                {{ log_request.description }}
             </p>
-            <a href="javascript:void(0)" class="card-link">Assign Service Provider</a>
-            <a href="javascript:void(0)" class="card-link">Cancel Request</a>
-            <div class="card-subtitle text-muted mt-1">{{ request.reported_date }}</div>
+            {% if cate == 'open' %}
+            <a href="javascript:void(0)" class="me-2">
+                <button title='Assign Service Provider' type="button" class="btn btn-icon btn-primary">
+                    <span class="tf-icons bi bi-person"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'open' %}
+            <a href={% url "cancel_request" pk=log_request.id %}>
+                <button title='Cancel Request' type="button" class="btn btn-icon btn-danger">
+                    <span class="tf-icons bi bi-x-lg"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'closed' %}
+            <a href={% url "reopen_request" pk=log_request.id %} class='me-2'>
+                <button title='Re-open Request' type="button" class="btn btn-icon btn-primary">
+                    <span class="tf-icons bi bi-key"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'closed' %}
+            <a href={% url "delete_request" pk=log_request.id %}>
+                <button title='Delete Request' type="button" class="btn btn-icon btn-danger">
+                    <span class="tf-icons bi bi-trash"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'in_progress' %}
+            <a href={% url "completed_request" pk=log_request.id %} class='me-2'>
+                <button title='Request Completed' type="button" class="btn btn-icon btn-primary">
+                    <span class="tf-icons bi bi-check-lg"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'in_progress' %}
+            <a href="javascript:void(0)" class="me-2">
+                <button title='View Service Provider' type="button" class="btn btn-icon btn-secondary">
+                    <span class="tf-icons bi bi-person-badge"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'in_progress' %}
+            <a href={% url "reopen_request" pk=log_request.id %}>
+                <button title='Re-open Request' type="button" class="btn btn-icon btn-dark">
+                    <span class="tf-icons bi bi-key"></span>
+                </button>
+            </a>
+            {% endif %}
+            {% if cate == 'completed' %}
+            <a href="javascript:void(0)">
+                <button title='Re-open Request' type="button" class="btn btn-icon btn-danger">
+                    <span class="tf-icons bi bi-trash"></span>
+                </button>
+            </a>
+            {% endif %}
+            <div class="card-subtitle text-muted mt-1">{{ log_request.reported_date }}</div>
         </div>
     </div>
 {% endfor %}
