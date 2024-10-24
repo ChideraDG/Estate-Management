@@ -45,21 +45,6 @@ class WorkOrder(models.Model):
     def __str__(self):
         return f"Work Order: {self.description[:20]} - {self.get_status_display()}"
 
-    def save(self, *args, **kwargs):
-        # Code to execute before saving the object
-        print("saving Work Order Instance")
-        
-        super().save(*args, **kwargs)  # Call the actual save method
-        
-        ActivityLog.objects.create(
-            user=Tenant.objects.get(apartment=self.apartment).user.user,
-            action_type="Work Order",
-            entity_type="Request",
-            entity_id=self.id,
-            colour="primary",
-            description=f"Logged a Request",
-            ip_address="tracking"
-        )
 
 class MaintenanceSchedule(models.Model):
     """
