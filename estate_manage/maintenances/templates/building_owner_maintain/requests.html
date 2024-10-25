@@ -63,9 +63,9 @@
 
             <!-- In Progress Tabs Details -->
             <div class="tab-pane fade {% if i_menu == 'in_progress' %}show active{% endif %}" id="navs-pills-justified-in-progress" role="tabpanel">
-                {% if i_menu == 'in-progress' and in_progress_count == 0 %}
+                {% if i_menu == 'in_progress' and in_progress_count == 0 %}
                     <h3>No In-Progress In-Progress Request :: No Active Service Provider</h3>
-                {% elif not i_menu == 'in-progress' and in_progress_count == 0 %}
+                {% elif not i_menu == 'in_progress' and in_progress_count == 0 %}
                     <h3>No In-Progress Request</h3>
                 {% else %}
                     {% include "building_owner_maintain/requests_details.html" with requests=in_progress cate='in_progress' %}
