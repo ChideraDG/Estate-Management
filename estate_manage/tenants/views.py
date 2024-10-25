@@ -147,7 +147,7 @@ def tenants_profiles(request, pk, type):
     if request.user.profile.designation == "building_owner":
         profile = request.user.profile.building_owner
     elif request.user.profile.designation == "company":
-        profile = None  # Handle company case later (if needed)
+        profile = request.user.profile.companies  # Handle company case later (if needed)
 
     # Retrieve all houses related to the building owner
     houses = profile.houses.all()
@@ -283,6 +283,7 @@ The EstateManage Team
     # Define the template route based on the user designation
     template_route = {
         'building_owner': "building_owners/BO_dashboard.html",
+        'company': "companies/C_dashboard.html"
     }
     
     # Prepare the context to be passed to the template
@@ -345,7 +346,7 @@ def filterTenants(request):
         tenants = request.user.profile.building_owner.tenants.all()
     elif request.user.profile.designation == 'company':
         # Needs fixing: Assume company filters tenants related to their estates
-        tenants = request.user.profile.company.tenants.all()
+        tenants = request.user.profile.companies.tenants.all()
     else:
         tenants = Tenant.objects.none()
 
@@ -423,6 +424,7 @@ def tenant_detail(request, type, pk, tenant_id):
     
     template_route = {
         'building_owner': "building_owners/BO_dashboard.html",
+        'company': "companies/C_dashboard.html"
     }
     context = {
         'menu': menu,

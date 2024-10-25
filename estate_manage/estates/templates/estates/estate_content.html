@@ -37,7 +37,7 @@
   
         <div class="card-body">
           <h4 class="card-title"><span class="badge rounded-pill bg-label-primary">{{ estate.estate_name }} {{ estate.address.title|slice:":25" }}</span></h4>
-          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Houses: {{ estate.number_of_houses }}</span></p>
+          <p class="card-text"><span class="badge rounded-pill bg-label-dark">Number of Houses: {{ estate.houses.count }}</span></p>
           <p class="card-text"><span class="badge rounded-pill bg-label-dark">Estate Type: {{ estate.estate_type.title }}</span></p>
           <a href={% url "estate-details" pk=profile estate_id=estate.id type=type %} class="btn btn-outline-primary">Details</a>
           <a href={% url "view-houses" pk=profile type=type estate_id=estate.id %} class="btn btn-outline-primary ms-2"><i class='tf-icon bi bi-house-fill'></i> Houses</a>
