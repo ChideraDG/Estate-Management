@@ -36,30 +36,15 @@ class WorkOrder(models.Model):
     
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name='work_orders', null=True, blank=True)
     description = models.TextField()
-    reported_date = models.DateField(auto_now_add=True)
+    reported_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     assigned_to = models.ForeignKey('ServiceProvider', on_delete=models.SET_NULL, null=True, blank=True, related_name='work_orders')
-    completion_date = models.DateField(null=True, blank=True)
+    completion_date = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     
     def __str__(self):
         return f"Work Order: {self.description[:20]} - {self.get_status_display()}"
 
-    def save(self, *args, **kwargs):
-        # Code to execute before saving the object
-        print("saving Work Order Instance")
-        
-        super().save(*args, **kwargs)  # Call the actual save method
-        
-        ActivityLog.objects.create(
-            user=Tenant.objects.get(apartment=self.apartment).user.user,
-            action_type="Work Order",
-            entity_type="Request",
-            entity_id=self.id,
-            colour="primary",
-            description=f"Logged a Request",
-            ip_address="tracking"
-        )
 
 class MaintenanceSchedule(models.Model):
     """
@@ -112,13 +97,20 @@ class ServiceProvider(models.Model):
         A record of the service history for the provider, nullable.
     """
 
+    SERVICE_TYPES = [
+        ('repair', 'Repair'),
+        ('maintenance', 'Maintenance'),
+        ('installation', 'Installation'),
+        ('consultation', 'Consultation'),
+        ('other', 'Other'),
+    ]
+
     name = models.CharField(max_length=200)
     contact_person = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     address = models.TextField(null=True, blank=True)
-    service_type = models.CharField(max_length=100)
-    service_history = models.TextField(null=True, blank=True)
+    service_type = models.CharField(max_length=100, choices=SERVICE_TYPES, default='repair')
     
     def __str__(self):
         return f"Service Provider: {self.name} - {self.service_type}"

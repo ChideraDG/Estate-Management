@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .forms import WorkOrderForm
 
 
+@login_required(login_url='login')
 def request_submission(request, pk):
     tenant = request.user.profile.tenant
     form = WorkOrderForm(tenant=tenant)
@@ -26,6 +28,7 @@ def request_submission(request, pk):
     }
     return render(request, 'tenant_work_order/request_submission.html', context)
 
+@login_required(login_url='login')
 def tracking(request, pk):
     context = {
         'menu': 'workorder',
@@ -34,6 +37,7 @@ def tracking(request, pk):
 
     return render(request, 'tenant_work_order/tracking.html', context)
 
+@login_required(login_url='login')
 def service_provider(request, pk):
     context = {
         'menu': 'workorder',

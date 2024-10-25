@@ -1,0 +1,95 @@
+{% extends "building_owners/BO_dashboard.html" %}
+
+{% block details %}
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light"> Maintenance / </span>
+        Service Provider
+    </h4>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript:void(0);">
+                        <i class="bi bi-person"></i> {{ workorder.apartment.tenant_apartment.user.name }}
+                    </a>
+                </li>
+            </ul>
+
+            <div class="card mb-4">
+                <h5 class="card-header">{{ sp.name }}</h5>
+
+                <hr class="my-0" />
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">House</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ workorder.apartment.house }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Apartment</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ workorder.apartment }}
+                            </div>
+                        </div>
+
+                        {% if sp.contact_person %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Contact Person</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ sp.contact_person }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if sp.phone_number %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ sp.phone_number }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if sp.email %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Email</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ sp.email }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if sp.address %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Address</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ sp.address }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if sp.service_type %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Service Type</label>
+                            <div class="form-control" style="background-color: #e9ecef">
+                                {{ sp.service_type.title }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <a href={% url "requests" pk=request.user.profile %}?i_menu=in_progress class="ms-4 mb-4">
+                    <button title='Go Back' type="button" class="btn btn-icon btn-danger">
+                        <span class="tf-icons bi bi-x-lg"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock details %}

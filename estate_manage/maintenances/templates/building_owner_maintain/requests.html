@@ -1,0 +1,97 @@
+{% extends "building_owners/BO_dashboard.html" %} 
+
+{% block details %}
+    <!-- Content -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light"> Maintenance / </span>
+        Requests
+    </h4>
+
+    <!-- Requests -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Open Requests Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link {% if i_menu == 'open' %}active{% endif %}" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-open" aria-controls="navs-pills-justified-open" aria-selected="true">
+                    <i class="tf-icons bi bi-inbox"></i> Open Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ open_count }}</span>
+                </button>
+            </li>
+
+            <!-- In Progress Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link {% if i_menu == 'in_progress' %}active{% endif %}" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-in-progress" aria-controls="navs-pills-justified-in-progress" aria-selected="false">
+                    <i class="tf-icons bi bi-arrow-repeat"></i> In-Progress Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ in_progress_count }}</span>
+                </button>
+            </li>
+
+            <!-- Completed Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link {% if i_menu == 'completed' %}active{% endif %}" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-Completed" aria-controls="navs-pills-justified-Completed" aria-selected="false">
+                    <i class="tf-icons bi bi-check-circle"></i> Completed Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ completed_count }}</span>
+                </button>
+            </li>
+
+            <!-- Closed Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link {% if i_menu == 'closed' %}active{% endif %}" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-Closed" aria-controls="navs-pills-justified-Closed" aria-selected="false">
+                    <i class="tf-icons bi bi-x-circle"></i> Closed Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ closed_count }}</span>
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
+
+        <!-- Details -->
+        <div class="tab-content" style="background-color: #D3D8E8">
+            <!-- Open Requests Tabs Details -->
+            <div class="tab-pane fade {% if i_menu == 'open' %}show active{% endif %}" id="navs-pills-justified-open" role="tabpanel">
+                {% if requests_count == 0 %}
+                    <h3>No Open Request</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=open cate='open' %}
+                    {% include "dashboard/pagination.html" with query_set=open custom_range=open_index query_menu='open' %}
+                {% endif %} 
+            </div>
+
+            <!-- In Progress Tabs Details -->
+            <div class="tab-pane fade {% if i_menu == 'in_progress' %}show active{% endif %}" id="navs-pills-justified-in-progress" role="tabpanel">
+                {% if i_menu == 'in_progress' and in_progress_count == 0 %}
+                    <h3>No In-Progress In-Progress Request :: No Active Service Provider</h3>
+                {% elif not i_menu == 'in_progress' and in_progress_count == 0 %}
+                    <h3>No In-Progress Request</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=in_progress cate='in_progress' %}
+                    {% include "dashboard/pagination.html" with query_set=in_progress custom_range=in_progress_index query_menu='in_progress' %}
+                {% endif %}
+            </div>
+
+            <!-- Completed Tabs Details -->
+            <div class="tab-pane fade {% if i_menu == 'completed' %}show active{% endif %}" id="navs-pills-justified-Completed" role="tabpanel">
+                {% if completed_count == 0 %}
+                    <h3>No Completed Request</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=completed cate='completed' %}
+                    {% include "dashboard/pagination.html" with query_set=completed custom_range=completed_index query_menu='completed' %}
+                {% endif %}
+            </div>
+
+            <!-- Closed Tabs Details -->
+            <div class="tab-pane fade {% if i_menu == 'closed' %}show active{% endif %}" id="navs-pills-justified-Closed" role="tabpanel">
+                {% if closed_count == 0 %}
+                    <h3>No Closed Request</h3>
+                {% else %}
+                    {% include "building_owner_maintain/requests_details.html" with requests=closed cate='closed' %}
+                    {% include "dashboard/pagination.html" with query_set=closed custom_range=closed_index query_menu='closed' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock details %}
