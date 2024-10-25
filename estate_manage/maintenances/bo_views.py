@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import WorkOrder
+from .forms import  ServiceProviderForm
 from .utils import paginateRequest
 
 
@@ -64,6 +65,7 @@ def reopen_request(request, pk):
     instance = WorkOrder.objects.get(id=pk)
     instance.status = 'open'
     instance.reported_date =  timezone.now()
+    instance.assigned_to = None
     instance.save()
 
     messages.success(request, f"Request with ID={pk} was re-opened.")
@@ -86,3 +88,37 @@ def completed_request(request, pk):
 
     messages.success(request, f"Request with ID={pk} has been Completed.")
     return redirect("requests", pk=request.user.profile)
+
+def assign_service_provider(request, pk, workorder_id):
+    workorder = WorkOrder.objects.get(id=workorder_id)
+
+    if request.method == 'POST':
+        form = ServiceProviderForm(request.POST)
+        if form.is_valid():
+            instance = form.save()
+
+            workorder.assigned_to = instance
+            workorder.status = 'in_progress'
+            workorder.save()
+
+            return redirect('requests', pk=request.user.profile)
+    else:
+        form = ServiceProviderForm()
+
+    context = {
+        'menu': 'mt',
+        's_menu': 'm-s-p',
+        'form': form,
+    }
+    return render(request,'building_owner_maintain/assign_service_provider.html', context)
+
+def service_provider(request, pk, workorder_id):
+    workorder = WorkOrder.objects.get(id=workorder_id)
+
+    context = {
+        'menu': 'mt',
+        's_menu': 'm-s-p',
+        'workorder': workorder,
+        'sp': workorder.assigned_to,
+    }
+    return render(request,'building_owner_maintain/service_provider_details.html', context)
