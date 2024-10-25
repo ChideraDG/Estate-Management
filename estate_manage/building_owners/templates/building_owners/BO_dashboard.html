@@ -28,7 +28,7 @@
     </li>
 
     <!-- Houses Management -->
-    <li class="menu-item {% if menu == 'houses-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'houses-management' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
             <div data-i18n="House Management">House Management</div>
@@ -49,7 +49,7 @@
     </li>
 
     <!-- Apartments Management -->
-    <li class="menu-item {% if menu == 'a-m' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'a-m' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-house-fill tiny-icon"></i>
             <div data-i18n="Apartment Management">Apartment Control</div>
@@ -70,7 +70,7 @@
     </li>
 
     <!-- Tenants Management -->
-    <li class="menu-item {% if menu == 'tm' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'tm' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-people-fill tiny-icon"></i>
             <div data-i18n="tenant management">Tenant Management</div>
@@ -98,7 +98,7 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Services</span></li>
 
     <!-- Finances -->
-    <li class="menu-item {% if menu == 'fns' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'fns' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-bank tiny-icon"></i>
             <div data-i18n="finances">Finances</div>
@@ -123,7 +123,7 @@
     </li>
 
     <!-- Maintenance -->
-    <li class="menu-item {% if menu == 'mt' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'mt' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-tools tiny-icon"></i>
             <div data-i18n="maintenance">Maintenance</div>
@@ -140,7 +140,7 @@
                 </a>
             </li>
             <li class="menu-item {% if s_menu == 'm-s-p' %}active{% endif %}">
-                <a href={% url "requests" pk=request.user.profile %}?i_menu=in-progress class="menu-link">
+                <a href={% url "requests" pk=request.user.profile %}?i_menu=in_progress class="menu-link">
                     <div data-i18n="service-provider-management">Service Provider</div>
                 </a>
             </li>
@@ -148,8 +148,8 @@
     </li>
 
     <!-- Documents -->
-    <li class="menu-item {% if menu == 'document' %}active{% endif %}">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
+    <li class="menu-item {% if menu == 'document' %}active open{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-folder-fill tiny-icon"></i>
             <div data-i18n="Extended UI">Documents</div>
         </a>
@@ -171,7 +171,7 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Forecasting</span></li>
     
     <!-- Analytics -->
-    <li class="menu-item {% if menu == 'analytics' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'analytics' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-graph-up tiny-icon"></i>
             <div data-i18n="analytics">Analytics</div>
@@ -191,7 +191,7 @@
     </li>
 
     <!-- Reporting -->
-    <li class="menu-item {% if menu == 'reporting' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'reporting' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-file-earmark-bar-graph-fill tiny-icon"></i>
             <div data-i18n="reports">Reports</div>
@@ -208,7 +208,7 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Profiles</span></li>
                     
     <!-- User Management -->
-    <li class="menu-item {% if menu == 'user-management' %}active{% endif %}">
+    <li class="menu-item {% if menu == 'user-management' %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bi bi-person-circle tiny-icon"></i>
             <div data-i18n="User Management">User Management</div>
