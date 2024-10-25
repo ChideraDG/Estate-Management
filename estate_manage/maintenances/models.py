@@ -97,13 +97,20 @@ class ServiceProvider(models.Model):
         A record of the service history for the provider, nullable.
     """
 
+    SERVICE_TYPES = [
+        ('repair', 'Repair'),
+        ('maintenance', 'Maintenance'),
+        ('installation', 'Installation'),
+        ('consultation', 'Consultation'),
+        ('other', 'Other'),
+    ]
+
     name = models.CharField(max_length=200)
     contact_person = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     address = models.TextField(null=True, blank=True)
-    service_type = models.CharField(max_length=100)
-    service_history = models.TextField(null=True, blank=True)
+    service_type = models.CharField(max_length=100, choices=SERVICE_TYPES, default='repair')
     
     def __str__(self):
         return f"Service Provider: {self.name} - {self.service_type}"
