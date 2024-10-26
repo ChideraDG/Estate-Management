@@ -18,7 +18,7 @@ def request_submission(request, pk):
             instance.apartment = tenant.apartment
             instance.save()
             messages.success(request, 'Work Order has been Logged')
-            return redirect('log_request', pk=pk)
+            return redirect('tracking', pk=pk)
         else:
             print(form.errors)
 
@@ -57,10 +57,13 @@ def tracking(request, pk):
     return render(request, 'tenant_work_order/tracking.html', context)
 
 @login_required(login_url='login')
-def service_provider_details(request, pk):
+def service_provider_details(request, pk, workorder_id):
+    workorder = WorkOrder.objects.get(id=workorder_id)
+
     context = {
         'menu': 'workorder',
         's_menu': 'spi',
+        'sp': workorder.assigned_to,
     }
 
     return render(request, 'tenant_work_order/service_provider.html', context)

@@ -44,6 +44,9 @@ class WorkOrder(models.Model):
     
     def __str__(self):
         return f"Work Order: {self.description[:20]} - {self.get_status_display()}"
+    
+    class Meta:
+        ordering = ["-reported_date"]
 
 
 class MaintenanceSchedule(models.Model):

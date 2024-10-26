@@ -50,7 +50,7 @@
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
                 data-bs-target="#navs-pills-justified-inprogress" aria-controls="navs-pills-justified-inprogress" aria-selected="true">
-                    <i class="tf-icons bi bi-inbox"></i> In-Progress Requests
+                    <i class="tf-icons bi bi-arrow-repeat"></i> In-Progress Requests
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ in_progress_count }}</span>
                 </button>
             </li>
@@ -68,6 +68,11 @@
                         </p>
                         <div class="card-subtitle text-muted mt-1">Status: In-Progress</div>
                     </div>
+                    <a href={% url "service_provider_details" pk=request.user.profile workorder_id=log_request.id %} class="ms-4 mb-4">
+                        <button title='View Service Provider' type="button" class="btn btn-icon btn-secondary">
+                            <span class="tf-icons bi bi-person-badge"></span>
+                        </button>
+                    </a>
                 </div>
                 {% endfor %}
                 {% else %}
@@ -86,7 +91,7 @@
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
                 data-bs-target="#navs-pills-justified-completed" aria-controls="navs-pills-justified-completed" aria-selected="true">
-                    <i class="tf-icons bi bi-inbox"></i> Completed Requests
+                    <i class="tf-icons bi bi-check-circle"></i> Completed Requests
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ completed_count }}</span>
                 </button>
             </li>
@@ -122,7 +127,7 @@
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
                 data-bs-target="#navs-pills-justified-closed" aria-controls="navs-pills-justified-closed" aria-selected="true">
-                    <i class="tf-icons bi bi-inbox"></i> Closed Requests
+                    <i class="tf-icons bi bi-x-circle"></i> Closed Requests
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ closed_count }}</span>
                 </button>
             </li>
@@ -149,5 +154,5 @@
         </div>
     </div>
     {% endif %}
-    
+
 {% endblock details %}

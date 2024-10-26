@@ -7,6 +7,13 @@
 {% endblock title %} 
 
 {% block tenant %}
+  <style>
+    .scrolling-content {
+        max-height: 500px; /* Adjust the height as needed */
+        overflow-y: auto; /* Enable manual vertical scrolling */
+        position: relative;
+    }      
+  </style>
 
   <!-- Dashboard -->
   <li class="menu-item {% if menu == 'tenant-dashboard' %}active{% endif %}">
@@ -80,8 +87,8 @@
         </a>
       </li>
       <li class="menu-item  {% if s_menu == 'spi' %}active{% endif %}">
-        <a href={% url "tracking" pk=request.user.profile %}?status=open class="menu-link">
-          <div data-i18n="service-info">Service Provider Information</div>
+        <a href={% url "tracking" pk=request.user.profile %}?status=in_progress class="menu-link">
+          <div data-i18n="service-info">Service Provider</div>
         </a>
       </li>
     </ul>
@@ -432,18 +439,19 @@
                 <i class="bi bi-three-dots-vertical"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                <a class="dropdown-item" href="?option=activity&filter=28">Last 28 Days</a>
+                <a class="dropdown-item" href="?option=activity&filter=last_month">Last Month</a>
+                <a class="dropdown-item" href="?option=activity&filter=last_year">Last Year</a>
+                <a class="dropdown-item" href="?option=activity&filter=all">All</a>
               </div>
             </div>
           </div>
-          <div class="card-body">
+          <div class="card-body scrolling-content">
             <ul class="p-0 m-0">
-                {% for activity in activities|slice:":8" %}
+                {% for activity in activities %}
                 <a href=
-                        {% if activity.ip_address == "tracking" %}
-                            {% url activity.ip_address pk=request.user.profile %}
+                        {% if activity.ip_address == "open_request" %}
+                            {% url "tracking" pk=request.user.profile %}?status=open
                         {% else %}"#"{% endif %}>
                 <li class="d-flex mb-4 pb-1">
                     <div class="avatar flex-shrink-0 me-3">
@@ -456,6 +464,8 @@
                               <i class="bi bi-credit-card-fill"></i>
                             {% elif activity.get_entity_type_display == "Request" %}
                               <i class="bi bi-clipboard-plus"></i>
+                            {% elif activity.ip_address == "open_request" %}
+                              <i class="bi bi-inbox"></i>
                             {% endif %}
                         </span>
                     </div>

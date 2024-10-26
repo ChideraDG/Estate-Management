@@ -7,7 +7,7 @@ urlpatterns = [
     # tenants work-order urls
     path('tenant/<pk>/tracking/', tracking, name='tracking'),
     path('tenant/<pk>/log-request/', request_submission, name='log_request'),
-    path('tenant/<pk>/service_provider/', service_provider_details, name='service_provider_details'),
+    path('tenant/<pk>/service_provider/<workorder_id>/details/', service_provider_details, name='service_provider_details'),
 
     # building owner requests urls
     path('bo/<pk>/maintenance/requests/', requests, name='requests'),
