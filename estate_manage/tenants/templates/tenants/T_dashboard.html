@@ -80,7 +80,7 @@
         </a>
       </li>
       <li class="menu-item  {% if s_menu == 'spi' %}active{% endif %}">
-        <a href={% url "service_provider" pk=request.user.profile %} class="menu-link">
+        <a href={% url "tracking" pk=request.user.profile %}?status=open class="menu-link">
           <div data-i18n="service-info">Service Provider Information</div>
         </a>
       </li>
