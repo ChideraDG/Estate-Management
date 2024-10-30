@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import WorkOrder
 from .forms import WorkOrderForm
 
 
@@ -17,7 +18,7 @@ def request_submission(request, pk):
             instance.apartment = tenant.apartment
             instance.save()
             messages.success(request, 'Work Order has been Logged')
-            return redirect('log_request', pk=pk)
+            return redirect('tracking', pk=pk)
         else:
             print(form.errors)
 
@@ -30,18 +31,39 @@ def request_submission(request, pk):
 
 @login_required(login_url='login')
 def tracking(request, pk):
+    status = request.GET.get('status', 'all')
+    workorder = WorkOrder.objects.filter(apartment__tenant_apartment__user=request.user.profile)
+    
+    open_request = workorder.filter(status='open')
+    in_progress_request = workorder.filter(status='in_progress')
+    completed_request = workorder.filter(status='completed')
+    closed_request = workorder.filter(status='closed')
+
     context = {
         'menu': 'workorder',
         's_menu': 'tau',
+        'open_count': open_request.count(),
+        'in_progress_count': in_progress_request.count(),
+        'completed_count': completed_request.count(),
+        'closed_count': closed_request.count(),
+        'open': open_request,
+        'in_progress': in_progress_request,
+        'completed': completed_request,
+        'closed': closed_request,
+        'workorder': workorder,
+        'status': status,
     }
 
     return render(request, 'tenant_work_order/tracking.html', context)
 
 @login_required(login_url='login')
-def service_provider(request, pk):
+def service_provider_details(request, pk, workorder_id):
+    workorder = WorkOrder.objects.get(id=workorder_id)
+
     context = {
         'menu': 'workorder',
         's_menu': 'spi',
+        'sp': workorder.assigned_to,
     }
 
     return render(request, 'tenant_work_order/service_provider.html', context)

@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (get_states, view_connections, tenantDashboard,
-                                tenant_profile, tenants_profiles, tenant_detail,
-                                delete_tenant, tenant_lease_info, update_tenant_lease_info,
-                                payment_history)
+                    tenant_profile, tenants_profiles, tenant_detail,
+                    delete_tenant, tenant_lease_info, update_tenant_lease_info,
+                    payment_history)
 
 urlpatterns = [
     path('get_states/', get_states, name='get-states'),

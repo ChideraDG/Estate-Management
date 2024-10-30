@@ -3,6 +3,156 @@
 {% block details %}
     <!-- Content -->
     <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Work Order /</span> Tracking
+        <span class="text-muted fw-light">Work Order /</span> Tracking and Updates
     </h4>
+
+    {% if status == 'all' or status ==  'open' %}
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Open Requests Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-open" aria-controls="navs-pills-justified-open" aria-selected="true">
+                    <i class="tf-icons bi bi-inbox"></i> Open Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ open_count }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" style="background-color: #f5f5f9">
+            <div class="tab-pane fade show active" id="navs-pills-justified-open" role="tabpanel">
+                {% if open_count > 0 %}
+                {% for log_request in open %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-subtitle text-muted mb-1">{{ log_request.reported_date }}</div>
+                        <p class="card-text" style="color: #856404; padding:5px; border-left: 5px solid #ffeeba; margin-bottom: 15px;">
+                            {{ log_request.description }}
+                        </p>
+                        <div class="card-subtitle text-muted mt-1">Status: Open</div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h4>No Open Request</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if status == 'all' or status ==  'in_progress' %}
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Open Requests Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-inprogress" aria-controls="navs-pills-justified-inprogress" aria-selected="true">
+                    <i class="tf-icons bi bi-arrow-repeat"></i> In-Progress Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ in_progress_count }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" style="background-color: #f5f5f9">
+            <div class="tab-pane fade show active" id="navs-pills-justified-inprogress" role="tabpanel">
+                {% if in_progress_count > 0 %}
+                {% for log_request in in_progress %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-subtitle text-muted mb-1">{{ log_request.reported_date }}</div>
+                        <p class="card-text" style="color: #856404; padding:5px; border-left: 5px solid #ffeeba; margin-bottom: 15px;">
+                            {{ log_request.description }}
+                        </p>
+                        <div class="card-subtitle text-muted mt-1">Status: In-Progress</div>
+                    </div>
+                    <a href={% url "service_provider_details" pk=request.user.profile workorder_id=log_request.id %} class="ms-4 mb-4">
+                        <button title='View Service Provider' type="button" class="btn btn-icon btn-secondary">
+                            <span class="tf-icons bi bi-person-badge"></span>
+                        </button>
+                    </a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h4>No In-Progress Request</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if status == 'all' or status ==  'completed' %}
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Open Requests Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-completed" aria-controls="navs-pills-justified-completed" aria-selected="true">
+                    <i class="tf-icons bi bi-check-circle"></i> Completed Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ completed_count }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" style="background-color: #f5f5f9">
+            <div class="tab-pane fade show active" id="navs-pills-justified-completed" role="tabpanel">
+                {% if completed_count > 0 %}
+                {% for log_request in completed %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-subtitle text-muted mb-1">{{ log_request.reported_date }}</div>
+                        <p class="card-text" style="color: #856404; padding:5px; border-left: 5px solid #ffeeba; margin-bottom: 15px;">
+                            {{ log_request.description }}
+                        </p>
+                    </div>
+                </div>
+                <div class="card-subtitle text-muted mt-1">Status: Completed</div>
+                {% endfor %}
+                {% else %}
+                <h4>No Completed Request</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if status == 'all' or status ==  'closed' %}
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- Open Requests Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-closed" aria-controls="navs-pills-justified-closed" aria-selected="true">
+                    <i class="tf-icons bi bi-x-circle"></i> Closed Requests
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{ closed_count }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" style="background-color: #f5f5f9">
+            <div class="tab-pane fade show active" id="navs-pills-justified-closed" role="tabpanel">
+                {% if closed_count > 0 %}
+                {% for log_request in closed %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-subtitle text-muted mb-1">{{ log_request.reported_date }}</div>
+                        <p class="card-text" style="color: #856404; padding:5px; border-left: 5px solid #ffeeba; margin-bottom: 15px;">
+                            {{ log_request.description }}
+                        </p>
+                        <div class="card-subtitle text-muted mt-1">Status: Closed</div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h4>No Closed Request</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
 {% endblock details %}
