@@ -7,6 +7,7 @@ from apartments.models import Apartment
 from houses.models import House
 from building_owners.models import BuildingOwner
 from estates.models import Estate
+from companies.models import Company
     
 
 class Tenant(models.Model):
@@ -32,7 +33,7 @@ class Tenant(models.Model):
                                 related_name='tenant')
     building_owner = models.ForeignKey(BuildingOwner, on_delete=models.CASCADE, blank=True, null=True, 
                                        default=None, related_name='tenants')
-    estate = models.ForeignKey(Estate, on_delete=models.SET_NULL, blank=True, null=True, 
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, 
                                default=None, related_name='tenants')
     house = models.ForeignKey(House, on_delete=models.SET_NULL, blank=True, null=True, default= None,
                               related_name='tenant_house')

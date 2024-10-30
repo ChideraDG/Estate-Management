@@ -61,7 +61,7 @@ class Estate(models.Model):
     city = models.CharField(max_length=200, null=True, blank=True)
     estate_type = models.CharField(max_length=100, choices=DESIGNATION, blank=False, null=False, default='residential')
     year_built = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(1900)])
-    number_of_houses = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)], default=0)
+    number_of_houses = models.PositiveIntegerField(null=True, blank=True, default=0)
     total_area_covered = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,
                                              validators=[MinValueValidator(0)])
     land_area = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00,

@@ -182,7 +182,7 @@
     </div>
     <!-- End House Details -->
 
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", function() {
           // Attach a change event listener to the country dropdown
           var houseSelect = document.getElementById('house_id');
@@ -204,7 +204,69 @@
             }
           });
         });        
-    </script>
+    </script> -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    // Select elements for estate, house, and apartment dropdowns
+    const estateSelect = document.getElementById('estate_id');
+    const houseSelect = document.getElementById('house_id');
+    const apartmentSelect = document.getElementById('apartment_id');
+
+    // Load houses when an estate is selected (for company users)
+    if (estateSelect) {
+        estateSelect.addEventListener('change', function() {
+            const estateId = this.value;
+            if (estateId) {
+                fetch("{% url 'get-houses' %}?estate_id=" + estateId)
+                    .then(response => response.json())
+                    .then(data => {
+                        let options = '';
+                        if (data.length > 0) {
+                        options = '<option value="">Select a House</option>';
+                        data.forEach(function(house) {
+                            options += '<option value="' + house.id + '">House No:' + house.house_number + ' -Address: ' + house.address + '</option>';
+                        });
+                    } else {
+                            options = '<option value="">No houses found</option>';
+                        }
+                        houseSelect.innerHTML = options;
+                        apartmentSelect.innerHTML = '';  // Reset apartment dropdown
+                    })
+                    .catch(error => console.error("Error fetching houses:", error));
+            } else {
+                houseSelect.innerHTML = '<option value="">Select a House</option>';
+                apartmentSelect.innerHTML = '';
+            }
+        });
+    }
+
+    // Load apartments when a house is selected (for both user types)
+    houseSelect.addEventListener('change', function() {
+        const houseId = this.value;
+        if (houseId) {
+            fetch("{% url 'get-apartments' %}?house_id=" + houseId)
+                .then(response => response.json())
+                .then(data => {
+                    let options = '';
+                    if (data.length > 0) {
+                        options = '<option value="">Select an Apartment</option>';
+                        data.forEach(apartment => {
+                            options += `<option value="${apartment.id}">Apartment ${apartment.apartment_number} - Floor ${apartment.floor_number}</option>`;
+                        });
+                    } else {
+                        options = '<option value="">No apartments available</option>';
+                    }
+                    apartmentSelect.innerHTML = options;
+                })
+                .catch(error => console.error("Error fetching apartments:", error));
+        } else {
+            apartmentSelect.innerHTML = '<option value="">Select an Apartment</option>';
+        }
+    });
+});
+</script>
+
     <script>
         document.getElementById('reset-button').addEventListener('click', function() {
             // Select the form
@@ -215,6 +277,7 @@
             window.location.href = window.location.pathname;
         });
     </script>
+
     <script>
         document.getElementById('reset-filter').addEventListener('click', function() {
             window.location.href = window.location.pathname;
