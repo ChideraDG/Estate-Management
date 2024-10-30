@@ -19,7 +19,7 @@ from leaseAgreements.forms import LeaseAgreementForm
 from leaseAgreements.models import LeaseAgreement
 from finances.models import Receipt, RentPayment
 from .models import Tenant
-from .forms import TenantForm, TenantFilterForm, AddTenantForm
+from .forms import TenantForm, TenantFilterForm, AddTenantForm, AddCompanyTenantForm
 from .utils import paginateTenants
 
 
@@ -172,7 +172,11 @@ def tenants_profiles(request, pk, type):
 
     # Process the form submission for adding a new tenant
     if request.method == 'POST':
-        form = AddTenantForm(request.POST, building_owner=profile, request=request)
+        if request.user.profile.designation == "building_owner":
+            form = AddTenantForm(request.POST, building_owner=profile, request=request)
+        
+        else:
+            form = AddCompanyTenantForm(request.POST, company=profile, request=request)
         
         if form.is_valid():
             # Generate a username and password for the new tenant
@@ -277,8 +281,11 @@ The EstateManage Team
                 print(f"Field: {field}, Errors: {errors}")
                 
     else:
-        # If the request is GET, initialize an empty form
-        form = AddTenantForm(building_owner=profile, request=request)
+        if request.user.profile.designation == "building_owner":
+            form = AddTenantForm(request.POST, building_owner=profile, request=request)
+        
+        else:
+            form = AddCompanyTenantForm(request.POST, company=profile, request=request)
 
     # Define the template route based on the user designation
     template_route = {
@@ -401,7 +408,12 @@ def tenant_detail(request, type, pk, tenant_id):
     tenant = Tenant.objects.get(id=tenant_id)
 
     if request.method == 'POST':
-        form = AddTenantForm(request.POST, building_owner=profile, request=request, instance=tenant)
+        if request.user.profile.designation == "building_owner":
+            form = AddTenantForm(request.POST, building_owner=profile, request=request)
+        
+        else:
+            form = AddCompanyTenantForm(request.POST, company=profile, request=request)
+
         tenant_data = {
             'move_in_date': 'move_in_date',
             'lease_start_date': 'lease_start_date',
@@ -420,7 +432,11 @@ def tenant_detail(request, type, pk, tenant_id):
         tenant.save()
         return redirect("tenant-detail", pk=pk, type=type, tenant_id=tenant_id)
     else:
-        form = AddTenantForm(building_owner=profile, request=request, instance=tenant)
+        if request.user.profile.designation == "building_owner":
+            form = AddTenantForm(request.POST, building_owner=profile, request=request)
+        
+        else:
+            form = AddCompanyTenantForm(request.POST, company=profile, request=request)
     
     template_route = {
         'building_owner': "building_owners/BO_dashboard.html",
@@ -442,7 +458,7 @@ def delete_tenant(request, pk):
     if request.user.profile.designation == "building_owner":
         profile = request.user.profile.building_owner
     elif request.user.profile.designation == "company":
-        profile = None  # Handle company case later (if needed)
+        profile = request.user.profile.company  # Handle company case later (if needed)
 
     tenant = Tenant.objects.get(id=pk)
     tenant.delete()

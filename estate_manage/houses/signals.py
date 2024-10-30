@@ -1,11 +1,12 @@
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 from .models import House
+from estates.models import Estate
 from building_owners.models import BuildingOwner
 
 
 @receiver(post_save, sender=House)
-def building_owner(sender, instance, created, **kwargs):
+def house_increase(sender, instance, created, **kwargs):
     """
     Updates the building owner's portfolio size when a new House is created.
     
@@ -27,10 +28,13 @@ def building_owner(sender, instance, created, **kwargs):
         bo_user = BuildingOwner.objects.get(id=instance.building_owner.id)
         bo_user.portfolio_size += 1
         bo_user.save()
-
+    elif created and instance.company:
+        estate = Estate.objects.get(id=instance.estate.id)
+        estate.number_of_houses += 1
+        estate.save()
 
 @receiver(pre_delete, sender=House)
-def delete_building_owner(sender, instance, **kwargs):
+def house_decrease(sender, instance, **kwargs):
     """
     Updates the building owner's portfolio size and deletes associated apartments 
     when a House is deleted.

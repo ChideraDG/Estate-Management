@@ -8,6 +8,7 @@ from .models import House, Photo
 from .forms import HouseForm, HouseFilterForm
 from .utils import paginateHouses
 from estates.models import Estate
+from apartments.models import Apartment
 
 
 @login_required(login_url='login')
@@ -16,6 +17,18 @@ def get_states(request):
     states = State.objects.filter(country_id=country_id).order_by('name')
     states_list = [{'id': state.id, 'name': state.name} for state in states]
     return JsonResponse(states_list, safe=False)
+
+@login_required(login_url='login')
+def get_houses(request):
+    estate_id = request.GET.get('estate_id')
+    houses = House.objects.filter(estate=estate_id)
+    houses_list = [{
+        'id': house.id,
+        'house_number': house.house_number, 
+        'address': house.address
+        } for house in houses if not Apartment.objects.filter(house=house).filter(is_occupied=True).exists()
+    ]
+    return JsonResponse(houses_list, safe=False)
 
 @login_required(login_url='login')
 def houses(request, pk, type):
