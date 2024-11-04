@@ -201,7 +201,7 @@ def tenants_profiles(request, pk, type):
             # Display a success message and notify the building owner via email
             messages.success(request, "Tenant Successfully Created. \nTenant's details sent to your Inbox")
 
-            email = profile.contact_email
+            email = profile.email
             subject = f"{form.cleaned_data['first_name'].title()} {form.cleaned_data['last_name'].title()} Profile Created"
             message = f'''
 Welcome to EstateManage!
@@ -228,6 +228,8 @@ The EstateManage Team
             tenant = Tenant.objects.filter(user__username=username).first()
             if request.user.profile.designation == "building_owner":
                 tenant.building_owner = profile
+            elif request.user.profile.designation == "company":
+                tenant.company = profile
             tenant.house = House.objects.filter(id=request.POST['_house']).first()
             tenant.apartment = Apartment.objects.filter(id=request.POST['_apartment']).first()
             tenant.first_name = request.POST['first_name']

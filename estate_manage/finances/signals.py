@@ -56,6 +56,6 @@ Best regards,
 EstateManage.
 """
         from_email = settings.EMAIL_HOST_USER
-        receipent = [f"{instance.lease.tenant.building_owner.contact_email}"]
+        receipent = [f"{instance.lease.tenant.building_owner.email}"]
         send_mail(subject, message, from_email, receipent, fail_silently=False)
 

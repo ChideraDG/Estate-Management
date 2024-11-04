@@ -81,7 +81,7 @@ class BuildingOwner(models.Model):
     user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True, null=True, default=None,
                                 related_name='building_owner')
     building_owner_name = models.CharField(max_length=200, blank=False, null=False)
-    contact_email = models.EmailField(unique=True, blank=False, null=False)
+    email = models.EmailField(unique=True, blank=False, null=False)
     contact_phone = models.CharField(max_length=15, unique=True, blank=True, null=True,
                                      validators=[RegexValidator(
                                          r'^\+?[0-9]{3} ?[0-9-]{8,11}$',

@@ -42,12 +42,12 @@ class BuildingOwnerForm(ModelForm):
 
     class Meta:
         model = BuildingOwner
-        fields = ['building_owner_name', 'contact_email', 'contact_phone', 'address', 'country', 'state', 'city',
+        fields = ['building_owner_name', 'email', 'contact_phone', 'address', 'country', 'state', 'city',
                   'is_visible', 'investment_strategy', 'tax_id', 'notes']
         
         labels = {
             'building_owner_name': 'Building Owner Name',
-            'contact_email': 'Contact Email',
+            'email': 'Contact Email',
             'contact_phone': 'Contact Phone',
             'address': 'Address',
             'city': 'City',
@@ -126,7 +126,7 @@ class BuildingOwnerForm(ModelForm):
         return contact_phone
     
     def clean_contact_email(self):
-        email = self.cleaned_data.get('contact_email')
+        email = self.cleaned_data.get('email')
 
         # Check if email is not empty (although required=True should handle this)
         if not email:
