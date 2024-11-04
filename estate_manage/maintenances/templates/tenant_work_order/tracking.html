@@ -2,9 +2,33 @@
   
 {% block details %}
     <!-- Content -->
-    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Work Order /</span> Tracking and Updates
-    </h4>
+    <div class="row navbar-nav-right">
+        <div class="col-xl-6 mb-xl-0">
+            <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Work Order /</span> Tracking and Updates
+            </h4>
+        </div>
+        
+        <div class="navbar-nav col-xl-6 mb-xl-0 py-2">
+            <div class="btn-group" role="group" aria-label="First group">
+                <a href={% url "tracking" pk=request.user.profile %}?status=all class="btn btn-outline-secondary">
+                    <i class="tf-icons bi bi-list"></i> All
+                </a>
+                <a href={% url "tracking" pk=request.user.profile %}?status=open class="btn btn-outline-secondary">
+                    <i class="tf-icons bi bi-inbox"></i> Open
+                </a>
+                <a href={% url "tracking" pk=request.user.profile %}?status=in_progress class="btn btn-outline-secondary">
+                    <i class="tf-icons bi bi-arrow-repeat"></i> In-Progress
+                </a>
+                <a href={% url "tracking" pk=request.user.profile %}?status=completed class="btn btn-outline-secondary">
+                    <i class="tf-icons bi bi-check-circle"></i> Completed
+                </a>
+                <a href={% url "tracking" pk=request.user.profile %}?status=closed class="btn btn-outline-secondary">
+                    <i class="tf-icons bi bi-x-circle"></i> Closed
+                </a>
+            </div>
+        </div>
+    </div>
 
     {% if status == 'all' or status ==  'open' %}
     <div class="nav-align-top mb-4">
@@ -107,9 +131,9 @@
                         <p class="card-text" style="color: #856404; padding:5px; border-left: 5px solid #ffeeba; margin-bottom: 15px;">
                             {{ log_request.description }}
                         </p>
+                        <div class="card-subtitle text-muted mt-1">Status: Completed</div>
                     </div>
                 </div>
-                <div class="card-subtitle text-muted mt-1">Status: Completed</div>
                 {% endfor %}
                 {% else %}
                 <h4>No Completed Request</h4>
