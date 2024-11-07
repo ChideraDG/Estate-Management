@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from notifications.models import Notification
 from .models import WorkOrder
 from .forms import  ServiceProviderForm
 from .utils import paginateRequest
@@ -30,6 +31,9 @@ def requests(request, pk):
     in_progress = paginateRequest(request, sorted(in_progress_requests, key=lambda x: x.reported_date, reverse=True), 5)
     completed = paginateRequest(request, sorted(completed_requests, key=lambda x: x.reported_date, reverse=True), 5)
     closed = paginateRequest(request, sorted(closed_requests, key=lambda x: x.reported_date, reverse=True), 5)
+
+    # for Notifications
+    Notification.objects.filter(user=request.user).filter(status="UN", notification_type="MU").update(status="RD")
     
     context = {
         'menu': 'mt',

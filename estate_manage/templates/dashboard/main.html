@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load custom_filters %}
 
 <html
   lang="en"
@@ -270,22 +271,31 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Place this tag where you want the button to render. -->
                             <li class="nav-item lh-1 me-3">
-                                <a href="#" class="notification-icon" style="margin-right: 16px;">
+                                <a 
+                                href=
+                                {% if request.user.profile.designation == "building_owner" %}
+                                    {% url "notify" pk=request.user.profile type="bo" %}
+                                {% else %}
+                                    "#"
+                                {% endif %}
+                                 class="notification-icon" style="margin-right: 16px;">
                                     <i class="bi bi-bell-fill" style="font-size: 20px"></i>
-                                    <span class="badge bg-success badge-number"></span>
+                                    {% if request.user|unread_notifications_count %}
+                                        <span class="badge bg-dark badge-number">{{ request.user|unread_notifications_count }}</span>
+                                    {% endif %}
                                 </a>
                                 
                                 <a 
                                 href=
                                 {% if request.user.profile.designation == "building_owner" %}
                                     {% url "bo-comms" pk=request.user.profile %}
-                                {% else %}
+                                {% elif request.user.profile.designation == "tenant" %}
                                     {% url "tenant-comms" pk=request.user.profile %} 
                                 {% endif %}
                                 class="notification-icon">
                                     <i class="bi bi-envelope-fill" style="font-size: 20px"></i>
                                     {% if request.user.profile.unread_messages > 0 %}
-                                        <span class="badge bg-success badge-number" style="background-color: #e7e8ff;">
+                                        <span class="badge bg-dark badge-number">
                                                 {{ request.user.profile.unread_messages }}
                                         </span>
                                     {% endif %}

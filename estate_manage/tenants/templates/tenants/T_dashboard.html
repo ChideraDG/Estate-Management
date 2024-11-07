@@ -259,7 +259,7 @@
                       Your home is not just a place – it’s a feeling. Let this space be where you find comfort, inspiration, 
                       and strength. Remember, no matter how busy life gets, there’s always room to grow, laugh, and enjoy the journey.    
                     </p>
-                    <a href="#" class="btn btn-sm btn-outline-primary">View Messages</a>
+                    <a href={% url "tenant-comms" pk=request.user.profile %} class="btn btn-sm btn-outline-primary">View Messages</a>
                 </div>
               </div>
               <div class="col-sm-5 text-center text-sm-left">

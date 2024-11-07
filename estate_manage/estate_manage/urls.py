@@ -20,6 +20,7 @@ urlpatterns = [
     path("", include('communications.urls')),
     path("", include('finances.urls')),
     path("", include('maintenances.urls')),
+    path("", include('notifications.urls')),
 
     path("reset_password/", CustomPasswordResetView.as_view(template_name='reset_password.html'),
          name='reset_password'),

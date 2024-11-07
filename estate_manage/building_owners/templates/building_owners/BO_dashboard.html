@@ -226,6 +226,15 @@
             </li>
         </ul>
     </li>
+
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">Notification</span></li>
+
+    <li class="menu-item {% if menu == 'notification' %}active open{% endif %}">
+        <a href={% url "notify" pk=request.user.profile type="bo" %} class="menu-link">
+            <i class="menu-icon tf-icons bi bi-bell-fill tiny-icon"></i>
+            <div data-i18n="User Management">Notifications</div>
+        </a>
+    </li>
 {% endblock BO %}
 
 {% block details %}
