@@ -50,24 +50,6 @@ def buyerProfile(request,pk):
 
     return render(request, 'buyers/buyer.html', context)
 
-def updateBuyer(request, pk):
-    countries = Country.objects.all()
-    profile = Buyer.objects.get(id=pk)
-    form = BuyerForm(instance=profile)
-
-
-    if request.method == 'POST':
-        form = BuyerForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            buyer = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
-            if buyer.full_name:
-                buyer.full_name = buyer.full_name.strip().title()
-            buyer.save()
-            return redirect('buyer-home')
-
-    context = {'form': form, 'countries': countries, 'profile':profile}
-    return render(request, 'buyers/buyerReg.html', context)
-
 @login_required(login_url='login')
 def get_states(request):
     country_id = request.GET.get('country_id')
