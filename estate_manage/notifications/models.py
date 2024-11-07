@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Notification(models.Model):
+    """
+    A model to represent notifications within the estate management app.
+    Notifications can be of different types (e.g., lease renewals, payment reminders) and can have different statuses
+    (e.g., unread, read, archived). Each notification is linked to a specific user and can optionally include a link
+    for additional details.
+    """
+    
     # Notification Types
     LEASE_RENEWAL = 'LR'
     PAYMENT_REMINDER = 'PR'
@@ -27,7 +34,6 @@ class Notification(models.Model):
         (ARCHIVED, 'Archived'),
     ]
 
-    # Fields
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     notification_type = models.CharField(max_length=2, choices=NOTIFICATION_TYPES)
     title = models.CharField(max_length=255)
