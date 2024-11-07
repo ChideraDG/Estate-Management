@@ -279,7 +279,7 @@
                                 href=
                                 {% if request.user.profile.designation == "building_owner" %}
                                     {% url "bo-comms" pk=request.user.profile %}
-                                {% else %}
+                                {% elif request.user.profile.designation == "tenant" %}
                                     {% url "tenant-comms" pk=request.user.profile %} 
                                 {% endif %}
                                 class="notification-icon">
