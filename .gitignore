@@ -36,3 +36,5 @@
 /estate_manage/tenants/__pycache__
 /estate_manage/users/migrations
 /estate_manage/users/__pycache__
+/estate_manage/notifications/migrations
+/estate_manage/notifications/__pycache__
