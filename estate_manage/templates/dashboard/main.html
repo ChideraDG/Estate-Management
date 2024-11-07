@@ -275,6 +275,8 @@
                                 href=
                                 {% if request.user.profile.designation == "building_owner" %}
                                     {% url "notify" pk=request.user.profile type="bo" %}
+                                {% else %}
+                                    "#"
                                 {% endif %}
                                  class="notification-icon" style="margin-right: 16px;">
                                     <i class="bi bi-bell-fill" style="font-size: 20px"></i>
