@@ -192,7 +192,7 @@ def tenants_profiles(request, pk, type):
                 email=form.cleaned_data['email'].lower(),
                 password=password,
                 first_name=form.cleaned_data['first_name'].title() + " " + form.cleaned_data['last_name'].title(),
-                last_name='tenant' if type == "bo" else 'company'
+                last_name='tenant'
             )
             user.first_name = form.cleaned_data['first_name'].title()
             user.last_name = form.cleaned_data['last_name'].title()

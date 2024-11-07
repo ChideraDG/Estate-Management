@@ -1,12 +1,8 @@
 from django.urls import path
-from .views import *
+from .views import  view_connections, buyerDashboard, buyerProfile
 
 urlpatterns = [
-    path('buyer-home/', buyerHome, name='buyer-home'),
-    path('get_states/', get_states, name='get-states'),
-    path('create/', createBuyer, name='create-buyer'),
-    path('update/<str:pk>/', updateBuyer, name='update-buyer'),
-    path('view/<str:pk>/', viewBuyer, name='view-buyer'),
-    path('delete/<str:pk>/', deleteBuyer, name='delete-buyer'),
-    path('<str:pk>/', buyerDashboard, name='dashboard-B'),
+    path('company/<str:pk>/view-connections/', view_connections, name='b-view-connections'),
+    path('company/<str:pk>/b-profile/', buyerProfile, name='view-buyer'),
+    path('buyer/<str:pk>/', buyerDashboard, name='dashboard-B'),
 ]

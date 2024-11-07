@@ -37,7 +37,7 @@ def send_building_owner_rent_payment_email(sender, instance, created, **kwargs):
     if created:
         subject = 'Rent Payment Confirmation'
         message = f"""
-Dear {instance.lease.tenant.building_owner},
+Dear {instance.lease.tenant.building_owner if instance.lease.tenant.building_owner else instance.lease.tenant.company.email},
 
 We are pleased to inform you that we have received a rent payment for the property at {instance.lease.apartment.house} : {instance.lease.apartment}.
 
@@ -56,6 +56,6 @@ Best regards,
 EstateManage.
 """
         from_email = settings.EMAIL_HOST_USER
-        receipent = [f"{instance.lease.tenant.building_owner.email}"]
+        receipent = [f"{instance.lease.tenant.building_owner.email if instance.lease.tenant.building_owner else instance.lease.tenant.company.email}"] 
         send_mail(subject, message, from_email, receipent, fail_silently=False)
 

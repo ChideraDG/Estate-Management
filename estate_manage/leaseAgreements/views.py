@@ -16,6 +16,10 @@ def lease_agreements(request, type, pk):
         tenants = profile.building_owner.tenants.all()
         agreements = LeaseAgreement.objects.filter(tenant__in=tenants)
 
+    elif profile.designation == "company":
+        tenants = profile.companies.tenants.all()
+        agreements = LeaseAgreement.objects.filter(tenant__in=tenants)
+
     lease_update = request.GET.get("lease_update", False)
     if lease_update:
         tenant = request.GET.get("tenant_id", "")
@@ -47,6 +51,7 @@ def lease_agreements(request, type, pk):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
+        'company': "companies/C_dashboard.html",
     }
     context = {
         "menu": menu,
@@ -69,6 +74,7 @@ def agreements_details(request, type, pk, agreement_id):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
+        'company': "companies/C_dashboard.html",
     }
     context = {
         'user': request.user.profile,
@@ -89,6 +95,7 @@ def update_agreement(request, type, pk, agreement_id):
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
+        'company': "companies/C_dashboard.html",
     }
 
     if request.method == 'POST':

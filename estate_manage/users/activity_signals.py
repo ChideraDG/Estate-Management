@@ -39,7 +39,7 @@ def rent_payment(sender, instance, created, **kwargs):
         )
 
         ActivityLog.objects.create(
-        user=instance.lease.tenant.building_owner.user.user,
+        user=instance.lease.tenant.building_owner.user.user if instance.lease.tenant.building_owner else instance.lease.tenant.company.user.user,
         entity_type="Finance",
         entity_id=instance.id,
         colour="primary",

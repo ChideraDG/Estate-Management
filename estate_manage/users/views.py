@@ -153,12 +153,14 @@ def user_profile(request, type, pk):
         'tenant': "tenants/T_dashboard.html",
         'agent': "agents/A_dashboard.html",
         'company': "companies/C_dashboard.html",
+        'buyer': "buyers/B_dashboard.html",
     }
     connection_route = {
         'building_owner': "bo-view-connections",
         'tenant': "t-view-connections",
         'agent': "a-view-connections",
         'company': "c-view-connections",
+        'buyer': "b-view-connections"
     }
 
     context = {
@@ -191,6 +193,7 @@ class CustomPasswordChangeView(PasswordChangeView):
         'tenant': "tenants/T_dashboard.html",
         'agent': "agents/A_dashboard.html",
         'company': "companies/C_dashboard.html",
+        'buyer': "buyers/B_dashboard.html",
     }
 
     connection_route = {
@@ -198,6 +201,7 @@ class CustomPasswordChangeView(PasswordChangeView):
         'tenant': "t-view-connections",
         'agent': "a-view-connections",
         'company': "c-view-connections",
+        'buyer': "b-view-connections",
     }
 
     def get_context_data(self, **kwargs):
@@ -223,6 +227,9 @@ class CustomPasswordChangeView(PasswordChangeView):
         print(form.errors)
         if "old_password" in form.errors:
             messages.error(self.request, "Your old password was entered incorrectly. Please enter it again.")
+        # elif "new password 2"UeNC8QyQ9
+        elif "new_password2" in form.errors:
+            messages.error(self.request, "This password is too common.")
         
         error_message = form.get_error(self.request.POST['new_password1'], 
                                        self.request.POST['new_password2']

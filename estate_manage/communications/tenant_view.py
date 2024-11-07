@@ -12,6 +12,7 @@ def tenant_communications(request, pk):
     profile = request.user.profile.tenant
 
     messages = None
+    building_owner = None
     if profile.building_owner:
         building_owner = profile.building_owner
         messages_queryset = Message.objects.filter(
@@ -34,8 +35,6 @@ def tenant_communications(request, pk):
                 'timestamp': latest_message.timestamp,
             }
             messages = message_data
-    else:
-        building_owner = None
     
     Profile.objects.filter(username=request.user).update(unread_messages=tenant_get_unread(request))
     context = {

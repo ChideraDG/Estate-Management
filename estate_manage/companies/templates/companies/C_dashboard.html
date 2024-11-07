@@ -89,9 +89,9 @@
         <div data-i18n="tenant-profile">Tenant Profile</div>
       </a>
     </li>
-    <li class="menu-item">
-      <a href="#" class="menu-link">
-        <div data-i18n="house-report">House Report</div>
+    <li class="menu-item {% if s_menu == 'ta' %}active{% endif %}">
+      <a href={% url "agreements" type="c" pk=request.user.profile %} class="menu-link">
+        <div data-i18n="house-report">Lease agreement</div>
       </a>
     </li>
     <li class="menu-item">
