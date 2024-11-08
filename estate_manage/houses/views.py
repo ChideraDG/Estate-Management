@@ -26,7 +26,7 @@ def get_houses(request):
         'id': house.id,
         'house_number': house.house_number, 
         'address': house.address
-        } for house in houses if not Apartment.objects.filter(house=house).filter(is_occupied=True).exists()
+        } for house in houses if Apartment.objects.filter(house=house).filter(is_occupied=False).exists()
     ]
     return JsonResponse(houses_list, safe=False)
 
