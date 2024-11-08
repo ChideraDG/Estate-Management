@@ -13,6 +13,7 @@ def tenant_communications(request, pk):
 
     messages = None
     building_owner = None
+    company = None
     if profile.building_owner:
         building_owner = profile.building_owner
         messages_queryset = Message.objects.filter(
@@ -35,12 +36,34 @@ def tenant_communications(request, pk):
                 'timestamp': latest_message.timestamp,
             }
             messages = message_data
+    else:
+        company = profile.company
+        messages_queryset = Message.objects.filter(
+            Q(sender=request.user, recipient=company.user.user) |
+            Q(sender=company.user.user, recipient=request.user)
+        )
+        
+        if messages_queryset.exists():
+            # Get the latest message
+            latest_message = messages_queryset.last()
+            
+            # Prepare the message data
+            message_data = {
+                'id': company.id,
+                'profile_picture': company.user.profile_image,
+                'name': f"{company.user.name}",
+                'latest_message': latest_message.message,
+                'unread': messages_queryset.filter(recipient=request.user, is_read=False).count(),
+                'read': latest_message.is_read,
+                'timestamp': latest_message.timestamp,
+            }
+            messages = message_data
     
     Profile.objects.filter(username=request.user).update(unread_messages=tenant_get_unread(request))
     context = {
         'menu': menu,
         "message": messages,
-        "building_owner": building_owner
+        "building_owner": building_owner if profile.building_owner else company
     }
     return render(request, "communications/tenant_comms.html", context)
 
@@ -95,14 +118,16 @@ def tenant_chat(request, pk, bo_id):
 def tenant_get_unread(request):
     profile = request.user.profile.tenant
     if profile.building_owner:
-        building_owner = profile.building_owner
+        owner = profile.building_owner
+    else:
+        owner = profile.company
 
     # Prepare a list to hold the unread counts
     unread_total = []
 
     # Query for unread messages sent to the current user from each tenant
     unread_count = Message.objects.filter(
-        sender=building_owner.user.user, 
+        sender=owner.user.user, 
         recipient=request.user, 
         is_read=False
     ).count()

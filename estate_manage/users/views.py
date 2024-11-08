@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.utils.text import slugify
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
@@ -14,6 +14,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.views import PasswordChangeView
@@ -175,9 +176,10 @@ def user_profile(request, type, pk):
 
     return render(request, "users/user-profile.html", context)
 
-class CustomPasswordChangeView(PasswordChangeView):
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = CustomPasswordChangeForm
     template_name = 'users/user-change-password.html'
+    login_url = reverse_lazy('login')
 
     def get_success_url(self) -> str:
         return reverse('view-user-profile', kwargs={
