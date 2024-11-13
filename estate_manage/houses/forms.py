@@ -4,6 +4,7 @@ from django import forms
 from django.contrib import messages
 from .models import House
 from agents.models import Agent
+from locations.models import Country, State
 
 
 class HouseForm(ModelForm):
@@ -189,6 +190,17 @@ class HouseFilterForm(forms.ModelForm):
             # Set the 'min' attribute to 0 for all decimal and integer fields
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
+
+        # Filter countries and states based on user's previously added houses
+        if self.request:
+            company = self.request.user.profile.companies
+            user_houses = House.objects.filter(company=company)
+            user_countries = Country.objects.filter(houses__in=user_houses).distinct()
+            user_states = State.objects.filter(houses__in=user_houses).distinct()
+
+            # Set the choices for _country and _state
+            self.fields['_country'].choices = [('', 'Select Country')] + [(country.name, country.name) for country in user_countries]
+            self.fields['_state'].choices = [('', 'Select State')] + [(state.name, state.name) for state in user_states]
 
     def clean(self):
         cleaned_data = super().clean()

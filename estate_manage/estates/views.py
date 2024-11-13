@@ -271,6 +271,14 @@ def filterHouses(request, estate):
     houses = estate.houses.all()
     form = HouseFilterForm(request.GET, request=request)
 
+    # Limit the country and state options to those associated with the user's houses
+    user_countries = Country.objects.filter(houses__in=houses).distinct()
+    user_states = State.objects.filter(houses__in=houses).distinct()
+
+    # Update the form's country and state fields to only include these options
+    form.fields['_country'].queryset = user_countries
+    form.fields['_state'].queryset = user_states
+
     if form.is_valid():
         filters = {}
 
@@ -282,7 +290,7 @@ def filterHouses(request, estate):
             filters['country'] = Country.objects.filter(name=_country).first()
         if _state:
             filters['state'] = State.objects.filter(name=_state).first()
-
+            
         # Define the fields that need direct filtering
         fields_to_filters = {
             'house_no': 'house_number',
