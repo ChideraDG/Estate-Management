@@ -26,7 +26,7 @@ def companyProfile(request, pk):
         form = CompanyForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
-            instance = form.save(commit=False)  # Create a model instance but don't save it to the database yet.
+            instance = form.save(commit=False) 
             old_instance = Company.objects.get(user=profile.user.id)
 
             if instance.name:
