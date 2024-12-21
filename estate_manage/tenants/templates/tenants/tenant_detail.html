@@ -251,7 +251,7 @@
                     {% csrf_token %}
                     <div class="row">
                         {% for field in form %}
-                            {% if field.label != "First name" and field.label != "Last name" and field.label != "Email" and field.label != "Phone number" and field.label != "house" and field.label != "apartment" %}
+                            {% if field.label != "First name" and field.label != "Last name" and field.label != "Email" and field.label != "Phone number" and field.label != "house" and field.label != "apartment" and field.label != 'estate' %}
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">{{ field.label }}</label>
                                     {{ field }}
