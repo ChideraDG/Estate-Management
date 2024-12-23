@@ -200,9 +200,9 @@ def FilterEstates(request):
 @login_required(login_url='login')
 def estate_details(request, pk, estate_id, type):
     estate = Estate.objects.get(id=estate_id)
-
+    print(estate.houses.all())
     menu = 'estate-management'
-    s_menu = 'estate-profiles'
+    s_menu = 'estate-profile'
 
     if request.method == "POST":
         form = EstateForm(request.POST, instance=estate)
@@ -212,6 +212,14 @@ def estate_details(request, pk, estate_id, type):
             instance = form.save(commit=False)  
 
             instance.save()
+
+            # Batch update related houses with the new estate details
+            estate.houses.all().update(
+                country=estate.country,
+                state=estate.state,
+                city=estate.city,
+                address=estate.address
+            )
 
              # Access the Many-to-Many Table for utilities and save selected utilities.
             EstateUtilities = Estate.utilities.through
@@ -245,7 +253,7 @@ def estate_details(request, pk, estate_id, type):
     else:
         form = EstateForm(instance=estate)
 
-    context ={
+    context = {
         'form': form,
         'estate': estate,
         'menu': menu,
