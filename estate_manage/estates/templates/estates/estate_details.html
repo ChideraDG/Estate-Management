@@ -294,6 +294,30 @@
             button.disabled = !this.checked;
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Attach a change event listener to the country dropdown
+          var countrySelect = document.getElementById('id_country');
+          countrySelect.addEventListener('change', function() {
+            var countryId = this.value;
+            if (countryId) {
+                fetch("{% url 'get-states' %}?country_id=" + countryId)
+                    .then(response => response.json())
+                    .then(data => {
+                        var options = '<option value="">Select a state</option>';
+                        data.forEach(function(state) {
+                            options += '<option value="' + state.id + '">' + state.name + '</option>';
+                        });
+                        document.getElementById('id_state').innerHTML = options;
+                    })
+                    .catch(error => console.error("Error fetching states:", error));
+            } else {
+                document.getElementById('id_state').innerHTML = '';
+            }
+          });
+        });        
+    </script>
 {% endblock details %}
 
 {% block floater %}
