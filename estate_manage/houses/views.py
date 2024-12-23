@@ -294,7 +294,7 @@ def house_details(request, pk, house_id, type):
         s_menu = 'hp'
 
     if request.method == "POST":
-        form = HouseForm(request.POST, instance=house)
+        form = HouseForm(request.POST, instance=house, estate=house.estate if house.estate else None)
         images = request.FILES.getlist('images')
 
         if form.is_valid():
@@ -325,6 +325,8 @@ def house_details(request, pk, house_id, type):
                 )
             
             return redirect('house-details', pk=house.building_owner, house_id=house.id, type=type)
+        else:
+            print(form.errors)
     else:
         form = HouseForm(instance=house, estate=house.estate if house.estate else None)
 
