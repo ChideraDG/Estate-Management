@@ -99,26 +99,28 @@ class HouseForm(ModelForm):
             }),
         }
 
+    def _set_initial_and_disable(self, field_name):
+        """
+        Helper method to set the initial value and disable a field based on the estate.
+        """
+        if hasattr(self.estate, field_name):
+            field_value = getattr(self.estate, field_name, None)
+            if field_value:
+                self.fields[field_name].initial = field_value
+                self.fields[field_name].disabled = True
+                
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         self.estate = kwargs.pop('estate', None)  # Get the estate from kwargs
         super(HouseForm, self).__init__(*args, **kwargs)
         
-        # Prepopulate the 'country' field based on the estate
-        if self.estate and hasattr(self.estate, 'country'):
-            self.fields['country'].initial = self.estate.country
-            self.fields['country'].disabled = True
-        
-        # Prepopulate the 'state' field based on the estate
-        if self.estate and hasattr(self.estate, 'state'):
-            self.fields['state'].initial = self.estate.state
-            self.fields['state'].disabled = True
+        # Prepopulate and disable fields dynamically based on the estate
+        if self.estate:
+            self._set_initial_and_disable('country')
+            self._set_initial_and_disable('state')
+            self._set_initial_and_disable('address')
+            self._set_initial_and_disable('city')
 
-        # Prepopulate the 'address' field based on the estate
-        if self.estate and hasattr(self.estate, 'address'):
-            self.fields['address'].initial = self.estate.address
-            self.fields['address'].disabled = True
-            
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
 
