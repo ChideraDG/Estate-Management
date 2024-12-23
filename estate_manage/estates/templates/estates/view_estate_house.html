@@ -1,215 +1,214 @@
 {% extends "companies/C_dashboard.html" %} 
 
 {% block details %}
-  <!-- Content -->
+    <!-- Content -->
 
-  <!-- Location header -->
-  <h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">
-        <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile type=type %}>
-            House Profile
-        </a> /
-        <a class="text-muted fw-light" href={% url "estate-details" pk=request.user.profile estate_id=estate.id type=type %}> 
-             {{ estate.estate_name }}, {{ estate.address.title }}
-        </a> / 
-    </span>
-    House Profiles
-</h4>
-<!-- End Location header -->
+    <!-- Location header -->
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">
+            <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile type=type %}>
+                House Profile
+            </a> /
+            <a class="text-muted fw-light" href={% url "estate-details" pk=request.user.profile estate_id=estate.id type=type %}> 
+                {{ estate.estate_name }}, {{ estate.address.title }}
+            </a> / 
+        </span>
+        House Profiles
+    </h4>
+    <!-- End Location header -->
 
-<!-- House Profiles -->
-<div class="nav-align-top mb-4">
-    <!-- Tabs -->
-    <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-        <!-- house Tabs Button -->
-        <li class="nav-item">
-            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
-            data-bs-target="#navs-pills-justified-apartments" aria-controls="navs-pills-justified-apartments" aria-selected="true">
-                <i class="tf-icons bi bi-house-fill"></i> Houses
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{  total_houses }}</span>
-            </button>
-        </li>
+    <!-- House Profiles -->
+    <div class="nav-align-top mb-4">
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+            <!-- house Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-apartments" aria-controls="navs-pills-justified-apartments" aria-selected="true">
+                    <i class="tf-icons bi bi-house-fill"></i> Houses
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{  total_houses }}</span>
+                </button>
+            </li>
 
-         <!-- Add Houses Tabs Button -->
-         <li class="nav-item">
-            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
-            data-bs-target="#navs-pills-justified-add-apartment" aria-controls="navs-pills-justified-add-apartment" aria-selected="false">
-                <i class="tf-icons bi bi-plus-square-fill"></i> Add House
-            </button>
-        </li>
-    </ul>
-    <!-- End Tabs -->
+            <!-- Add Houses Tabs Button -->
+            <li class="nav-item">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" 
+                data-bs-target="#navs-pills-justified-add-apartment" aria-controls="navs-pills-justified-add-apartment" aria-selected="false">
+                    <i class="tf-icons bi bi-plus-square-fill"></i> Add House
+                </button>
+            </li>
+        </ul>
+        <!-- End Tabs -->
 
-    <!-- Details -->
-    <div class="tab-content">
-        <!-- Apartments Tabs Details -->
-        <div class="tab-pane fade show active" id="navs-pills-justified-apartments" role="tabpanel">
-            <!-- Apartments Tab Details Box -->
-            <div class="nav-align-top">
-                <ul class="nav nav-pills mb-3" role="tablist">
-                    <li class="nav-item">
-                        <button type="button" class="nav-link {% if i_menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
-                            All
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="nav-link {% if i_menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
-                            Occupied Houses
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="nav-link {% if i_menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
-                            Vacant Houses
-                        </button>
-                    </li>
-                    <li>
-                        <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
-                            Filter Houses
-                        </button>
-                    </li>
-                    {% if reset_filter == "filtering" %}
-                    <li>
-                    <button type="button" class="btn btn-outline-secondary d-grid w-100 ms-2" id="reset-filter">Reset Filter</button>
-                    </li>
-                    {% endif %}
-                </ul>
-
-                <!-- House Tab Details Inner -->
-                <div class="tab-content" style="background-color: #f5f5f9;">
-                    <!-- All Houses Tab Details -->
-                    <div class="tab-pane fade {% if i_menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
-                      {% if exist.0 %}
-                        {% include "houses/house_content.html" with profile=profile houses=houses type=type %}
-                        <!--Paginator for All Houses-->
-                        {% include "dashboard/pagination.html" with query_set=houses custom_range=custom_range query_menu='all' query_string=query_string %}
-                        <!--End Paginator-->
-                      {% else %}
-                        <h2>No House Found</h2>
-                      {% endif %}
-                    </div>  
-                    <!-- End All Houses Tab Details -->
-
-                    <!-- Occupied Houses Tab Details -->
-                    <div class="tab-pane fade {% if i_menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
-                        {% if exist.1 %}
-                          {% include "houses/house_content.html" with profile=profile houses=occupied_houses type=type %}
-                          <!--Paginator for Occupied Houses-->
-                          {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' query_string=query_string %}
-                          <!--End Paginator-->
-                        {% else %}
-                          <h2>No House Found</h2>
+        <!-- Details -->
+        <div class="tab-content">
+            <!-- Apartments Tabs Details -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-apartments" role="tabpanel">
+                <!-- Apartments Tab Details Box -->
+                <div class="nav-align-top">
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if i_menu == 'all' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-all" aria-controls="navs-pills-top-all" aria-selected="true">
+                                All
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if i_menu == 'occupied' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-occupied" aria-controls="navs-pills-top-occupied" aria-selected="false">
+                                Occupied Houses
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if i_menu == 'vacant' %}active{% endif %}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-vacant" aria-controls="navs-pills-top-vacant" aria-selected="false">
+                                Vacant Houses
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                                Filter Houses
+                            </button>
+                        </li>
+                        {% if reset_filter == "filtering" %}
+                        <li>
+                        <button type="button" class="btn btn-outline-secondary d-grid w-100 ms-2" id="reset-filter">Reset Filter</button>
+                        </li>
                         {% endif %}
-                    </div>
-                      <!-- End Occupied Houses Tab Details -->
+                    </ul>
 
-                    <!-- Vacant Houses Tab Details -->
-                    <div class="tab-pane fade {% if i_menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
-                        {% if exist.2 %}
-                          {% include "houses/house_content.html" with profile=profile houses=vacant_houses type=type %}
-                          <!--Paginator for Vacant Houses-->
-                          {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %}
-                          <!-- End Paginator-->
+                    <!-- House Tab Details Inner -->
+                    <div class="tab-content" style="background-color: #f5f5f9;">
+                        <!-- All Houses Tab Details -->
+                        <div class="tab-pane fade {% if i_menu == 'all' %}show active{% endif %}" id="navs-pills-top-all" role="tabpanel">
+                        {% if exist.0 %}
+                            {% include "houses/house_content.html" with profile=profile houses=houses type=type %}
+                            <!--Paginator for All Houses-->
+                            {% include "dashboard/pagination.html" with query_set=houses custom_range=custom_range query_menu='all' query_string=query_string %}
+                            <!--End Paginator-->
                         {% else %}
-                        <h2>No House Found</h2>
+                            <h2>No House Found</h2>
                         {% endif %}
-                    </div>
-                    <!-- End Vacant Houses Tab Details -->
+                        </div>  
+                        <!-- End All Houses Tab Details -->
 
-                    <!-- Filter Backdrop -->
-                    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
-                        <div class="offcanvas-header">
-                            <h5 id="offcanvasBothLabel" class="offcanvas-title">Filter Houses</h5>
-                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-                            <form id="filterForm" action={% url "view-houses" pk=request.user.profile type=type estate_id=estate_id %} method="GET">
-                                {{ filter_form.as_p }}
-                                <input type='text' value="filtering" name="reset_filter" hidden/>
-                                <button type="submit" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
-                                <button type="button" class="btn btn-outline-secondary d-grid w-100" id="reset-button">Reset</button>
-                            </form>
-                        </div>
-                    </div>  
-                    <!-- End Filter Backdrop -->  
-                </div>
-                <!-- House Tab Details Inner -->
-            </div>
-            <!-- End Apartments Tab Details Box -->
-        </div>
-        <!-- End Apartments Tabs Details -->
-
-        <!-- Add an Apartment Tabs Details -->
-        <div class="tab-pane fade" id="navs-pills-justified-add-apartment" role="tabpanel">
-            <form method="POST" enctype="multipart/form-data" action="">
-                {% csrf_token %}
-                <div class="row">
-                    {% for field in form %}
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">{{ field.label }}</label>
-                            {{ field }}
-
-                            {% if field.label == "House Number" %}
-                            <div id="floatingInputHelp" class="form-text">
-                                This field is compulsory
-                            </div>
+                        <!-- Occupied Houses Tab Details -->
+                        <div class="tab-pane fade {% if i_menu == 'occupied' %}show active{% endif %}" id="navs-pills-top-occupied" role="tabpanel">
+                            {% if exist.1 %}
+                            {% include "houses/house_content.html" with profile=profile houses=occupied_houses type=type %}
+                            <!--Paginator for Occupied Houses-->
+                            {% include "dashboard/pagination.html" with query_set=occupied_houses custom_range=oh_custom_range query_menu='occupied' query_string=query_string %}
+                            <!--End Paginator-->
+                            {% else %}
+                            <h2>No House Found</h2>
                             {% endif %}
                         </div>
-                    {% endfor %}
-                    <div class="mb-3 col-md-6">
-                        <label class="form-label">Upload Images</label>
-                        <input type="file" name='images' multiple class="form-control">
+                        <!-- End Occupied Houses Tab Details -->
+
+                        <!-- Vacant Houses Tab Details -->
+                        <div class="tab-pane fade {% if i_menu == 'vacant' %}show active{% endif %}" id="navs-pills-top-vacant" role="tabpanel">
+                            {% if exist.2 %}
+                            {% include "houses/house_content.html" with profile=profile houses=vacant_houses type=type %}
+                            <!--Paginator for Vacant Houses-->
+                            {% include "dashboard/pagination.html" with query_set=vacant_houses custom_range=vh_custom_range query_menu='vacant' query_string=query_string %}
+                            <!-- End Paginator-->
+                            {% else %}
+                            <h2>No House Found</h2>
+                            {% endif %}
+                        </div>
+                        <!-- End Vacant Houses Tab Details -->
+
+                        <!-- Filter Backdrop -->
+                        <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasBothLabel" class="offcanvas-title">Filter Houses</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                                <form id="filterForm" action={% url "view-houses" pk=request.user.profile type=type estate_id=estate_id %} method="GET">
+                                    {{ filter_form.as_p }}
+                                    <input type='text' value="filtering" name="reset_filter" hidden/>
+                                    <button type="submit" class="btn btn-primary mb-2 d-grid w-100">Filter</button>
+                                    <button type="button" class="btn btn-outline-secondary d-grid w-100" id="reset-button">Reset</button>
+                                </form>
+                            </div>
+                        </div>  
+                        <!-- End Filter Backdrop -->  
                     </div>
+                    <!-- House Tab Details Inner -->
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary me-2">Add House</button>
-                </div>
-            </form>
+                <!-- End Apartments Tab Details Box -->
+            </div>
+            <!-- End Apartments Tabs Details -->
+
+            <!-- Add an Apartment Tabs Details -->
+            <div class="tab-pane fade" id="navs-pills-justified-add-apartment" role="tabpanel">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field }}
+
+                                {% if field.label == "House Number" %}
+                                <div id="floatingInputHelp" class="form-text">
+                                    This field is compulsory
+                                </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Upload Images</label>
+                            <input type="file" name='images' multiple class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary me-2">Add House</button>
+                    </div>
+                </form>
+            </div>
+            <!-- End of Add a Apartment Tabs Details -->
         </div>
-        <!-- End of Add a Apartment Tabs Details -->
-    </div>
-    <!-- End Details -->
+        <!-- End Details -->
+    </div>  
 
-</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Attach a change event listener to the country dropdown
+            var countrySelect = document.getElementById('id_country');
+            countrySelect.addEventListener('change', function() {
+                var countryId = this.value;
+                if (countryId) {
+                    fetch("{% url 'get-states' %}?country_id=" + countryId)
+                        .then(response => response.json())
+                        .then(data => {
+                            var options = '<option value="">Select a state</option>';
+                            data.forEach(function(state) {
+                                options += '<option value="' + state.id + '">' + state.name + '</option>';
+                            });
+                            document.getElementById('id_state').innerHTML = options;
+                        })
+                        .catch(error => console.error("Error fetching states:", error));
+                } else {
+                    document.getElementById('id_state').innerHTML = '';
+                }
+            });
+        });        
+    </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Attach a change event listener to the country dropdown
-      var countrySelect = document.getElementById('id_country');
-      countrySelect.addEventListener('change', function() {
-        var countryId = this.value;
-        if (countryId) {
-            fetch("{% url 'get-states' %}?country_id=" + countryId)
-                .then(response => response.json())
-                .then(data => {
-                    var options = '<option value="">Select a state</option>';
-                    data.forEach(function(state) {
-                        options += '<option value="' + state.id + '">' + state.name + '</option>';
-                    });
-                    document.getElementById('id_state').innerHTML = options;
-                })
-                .catch(error => console.error("Error fetching states:", error));
-        } else {
-            document.getElementById('id_state').innerHTML = '';
-        }
-      });
-    });        
-  </script>
-
-<script>
-    document.getElementById('reset-button').addEventListener('click', function() {
-        // Select the form
-        var form = this.closest('form');
-        
-        // Clear all input fields in the form
-        form.reset();
-        window.location.href = window.location.pathname;
+    <script>
+        document.getElementById('reset-button').addEventListener('click', function() {
+            // Select the form
+            var form = this.closest('form');
+            
+            // Clear all input fields in the form
+            form.reset();
+            window.location.href = window.location.pathname;
+        });
+    </script>
+    <script>
+        document.getElementById('reset-filter').addEventListener('click', function() {
+            window.location.href = window.location.pathname;
     });
-</script>
-<script>
-    document.getElementById('reset-filter').addEventListener('click', function() {
-        window.location.href = window.location.pathname;
-});
-</script>
+    </script>
 
 
   {% endblock details%}
