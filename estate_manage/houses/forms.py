@@ -104,7 +104,6 @@ class HouseForm(ModelForm):
         self.estate = kwargs.pop('estate', None)  # Get the estate from kwargs
         super(HouseForm, self).__init__(*args, **kwargs)
         
-        print(dir(self.estate))
         # Prepopulate the 'country' field based on the estate
         if self.estate and hasattr(self.estate, 'country'):
             self.fields['country'].initial = self.estate.country
