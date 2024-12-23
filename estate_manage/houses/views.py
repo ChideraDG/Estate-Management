@@ -65,9 +65,9 @@ def houses(request, pk, type):
     if type == 'bo':
         # Get the building owner's profile from the current user's profile.
         profile = request.user.profile.building_owner
-    elif type == 'c':
-        profile = request.user.profile.companies
-        estate = profile.estates
+    # elif type == 'c':
+    #     profile = request.user.profile.companies
+    #     estate = profile.estates
 
     # Filter houses using the filterHouses function and get the query string for filtering.
     houses, query_string = filterHouses(request)
@@ -115,8 +115,8 @@ def houses(request, pk, type):
             if request.user.profile.designation == 'building_owner':
                 # Assign the building owner to the house instance.
                 instance.building_owner = profile
-            elif request.user.profile.designation == 'company':
-                instance.estate = profile
+            # elif request.user.profile.designation == 'company':
+            #     instance.estate = profile
 
             agent = form.cleaned_data['_agent']
             if agent:
@@ -158,7 +158,7 @@ def houses(request, pk, type):
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
         'tenant': "tenants/T_dashboard.html",
-        'company': "companies/C_dashboard.html",
+        # 'company': "companies/C_dashboard.html",
     }
     # Prepare the context to be passed to the template.
     context = {
