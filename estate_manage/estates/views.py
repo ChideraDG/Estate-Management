@@ -357,7 +357,8 @@ def view_estate_houses(request, type, pk, estate_id):
     estate_total_houses = estate.houses.count()
 
     if request.method == 'POST':
-        form = HouseForm(request.POST, request=request)
+        form = HouseForm(request.POST, request=request, estate=estate)
+
         # Get the list of images uploaded with the form.
         images = request.FILES.getlist('images')
 
@@ -381,7 +382,7 @@ def view_estate_houses(request, type, pk, estate_id):
             return redirect('view-houses', type=type, pk=pk, estate_id=estate_id)
     
     else:
-        form = HouseForm()
+        form = HouseForm(estate=estate)
 
     context = {
         'menu': menu,
