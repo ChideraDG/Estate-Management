@@ -114,6 +114,11 @@ class HouseForm(ModelForm):
             self.fields['state'].initial = self.estate.state
             self.fields['state'].disabled = True
 
+        # Prepopulate the 'address' field based on the estate
+        if self.estate and hasattr(self.estate, 'address'):
+            self.fields['address'].initial = self.estate.address
+            self.fields['address'].disabled = True
+            
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
 
