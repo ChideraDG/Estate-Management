@@ -101,7 +101,19 @@ class HouseForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
+        self.estate = kwargs.pop('estate', None)  # Get the estate from kwargs
         super(HouseForm, self).__init__(*args, **kwargs)
+        
+        print(dir(self.estate))
+        # Prepopulate the 'country' field based on the estate
+        if self.estate and hasattr(self.estate, 'country'):
+            self.fields['country'].initial = self.estate.country
+            self.fields['country'].disabled = True
+        
+        # Prepopulate the 'state' field based on the estate
+        if self.estate and hasattr(self.estate, 'state'):
+            self.fields['state'].initial = self.estate.state
+            self.fields['state'].disabled = True
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
