@@ -29,7 +29,7 @@
                   </thead>
                   <tbody class="table-border-bottom-0">
                     {% for estate in estates %}
-                        <tr onclick="window.location.href='{% url "view-houses" type=type pk=request.user.profile estate_id=estate.id %}?menu=a-m&s_menu=a-p&i_menu=all'" style="cursor:pointer;">
+                        <tr onclick="window.location.href='{% url "view-houses" type=type pk=request.user.profile estate_id=estate.id %}?menu=hm&s_menu=hp&i_menu=all'" style="cursor:pointer;">
                             <td>
                                 <i class="fab fa-angular fa-lg text-danger me-1"></i>
                                 <h6 class="fw-bold"> {{estate.estate_name}}, {{ estate.address.title }}</h6>
