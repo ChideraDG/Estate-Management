@@ -65,9 +65,13 @@ def houses(request, pk, type):
     if type == 'bo':
         # Get the building owner's profile from the current user's profile.
         profile = request.user.profile.building_owner
-    # elif type == 'c':
-    #     profile = request.user.profile.companies
-    #     estate = profile.estates
+        menu = 'houses-management'
+        s_menu = 'house-profiles'
+    elif type == 'c':
+        profile = request.user.profile.companies
+        # estate = profile.estates
+        menu = 'hm'
+        s_menu = 'hp'
 
     # Filter houses using the filterHouses function and get the query string for filtering.
     houses, query_string = filterHouses(request)
@@ -79,10 +83,6 @@ def houses(request, pk, type):
 
     # Get the reset filter URL or default to '/' if not provided.
     reset_filter = request.GET.get('reset_filter', '/')
-
-    # Set the active menu and sub-menu for UI highlighting.
-    menu = 'houses-management'
-    s_menu = 'house-profiles'
 
     # Retrieve all countries (presumably for filtering options).
     countries = Country.objects.all()
@@ -286,8 +286,12 @@ def filterHouses(request):
 def house_details(request, pk, house_id, type):
     house = House.objects.get(id=house_id)
 
-    menu = 'houses-management'
-    s_menu = 'house-profiles'
+    if type == 'bo':
+        menu = 'houses-management'
+        s_menu = 'house-profiles'
+    elif type == 'c':
+        menu = 'hm'
+        s_menu = 'hp'
 
     if request.method == "POST":
         form = HouseForm(request.POST, instance=house)
@@ -322,7 +326,7 @@ def house_details(request, pk, house_id, type):
             
             return redirect('house-details', pk=house.building_owner, house_id=house.id, type=type)
     else:
-        form = HouseForm(instance=house)
+        form = HouseForm(instance=house, estate=house.estate if house.estate else None)
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
