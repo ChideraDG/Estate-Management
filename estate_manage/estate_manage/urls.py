@@ -8,7 +8,7 @@ from users.views import CustomPasswordResetView, CustomPasswordResetConfirmView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('users.urls')),
-    path("estates/", include('estates.urls')),
+    path("", include('estates.urls')),
     path("", include('companies.urls')),
     path("", include('building_owners.urls')),
     path("", include('houses.urls')),
