@@ -14,14 +14,14 @@
 </li>
 
 <!-- Estate Management -->
-<li class="menu-item {% if menu == 'estate-management' %}active open{% endif %}">
+<li class="menu-item {% if menu == 'em' %}active open{% endif %}">
   <a href="javascript:void(0);" class="menu-link menu-toggle">
     <i class="menu-icon tf-icons bi bi-building-fill tiny-icon"></i>
     <div data-i18n="Estate Management">Estate Management</div>
   </a>
 
   <ul class="menu-sub">
-    <li class="menu-item {% if s_menu == 'estate-profile' %}active{% endif %}">
+    <li class="menu-item {% if s_menu == 'ep' %}active{% endif %}">
       <a href={% url "estates" pk=request.user.profile type="c" %}?menu=all&page=1 class="menu-link">
         <div data-i18n="estate-profile">Estate Profile</div>
       </a>
@@ -44,7 +44,7 @@
   <ul class="menu-sub">
     <li class="menu-item {% if s_menu == 'hp' %}active{% endif %}">
       <a href={% url "estate-houses" pk=request.user.profile type="c" %}?i_menu=all&page=1 class="menu-link">
-          <div data-i18n="house-profiles">House Profiles</div>
+          <div data-i18n="house-profiles">House Profile</div>
       </a>
   </li>
     <li class="menu-item">
