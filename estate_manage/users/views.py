@@ -144,7 +144,7 @@ def user_profile(request, type, pk):
             if changes:
                 messages.success(request, 'Profile Updated!')
     else:
-        form = ProfileForm(instance=profile)
+        form = ProfileForm(instance=profile, request=request)
 
     menu = 'user-management'
     s_menu = 'personal-profile'
