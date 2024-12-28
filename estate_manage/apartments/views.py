@@ -85,7 +85,7 @@ def view_apartments(request, type, pk, house_id):
 
             return redirect('view-apartments', type=type, pk=pk, house_id=house_id)
     else:
-        form = ApartmentForm()
+        form = ApartmentForm(request=request)
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
@@ -190,7 +190,7 @@ def apartment_details(request, type, pk, house_id, apartment_number):
 
             return redirect('apartment-details', type, pk, house_id, instance.apartment_number)
     else:
-        form = ApartmentForm(instance=apartment)
+        form = ApartmentForm(instance=apartment, request=request)
 
     template_routes = {
         'building_owner': "building_owners/BO_dashboard.html",
