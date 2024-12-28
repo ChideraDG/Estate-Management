@@ -199,35 +199,4 @@ class EstateFilterForm(forms.ModelForm):
             self.add_error("min_maintenance_cost", "Min Maintenance Cost cannot be greater than Max Maintenance Cost.")
 
         return cleaned_data
-
-# class EstateHouseFilterForm(forms.ModelForm):
-#     house_no = forms.IntegerField(
-#         required=False,
-#         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter House Number'})
-#     )
-
-#     house_address = forms.CharField(
-#         required=False,
-#         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter House Number'})
-#     )
-
-#     sale_price_min = forms.DecimalField(
-#         required=False,
-#         widget=forms.NumberInput(attrs={
-#             'class': 'form-control',
-#             'placeholder': 'Min Price ($)',
-#             'min': '0'
-#         }))
-
-#     sale_price_max = forms.DecimalField(
-#         required=False,
-#         widget=forms.NumberInput(attrs={
-#             'class': 'form-control',
-#             'placeholder': 'Min Price ($)',
-#             'min': '0'
-#         }))
-
-    
-
-
             
