@@ -30,8 +30,8 @@ def estates(request, pk, type):
     reset_filter = request.GET.get('reset_filter', '/')
 
     # Set the active menu and sub-menu for UI highlighting.
-    menu = 'estate-management'
-    s_menu = 'estate-profile'
+    menu = 'em'
+    s_menu = 'ep'
 
 
     # Retrieve all countries (presumably for filtering options).
@@ -201,8 +201,8 @@ def FilterEstates(request):
 def estate_details(request, pk, estate_id, type):
     estate = Estate.objects.get(id=estate_id)
     print(estate.houses.all())
-    menu = 'estate-management'
-    s_menu = 'estate-profile'
+    menu = 'em'
+    s_menu = 'ep'
 
     if request.method == "POST":
         form = EstateForm(request.POST, instance=estate)
@@ -279,25 +279,8 @@ def filterHouses(request, estate):
     houses = estate.houses.all()
     form = HouseFilterForm(request.GET, request=request)
 
-    # Limit the country and state options to those associated with the user's houses
-    user_countries = Country.objects.filter(houses__in=houses).distinct()
-    user_states = State.objects.filter(houses__in=houses).distinct()
-
-    # Update the form's country and state fields to only include these options
-    form.fields['_country'].queryset = user_countries
-    form.fields['_state'].queryset = user_states
-
     if form.is_valid():
         filters = {}
-
-        # Handle country and state separately since they require lookups
-        _country = form.cleaned_data.get('_country')
-        _state = form.cleaned_data.get('_state')
-        
-        if _country:
-            filters['country'] = Country.objects.filter(name=_country).first()
-        if _state:
-            filters['state'] = State.objects.filter(name=_state).first()
             
         # Define the fields that need direct filtering
         fields_to_filters = {
@@ -359,7 +342,6 @@ def view_estate_houses(request, type, pk, estate_id):
     custom_range, houses = paginateHouses(request, houses, 6)
     oh_custom_range, occupied_houses = paginateHouses(request, occupied_houses, 6)
     vh_custom_range, vacant_houses = paginateHouses(request, vacant_houses, 6)
-    filter_form = HouseFilterForm()
 
     # Calculate total number of houses in this estate
     estate_total_houses = estate.houses.count()
@@ -390,7 +372,7 @@ def view_estate_houses(request, type, pk, estate_id):
             return redirect('view-houses', type=type, pk=pk, estate_id=estate_id)
     
     else:
-        form = HouseForm(estate=estate)
+        form = HouseForm(estate=estate, request=request)
 
     context = {
         'menu': menu,
@@ -405,7 +387,7 @@ def view_estate_houses(request, type, pk, estate_id):
         ' vh_custom_range':  vh_custom_range,
         'occupied_houses': occupied_houses,
         'vacant_houses': vacant_houses,
-        'filter_form': filter_form,
+        'filter_form': HouseFilterForm(request=request),
         'query_string': query_string,
         'reset_filter': reset_filter,
         'estate_id': estate_id,
