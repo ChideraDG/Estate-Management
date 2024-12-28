@@ -69,7 +69,6 @@ def houses(request, pk, type):
         s_menu = 'house-profiles'
     elif type == 'c':
         profile = request.user.profile.companies
-        # estate = profile.estates
         menu = 'hm'
         s_menu = 'hp'
 
@@ -174,7 +173,7 @@ def houses(request, pk, type):
         'oh_custom_range': oh_custom_range,
         'vh_custom_range': vh_custom_range,
         'i_menu': i_menu,
-        'filter_form': HouseFilterForm(),
+        'filter_form': HouseFilterForm(request=request),
         'exist': exist,
         'reset_filter': reset_filter,
         'query_string': query_string,
@@ -218,18 +217,15 @@ def filterHouses(request):
     """
     
     if request.user.profile.designation == 'building_owner':
-        # Get all houses related to the current user's profile
         houses = request.user.profile.building_owner.houses.all()  
     elif request.user.profile.designation == 'company':
-        # Needs fixing
         houses = House.objects.filter(company=request.user.profile.companies)
-        print(houses)
     
     form = HouseFilterForm(request.GET, request=request)
 
     if form.is_valid():
         filters = {}
-
+        
         # Handle country and state separately since they require lookups
         _country = form.cleaned_data.get('_country')
         _state = form.cleaned_data.get('_state')
@@ -285,7 +281,7 @@ def filterHouses(request):
 @login_required(login_url='login')
 def house_details(request, pk, house_id, type):
     house = House.objects.get(id=house_id)
-
+    
     if type == 'bo':
         menu = 'houses-management'
         s_menu = 'house-profiles'
@@ -339,6 +335,7 @@ def house_details(request, pk, house_id, type):
         'house': house,
         'form': form,
         'menu': menu,
+        'estate_id': house.estate_id if type == "c" else None,
         's_menu': s_menu,
         'type': type,
         'template_routes': template_routes.get(request.user.profile.designation),
