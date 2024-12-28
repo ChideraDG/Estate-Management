@@ -12,9 +12,11 @@
                 <a class="text-muted fw-light" href={% url "houses" pk=request.user.profile type=type %}>
                     House Profiles
                 </a> 
-                {% elif request.user.profile.designation == "company" %}
-                House Profiles
-                {% endif %}
+            {% elif request.user.profile.designation == "company" %}
+                <a class="text-muted fw-light" href={% url "view-houses" pk=request.user.profile type="c" estate_id=estate_id %}>
+                    House Profiles
+                </a>
+            {% endif %}
                 /
         </span> No. {{ house.house_number }}, {{ house.address.title }}
     </h4>
