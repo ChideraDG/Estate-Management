@@ -36,7 +36,7 @@ def building_owner_profile(request, pk):
             if changes:
                 messages.success(request, 'Profile Updated!')
     else:
-        form = BuildingOwnerForm(instance=profile)
+        form = BuildingOwnerForm(instance=profile, request=request)
 
     menu = 'user-management'
     s_menu = 'bo-profile'
