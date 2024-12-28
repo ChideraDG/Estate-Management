@@ -128,19 +128,29 @@ class HouseForm(ModelForm):
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
 
-country_choice = [('', 'Select a Country')]
-for country in House.objects.values_list('country_id__name', flat=True):
-    choice = (country, country)
-    if choice not in country_choice and choice != (None, None):
-        country_choice.append(choice)
+# country_choice = [('', 'Select a Country')]
+# for country in House.objects.values_list('country_id__name', flat=True):
+#     choice = (country, country)
+#     if choice not in country_choice and choice != (None, None):
+#         country_choice.append(choice)
 
-state_choice = [('', 'Select a State')]
-for state in House.objects.values_list('state_id__name', flat=True):
-    choice = (state, state)
-    if choice not in state_choice and choice != (None, None):
-        state_choice.append(choice)
+# state_choice = [('', 'Select a State')]
+# for state in House.objects.values_list('state_id__name', flat=True):
+#     choice = (state, state)
+#     if choice not in state_choice and choice != (None, None):
+#         state_choice.append(choice)
     
 class HouseFilterForm(forms.ModelForm):
+    COUNTRY_CHOICES = [
+        ('', 'Select a Country'),
+        *sorted([(country, country) for country in set(House.objects.values_list('country_id__name', flat=True)) if country])
+    ]
+
+    STATE_CHOICES = [
+        ('', 'Select a State'),
+        *sorted([(state, state) for state in set(House.objects.values_list('state_id__name', flat=True)) if state])
+    ]
+
     house_no = forms.IntegerField(required=False, label="House number")
     house_address = forms.CharField(required=False)
     house_size_min = forms.DecimalField(required=False)
@@ -151,8 +161,8 @@ class HouseFilterForm(forms.ModelForm):
     rent_price_max = forms.DecimalField(required=False)
     yard_size_min = forms.IntegerField(required=False)
     yard_size_max = forms.IntegerField(required=False)
-    _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False)
-    _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False)
+    _country = forms.ChoiceField(choices=COUNTRY_CHOICES, label="Country", required=False)
+    _state = forms.ChoiceField(choices=STATE_CHOICES, label="State", required=False)
 
     class Meta:
         model = House
@@ -175,6 +185,13 @@ class HouseFilterForm(forms.ModelForm):
         self.fields['number_of_apartments'].initial = ""
         self.fields['number_of_floors'].initial = ""
         self.fields['garage_space'].initial = ""
+        
+        if self.request.user.profile.designation == 'company':
+            # Make 'house_number' field hidden
+            self.fields['_country'].widget = forms.HiddenInput()
+            self.fields['_state'].widget = forms.HiddenInput()
+            self.fields['house_address'].widget = forms.HiddenInput()
+            self.fields['city'].widget = forms.HiddenInput()
 
         # Define placeholders for each field
         placeholders = {
@@ -208,17 +225,6 @@ class HouseFilterForm(forms.ModelForm):
             # Set the 'min' attribute to 0 for all decimal and integer fields
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
-
-        # Filter countries and states based on user's previously added houses
-        if self.request:
-            company = self.request.user.profile.companies
-            user_houses = House.objects.filter(company=company)
-            user_countries = Country.objects.filter(houses__in=user_houses).distinct()
-            user_states = State.objects.filter(houses__in=user_houses).distinct()
-
-            # Set the choices for _country and _state
-            self.fields['_country'].choices = [('', 'Select Country')] + [(country.name, country.name) for country in user_countries]
-            self.fields['_state'].choices = [('', 'Select State')] + [(state.name, state.name) for state in user_states]
 
     def clean(self):
         cleaned_data = super().clean()
