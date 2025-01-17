@@ -51,27 +51,40 @@ class EstateForm(ModelForm):
             if isinstance(field, (forms.DecimalField, forms.IntegerField)):
                 field.widget.attrs.update({'min': '0'})
 
-country_choice = [('', 'Select a Country')]
-for country in Estate.objects.values_list('country_id__name', flat=True):
-    choice = (country, country)
-    if choice not in country_choice and choice != (None, None):
-        country_choice.append(choice)
+# country_choice = [('', 'Select a Country')]
+# for country in Estate.objects.values_list('country_id__name', flat=True):
+#     choice = (country, country)
+#     if choice not in country_choice and choice != (None, None):
+#         country_choice.append(choice)
 
-state_choice = [('', 'Select a State')]
-for state in Estate.objects.values_list('state_id__name', flat=True):
-    choice = (state, state)
-    if choice not in state_choice and choice != (None, None):
-        state_choice.append(choice)
+# state_choice = [('', 'Select a State')]
+# for state in Estate.objects.values_list('state_id__name', flat=True):
+#     choice = (state, state)
+#     if choice not in state_choice and choice != (None, None):
+#         state_choice.append(choice)
 
 class EstateFilterForm(forms.ModelForm):
+    #  This is the change
+    country_choice = [
+        ('', 'Select a Country'),
+        *sorted([(country, country) for country in set(Estate.objects.values_list('country_id__name', flat=True)) if country])
+    ]
+
+    state_choice = [
+        ('', 'Select a State'),
+        *sorted([(state, state) for state in set(Estate.objects.values_list('state_id__name', flat=True)) if state])
+    ]
+
+    # ends here
+
     estate_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Estate Name'}))
     address = forms.CharField(required=False, 
             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Address'})
             )
-    _country = forms.ChoiceField(choices=sorted(country_choice), label="Country", required=False,
+    _country = forms.ChoiceField(choices=country_choice, label="Country", required=False,
              widget=forms.Select(attrs={'class': 'form-control',})
              )
-    _state = forms.ChoiceField(choices=sorted(state_choice), label="State", required=False, 
+    _state = forms.ChoiceField(choices=state_choice, label="State", required=False, 
             widget=forms.Select(attrs={'class': 'form-control',})
             )
 
