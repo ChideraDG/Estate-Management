@@ -143,12 +143,12 @@ class HouseForm(ModelForm):
 class HouseFilterForm(forms.ModelForm):
     COUNTRY_CHOICES = [
         ('', 'Select a Country'),
-        *sorted([(country, country) for country in set(House.objects.values_list('country_id__name', flat=True)) if country])
+        *sorted([(country, country) for country in set(House.objects.values_list('country_id__name', flat=True)) if country])  # Comment this line during database recovery
     ]
 
     STATE_CHOICES = [
         ('', 'Select a State'),
-        *sorted([(state, state) for state in set(House.objects.values_list('state_id__name', flat=True)) if state])
+        *sorted([(state, state) for state in set(House.objects.values_list('state_id__name', flat=True)) if state])  # Comment this line during database recovery
     ]
 
     house_no = forms.IntegerField(required=False, label="House number")

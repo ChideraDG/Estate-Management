@@ -67,12 +67,12 @@ class EstateFilterForm(forms.ModelForm):
     #  This is the change
     country_choice = [
         ('', 'Select a Country'),
-        *sorted([(country, country) for country in set(Estate.objects.values_list('country_id__name', flat=True)) if country])
+        *sorted([(country, country) for country in set(Estate.objects.values_list('country_id__name', flat=True)) if country])  # Comment this line during database recovery
     ]
 
     state_choice = [
         ('', 'Select a State'),
-        *sorted([(state, state) for state in set(Estate.objects.values_list('state_id__name', flat=True)) if state])
+        *sorted([(state, state) for state in set(Estate.objects.values_list('state_id__name', flat=True)) if state])  # Comment this line during database recovery
     ]
 
     # ends here

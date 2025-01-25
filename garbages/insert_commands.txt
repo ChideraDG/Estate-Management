@@ -1,0 +1,6 @@
+python manage.py insert_location
+python manage.py insert_utilies
+python manage.py insert_amenities
+python manage.py insert_features
+python manage.py insert_securites
+python manage.py insert_house_utilies
