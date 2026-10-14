@@ -39,3 +39,9 @@
 /estate_manage/notifications/migrations
 /estate_manage/notifications/__pycache__
 .codegpt
+
+# Machine and build files, never part of the project.
+.DS_Store
+__pycache__/
+*.pyc
+.idea/
