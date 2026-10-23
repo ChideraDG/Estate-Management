@@ -14,3 +14,5 @@ packaging~=24.0
 PyMySQL~=1.1.0
 Pillow~=10.4.0
 pycountry~=24.6.1
+django-phonenumber-field~=8.0.0
+phonenumbers~=8.13.40
